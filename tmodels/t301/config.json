@@ -1,0 +1,10 @@
+{
+  "model_type": "t301",
+  "version": "0.1.0",
+  "role": "retrieval_and_benchmark",
+  "embedding_dim": 1024,
+  "index_backend": "faiss",
+  "rag_top_k": 5,
+  "benchmark_datasets": ["mmlu", "hellaswag", "arc_challenge"],
+  "torch_dtype": "float16"
+}

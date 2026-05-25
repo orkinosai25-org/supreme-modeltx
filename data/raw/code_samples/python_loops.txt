@@ -1,0 +1,29 @@
+# Python: Basic loop examples
+
+# 1. For loop over a range
+for i in range(5):
+    print(f"Iteration {i}")
+
+# 2. While loop with counter
+count = 0
+while count < 3:
+    print(f"Count is {count}")
+    count += 1
+
+# 3. Looping over a list
+fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(f"Fruit: {fruit}")
+
+# 4. List comprehension
+squares = [x ** 2 for x in range(10)]
+print(squares)
+
+# 5. Enumerate to get index and value
+for index, value in enumerate(fruits):
+    print(f"{index}: {value}")
+
+# 6. Dictionary iteration
+scores = {"Alice": 90, "Bob": 85, "Carol": 92}
+for name, score in scores.items():
+    print(f"{name} scored {score}")

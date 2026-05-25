@@ -1,0 +1,21 @@
+Cloud Computing Fundamentals
+
+Cloud computing is the delivery of computing services including servers, storage, databases, networking, software, and analytics over the internet. Providers maintain large data centres equipped with the hardware and software needed to run these services, charging customers based on their actual consumption rather than requiring them to purchase and maintain their own infrastructure.
+
+The three primary service models are infrastructure as a service, platform as a service, and software as a service. Infrastructure as a service provides raw virtualised compute, storage, and networking, giving customers maximum control over the operating system and installed software. Platform as a service adds a managed runtime environment, removing the need to configure or patch the underlying operating system. Software as a service delivers complete applications accessible through a web browser.
+
+Virtualisation is the foundational technology that enables cloud providers to share physical hardware among many customers. A hypervisor running on a physical server creates and manages multiple virtual machines, each with its own virtual CPU, memory, and storage. Container technology offers a lighter-weight alternative by sharing the host operating system kernel while isolating application processes.
+
+Elasticity allows cloud consumers to rapidly acquire additional resources during demand peaks and release them when they are no longer needed, paying only for what they use. Auto-scaling systems monitor metrics such as CPU utilisation or request rate and trigger provisioning or deprovisioning of instances automatically.
+
+Availability zones are distinct data centre facilities within a cloud region, separated by sufficient distance to avoid common failure modes such as power outages or natural disasters. Customers can deploy redundant application tiers across multiple availability zones to achieve high availability without managing their own secondary data centres.
+
+Object storage systems provide a flat namespace for storing and retrieving arbitrary binary objects identified by keys. Unlike traditional file systems, object storage scales horizontally to exabytes and decouples storage capacity from compute resources. Data durability is achieved by replicating objects across multiple storage nodes or erasure-coding them.
+
+Managed database services relieve customers of responsibility for database installation, patching, backups, and failover. Providers offer relational databases, document stores, key-value caches, columnar analytics stores, and graph databases as services, each tuned for particular access patterns.
+
+Identity and access management frameworks control who or what can interact with which cloud resources and under what conditions. Role-based access control assigns permissions to roles rather than individuals, simplifying administration. Multi-factor authentication adds a second verification step to reduce the risk of credential compromise.
+
+Content delivery networks distribute static assets such as images, stylesheets, and scripts to caching servers located close to end users. Requests are routed to the nearest cache rather than back to the origin server, reducing latency and offloading traffic. Dynamic content can also be accelerated through optimised routing over the provider's global backbone.
+
+Cost management in cloud environments requires ongoing attention because the ease of provisioning resources can lead to unused or oversized instances accumulating expense. Resource tagging enables chargeback to cost centres, and budget alerts notify administrators when spending approaches thresholds.

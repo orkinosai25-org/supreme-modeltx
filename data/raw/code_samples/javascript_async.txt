@@ -1,0 +1,39 @@
+// JavaScript: Asynchronous patterns
+
+// Simple delay utility
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Promise-based fetch simulation
+function fetchUserName(id) {
+  return new Promise((resolve, reject) => {
+    if (id <= 0) {
+      reject(new Error("Invalid ID"));
+      return;
+    }
+    setTimeout(() => resolve(`User_${id}`), 100);
+  });
+}
+
+// Async/await
+async function greetUser(id) {
+  try {
+    const name = await fetchUserName(id);
+    await delay(50);
+    return `Hello, ${name}!`;
+  } catch (err) {
+    return `Error: ${err.message}`;
+  }
+}
+
+// Promise.all for parallel execution
+async function greetAll(ids) {
+  const greetings = await Promise.all(ids.map(greetUser));
+  return greetings;
+}
+
+// Run examples
+greetUser(42).then(console.log);
+greetUser(-1).then(console.log);
+greetAll([1, 2, 3]).then((results) => results.forEach(console.log));

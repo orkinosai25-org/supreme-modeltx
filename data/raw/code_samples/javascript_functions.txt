@@ -1,0 +1,41 @@
+// JavaScript: Function examples
+
+// Arrow function
+const greet = (name) => `Hello, ${name}!`;
+
+// Default parameters
+function power(base, exponent = 2) {
+  return Math.pow(base, exponent);
+}
+
+// Rest parameters
+function sum(...numbers) {
+  return numbers.reduce((total, n) => total + n, 0);
+}
+
+// Higher-order function
+function applyTwice(fn, value) {
+  return fn(fn(value));
+}
+
+// Closure counter
+function createCounter(start = 0) {
+  let count = start;
+  return {
+    increment() { count += 1; },
+    decrement() { count -= 1; },
+    value() { return count; },
+  };
+}
+
+// Usage
+console.log(greet("World"));
+console.log(power(3, 4));
+console.log(sum(1, 2, 3, 4, 5));
+console.log(applyTwice((x) => x * 2, 3));
+
+const counter = createCounter(10);
+counter.increment();
+counter.increment();
+counter.decrement();
+console.log(counter.value()); // 11

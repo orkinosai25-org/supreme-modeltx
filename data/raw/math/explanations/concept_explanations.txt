@@ -1,0 +1,59 @@
+Concept: Addition
+Addition is one of the four basic arithmetic operations. It combines two or more quantities into a single total, called the sum. For example, if you have 3 apples and someone gives you 4 more, you now have 3 + 4 = 7 apples. The symbol for addition is +. When adding multi-digit numbers, we align digits by place value (ones, tens, hundreds) and add column by column from right to left, carrying any excess to the next column.
+---
+
+Concept: Subtraction
+Subtraction is the operation of removing one quantity from another to find the difference. The result is called the difference. For example, 10 - 4 = 6 means starting with 10 and removing 4 leaves 6. Subtraction is the inverse of addition. When subtracting multi-digit numbers, we align by place value and subtract right to left, borrowing from the next column when necessary.
+---
+
+Concept: Multiplication
+Multiplication is repeated addition. The expression 5 × 3 means adding 5 three times: 5 + 5 + 5 = 15. The result is called the product. Multiplication is commutative, meaning 5 × 3 = 3 × 5 = 15. The distributive property states that a × (b + c) = a×b + a×c, which is useful for mental arithmetic and algebra. Memorizing the multiplication tables up to 12×12 helps with quick calculations.
+---
+
+Concept: Division
+Division splits a quantity into equal parts. The expression 20 ÷ 4 = 5 means distributing 20 into 4 equal groups of 5. Division is the inverse of multiplication. The number being divided is the dividend, the number dividing it is the divisor, and the result is the quotient. If the division is not exact, there is a remainder. For example, 22 ÷ 4 = 5 remainder 2.
+---
+
+Concept: Order of Operations
+When an expression contains multiple operations, we follow a specific order: Parentheses first, then Exponents, then Multiplication and Division (left to right), then Addition and Subtraction (left to right). This is often remembered with the acronym PEMDAS (Parentheses, Exponents, Multiplication, Division, Addition, Subtraction). For example, 3 + 2 × 4 = 3 + 8 = 11, not 20, because multiplication is done before addition.
+---
+
+Concept: Variables and Expressions
+In algebra, a variable is a symbol (usually a letter like x or y) that represents an unknown or changing value. An algebraic expression combines variables, numbers, and operations without an equal sign, for example 3x + 5. An equation sets two expressions equal to each other, for example 3x + 5 = 14. Solving an equation means finding the value of the variable that makes the equation true.
+---
+
+Concept: Solving Linear Equations
+A linear equation in one variable has the form ax + b = c, where a, b, and c are constants and x is the variable. To solve, we isolate x using inverse operations: first subtract b from both sides (ax = c - b), then divide both sides by a (x = (c - b) / a). Whatever operation is applied to one side of the equation must also be applied to the other side to maintain balance.
+---
+
+Concept: Fractions
+A fraction represents a part of a whole. It is written as a/b, where a is the numerator (how many parts we have) and b is the denominator (how many equal parts the whole is divided into). For example, 3/4 means 3 out of 4 equal parts. To add fractions with the same denominator, add the numerators: 1/5 + 2/5 = 3/5. To add fractions with different denominators, first find a common denominator.
+---
+
+Concept: Percentages
+A percentage is a way to express a number as a fraction of 100. The symbol % means "per hundred." For example, 35% means 35 out of 100, or 0.35 as a decimal. To find a percentage of a number, convert the percentage to a decimal and multiply: 35% of 80 = 0.35 × 80 = 28. Percentages are commonly used in discounts, interest rates, and statistics.
+---
+
+Concept: Number Patterns and Sequences
+A sequence is an ordered list of numbers that follow a rule. In an arithmetic sequence, each term is obtained by adding a fixed value (common difference) to the previous term. For example, 2, 5, 8, 11, 14 has a common difference of 3. In a geometric sequence, each term is obtained by multiplying the previous term by a fixed value (common ratio). For example, 3, 6, 12, 24 has a common ratio of 2.
+---
+
+Concept: Prime Numbers
+A prime number is a natural number greater than 1 that has no divisors other than 1 and itself. The first several primes are 2, 3, 5, 7, 11, 13, 17, 19, 23. The number 1 is not prime by convention. Every natural number greater than 1 can be expressed as a unique product of prime numbers, a fact known as the Fundamental Theorem of Arithmetic. Primes are essential in cryptography and number theory.
+---
+
+Concept: Area and Perimeter
+The perimeter of a shape is the total length of its boundary. For a rectangle with length l and width w, the perimeter is P = 2(l + w). The area of a shape is the amount of space it encloses. For a rectangle, area = l × w. For a triangle with base b and height h, area = (1/2) × b × h. For a circle with radius r, area = π × r² and circumference = 2πr.
+---
+
+Concept: Mean, Median, and Mode
+These are measures of central tendency that describe the center of a data set. The mean is the average: sum of all values divided by the count of values. The median is the middle value when data is sorted in order; if there are two middle values, the median is their average. The mode is the value that appears most frequently. For example, for the data set {2, 4, 4, 6, 8}: mean = 24/5 = 4.8, median = 4, mode = 4.
+---
+
+Concept: Exponents and Powers
+An exponent indicates how many times a number (the base) is multiplied by itself. For example, 2³ = 2 × 2 × 2 = 8. The expression aⁿ is read as "a to the power of n." Any nonzero number to the power of 0 equals 1: a⁰ = 1. Negative exponents represent reciprocals: a⁻ⁿ = 1/aⁿ. Exponent rules include: aᵐ × aⁿ = aᵐ⁺ⁿ and (aᵐ)ⁿ = aᵐⁿ.
+---
+
+Concept: Ratios and Proportions
+A ratio compares two quantities, written as a:b or a/b. For example, if a recipe calls for 2 cups of flour and 1 cup of sugar, the ratio of flour to sugar is 2:1. A proportion is an equation stating that two ratios are equal: a/b = c/d. Proportions are used to scale recipes, maps, and models. Cross-multiplication is a common technique for solving proportions: if a/b = c/d, then a × d = b × c.
+---

@@ -1,0 +1,27 @@
+{
+  "model_name": "t101-7b",
+  "model_config": "tmodels/t101/config.json",
+  "training": {
+    "output_dir": "checkpoints/t101",
+    "num_train_epochs": 3,
+    "per_device_train_batch_size": 4,
+    "gradient_accumulation_steps": 8,
+    "learning_rate": 2e-4,
+    "lr_scheduler_type": "cosine",
+    "warmup_ratio": 0.03,
+    "weight_decay": 0.01,
+    "max_grad_norm": 1.0,
+    "bf16": true,
+    "logging_steps": 100,
+    "save_steps": 500,
+    "save_total_limit": 3,
+    "seed": 42
+  },
+  "data": {
+    "train_file": "data/train.jsonl",
+    "validation_file": "data/val.jsonl",
+    "max_seq_length": 2048,
+    "preprocessing_num_workers": 8
+  },
+  "deepspeed": "training/deepspeed_config.json"
+}

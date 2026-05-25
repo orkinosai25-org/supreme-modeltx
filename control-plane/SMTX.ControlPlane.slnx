@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SMTX.ControlPlane.Api/SMTX.ControlPlane.Api.csproj" />
+    <Project Path="src/SMTX.ControlPlane.Blazor/SMTX.ControlPlane.Blazor.csproj" />
+    <Project Path="src/SMTX.ControlPlane.Core/SMTX.ControlPlane.Core.csproj" />
+    <Project Path="src/SMTX.ControlPlane.Infrastructure/SMTX.ControlPlane.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SMTX.ControlPlane.Tests/SMTX.ControlPlane.Tests.csproj" />
+  </Folder>
+</Solution>

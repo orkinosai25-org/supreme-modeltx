@@ -1,0 +1,21 @@
+Robotics and Automation
+
+Robotics is an interdisciplinary field combining mechanical engineering, electrical engineering, and computer science to design, build, program, and operate machines capable of carrying out physical tasks. Robots range from simple fixed-arm manipulators on production lines to sophisticated mobile platforms that navigate and interact with unstructured environments.
+
+Industrial robots have been used in manufacturing since the 1960s, performing tasks such as welding, painting, assembly, and material handling with speed and repeatability that exceed human capability. They are typically programmed by teaching the arm a series of waypoints, which it then reproduces precisely. Modern systems can be reprogrammed rapidly to accommodate changes in production.
+
+Sensors are the perceptual organs of a robot, allowing it to gather information about itself and its surroundings. Cameras provide visual information, lidar uses laser pulses to measure distances, sonar maps the acoustic environment, and tactile sensors detect forces at points of contact. Sensor fusion combines data from multiple sources to form a richer and more reliable world model.
+
+Path planning algorithms compute collision-free trajectories for robots navigating from one location to another. Sampling-based methods such as rapidly exploring random trees explore the configuration space by randomly sampling configurations and connecting them. Grid-based methods discretise the environment and apply search algorithms such as A-star.
+
+Simultaneous localisation and mapping allows a robot to build a map of an unknown environment while concurrently tracking its position within it. Solutions rely on probabilistic methods that maintain a distribution over possible robot poses and map features, updating the distribution as new sensor observations arrive.
+
+Collaborative robots, or cobots, are designed to work alongside human workers safely, equipped with force-torque sensors that detect unexpected contact and bring the arm to a halt. Their lighter construction allows them to operate without the safety fencing required by traditional industrial robots.
+
+Legged robots achieve mobility on terrain impassable for wheeled vehicles, such as stairs, rubble, and steep slopes. Control systems for legged locomotion must manage the complex dynamics of balancing and stepping, often combining model-based controllers with learning-based components.
+
+Soft robotics uses compliant, flexible materials to create actuators and structures that deform continuously rather than rotating at discrete joints. This approach enables safe interaction with delicate objects and biological tissues, with applications in surgery, rehabilitation, and food handling.
+
+Drone technology has matured rapidly, with small multi-rotor aircraft now used for aerial photography, infrastructure inspection, precision agriculture, and parcel delivery. Autonomous flight relies on inertial measurement units, GPS, barometric altimeters, and computer vision for stable hover and navigation.
+
+Ethics and safety are central concerns as robots enter social spaces. Questions include liability for accidents caused by autonomous systems, the impact of automation on employment, and the development of standards ensuring safe deployment without stifling innovation.

@@ -1,0 +1,2799 @@
+Problem: Quinn had 6 cards. After visiting the market, Quinn now has 7 more cards. How many cards does Quinn have in total?
+Solution:
+  Step 1: Add the original count to the new count: 6 + 7.
+  Step 2: 6 + 7 = 13.
+Answer: Quinn has 13 cards in total.
+---
+
+Problem: Emery drives at 90 km/h for 4 hour(s). How far does Emery travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 90 × 4 = 360 km.
+Answer: Emery travels 360 km.
+---
+
+Problem: Blake drives at 36 km/h for 5 hour(s). How far does Blake travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 36 × 5 = 180 km.
+Answer: Blake travels 180 km.
+---
+
+Problem: Morgan drives at 58 km/h for 5 hour(s). How far does Morgan travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 58 × 5 = 290 km.
+Answer: Morgan travels 290 km.
+---
+
+Problem: Morgan drives at 82 km/h for 5 hour(s). How far does Morgan travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 82 × 5 = 410 km.
+Answer: Morgan travels 410 km.
+---
+
+Problem: Blake buys 5 marbles at 12 dollars each. How much does Blake spend in total?
+Solution:
+  Step 1: Identify the quantity (5) and price per item ($12).
+  Step 2: Multiply: 5 × 12 = 60.
+Answer: Blake spends $60.
+---
+
+Problem: Alex has 40 cards to share equally among 8 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (40) by the number of friends (8).
+  Step 2: 40 ÷ 8 = 5.
+Answer: Each friend receives 5 cards.
+---
+
+Problem: Morgan drives at 76 km/h for 4 hour(s). How far does Morgan travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 76 × 4 = 304 km.
+Answer: Morgan travels 304 km.
+---
+
+Problem: Quinn buys 4 apples at 15 dollars each. How much does Quinn spend in total?
+Solution:
+  Step 1: Identify the quantity (4) and price per item ($15).
+  Step 2: Multiply: 4 × 15 = 60.
+Answer: Quinn spends $60.
+---
+
+Problem: Quinn had 44 toy cars. After visiting the store, Quinn now has 14 more toy cars. How many toy cars does Quinn have in total?
+Solution:
+  Step 1: Add the original count to the new count: 44 + 14.
+  Step 2: 44 + 14 = 58.
+Answer: Quinn has 58 toy cars in total.
+---
+
+Problem: Casey buys 8 stamps at 12 dollars each. How much does Casey spend in total?
+Solution:
+  Step 1: Identify the quantity (8) and price per item ($12).
+  Step 2: Multiply: 8 × 12 = 96.
+Answer: Casey spends $96.
+---
+
+Problem: Casey is 21 years old. Avery is 7 years older than Casey. How old is Avery?
+Solution:
+  Step 1: Avery's age = Casey's age + 7 = 21 + 7.
+  Step 2: 21 + 7 = 28.
+Answer: Avery is 28 years old.
+---
+
+Problem: Morgan buys 6 stickers at 3 dollars each. How much does Morgan spend in total?
+Solution:
+  Step 1: Identify the quantity (6) and price per item ($3).
+  Step 2: Multiply: 6 × 3 = 18.
+Answer: Morgan spends $18.
+---
+
+Problem: Dana had 44 cards. After visiting the store, Dana now has 22 more cards. How many cards does Dana have in total?
+Solution:
+  Step 1: Add the original count to the new count: 44 + 22.
+  Step 2: 44 + 22 = 66.
+Answer: Dana has 66 cards in total.
+---
+
+Problem: Riley is 16 years old. Drew is 3 years older than Riley. How old is Drew?
+Solution:
+  Step 1: Drew's age = Riley's age + 3 = 16 + 3.
+  Step 2: 16 + 3 = 19.
+Answer: Drew is 19 years old.
+---
+
+Problem: Taylor has 10 pencils to share equally among 5 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (10) by the number of friends (5).
+  Step 2: 10 ÷ 5 = 2.
+Answer: Each friend receives 2 pencils.
+---
+
+Problem: Charlie scored 75% of 104 points on a quiz. How many points did Charlie score?
+Solution:
+  Step 1: Convert percent to decimal: 75% = 0.75.
+  Step 2: Multiply: 104 × 0.75 = 78.
+Answer: Charlie scored 78 points.
+---
+
+Problem: Charlie had 38 cards. After visiting the library, Charlie now has 13 more cards. How many cards does Charlie have in total?
+Solution:
+  Step 1: Add the original count to the new count: 38 + 13.
+  Step 2: 38 + 13 = 51.
+Answer: Charlie has 51 cards in total.
+---
+
+Problem: Frankie had 6 coins. After visiting school, Frankie now has 40 more coins. How many coins does Frankie have in total?
+Solution:
+  Step 1: Add the original count to the new count: 6 + 40.
+  Step 2: 6 + 40 = 46.
+Answer: Frankie has 46 coins in total.
+---
+
+Problem: Jordan drives at 40 km/h for 4 hour(s). How far does Jordan travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 40 × 4 = 160 km.
+Answer: Jordan travels 160 km.
+---
+
+Problem: Jordan had 29 cards. After visiting the park, Jordan now has 38 more cards. How many cards does Jordan have in total?
+Solution:
+  Step 1: Add the original count to the new count: 29 + 38.
+  Step 2: 29 + 38 = 67.
+Answer: Jordan has 67 cards in total.
+---
+
+Problem: Blake has 6 toy cars to share equally among 6 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (6) by the number of friends (6).
+  Step 2: 6 ÷ 6 = 1.
+Answer: Each friend receives 1 toy car.
+---
+
+Problem: Alex has 6 coins to share equally among 2 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (6) by the number of friends (2).
+  Step 2: 6 ÷ 2 = 3.
+Answer: Each friend receives 3 coins.
+---
+
+Problem: Sam drives at 90 km/h for 2 hour(s). How far does Sam travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 90 × 2 = 180 km.
+Answer: Sam travels 180 km.
+---
+
+Problem: Alex has 21 oranges to share equally among 3 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (21) by the number of friends (3).
+  Step 2: 21 ÷ 3 = 7.
+Answer: Each friend receives 7 oranges.
+---
+
+Problem: Emery has 42 pencils to share equally among 7 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (42) by the number of friends (7).
+  Step 2: 42 ÷ 7 = 6.
+Answer: Each friend receives 6 pencils.
+---
+
+Problem: Drew has 18 flowers to share equally among 2 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (18) by the number of friends (2).
+  Step 2: 18 ÷ 2 = 9.
+Answer: Each friend receives 9 flowers.
+---
+
+Problem: Charlie buys 6 coins at 14 dollars each. How much does Charlie spend in total?
+Solution:
+  Step 1: Identify the quantity (6) and price per item ($14).
+  Step 2: Multiply: 6 × 14 = 84.
+Answer: Charlie spends $84.
+---
+
+Problem: Frankie scored 40% of 98 points on a quiz. How many points did Frankie score?
+Solution:
+  Step 1: Convert percent to decimal: 40% = 0.4.
+  Step 2: Multiply: 98 × 0.4 = 39.
+Answer: Frankie scored 39 points.
+---
+
+Problem: Morgan is 20 years old. Emery is 2 years older than Morgan. How old is Emery?
+Solution:
+  Step 1: Emery's age = Morgan's age + 2 = 20 + 2.
+  Step 2: 20 + 2 = 22.
+Answer: Emery is 22 years old.
+---
+
+Problem: Blake has 18 cards to share equally among 3 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (18) by the number of friends (3).
+  Step 2: 18 ÷ 3 = 6.
+Answer: Each friend receives 6 cards.
+---
+
+Problem: Alex scored 40% of 195 points on a quiz. How many points did Alex score?
+Solution:
+  Step 1: Convert percent to decimal: 40% = 0.4.
+  Step 2: Multiply: 195 × 0.4 = 78.
+Answer: Alex scored 78 points.
+---
+
+Problem: Alex drives at 89 km/h for 6 hour(s). How far does Alex travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 89 × 6 = 534 km.
+Answer: Alex travels 534 km.
+---
+
+Problem: Taylor had 26 pencils. After visiting the market, Taylor now has 30 more pencils. How many pencils does Taylor have in total?
+Solution:
+  Step 1: Add the original count to the new count: 26 + 30.
+  Step 2: 26 + 30 = 56.
+Answer: Taylor has 56 pencils in total.
+---
+
+Problem: Morgan has 30 toy cars to share equally among 3 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (30) by the number of friends (3).
+  Step 2: 30 ÷ 3 = 10.
+Answer: Each friend receives 10 toy cars.
+---
+
+Problem: Casey had 47 cookies. After visiting the store, Casey now has 38 more cookies. How many cookies does Casey have in total?
+Solution:
+  Step 1: Add the original count to the new count: 47 + 38.
+  Step 2: 47 + 38 = 85.
+Answer: Casey has 85 cookies in total.
+---
+
+Problem: Avery drives at 36 km/h for 1 hour(s). How far does Avery travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 36 × 1 = 36 km.
+Answer: Avery travels 36 km.
+---
+
+Problem: Taylor buys 18 books at 11 dollars each. How much does Taylor spend in total?
+Solution:
+  Step 1: Identify the quantity (18) and price per item ($11).
+  Step 2: Multiply: 18 × 11 = 198.
+Answer: Taylor spends $198.
+---
+
+Problem: Charlie has 14 cards to share equally among 7 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (14) by the number of friends (7).
+  Step 2: 14 ÷ 7 = 2.
+Answer: Each friend receives 2 cards.
+---
+
+Problem: Alex buys 8 stamps at 9 dollars each. How much does Alex spend in total?
+Solution:
+  Step 1: Identify the quantity (8) and price per item ($9).
+  Step 2: Multiply: 8 × 9 = 72.
+Answer: Alex spends $72.
+---
+
+Problem: Frankie has 50 books to share equally among 5 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (50) by the number of friends (5).
+  Step 2: 50 ÷ 5 = 10.
+Answer: Each friend receives 10 books.
+---
+
+Problem: Dana has 4 books to share equally among 2 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (4) by the number of friends (2).
+  Step 2: 4 ÷ 2 = 2.
+Answer: Each friend receives 2 books.
+---
+
+Problem: Quinn is 13 years old. Drew is 4 years older than Quinn. How old is Drew?
+Solution:
+  Step 1: Drew's age = Quinn's age + 4 = 13 + 4.
+  Step 2: 13 + 4 = 17.
+Answer: Drew is 17 years old.
+---
+
+Problem: Sam drives at 85 km/h for 5 hour(s). How far does Sam travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 85 × 5 = 425 km.
+Answer: Sam travels 425 km.
+---
+
+Problem: Quinn had 17 stamps. After visiting school, Quinn now has 13 more stamps. How many stamps does Quinn have in total?
+Solution:
+  Step 1: Add the original count to the new count: 17 + 13.
+  Step 2: 17 + 13 = 30.
+Answer: Quinn has 30 stamps in total.
+---
+
+Problem: Jordan is 12 years old. Frankie is 1 years older than Jordan. How old is Frankie?
+Solution:
+  Step 1: Frankie's age = Jordan's age + 1 = 12 + 1.
+  Step 2: 12 + 1 = 13.
+Answer: Frankie is 13 years old.
+---
+
+Problem: Alex is 21 years old. Emery is 13 years older than Alex. How old is Emery?
+Solution:
+  Step 1: Emery's age = Alex's age + 13 = 21 + 13.
+  Step 2: 21 + 13 = 34.
+Answer: Emery is 34 years old.
+---
+
+Problem: Drew drives at 64 km/h for 6 hour(s). How far does Drew travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 64 × 6 = 384 km.
+Answer: Drew travels 384 km.
+---
+
+Problem: Jordan buys 8 apples at 9 dollars each. How much does Jordan spend in total?
+Solution:
+  Step 1: Identify the quantity (8) and price per item ($9).
+  Step 2: Multiply: 8 × 9 = 72.
+Answer: Jordan spends $72.
+---
+
+Problem: Alex is 19 years old. Charlie is 14 years older than Alex. How old is Charlie?
+Solution:
+  Step 1: Charlie's age = Alex's age + 14 = 19 + 14.
+  Step 2: 19 + 14 = 33.
+Answer: Charlie is 33 years old.
+---
+
+Problem: Casey buys 3 marbles at 12 dollars each. How much does Casey spend in total?
+Solution:
+  Step 1: Identify the quantity (3) and price per item ($12).
+  Step 2: Multiply: 3 × 12 = 36.
+Answer: Casey spends $36.
+---
+
+Problem: Sam buys 20 cookies at 11 dollars each. How much does Sam spend in total?
+Solution:
+  Step 1: Identify the quantity (20) and price per item ($11).
+  Step 2: Multiply: 20 × 11 = 220.
+Answer: Sam spends $220.
+---
+
+Problem: Blake is 28 years old. Dana is 15 years older than Blake. How old is Dana?
+Solution:
+  Step 1: Dana's age = Blake's age + 15 = 28 + 15.
+  Step 2: 28 + 15 = 43.
+Answer: Dana is 43 years old.
+---
+
+Problem: Jordan scored 30% of 69 points on a quiz. How many points did Jordan score?
+Solution:
+  Step 1: Convert percent to decimal: 30% = 0.3.
+  Step 2: Multiply: 69 × 0.3 = 20.
+Answer: Jordan scored 20 points.
+---
+
+Problem: Casey has 54 marbles to share equally among 6 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (54) by the number of friends (6).
+  Step 2: 54 ÷ 6 = 9.
+Answer: Each friend receives 9 marbles.
+---
+
+Problem: Quinn buys 16 pencils at 3 dollars each. How much does Quinn spend in total?
+Solution:
+  Step 1: Identify the quantity (16) and price per item ($3).
+  Step 2: Multiply: 16 × 3 = 48.
+Answer: Quinn spends $48.
+---
+
+Problem: Alex is 10 years old. Morgan is 3 years older than Alex. How old is Morgan?
+Solution:
+  Step 1: Morgan's age = Alex's age + 3 = 10 + 3.
+  Step 2: 10 + 3 = 13.
+Answer: Morgan is 13 years old.
+---
+
+Problem: Morgan has 21 toy cars to share equally among 7 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (21) by the number of friends (7).
+  Step 2: 21 ÷ 7 = 3.
+Answer: Each friend receives 3 toy cars.
+---
+
+Problem: Sam has 42 apples to share equally among 6 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (42) by the number of friends (6).
+  Step 2: 42 ÷ 6 = 7.
+Answer: Each friend receives 7 apples.
+---
+
+Problem: Riley had 40 books. After visiting the store, Riley now has 39 more books. How many books does Riley have in total?
+Solution:
+  Step 1: Add the original count to the new count: 40 + 39.
+  Step 2: 40 + 39 = 79.
+Answer: Riley has 79 books in total.
+---
+
+Problem: Casey scored 50% of 50 points on a quiz. How many points did Casey score?
+Solution:
+  Step 1: Convert percent to decimal: 50% = 0.5.
+  Step 2: Multiply: 50 × 0.5 = 25.
+Answer: Casey scored 25 points.
+---
+
+Problem: Taylor had 23 coins. After visiting the market, Taylor now has 30 more coins. How many coins does Taylor have in total?
+Solution:
+  Step 1: Add the original count to the new count: 23 + 30.
+  Step 2: 23 + 30 = 53.
+Answer: Taylor has 53 coins in total.
+---
+
+Problem: Alex has 16 flowers to share equally among 2 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (16) by the number of friends (2).
+  Step 2: 16 ÷ 2 = 8.
+Answer: Each friend receives 8 flowers.
+---
+
+Problem: Alex buys 20 pencils at 10 dollars each. How much does Alex spend in total?
+Solution:
+  Step 1: Identify the quantity (20) and price per item ($10).
+  Step 2: Multiply: 20 × 10 = 200.
+Answer: Alex spends $200.
+---
+
+Problem: Casey buys 2 stamps at 13 dollars each. How much does Casey spend in total?
+Solution:
+  Step 1: Identify the quantity (2) and price per item ($13).
+  Step 2: Multiply: 2 × 13 = 26.
+Answer: Casey spends $26.
+---
+
+Problem: Drew has 8 books to share equally among 4 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (8) by the number of friends (4).
+  Step 2: 8 ÷ 4 = 2.
+Answer: Each friend receives 2 books.
+---
+
+Problem: Avery has 14 pencils to share equally among 2 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (14) by the number of friends (2).
+  Step 2: 14 ÷ 2 = 7.
+Answer: Each friend receives 7 pencils.
+---
+
+Problem: Emery had 48 stamps. After visiting the library, Emery now has 19 more stamps. How many stamps does Emery have in total?
+Solution:
+  Step 1: Add the original count to the new count: 48 + 19.
+  Step 2: 48 + 19 = 67.
+Answer: Emery has 67 stamps in total.
+---
+
+Problem: Sam had 10 cards. After visiting the store, Sam now has 12 more cards. How many cards does Sam have in total?
+Solution:
+  Step 1: Add the original count to the new count: 10 + 12.
+  Step 2: 10 + 12 = 22.
+Answer: Sam has 22 cards in total.
+---
+
+Problem: Avery buys 14 cookies at 13 dollars each. How much does Avery spend in total?
+Solution:
+  Step 1: Identify the quantity (14) and price per item ($13).
+  Step 2: Multiply: 14 × 13 = 182.
+Answer: Avery spends $182.
+---
+
+Problem: Dana buys 13 coins at 11 dollars each. How much does Dana spend in total?
+Solution:
+  Step 1: Identify the quantity (13) and price per item ($11).
+  Step 2: Multiply: 13 × 11 = 143.
+Answer: Dana spends $143.
+---
+
+Problem: Taylor had 39 stickers. After visiting school, Taylor now has 38 more stickers. How many stickers does Taylor have in total?
+Solution:
+  Step 1: Add the original count to the new count: 39 + 38.
+  Step 2: 39 + 38 = 77.
+Answer: Taylor has 77 stickers in total.
+---
+
+Problem: Riley is 25 years old. Quinn is 4 years older than Riley. How old is Quinn?
+Solution:
+  Step 1: Quinn's age = Riley's age + 4 = 25 + 4.
+  Step 2: 25 + 4 = 29.
+Answer: Quinn is 29 years old.
+---
+
+Problem: Dana has 42 stickers to share equally among 6 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (42) by the number of friends (6).
+  Step 2: 42 ÷ 6 = 7.
+Answer: Each friend receives 7 stickers.
+---
+
+Problem: Drew had 26 apples. After visiting the park, Drew now has 18 more apples. How many apples does Drew have in total?
+Solution:
+  Step 1: Add the original count to the new count: 26 + 18.
+  Step 2: 26 + 18 = 44.
+Answer: Drew has 44 apples in total.
+---
+
+Problem: Alex has 56 apples to share equally among 8 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (56) by the number of friends (8).
+  Step 2: 56 ÷ 8 = 7.
+Answer: Each friend receives 7 apples.
+---
+
+Problem: Morgan is 13 years old. Casey is 11 years older than Morgan. How old is Casey?
+Solution:
+  Step 1: Casey's age = Morgan's age + 11 = 13 + 11.
+  Step 2: 13 + 11 = 24.
+Answer: Casey is 24 years old.
+---
+
+Problem: Taylor scored 40% of 338 points on a quiz. How many points did Taylor score?
+Solution:
+  Step 1: Convert percent to decimal: 40% = 0.4.
+  Step 2: Multiply: 338 × 0.4 = 135.
+Answer: Taylor scored 135 points.
+---
+
+Problem: Taylor had 14 cookies. After visiting the store, Taylor now has 23 more cookies. How many cookies does Taylor have in total?
+Solution:
+  Step 1: Add the original count to the new count: 14 + 23.
+  Step 2: 14 + 23 = 37.
+Answer: Taylor has 37 cookies in total.
+---
+
+Problem: Emery scored 40% of 191 points on a quiz. How many points did Emery score?
+Solution:
+  Step 1: Convert percent to decimal: 40% = 0.4.
+  Step 2: Multiply: 191 × 0.4 = 76.
+Answer: Emery scored 76 points.
+---
+
+Problem: Emery scored 10% of 211 points on a quiz. How many points did Emery score?
+Solution:
+  Step 1: Convert percent to decimal: 10% = 0.1.
+  Step 2: Multiply: 211 × 0.1 = 21.
+Answer: Emery scored 21 points.
+---
+
+Problem: Taylor buys 14 toy cars at 10 dollars each. How much does Taylor spend in total?
+Solution:
+  Step 1: Identify the quantity (14) and price per item ($10).
+  Step 2: Multiply: 14 × 10 = 140.
+Answer: Taylor spends $140.
+---
+
+Problem: Jordan scored 75% of 495 points on a quiz. How many points did Jordan score?
+Solution:
+  Step 1: Convert percent to decimal: 75% = 0.75.
+  Step 2: Multiply: 495 × 0.75 = 371.
+Answer: Jordan scored 371 points.
+---
+
+Problem: Emery drives at 58 km/h for 3 hour(s). How far does Emery travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 58 × 3 = 174 km.
+Answer: Emery travels 174 km.
+---
+
+Problem: Morgan buys 19 flowers at 8 dollars each. How much does Morgan spend in total?
+Solution:
+  Step 1: Identify the quantity (19) and price per item ($8).
+  Step 2: Multiply: 19 × 8 = 152.
+Answer: Morgan spends $152.
+---
+
+Problem: Dana is 24 years old. Jordan is 11 years older than Dana. How old is Jordan?
+Solution:
+  Step 1: Jordan's age = Dana's age + 11 = 24 + 11.
+  Step 2: 24 + 11 = 35.
+Answer: Jordan is 35 years old.
+---
+
+Problem: Dana buys 4 stickers at 5 dollars each. How much does Dana spend in total?
+Solution:
+  Step 1: Identify the quantity (4) and price per item ($5).
+  Step 2: Multiply: 4 × 5 = 20.
+Answer: Dana spends $20.
+---
+
+Problem: Charlie buys 3 cookies at 13 dollars each. How much does Charlie spend in total?
+Solution:
+  Step 1: Identify the quantity (3) and price per item ($13).
+  Step 2: Multiply: 3 × 13 = 39.
+Answer: Charlie spends $39.
+---
+
+Problem: Emery is 16 years old. Quinn is 9 years older than Emery. How old is Quinn?
+Solution:
+  Step 1: Quinn's age = Emery's age + 9 = 16 + 9.
+  Step 2: 16 + 9 = 25.
+Answer: Quinn is 25 years old.
+---
+
+Problem: Morgan has 32 stickers to share equally among 4 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (32) by the number of friends (4).
+  Step 2: 32 ÷ 4 = 8.
+Answer: Each friend receives 8 stickers.
+---
+
+Problem: Casey buys 18 stickers at 7 dollars each. How much does Casey spend in total?
+Solution:
+  Step 1: Identify the quantity (18) and price per item ($7).
+  Step 2: Multiply: 18 × 7 = 126.
+Answer: Casey spends $126.
+---
+
+Problem: Drew had 19 apples. After visiting school, Drew now has 17 more apples. How many apples does Drew have in total?
+Solution:
+  Step 1: Add the original count to the new count: 19 + 17.
+  Step 2: 19 + 17 = 36.
+Answer: Drew has 36 apples in total.
+---
+
+Problem: Avery is 30 years old. Emery is 8 years older than Avery. How old is Emery?
+Solution:
+  Step 1: Emery's age = Avery's age + 8 = 30 + 8.
+  Step 2: 30 + 8 = 38.
+Answer: Emery is 38 years old.
+---
+
+Problem: Riley scored 30% of 281 points on a quiz. How many points did Riley score?
+Solution:
+  Step 1: Convert percent to decimal: 30% = 0.3.
+  Step 2: Multiply: 281 × 0.3 = 84.
+Answer: Riley scored 84 points.
+---
+
+Problem: Charlie drives at 32 km/h for 4 hour(s). How far does Charlie travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 32 × 4 = 128 km.
+Answer: Charlie travels 128 km.
+---
+
+Problem: Jordan has 45 books to share equally among 5 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (45) by the number of friends (5).
+  Step 2: 45 ÷ 5 = 9.
+Answer: Each friend receives 9 books.
+---
+
+Problem: Sam buys 5 cookies at 3 dollars each. How much does Sam spend in total?
+Solution:
+  Step 1: Identify the quantity (5) and price per item ($3).
+  Step 2: Multiply: 5 × 3 = 15.
+Answer: Sam spends $15.
+---
+
+Problem: Quinn drives at 54 km/h for 2 hour(s). How far does Quinn travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 54 × 2 = 108 km.
+Answer: Quinn travels 108 km.
+---
+
+Problem: Casey is 8 years old. Frankie is 2 years older than Casey. How old is Frankie?
+Solution:
+  Step 1: Frankie's age = Casey's age + 2 = 8 + 2.
+  Step 2: 8 + 2 = 10.
+Answer: Frankie is 10 years old.
+---
+
+Problem: Riley drives at 46 km/h for 5 hour(s). How far does Riley travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 46 × 5 = 230 km.
+Answer: Riley travels 230 km.
+---
+
+Problem: Casey is 23 years old. Morgan is 6 years older than Casey. How old is Morgan?
+Solution:
+  Step 1: Morgan's age = Casey's age + 6 = 23 + 6.
+  Step 2: 23 + 6 = 29.
+Answer: Morgan is 29 years old.
+---
+
+Problem: Drew has 63 books to share equally among 7 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (63) by the number of friends (7).
+  Step 2: 63 ÷ 7 = 9.
+Answer: Each friend receives 9 books.
+---
+
+Problem: Sam had 10 marbles. After visiting the park, Sam now has 35 more marbles. How many marbles does Sam have in total?
+Solution:
+  Step 1: Add the original count to the new count: 10 + 35.
+  Step 2: 10 + 35 = 45.
+Answer: Sam has 45 marbles in total.
+---
+
+Problem: Avery is 24 years old. Casey is 11 years older than Avery. How old is Casey?
+Solution:
+  Step 1: Casey's age = Avery's age + 11 = 24 + 11.
+  Step 2: 24 + 11 = 35.
+Answer: Casey is 35 years old.
+---
+
+Problem: Drew drives at 61 km/h for 1 hour(s). How far does Drew travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 61 × 1 = 61 km.
+Answer: Drew travels 61 km.
+---
+
+Problem: Charlie is 12 years old. Avery is 6 years older than Charlie. How old is Avery?
+Solution:
+  Step 1: Avery's age = Charlie's age + 6 = 12 + 6.
+  Step 2: 12 + 6 = 18.
+Answer: Avery is 18 years old.
+---
+
+Problem: Sam buys 7 oranges at 9 dollars each. How much does Sam spend in total?
+Solution:
+  Step 1: Identify the quantity (7) and price per item ($9).
+  Step 2: Multiply: 7 × 9 = 63.
+Answer: Sam spends $63.
+---
+
+Problem: Casey buys 20 cookies at 11 dollars each. How much does Casey spend in total?
+Solution:
+  Step 1: Identify the quantity (20) and price per item ($11).
+  Step 2: Multiply: 20 × 11 = 220.
+Answer: Casey spends $220.
+---
+
+Problem: Alex is 19 years old. Avery is 4 years older than Alex. How old is Avery?
+Solution:
+  Step 1: Avery's age = Alex's age + 4 = 19 + 4.
+  Step 2: 19 + 4 = 23.
+Answer: Avery is 23 years old.
+---
+
+Problem: Quinn has 12 books to share equally among 6 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (12) by the number of friends (6).
+  Step 2: 12 ÷ 6 = 2.
+Answer: Each friend receives 2 books.
+---
+
+Problem: Jordan buys 17 toy cars at 8 dollars each. How much does Jordan spend in total?
+Solution:
+  Step 1: Identify the quantity (17) and price per item ($8).
+  Step 2: Multiply: 17 × 8 = 136.
+Answer: Jordan spends $136.
+---
+
+Problem: Sam buys 18 pencils at 1 dollars each. How much does Sam spend in total?
+Solution:
+  Step 1: Identify the quantity (18) and price per item ($1).
+  Step 2: Multiply: 18 × 1 = 18.
+Answer: Sam spends $18.
+---
+
+Problem: Alex buys 18 stickers at 5 dollars each. How much does Alex spend in total?
+Solution:
+  Step 1: Identify the quantity (18) and price per item ($5).
+  Step 2: Multiply: 18 × 5 = 90.
+Answer: Alex spends $90.
+---
+
+Problem: Dana scored 10% of 203 points on a quiz. How many points did Dana score?
+Solution:
+  Step 1: Convert percent to decimal: 10% = 0.1.
+  Step 2: Multiply: 203 × 0.1 = 20.
+Answer: Dana scored 20 points.
+---
+
+Problem: Charlie drives at 36 km/h for 1 hour(s). How far does Charlie travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 36 × 1 = 36 km.
+Answer: Charlie travels 36 km.
+---
+
+Problem: Charlie scored 30% of 335 points on a quiz. How many points did Charlie score?
+Solution:
+  Step 1: Convert percent to decimal: 30% = 0.3.
+  Step 2: Multiply: 335 × 0.3 = 100.
+Answer: Charlie scored 100 points.
+---
+
+Problem: Quinn is 13 years old. Frankie is 1 years older than Quinn. How old is Frankie?
+Solution:
+  Step 1: Frankie's age = Quinn's age + 1 = 13 + 1.
+  Step 2: 13 + 1 = 14.
+Answer: Frankie is 14 years old.
+---
+
+Problem: Emery has 9 coins to share equally among 3 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (9) by the number of friends (3).
+  Step 2: 9 ÷ 3 = 3.
+Answer: Each friend receives 3 coins.
+---
+
+Problem: Blake drives at 71 km/h for 4 hour(s). How far does Blake travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 71 × 4 = 284 km.
+Answer: Blake travels 284 km.
+---
+
+Problem: Sam is 17 years old. Jordan is 5 years older than Sam. How old is Jordan?
+Solution:
+  Step 1: Jordan's age = Sam's age + 5 = 17 + 5.
+  Step 2: 17 + 5 = 22.
+Answer: Jordan is 22 years old.
+---
+
+Problem: Avery buys 18 pencils at 5 dollars each. How much does Avery spend in total?
+Solution:
+  Step 1: Identify the quantity (18) and price per item ($5).
+  Step 2: Multiply: 18 × 5 = 90.
+Answer: Avery spends $90.
+---
+
+Problem: Drew buys 9 pencils at 14 dollars each. How much does Drew spend in total?
+Solution:
+  Step 1: Identify the quantity (9) and price per item ($14).
+  Step 2: Multiply: 9 × 14 = 126.
+Answer: Drew spends $126.
+---
+
+Problem: Blake buys 13 pencils at 7 dollars each. How much does Blake spend in total?
+Solution:
+  Step 1: Identify the quantity (13) and price per item ($7).
+  Step 2: Multiply: 13 × 7 = 91.
+Answer: Blake spends $91.
+---
+
+Problem: Dana buys 18 flowers at 13 dollars each. How much does Dana spend in total?
+Solution:
+  Step 1: Identify the quantity (18) and price per item ($13).
+  Step 2: Multiply: 18 × 13 = 234.
+Answer: Dana spends $234.
+---
+
+Problem: Morgan had 8 pencils. After visiting the market, Morgan now has 23 more pencils. How many pencils does Morgan have in total?
+Solution:
+  Step 1: Add the original count to the new count: 8 + 23.
+  Step 2: 8 + 23 = 31.
+Answer: Morgan has 31 pencils in total.
+---
+
+Problem: Taylor buys 14 flowers at 13 dollars each. How much does Taylor spend in total?
+Solution:
+  Step 1: Identify the quantity (14) and price per item ($13).
+  Step 2: Multiply: 14 × 13 = 182.
+Answer: Taylor spends $182.
+---
+
+Problem: Quinn has 8 oranges to share equally among 4 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (8) by the number of friends (4).
+  Step 2: 8 ÷ 4 = 2.
+Answer: Each friend receives 2 oranges.
+---
+
+Problem: Frankie drives at 38 km/h for 3 hour(s). How far does Frankie travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 38 × 3 = 114 km.
+Answer: Frankie travels 114 km.
+---
+
+Problem: Riley has 24 coins to share equally among 8 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (24) by the number of friends (8).
+  Step 2: 24 ÷ 8 = 3.
+Answer: Each friend receives 3 coins.
+---
+
+Problem: Charlie has 40 stickers to share equally among 8 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (40) by the number of friends (8).
+  Step 2: 40 ÷ 8 = 5.
+Answer: Each friend receives 5 stickers.
+---
+
+Problem: Taylor buys 11 cookies at 3 dollars each. How much does Taylor spend in total?
+Solution:
+  Step 1: Identify the quantity (11) and price per item ($3).
+  Step 2: Multiply: 11 × 3 = 33.
+Answer: Taylor spends $33.
+---
+
+Problem: Drew had 46 coins. After visiting the market, Drew now has 41 more coins. How many coins does Drew have in total?
+Solution:
+  Step 1: Add the original count to the new count: 46 + 41.
+  Step 2: 46 + 41 = 87.
+Answer: Drew has 87 coins in total.
+---
+
+Problem: Dana had 35 pencils. After visiting the market, Dana now has 40 more pencils. How many pencils does Dana have in total?
+Solution:
+  Step 1: Add the original count to the new count: 35 + 40.
+  Step 2: 35 + 40 = 75.
+Answer: Dana has 75 pencils in total.
+---
+
+Problem: Emery buys 15 flowers at 14 dollars each. How much does Emery spend in total?
+Solution:
+  Step 1: Identify the quantity (15) and price per item ($14).
+  Step 2: Multiply: 15 × 14 = 210.
+Answer: Emery spends $210.
+---
+
+Problem: Casey has 60 stamps to share equally among 6 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (60) by the number of friends (6).
+  Step 2: 60 ÷ 6 = 10.
+Answer: Each friend receives 10 stamps.
+---
+
+Problem: Dana buys 20 cards at 2 dollars each. How much does Dana spend in total?
+Solution:
+  Step 1: Identify the quantity (20) and price per item ($2).
+  Step 2: Multiply: 20 × 2 = 40.
+Answer: Dana spends $40.
+---
+
+Problem: Riley drives at 61 km/h for 2 hour(s). How far does Riley travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 61 × 2 = 122 km.
+Answer: Riley travels 122 km.
+---
+
+Problem: Taylor is 20 years old. Quinn is 11 years older than Taylor. How old is Quinn?
+Solution:
+  Step 1: Quinn's age = Taylor's age + 11 = 20 + 11.
+  Step 2: 20 + 11 = 31.
+Answer: Quinn is 31 years old.
+---
+
+Problem: Charlie scored 75% of 345 points on a quiz. How many points did Charlie score?
+Solution:
+  Step 1: Convert percent to decimal: 75% = 0.75.
+  Step 2: Multiply: 345 × 0.75 = 258.
+Answer: Charlie scored 258 points.
+---
+
+Problem: Drew has 7 marbles to share equally among 7 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (7) by the number of friends (7).
+  Step 2: 7 ÷ 7 = 1.
+Answer: Each friend receives 1 marble.
+---
+
+Problem: Drew scored 50% of 472 points on a quiz. How many points did Drew score?
+Solution:
+  Step 1: Convert percent to decimal: 50% = 0.5.
+  Step 2: Multiply: 472 × 0.5 = 236.
+Answer: Drew scored 236 points.
+---
+
+Problem: Riley had 12 cards. After visiting the library, Riley now has 24 more cards. How many cards does Riley have in total?
+Solution:
+  Step 1: Add the original count to the new count: 12 + 24.
+  Step 2: 12 + 24 = 36.
+Answer: Riley has 36 cards in total.
+---
+
+Problem: Casey scored 75% of 90 points on a quiz. How many points did Casey score?
+Solution:
+  Step 1: Convert percent to decimal: 75% = 0.75.
+  Step 2: Multiply: 90 × 0.75 = 67.
+Answer: Casey scored 67 points.
+---
+
+Problem: Dana drives at 73 km/h for 4 hour(s). How far does Dana travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 73 × 4 = 292 km.
+Answer: Dana travels 292 km.
+---
+
+Problem: Dana buys 15 marbles at 6 dollars each. How much does Dana spend in total?
+Solution:
+  Step 1: Identify the quantity (15) and price per item ($6).
+  Step 2: Multiply: 15 × 6 = 90.
+Answer: Dana spends $90.
+---
+
+Problem: Emery drives at 31 km/h for 5 hour(s). How far does Emery travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 31 × 5 = 155 km.
+Answer: Emery travels 155 km.
+---
+
+Problem: Sam scored 20% of 455 points on a quiz. How many points did Sam score?
+Solution:
+  Step 1: Convert percent to decimal: 20% = 0.2.
+  Step 2: Multiply: 455 × 0.2 = 91.
+Answer: Sam scored 91 points.
+---
+
+Problem: Charlie drives at 52 km/h for 4 hour(s). How far does Charlie travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 52 × 4 = 208 km.
+Answer: Charlie travels 208 km.
+---
+
+Problem: Blake has 50 stamps to share equally among 5 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (50) by the number of friends (5).
+  Step 2: 50 ÷ 5 = 10.
+Answer: Each friend receives 10 stamps.
+---
+
+Problem: Morgan scored 20% of 163 points on a quiz. How many points did Morgan score?
+Solution:
+  Step 1: Convert percent to decimal: 20% = 0.2.
+  Step 2: Multiply: 163 × 0.2 = 32.
+Answer: Morgan scored 32 points.
+---
+
+Problem: Avery has 24 books to share equally among 4 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (24) by the number of friends (4).
+  Step 2: 24 ÷ 4 = 6.
+Answer: Each friend receives 6 books.
+---
+
+Problem: Drew is 12 years old. Charlie is 3 years older than Drew. How old is Charlie?
+Solution:
+  Step 1: Charlie's age = Drew's age + 3 = 12 + 3.
+  Step 2: 12 + 3 = 15.
+Answer: Charlie is 15 years old.
+---
+
+Problem: Jordan had 47 books. After visiting the library, Jordan now has 31 more books. How many books does Jordan have in total?
+Solution:
+  Step 1: Add the original count to the new count: 47 + 31.
+  Step 2: 47 + 31 = 78.
+Answer: Jordan has 78 books in total.
+---
+
+Problem: Taylor is 27 years old. Avery is 13 years older than Taylor. How old is Avery?
+Solution:
+  Step 1: Avery's age = Taylor's age + 13 = 27 + 13.
+  Step 2: 27 + 13 = 40.
+Answer: Avery is 40 years old.
+---
+
+Problem: Quinn drives at 39 km/h for 6 hour(s). How far does Quinn travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 39 × 6 = 234 km.
+Answer: Quinn travels 234 km.
+---
+
+Problem: Jordan is 12 years old. Taylor is 5 years older than Jordan. How old is Taylor?
+Solution:
+  Step 1: Taylor's age = Jordan's age + 5 = 12 + 5.
+  Step 2: 12 + 5 = 17.
+Answer: Taylor is 17 years old.
+---
+
+Problem: Sam is 25 years old. Alex is 1 years older than Sam. How old is Alex?
+Solution:
+  Step 1: Alex's age = Sam's age + 1 = 25 + 1.
+  Step 2: 25 + 1 = 26.
+Answer: Alex is 26 years old.
+---
+
+Problem: Casey has 20 cookies to share equally among 5 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (20) by the number of friends (5).
+  Step 2: 20 ÷ 5 = 4.
+Answer: Each friend receives 4 cookies.
+---
+
+Problem: Alex has 21 stamps to share equally among 3 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (21) by the number of friends (3).
+  Step 2: 21 ÷ 3 = 7.
+Answer: Each friend receives 7 stamps.
+---
+
+Problem: Quinn scored 25% of 431 points on a quiz. How many points did Quinn score?
+Solution:
+  Step 1: Convert percent to decimal: 25% = 0.25.
+  Step 2: Multiply: 431 × 0.25 = 107.
+Answer: Quinn scored 107 points.
+---
+
+Problem: Jordan had 37 coins. After visiting the market, Jordan now has 32 more coins. How many coins does Jordan have in total?
+Solution:
+  Step 1: Add the original count to the new count: 37 + 32.
+  Step 2: 37 + 32 = 69.
+Answer: Jordan has 69 coins in total.
+---
+
+Problem: Taylor buys 12 coins at 12 dollars each. How much does Taylor spend in total?
+Solution:
+  Step 1: Identify the quantity (12) and price per item ($12).
+  Step 2: Multiply: 12 × 12 = 144.
+Answer: Taylor spends $144.
+---
+
+Problem: Emery buys 2 coins at 4 dollars each. How much does Emery spend in total?
+Solution:
+  Step 1: Identify the quantity (2) and price per item ($4).
+  Step 2: Multiply: 2 × 4 = 8.
+Answer: Emery spends $8.
+---
+
+Problem: Taylor has 12 stickers to share equally among 3 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (12) by the number of friends (3).
+  Step 2: 12 ÷ 3 = 4.
+Answer: Each friend receives 4 stickers.
+---
+
+Problem: Frankie drives at 85 km/h for 5 hour(s). How far does Frankie travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 85 × 5 = 425 km.
+Answer: Frankie travels 425 km.
+---
+
+Problem: Drew had 41 cookies. After visiting the store, Drew now has 37 more cookies. How many cookies does Drew have in total?
+Solution:
+  Step 1: Add the original count to the new count: 41 + 37.
+  Step 2: 41 + 37 = 78.
+Answer: Drew has 78 cookies in total.
+---
+
+Problem: Charlie drives at 63 km/h for 1 hour(s). How far does Charlie travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 63 × 1 = 63 km.
+Answer: Charlie travels 63 km.
+---
+
+Problem: Casey has 32 stamps to share equally among 8 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (32) by the number of friends (8).
+  Step 2: 32 ÷ 8 = 4.
+Answer: Each friend receives 4 stamps.
+---
+
+Problem: Frankie buys 3 toy cars at 1 dollars each. How much does Frankie spend in total?
+Solution:
+  Step 1: Identify the quantity (3) and price per item ($1).
+  Step 2: Multiply: 3 × 1 = 3.
+Answer: Frankie spends $3.
+---
+
+Problem: Jordan had 17 pencils. After visiting the library, Jordan now has 37 more pencils. How many pencils does Jordan have in total?
+Solution:
+  Step 1: Add the original count to the new count: 17 + 37.
+  Step 2: 17 + 37 = 54.
+Answer: Jordan has 54 pencils in total.
+---
+
+Problem: Jordan had 32 oranges. After visiting the park, Jordan now has 25 more oranges. How many oranges does Jordan have in total?
+Solution:
+  Step 1: Add the original count to the new count: 32 + 25.
+  Step 2: 32 + 25 = 57.
+Answer: Jordan has 57 oranges in total.
+---
+
+Problem: Avery buys 4 coins at 2 dollars each. How much does Avery spend in total?
+Solution:
+  Step 1: Identify the quantity (4) and price per item ($2).
+  Step 2: Multiply: 4 × 2 = 8.
+Answer: Avery spends $8.
+---
+
+Problem: Riley had 33 cookies. After visiting the market, Riley now has 44 more cookies. How many cookies does Riley have in total?
+Solution:
+  Step 1: Add the original count to the new count: 33 + 44.
+  Step 2: 33 + 44 = 77.
+Answer: Riley has 77 cookies in total.
+---
+
+Problem: Frankie buys 18 books at 5 dollars each. How much does Frankie spend in total?
+Solution:
+  Step 1: Identify the quantity (18) and price per item ($5).
+  Step 2: Multiply: 18 × 5 = 90.
+Answer: Frankie spends $90.
+---
+
+Problem: Alex drives at 81 km/h for 6 hour(s). How far does Alex travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 81 × 6 = 486 km.
+Answer: Alex travels 486 km.
+---
+
+Problem: Frankie scored 20% of 342 points on a quiz. How many points did Frankie score?
+Solution:
+  Step 1: Convert percent to decimal: 20% = 0.2.
+  Step 2: Multiply: 342 × 0.2 = 68.
+Answer: Frankie scored 68 points.
+---
+
+Problem: Drew has 72 pencils to share equally among 8 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (72) by the number of friends (8).
+  Step 2: 72 ÷ 8 = 9.
+Answer: Each friend receives 9 pencils.
+---
+
+Problem: Frankie is 16 years old. Emery is 14 years older than Frankie. How old is Emery?
+Solution:
+  Step 1: Emery's age = Frankie's age + 14 = 16 + 14.
+  Step 2: 16 + 14 = 30.
+Answer: Emery is 30 years old.
+---
+
+Problem: Blake is 17 years old. Quinn is 15 years older than Blake. How old is Quinn?
+Solution:
+  Step 1: Quinn's age = Blake's age + 15 = 17 + 15.
+  Step 2: 17 + 15 = 32.
+Answer: Quinn is 32 years old.
+---
+
+Problem: Emery has 35 books to share equally among 7 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (35) by the number of friends (7).
+  Step 2: 35 ÷ 7 = 5.
+Answer: Each friend receives 5 books.
+---
+
+Problem: Frankie had 26 cookies. After visiting the park, Frankie now has 33 more cookies. How many cookies does Frankie have in total?
+Solution:
+  Step 1: Add the original count to the new count: 26 + 33.
+  Step 2: 26 + 33 = 59.
+Answer: Frankie has 59 cookies in total.
+---
+
+Problem: Alex has 40 stickers to share equally among 8 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (40) by the number of friends (8).
+  Step 2: 40 ÷ 8 = 5.
+Answer: Each friend receives 5 stickers.
+---
+
+Problem: Morgan has 15 stickers to share equally among 3 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (15) by the number of friends (3).
+  Step 2: 15 ÷ 3 = 5.
+Answer: Each friend receives 5 stickers.
+---
+
+Problem: Quinn has 10 books to share equally among 2 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (10) by the number of friends (2).
+  Step 2: 10 ÷ 2 = 5.
+Answer: Each friend receives 5 books.
+---
+
+Problem: Frankie has 48 toy cars to share equally among 8 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (48) by the number of friends (8).
+  Step 2: 48 ÷ 8 = 6.
+Answer: Each friend receives 6 toy cars.
+---
+
+Problem: Riley has 10 apples to share equally among 5 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (10) by the number of friends (5).
+  Step 2: 10 ÷ 5 = 2.
+Answer: Each friend receives 2 apples.
+---
+
+Problem: Casey drives at 44 km/h for 5 hour(s). How far does Casey travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 44 × 5 = 220 km.
+Answer: Casey travels 220 km.
+---
+
+Problem: Sam has 15 cards to share equally among 3 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (15) by the number of friends (3).
+  Step 2: 15 ÷ 3 = 5.
+Answer: Each friend receives 5 cards.
+---
+
+Problem: Taylor buys 17 toy cars at 14 dollars each. How much does Taylor spend in total?
+Solution:
+  Step 1: Identify the quantity (17) and price per item ($14).
+  Step 2: Multiply: 17 × 14 = 238.
+Answer: Taylor spends $238.
+---
+
+Problem: Sam buys 12 cards at 15 dollars each. How much does Sam spend in total?
+Solution:
+  Step 1: Identify the quantity (12) and price per item ($15).
+  Step 2: Multiply: 12 × 15 = 180.
+Answer: Sam spends $180.
+---
+
+Problem: Dana has 64 marbles to share equally among 8 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (64) by the number of friends (8).
+  Step 2: 64 ÷ 8 = 8.
+Answer: Each friend receives 8 marbles.
+---
+
+Problem: Blake scored 40% of 177 points on a quiz. How many points did Blake score?
+Solution:
+  Step 1: Convert percent to decimal: 40% = 0.4.
+  Step 2: Multiply: 177 × 0.4 = 70.
+Answer: Blake scored 70 points.
+---
+
+Problem: Frankie scored 50% of 161 points on a quiz. How many points did Frankie score?
+Solution:
+  Step 1: Convert percent to decimal: 50% = 0.5.
+  Step 2: Multiply: 161 × 0.5 = 80.
+Answer: Frankie scored 80 points.
+---
+
+Problem: Quinn drives at 42 km/h for 2 hour(s). How far does Quinn travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 42 × 2 = 84 km.
+Answer: Quinn travels 84 km.
+---
+
+Problem: Avery buys 14 apples at 15 dollars each. How much does Avery spend in total?
+Solution:
+  Step 1: Identify the quantity (14) and price per item ($15).
+  Step 2: Multiply: 14 × 15 = 210.
+Answer: Avery spends $210.
+---
+
+Problem: Emery drives at 72 km/h for 5 hour(s). How far does Emery travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 72 × 5 = 360 km.
+Answer: Emery travels 360 km.
+---
+
+Problem: Charlie has 24 marbles to share equally among 4 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (24) by the number of friends (4).
+  Step 2: 24 ÷ 4 = 6.
+Answer: Each friend receives 6 marbles.
+---
+
+Problem: Dana has 21 apples to share equally among 3 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (21) by the number of friends (3).
+  Step 2: 21 ÷ 3 = 7.
+Answer: Each friend receives 7 apples.
+---
+
+Problem: Charlie has 48 cookies to share equally among 6 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (48) by the number of friends (6).
+  Step 2: 48 ÷ 6 = 8.
+Answer: Each friend receives 8 cookies.
+---
+
+Problem: Casey buys 18 marbles at 1 dollars each. How much does Casey spend in total?
+Solution:
+  Step 1: Identify the quantity (18) and price per item ($1).
+  Step 2: Multiply: 18 × 1 = 18.
+Answer: Casey spends $18.
+---
+
+Problem: Charlie is 16 years old. Blake is 5 years older than Charlie. How old is Blake?
+Solution:
+  Step 1: Blake's age = Charlie's age + 5 = 16 + 5.
+  Step 2: 16 + 5 = 21.
+Answer: Blake is 21 years old.
+---
+
+Problem: Blake buys 7 stickers at 13 dollars each. How much does Blake spend in total?
+Solution:
+  Step 1: Identify the quantity (7) and price per item ($13).
+  Step 2: Multiply: 7 × 13 = 91.
+Answer: Blake spends $91.
+---
+
+Problem: Taylor buys 18 apples at 9 dollars each. How much does Taylor spend in total?
+Solution:
+  Step 1: Identify the quantity (18) and price per item ($9).
+  Step 2: Multiply: 18 × 9 = 162.
+Answer: Taylor spends $162.
+---
+
+Problem: Blake has 35 oranges to share equally among 7 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (35) by the number of friends (7).
+  Step 2: 35 ÷ 7 = 5.
+Answer: Each friend receives 5 oranges.
+---
+
+Problem: Jordan buys 13 oranges at 4 dollars each. How much does Jordan spend in total?
+Solution:
+  Step 1: Identify the quantity (13) and price per item ($4).
+  Step 2: Multiply: 13 × 4 = 52.
+Answer: Jordan spends $52.
+---
+
+Problem: Frankie buys 6 cookies at 1 dollars each. How much does Frankie spend in total?
+Solution:
+  Step 1: Identify the quantity (6) and price per item ($1).
+  Step 2: Multiply: 6 × 1 = 6.
+Answer: Frankie spends $6.
+---
+
+Problem: Taylor buys 14 coins at 3 dollars each. How much does Taylor spend in total?
+Solution:
+  Step 1: Identify the quantity (14) and price per item ($3).
+  Step 2: Multiply: 14 × 3 = 42.
+Answer: Taylor spends $42.
+---
+
+Problem: Blake scored 75% of 270 points on a quiz. How many points did Blake score?
+Solution:
+  Step 1: Convert percent to decimal: 75% = 0.75.
+  Step 2: Multiply: 270 × 0.75 = 202.
+Answer: Blake scored 202 points.
+---
+
+Problem: Jordan buys 17 books at 11 dollars each. How much does Jordan spend in total?
+Solution:
+  Step 1: Identify the quantity (17) and price per item ($11).
+  Step 2: Multiply: 17 × 11 = 187.
+Answer: Jordan spends $187.
+---
+
+Problem: Charlie had 14 stickers. After visiting the library, Charlie now has 8 more stickers. How many stickers does Charlie have in total?
+Solution:
+  Step 1: Add the original count to the new count: 14 + 8.
+  Step 2: 14 + 8 = 22.
+Answer: Charlie has 22 stickers in total.
+---
+
+Problem: Sam has 28 cookies to share equally among 7 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (28) by the number of friends (7).
+  Step 2: 28 ÷ 7 = 4.
+Answer: Each friend receives 4 cookies.
+---
+
+Problem: Dana drives at 65 km/h for 6 hour(s). How far does Dana travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 65 × 6 = 390 km.
+Answer: Dana travels 390 km.
+---
+
+Problem: Avery has 63 cookies to share equally among 7 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (63) by the number of friends (7).
+  Step 2: 63 ÷ 7 = 9.
+Answer: Each friend receives 9 cookies.
+---
+
+Problem: Taylor buys 19 coins at 13 dollars each. How much does Taylor spend in total?
+Solution:
+  Step 1: Identify the quantity (19) and price per item ($13).
+  Step 2: Multiply: 19 × 13 = 247.
+Answer: Taylor spends $247.
+---
+
+Problem: Taylor had 14 cookies. After visiting school, Taylor now has 32 more cookies. How many cookies does Taylor have in total?
+Solution:
+  Step 1: Add the original count to the new count: 14 + 32.
+  Step 2: 14 + 32 = 46.
+Answer: Taylor has 46 cookies in total.
+---
+
+Problem: Avery buys 15 flowers at 5 dollars each. How much does Avery spend in total?
+Solution:
+  Step 1: Identify the quantity (15) and price per item ($5).
+  Step 2: Multiply: 15 × 5 = 75.
+Answer: Avery spends $75.
+---
+
+Problem: Quinn drives at 90 km/h for 2 hour(s). How far does Quinn travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 90 × 2 = 180 km.
+Answer: Quinn travels 180 km.
+---
+
+Problem: Riley is 13 years old. Alex is 13 years older than Riley. How old is Alex?
+Solution:
+  Step 1: Alex's age = Riley's age + 13 = 13 + 13.
+  Step 2: 13 + 13 = 26.
+Answer: Alex is 26 years old.
+---
+
+Problem: Drew has 16 stamps to share equally among 2 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (16) by the number of friends (2).
+  Step 2: 16 ÷ 2 = 8.
+Answer: Each friend receives 8 stamps.
+---
+
+Problem: Blake scored 10% of 203 points on a quiz. How many points did Blake score?
+Solution:
+  Step 1: Convert percent to decimal: 10% = 0.1.
+  Step 2: Multiply: 203 × 0.1 = 20.
+Answer: Blake scored 20 points.
+---
+
+Problem: Taylor scored 50% of 432 points on a quiz. How many points did Taylor score?
+Solution:
+  Step 1: Convert percent to decimal: 50% = 0.5.
+  Step 2: Multiply: 432 × 0.5 = 216.
+Answer: Taylor scored 216 points.
+---
+
+Problem: Riley scored 75% of 500 points on a quiz. How many points did Riley score?
+Solution:
+  Step 1: Convert percent to decimal: 75% = 0.75.
+  Step 2: Multiply: 500 × 0.75 = 375.
+Answer: Riley scored 375 points.
+---
+
+Problem: Riley has 30 marbles to share equally among 3 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (30) by the number of friends (3).
+  Step 2: 30 ÷ 3 = 10.
+Answer: Each friend receives 10 marbles.
+---
+
+Problem: Emery has 12 cookies to share equally among 4 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (12) by the number of friends (4).
+  Step 2: 12 ÷ 4 = 3.
+Answer: Each friend receives 3 cookies.
+---
+
+Problem: Avery has 25 stamps to share equally among 5 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (25) by the number of friends (5).
+  Step 2: 25 ÷ 5 = 5.
+Answer: Each friend receives 5 stamps.
+---
+
+Problem: Blake scored 40% of 141 points on a quiz. How many points did Blake score?
+Solution:
+  Step 1: Convert percent to decimal: 40% = 0.4.
+  Step 2: Multiply: 141 × 0.4 = 56.
+Answer: Blake scored 56 points.
+---
+
+Problem: Frankie scored 10% of 204 points on a quiz. How many points did Frankie score?
+Solution:
+  Step 1: Convert percent to decimal: 10% = 0.1.
+  Step 2: Multiply: 204 × 0.1 = 20.
+Answer: Frankie scored 20 points.
+---
+
+Problem: Casey buys 10 pencils at 8 dollars each. How much does Casey spend in total?
+Solution:
+  Step 1: Identify the quantity (10) and price per item ($8).
+  Step 2: Multiply: 10 × 8 = 80.
+Answer: Casey spends $80.
+---
+
+Problem: Dana scored 20% of 297 points on a quiz. How many points did Dana score?
+Solution:
+  Step 1: Convert percent to decimal: 20% = 0.2.
+  Step 2: Multiply: 297 × 0.2 = 59.
+Answer: Dana scored 59 points.
+---
+
+Problem: Quinn scored 40% of 255 points on a quiz. How many points did Quinn score?
+Solution:
+  Step 1: Convert percent to decimal: 40% = 0.4.
+  Step 2: Multiply: 255 × 0.4 = 102.
+Answer: Quinn scored 102 points.
+---
+
+Problem: Blake scored 10% of 268 points on a quiz. How many points did Blake score?
+Solution:
+  Step 1: Convert percent to decimal: 10% = 0.1.
+  Step 2: Multiply: 268 × 0.1 = 26.
+Answer: Blake scored 26 points.
+---
+
+Problem: Quinn buys 2 stamps at 14 dollars each. How much does Quinn spend in total?
+Solution:
+  Step 1: Identify the quantity (2) and price per item ($14).
+  Step 2: Multiply: 2 × 14 = 28.
+Answer: Quinn spends $28.
+---
+
+Problem: Blake is 25 years old. Dana is 13 years older than Blake. How old is Dana?
+Solution:
+  Step 1: Dana's age = Blake's age + 13 = 25 + 13.
+  Step 2: 25 + 13 = 38.
+Answer: Dana is 38 years old.
+---
+
+Problem: Drew has 21 coins to share equally among 3 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (21) by the number of friends (3).
+  Step 2: 21 ÷ 3 = 7.
+Answer: Each friend receives 7 coins.
+---
+
+Problem: Quinn scored 40% of 334 points on a quiz. How many points did Quinn score?
+Solution:
+  Step 1: Convert percent to decimal: 40% = 0.4.
+  Step 2: Multiply: 334 × 0.4 = 133.
+Answer: Quinn scored 133 points.
+---
+
+Problem: Jordan scored 25% of 420 points on a quiz. How many points did Jordan score?
+Solution:
+  Step 1: Convert percent to decimal: 25% = 0.25.
+  Step 2: Multiply: 420 × 0.25 = 105.
+Answer: Jordan scored 105 points.
+---
+
+Problem: Drew has 72 pencils to share equally among 8 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (72) by the number of friends (8).
+  Step 2: 72 ÷ 8 = 9.
+Answer: Each friend receives 9 pencils.
+---
+
+Problem: Morgan has 28 pencils to share equally among 7 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (28) by the number of friends (7).
+  Step 2: 28 ÷ 7 = 4.
+Answer: Each friend receives 4 pencils.
+---
+
+Problem: Avery buys 3 stickers at 9 dollars each. How much does Avery spend in total?
+Solution:
+  Step 1: Identify the quantity (3) and price per item ($9).
+  Step 2: Multiply: 3 × 9 = 27.
+Answer: Avery spends $27.
+---
+
+Problem: Quinn buys 18 books at 1 dollars each. How much does Quinn spend in total?
+Solution:
+  Step 1: Identify the quantity (18) and price per item ($1).
+  Step 2: Multiply: 18 × 1 = 18.
+Answer: Quinn spends $18.
+---
+
+Problem: Morgan is 25 years old. Quinn is 1 years older than Morgan. How old is Quinn?
+Solution:
+  Step 1: Quinn's age = Morgan's age + 1 = 25 + 1.
+  Step 2: 25 + 1 = 26.
+Answer: Quinn is 26 years old.
+---
+
+Problem: Sam has 24 oranges to share equally among 4 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (24) by the number of friends (4).
+  Step 2: 24 ÷ 4 = 6.
+Answer: Each friend receives 6 oranges.
+---
+
+Problem: Charlie buys 2 books at 14 dollars each. How much does Charlie spend in total?
+Solution:
+  Step 1: Identify the quantity (2) and price per item ($14).
+  Step 2: Multiply: 2 × 14 = 28.
+Answer: Charlie spends $28.
+---
+
+Problem: Drew buys 3 cookies at 15 dollars each. How much does Drew spend in total?
+Solution:
+  Step 1: Identify the quantity (3) and price per item ($15).
+  Step 2: Multiply: 3 × 15 = 45.
+Answer: Drew spends $45.
+---
+
+Problem: Alex scored 25% of 444 points on a quiz. How many points did Alex score?
+Solution:
+  Step 1: Convert percent to decimal: 25% = 0.25.
+  Step 2: Multiply: 444 × 0.25 = 111.
+Answer: Alex scored 111 points.
+---
+
+Problem: Avery drives at 65 km/h for 2 hour(s). How far does Avery travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 65 × 2 = 130 km.
+Answer: Avery travels 130 km.
+---
+
+Problem: Sam buys 5 marbles at 11 dollars each. How much does Sam spend in total?
+Solution:
+  Step 1: Identify the quantity (5) and price per item ($11).
+  Step 2: Multiply: 5 × 11 = 55.
+Answer: Sam spends $55.
+---
+
+Problem: Taylor scored 75% of 242 points on a quiz. How many points did Taylor score?
+Solution:
+  Step 1: Convert percent to decimal: 75% = 0.75.
+  Step 2: Multiply: 242 × 0.75 = 181.
+Answer: Taylor scored 181 points.
+---
+
+Problem: Avery had 6 stamps. After visiting the market, Avery now has 24 more stamps. How many stamps does Avery have in total?
+Solution:
+  Step 1: Add the original count to the new count: 6 + 24.
+  Step 2: 6 + 24 = 30.
+Answer: Avery has 30 stamps in total.
+---
+
+Problem: Quinn buys 17 flowers at 5 dollars each. How much does Quinn spend in total?
+Solution:
+  Step 1: Identify the quantity (17) and price per item ($5).
+  Step 2: Multiply: 17 × 5 = 85.
+Answer: Quinn spends $85.
+---
+
+Problem: Blake has 48 cards to share equally among 8 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (48) by the number of friends (8).
+  Step 2: 48 ÷ 8 = 6.
+Answer: Each friend receives 6 cards.
+---
+
+Problem: Sam drives at 80 km/h for 1 hour(s). How far does Sam travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 80 × 1 = 80 km.
+Answer: Sam travels 80 km.
+---
+
+Problem: Jordan drives at 50 km/h for 6 hour(s). How far does Jordan travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 50 × 6 = 300 km.
+Answer: Jordan travels 300 km.
+---
+
+Problem: Sam is 27 years old. Blake is 8 years older than Sam. How old is Blake?
+Solution:
+  Step 1: Blake's age = Sam's age + 8 = 27 + 8.
+  Step 2: 27 + 8 = 35.
+Answer: Blake is 35 years old.
+---
+
+Problem: Riley buys 3 flowers at 3 dollars each. How much does Riley spend in total?
+Solution:
+  Step 1: Identify the quantity (3) and price per item ($3).
+  Step 2: Multiply: 3 × 3 = 9.
+Answer: Riley spends $9.
+---
+
+Problem: Riley has 24 stamps to share equally among 6 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (24) by the number of friends (6).
+  Step 2: 24 ÷ 6 = 4.
+Answer: Each friend receives 4 stamps.
+---
+
+Problem: Sam is 22 years old. Dana is 12 years older than Sam. How old is Dana?
+Solution:
+  Step 1: Dana's age = Sam's age + 12 = 22 + 12.
+  Step 2: 22 + 12 = 34.
+Answer: Dana is 34 years old.
+---
+
+Problem: Drew buys 2 cookies at 9 dollars each. How much does Drew spend in total?
+Solution:
+  Step 1: Identify the quantity (2) and price per item ($9).
+  Step 2: Multiply: 2 × 9 = 18.
+Answer: Drew spends $18.
+---
+
+Problem: Morgan drives at 74 km/h for 5 hour(s). How far does Morgan travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 74 × 5 = 370 km.
+Answer: Morgan travels 370 km.
+---
+
+Problem: Morgan buys 13 cookies at 13 dollars each. How much does Morgan spend in total?
+Solution:
+  Step 1: Identify the quantity (13) and price per item ($13).
+  Step 2: Multiply: 13 × 13 = 169.
+Answer: Morgan spends $169.
+---
+
+Problem: Emery drives at 34 km/h for 1 hour(s). How far does Emery travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 34 × 1 = 34 km.
+Answer: Emery travels 34 km.
+---
+
+Problem: Emery buys 5 stamps at 12 dollars each. How much does Emery spend in total?
+Solution:
+  Step 1: Identify the quantity (5) and price per item ($12).
+  Step 2: Multiply: 5 × 12 = 60.
+Answer: Emery spends $60.
+---
+
+Problem: Casey has 3 pencils to share equally among 3 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (3) by the number of friends (3).
+  Step 2: 3 ÷ 3 = 1.
+Answer: Each friend receives 1 pencil.
+---
+
+Problem: Emery buys 17 pencils at 8 dollars each. How much does Emery spend in total?
+Solution:
+  Step 1: Identify the quantity (17) and price per item ($8).
+  Step 2: Multiply: 17 × 8 = 136.
+Answer: Emery spends $136.
+---
+
+Problem: Casey buys 20 marbles at 11 dollars each. How much does Casey spend in total?
+Solution:
+  Step 1: Identify the quantity (20) and price per item ($11).
+  Step 2: Multiply: 20 × 11 = 220.
+Answer: Casey spends $220.
+---
+
+Problem: Taylor scored 25% of 169 points on a quiz. How many points did Taylor score?
+Solution:
+  Step 1: Convert percent to decimal: 25% = 0.25.
+  Step 2: Multiply: 169 × 0.25 = 42.
+Answer: Taylor scored 42 points.
+---
+
+Problem: Morgan is 8 years old. Alex is 9 years older than Morgan. How old is Alex?
+Solution:
+  Step 1: Alex's age = Morgan's age + 9 = 8 + 9.
+  Step 2: 8 + 9 = 17.
+Answer: Alex is 17 years old.
+---
+
+Problem: Jordan buys 17 pencils at 15 dollars each. How much does Jordan spend in total?
+Solution:
+  Step 1: Identify the quantity (17) and price per item ($15).
+  Step 2: Multiply: 17 × 15 = 255.
+Answer: Jordan spends $255.
+---
+
+Problem: Sam drives at 34 km/h for 5 hour(s). How far does Sam travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 34 × 5 = 170 km.
+Answer: Sam travels 170 km.
+---
+
+Problem: Charlie is 23 years old. Drew is 5 years older than Charlie. How old is Drew?
+Solution:
+  Step 1: Drew's age = Charlie's age + 5 = 23 + 5.
+  Step 2: 23 + 5 = 28.
+Answer: Drew is 28 years old.
+---
+
+Problem: Sam had 46 stickers. After visiting the park, Sam now has 13 more stickers. How many stickers does Sam have in total?
+Solution:
+  Step 1: Add the original count to the new count: 46 + 13.
+  Step 2: 46 + 13 = 59.
+Answer: Sam has 59 stickers in total.
+---
+
+Problem: Casey buys 6 cookies at 13 dollars each. How much does Casey spend in total?
+Solution:
+  Step 1: Identify the quantity (6) and price per item ($13).
+  Step 2: Multiply: 6 × 13 = 78.
+Answer: Casey spends $78.
+---
+
+Problem: Drew is 30 years old. Sam is 9 years older than Drew. How old is Sam?
+Solution:
+  Step 1: Sam's age = Drew's age + 9 = 30 + 9.
+  Step 2: 30 + 9 = 39.
+Answer: Sam is 39 years old.
+---
+
+Problem: Jordan drives at 68 km/h for 6 hour(s). How far does Jordan travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 68 × 6 = 408 km.
+Answer: Jordan travels 408 km.
+---
+
+Problem: Drew buys 13 coins at 10 dollars each. How much does Drew spend in total?
+Solution:
+  Step 1: Identify the quantity (13) and price per item ($10).
+  Step 2: Multiply: 13 × 10 = 130.
+Answer: Drew spends $130.
+---
+
+Problem: Taylor drives at 36 km/h for 4 hour(s). How far does Taylor travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 36 × 4 = 144 km.
+Answer: Taylor travels 144 km.
+---
+
+Problem: Taylor buys 2 apples at 10 dollars each. How much does Taylor spend in total?
+Solution:
+  Step 1: Identify the quantity (2) and price per item ($10).
+  Step 2: Multiply: 2 × 10 = 20.
+Answer: Taylor spends $20.
+---
+
+Problem: Charlie had 40 apples. After visiting school, Charlie now has 30 more apples. How many apples does Charlie have in total?
+Solution:
+  Step 1: Add the original count to the new count: 40 + 30.
+  Step 2: 40 + 30 = 70.
+Answer: Charlie has 70 apples in total.
+---
+
+Problem: Blake drives at 30 km/h for 2 hour(s). How far does Blake travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 30 × 2 = 60 km.
+Answer: Blake travels 60 km.
+---
+
+Problem: Morgan has 30 coins to share equally among 3 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (30) by the number of friends (3).
+  Step 2: 30 ÷ 3 = 10.
+Answer: Each friend receives 10 coins.
+---
+
+Problem: Jordan drives at 34 km/h for 3 hour(s). How far does Jordan travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 34 × 3 = 102 km.
+Answer: Jordan travels 102 km.
+---
+
+Problem: Avery drives at 61 km/h for 5 hour(s). How far does Avery travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 61 × 5 = 305 km.
+Answer: Avery travels 305 km.
+---
+
+Problem: Casey scored 75% of 263 points on a quiz. How many points did Casey score?
+Solution:
+  Step 1: Convert percent to decimal: 75% = 0.75.
+  Step 2: Multiply: 263 × 0.75 = 197.
+Answer: Casey scored 197 points.
+---
+
+Problem: Morgan is 19 years old. Taylor is 15 years older than Morgan. How old is Taylor?
+Solution:
+  Step 1: Taylor's age = Morgan's age + 15 = 19 + 15.
+  Step 2: 19 + 15 = 34.
+Answer: Taylor is 34 years old.
+---
+
+Problem: Alex buys 9 marbles at 11 dollars each. How much does Alex spend in total?
+Solution:
+  Step 1: Identify the quantity (9) and price per item ($11).
+  Step 2: Multiply: 9 × 11 = 99.
+Answer: Alex spends $99.
+---
+
+Problem: Emery buys 17 pencils at 6 dollars each. How much does Emery spend in total?
+Solution:
+  Step 1: Identify the quantity (17) and price per item ($6).
+  Step 2: Multiply: 17 × 6 = 102.
+Answer: Emery spends $102.
+---
+
+Problem: Charlie is 25 years old. Alex is 9 years older than Charlie. How old is Alex?
+Solution:
+  Step 1: Alex's age = Charlie's age + 9 = 25 + 9.
+  Step 2: 25 + 9 = 34.
+Answer: Alex is 34 years old.
+---
+
+Problem: Casey has 6 books to share equally among 2 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (6) by the number of friends (2).
+  Step 2: 6 ÷ 2 = 3.
+Answer: Each friend receives 3 books.
+---
+
+Problem: Emery had 5 cookies. After visiting the library, Emery now has 45 more cookies. How many cookies does Emery have in total?
+Solution:
+  Step 1: Add the original count to the new count: 5 + 45.
+  Step 2: 5 + 45 = 50.
+Answer: Emery has 50 cookies in total.
+---
+
+Problem: Riley scored 20% of 129 points on a quiz. How many points did Riley score?
+Solution:
+  Step 1: Convert percent to decimal: 20% = 0.2.
+  Step 2: Multiply: 129 × 0.2 = 25.
+Answer: Riley scored 25 points.
+---
+
+Problem: Quinn buys 20 coins at 6 dollars each. How much does Quinn spend in total?
+Solution:
+  Step 1: Identify the quantity (20) and price per item ($6).
+  Step 2: Multiply: 20 × 6 = 120.
+Answer: Quinn spends $120.
+---
+
+Problem: Taylor drives at 85 km/h for 1 hour(s). How far does Taylor travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 85 × 1 = 85 km.
+Answer: Taylor travels 85 km.
+---
+
+Problem: Alex buys 4 pencils at 5 dollars each. How much does Alex spend in total?
+Solution:
+  Step 1: Identify the quantity (4) and price per item ($5).
+  Step 2: Multiply: 4 × 5 = 20.
+Answer: Alex spends $20.
+---
+
+Problem: Quinn buys 9 coins at 13 dollars each. How much does Quinn spend in total?
+Solution:
+  Step 1: Identify the quantity (9) and price per item ($13).
+  Step 2: Multiply: 9 × 13 = 117.
+Answer: Quinn spends $117.
+---
+
+Problem: Sam drives at 42 km/h for 5 hour(s). How far does Sam travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 42 × 5 = 210 km.
+Answer: Sam travels 210 km.
+---
+
+Problem: Drew buys 20 cookies at 2 dollars each. How much does Drew spend in total?
+Solution:
+  Step 1: Identify the quantity (20) and price per item ($2).
+  Step 2: Multiply: 20 × 2 = 40.
+Answer: Drew spends $40.
+---
+
+Problem: Alex scored 20% of 315 points on a quiz. How many points did Alex score?
+Solution:
+  Step 1: Convert percent to decimal: 20% = 0.2.
+  Step 2: Multiply: 315 × 0.2 = 63.
+Answer: Alex scored 63 points.
+---
+
+Problem: Dana is 8 years old. Taylor is 1 years older than Dana. How old is Taylor?
+Solution:
+  Step 1: Taylor's age = Dana's age + 1 = 8 + 1.
+  Step 2: 8 + 1 = 9.
+Answer: Taylor is 9 years old.
+---
+
+Problem: Quinn buys 7 toy cars at 6 dollars each. How much does Quinn spend in total?
+Solution:
+  Step 1: Identify the quantity (7) and price per item ($6).
+  Step 2: Multiply: 7 × 6 = 42.
+Answer: Quinn spends $42.
+---
+
+Problem: Quinn scored 75% of 216 points on a quiz. How many points did Quinn score?
+Solution:
+  Step 1: Convert percent to decimal: 75% = 0.75.
+  Step 2: Multiply: 216 × 0.75 = 162.
+Answer: Quinn scored 162 points.
+---
+
+Problem: Frankie buys 16 pencils at 3 dollars each. How much does Frankie spend in total?
+Solution:
+  Step 1: Identify the quantity (16) and price per item ($3).
+  Step 2: Multiply: 16 × 3 = 48.
+Answer: Frankie spends $48.
+---
+
+Problem: Morgan has 60 oranges to share equally among 6 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (60) by the number of friends (6).
+  Step 2: 60 ÷ 6 = 10.
+Answer: Each friend receives 10 oranges.
+---
+
+Problem: Alex is 14 years old. Quinn is 6 years older than Alex. How old is Quinn?
+Solution:
+  Step 1: Quinn's age = Alex's age + 6 = 14 + 6.
+  Step 2: 14 + 6 = 20.
+Answer: Quinn is 20 years old.
+---
+
+Problem: Casey buys 18 cookies at 5 dollars each. How much does Casey spend in total?
+Solution:
+  Step 1: Identify the quantity (18) and price per item ($5).
+  Step 2: Multiply: 18 × 5 = 90.
+Answer: Casey spends $90.
+---
+
+Problem: Morgan is 11 years old. Blake is 7 years older than Morgan. How old is Blake?
+Solution:
+  Step 1: Blake's age = Morgan's age + 7 = 11 + 7.
+  Step 2: 11 + 7 = 18.
+Answer: Blake is 18 years old.
+---
+
+Problem: Dana has 24 cards to share equally among 3 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (24) by the number of friends (3).
+  Step 2: 24 ÷ 3 = 8.
+Answer: Each friend receives 8 cards.
+---
+
+Problem: Frankie had 46 pencils. After visiting the market, Frankie now has 41 more pencils. How many pencils does Frankie have in total?
+Solution:
+  Step 1: Add the original count to the new count: 46 + 41.
+  Step 2: 46 + 41 = 87.
+Answer: Frankie has 87 pencils in total.
+---
+
+Problem: Morgan is 21 years old. Jordan is 11 years older than Morgan. How old is Jordan?
+Solution:
+  Step 1: Jordan's age = Morgan's age + 11 = 21 + 11.
+  Step 2: 21 + 11 = 32.
+Answer: Jordan is 32 years old.
+---
+
+Problem: Dana is 15 years old. Drew is 12 years older than Dana. How old is Drew?
+Solution:
+  Step 1: Drew's age = Dana's age + 12 = 15 + 12.
+  Step 2: 15 + 12 = 27.
+Answer: Drew is 27 years old.
+---
+
+Problem: Quinn has 32 cards to share equally among 4 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (32) by the number of friends (4).
+  Step 2: 32 ÷ 4 = 8.
+Answer: Each friend receives 8 cards.
+---
+
+Problem: Emery buys 20 flowers at 6 dollars each. How much does Emery spend in total?
+Solution:
+  Step 1: Identify the quantity (20) and price per item ($6).
+  Step 2: Multiply: 20 × 6 = 120.
+Answer: Emery spends $120.
+---
+
+Problem: Riley buys 17 marbles at 13 dollars each. How much does Riley spend in total?
+Solution:
+  Step 1: Identify the quantity (17) and price per item ($13).
+  Step 2: Multiply: 17 × 13 = 221.
+Answer: Riley spends $221.
+---
+
+Problem: Dana drives at 59 km/h for 1 hour(s). How far does Dana travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 59 × 1 = 59 km.
+Answer: Dana travels 59 km.
+---
+
+Problem: Quinn had 38 cookies. After visiting the market, Quinn now has 20 more cookies. How many cookies does Quinn have in total?
+Solution:
+  Step 1: Add the original count to the new count: 38 + 20.
+  Step 2: 38 + 20 = 58.
+Answer: Quinn has 58 cookies in total.
+---
+
+Problem: Taylor drives at 33 km/h for 3 hour(s). How far does Taylor travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 33 × 3 = 99 km.
+Answer: Taylor travels 99 km.
+---
+
+Problem: Charlie buys 20 oranges at 9 dollars each. How much does Charlie spend in total?
+Solution:
+  Step 1: Identify the quantity (20) and price per item ($9).
+  Step 2: Multiply: 20 × 9 = 180.
+Answer: Charlie spends $180.
+---
+
+Problem: Blake is 20 years old. Casey is 4 years older than Blake. How old is Casey?
+Solution:
+  Step 1: Casey's age = Blake's age + 4 = 20 + 4.
+  Step 2: 20 + 4 = 24.
+Answer: Casey is 24 years old.
+---
+
+Problem: Jordan drives at 71 km/h for 3 hour(s). How far does Jordan travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 71 × 3 = 213 km.
+Answer: Jordan travels 213 km.
+---
+
+Problem: Casey drives at 70 km/h for 5 hour(s). How far does Casey travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 70 × 5 = 350 km.
+Answer: Casey travels 350 km.
+---
+
+Problem: Riley has 32 cookies to share equally among 4 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (32) by the number of friends (4).
+  Step 2: 32 ÷ 4 = 8.
+Answer: Each friend receives 8 cookies.
+---
+
+Problem: Avery scored 40% of 254 points on a quiz. How many points did Avery score?
+Solution:
+  Step 1: Convert percent to decimal: 40% = 0.4.
+  Step 2: Multiply: 254 × 0.4 = 101.
+Answer: Avery scored 101 points.
+---
+
+Problem: Alex is 29 years old. Frankie is 4 years older than Alex. How old is Frankie?
+Solution:
+  Step 1: Frankie's age = Alex's age + 4 = 29 + 4.
+  Step 2: 29 + 4 = 33.
+Answer: Frankie is 33 years old.
+---
+
+Problem: Jordan is 23 years old. Riley is 11 years older than Jordan. How old is Riley?
+Solution:
+  Step 1: Riley's age = Jordan's age + 11 = 23 + 11.
+  Step 2: 23 + 11 = 34.
+Answer: Riley is 34 years old.
+---
+
+Problem: Alex buys 15 stamps at 9 dollars each. How much does Alex spend in total?
+Solution:
+  Step 1: Identify the quantity (15) and price per item ($9).
+  Step 2: Multiply: 15 × 9 = 135.
+Answer: Alex spends $135.
+---
+
+Problem: Frankie drives at 76 km/h for 2 hour(s). How far does Frankie travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 76 × 2 = 152 km.
+Answer: Frankie travels 152 km.
+---
+
+Problem: Quinn buys 10 stamps at 14 dollars each. How much does Quinn spend in total?
+Solution:
+  Step 1: Identify the quantity (10) and price per item ($14).
+  Step 2: Multiply: 10 × 14 = 140.
+Answer: Quinn spends $140.
+---
+
+Problem: Taylor drives at 53 km/h for 5 hour(s). How far does Taylor travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 53 × 5 = 265 km.
+Answer: Taylor travels 265 km.
+---
+
+Problem: Casey drives at 48 km/h for 3 hour(s). How far does Casey travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 48 × 3 = 144 km.
+Answer: Casey travels 144 km.
+---
+
+Problem: Blake scored 25% of 345 points on a quiz. How many points did Blake score?
+Solution:
+  Step 1: Convert percent to decimal: 25% = 0.25.
+  Step 2: Multiply: 345 × 0.25 = 86.
+Answer: Blake scored 86 points.
+---
+
+Problem: Alex drives at 53 km/h for 6 hour(s). How far does Alex travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 53 × 6 = 318 km.
+Answer: Alex travels 318 km.
+---
+
+Problem: Taylor had 37 coins. After visiting the store, Taylor now has 50 more coins. How many coins does Taylor have in total?
+Solution:
+  Step 1: Add the original count to the new count: 37 + 50.
+  Step 2: 37 + 50 = 87.
+Answer: Taylor has 87 coins in total.
+---
+
+Problem: Taylor is 30 years old. Sam is 12 years older than Taylor. How old is Sam?
+Solution:
+  Step 1: Sam's age = Taylor's age + 12 = 30 + 12.
+  Step 2: 30 + 12 = 42.
+Answer: Sam is 42 years old.
+---
+
+Problem: Blake has 40 flowers to share equally among 5 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (40) by the number of friends (5).
+  Step 2: 40 ÷ 5 = 8.
+Answer: Each friend receives 8 flowers.
+---
+
+Problem: Emery is 12 years old. Dana is 6 years older than Emery. How old is Dana?
+Solution:
+  Step 1: Dana's age = Emery's age + 6 = 12 + 6.
+  Step 2: 12 + 6 = 18.
+Answer: Dana is 18 years old.
+---
+
+Problem: Frankie scored 25% of 230 points on a quiz. How many points did Frankie score?
+Solution:
+  Step 1: Convert percent to decimal: 25% = 0.25.
+  Step 2: Multiply: 230 × 0.25 = 57.
+Answer: Frankie scored 57 points.
+---
+
+Problem: Avery buys 14 pencils at 11 dollars each. How much does Avery spend in total?
+Solution:
+  Step 1: Identify the quantity (14) and price per item ($11).
+  Step 2: Multiply: 14 × 11 = 154.
+Answer: Avery spends $154.
+---
+
+Problem: Morgan is 14 years old. Drew is 14 years older than Morgan. How old is Drew?
+Solution:
+  Step 1: Drew's age = Morgan's age + 14 = 14 + 14.
+  Step 2: 14 + 14 = 28.
+Answer: Drew is 28 years old.
+---
+
+Problem: Drew is 9 years old. Dana is 6 years older than Drew. How old is Dana?
+Solution:
+  Step 1: Dana's age = Drew's age + 6 = 9 + 6.
+  Step 2: 9 + 6 = 15.
+Answer: Dana is 15 years old.
+---
+
+Problem: Frankie has 40 cookies to share equally among 8 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (40) by the number of friends (8).
+  Step 2: 40 ÷ 8 = 5.
+Answer: Each friend receives 5 cookies.
+---
+
+Problem: Jordan is 28 years old. Morgan is 7 years older than Jordan. How old is Morgan?
+Solution:
+  Step 1: Morgan's age = Jordan's age + 7 = 28 + 7.
+  Step 2: 28 + 7 = 35.
+Answer: Morgan is 35 years old.
+---
+
+Problem: Riley has 24 stickers to share equally among 4 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (24) by the number of friends (4).
+  Step 2: 24 ÷ 4 = 6.
+Answer: Each friend receives 6 stickers.
+---
+
+Problem: Charlie drives at 42 km/h for 1 hour(s). How far does Charlie travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 42 × 1 = 42 km.
+Answer: Charlie travels 42 km.
+---
+
+Problem: Frankie had 24 flowers. After visiting the library, Frankie now has 26 more flowers. How many flowers does Frankie have in total?
+Solution:
+  Step 1: Add the original count to the new count: 24 + 26.
+  Step 2: 24 + 26 = 50.
+Answer: Frankie has 50 flowers in total.
+---
+
+Problem: Dana is 15 years old. Charlie is 7 years older than Dana. How old is Charlie?
+Solution:
+  Step 1: Charlie's age = Dana's age + 7 = 15 + 7.
+  Step 2: 15 + 7 = 22.
+Answer: Charlie is 22 years old.
+---
+
+Problem: Charlie buys 7 stickers at 11 dollars each. How much does Charlie spend in total?
+Solution:
+  Step 1: Identify the quantity (7) and price per item ($11).
+  Step 2: Multiply: 7 × 11 = 77.
+Answer: Charlie spends $77.
+---
+
+Problem: Taylor buys 7 cookies at 11 dollars each. How much does Taylor spend in total?
+Solution:
+  Step 1: Identify the quantity (7) and price per item ($11).
+  Step 2: Multiply: 7 × 11 = 77.
+Answer: Taylor spends $77.
+---
+
+Problem: Emery has 32 cookies to share equally among 4 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (32) by the number of friends (4).
+  Step 2: 32 ÷ 4 = 8.
+Answer: Each friend receives 8 cookies.
+---
+
+Problem: Dana has 36 flowers to share equally among 4 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (36) by the number of friends (4).
+  Step 2: 36 ÷ 4 = 9.
+Answer: Each friend receives 9 flowers.
+---
+
+Problem: Charlie scored 40% of 463 points on a quiz. How many points did Charlie score?
+Solution:
+  Step 1: Convert percent to decimal: 40% = 0.4.
+  Step 2: Multiply: 463 × 0.4 = 185.
+Answer: Charlie scored 185 points.
+---
+
+Problem: Taylor has 14 oranges to share equally among 2 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (14) by the number of friends (2).
+  Step 2: 14 ÷ 2 = 7.
+Answer: Each friend receives 7 oranges.
+---
+
+Problem: Sam had 14 marbles. After visiting school, Sam now has 6 more marbles. How many marbles does Sam have in total?
+Solution:
+  Step 1: Add the original count to the new count: 14 + 6.
+  Step 2: 14 + 6 = 20.
+Answer: Sam has 20 marbles in total.
+---
+
+Problem: Avery has 12 marbles to share equally among 4 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (12) by the number of friends (4).
+  Step 2: 12 ÷ 4 = 3.
+Answer: Each friend receives 3 marbles.
+---
+
+Problem: Drew buys 18 flowers at 2 dollars each. How much does Drew spend in total?
+Solution:
+  Step 1: Identify the quantity (18) and price per item ($2).
+  Step 2: Multiply: 18 × 2 = 36.
+Answer: Drew spends $36.
+---
+
+Problem: Jordan is 22 years old. Charlie is 10 years older than Jordan. How old is Charlie?
+Solution:
+  Step 1: Charlie's age = Jordan's age + 10 = 22 + 10.
+  Step 2: 22 + 10 = 32.
+Answer: Charlie is 32 years old.
+---
+
+Problem: Frankie buys 14 marbles at 8 dollars each. How much does Frankie spend in total?
+Solution:
+  Step 1: Identify the quantity (14) and price per item ($8).
+  Step 2: Multiply: 14 × 8 = 112.
+Answer: Frankie spends $112.
+---
+
+Problem: Jordan has 24 flowers to share equally among 3 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (24) by the number of friends (3).
+  Step 2: 24 ÷ 3 = 8.
+Answer: Each friend receives 8 flowers.
+---
+
+Problem: Riley buys 9 oranges at 10 dollars each. How much does Riley spend in total?
+Solution:
+  Step 1: Identify the quantity (9) and price per item ($10).
+  Step 2: Multiply: 9 × 10 = 90.
+Answer: Riley spends $90.
+---
+
+Problem: Morgan buys 13 stickers at 2 dollars each. How much does Morgan spend in total?
+Solution:
+  Step 1: Identify the quantity (13) and price per item ($2).
+  Step 2: Multiply: 13 × 2 = 26.
+Answer: Morgan spends $26.
+---
+
+Problem: Avery buys 14 oranges at 13 dollars each. How much does Avery spend in total?
+Solution:
+  Step 1: Identify the quantity (14) and price per item ($13).
+  Step 2: Multiply: 14 × 13 = 182.
+Answer: Avery spends $182.
+---
+
+Problem: Riley drives at 73 km/h for 5 hour(s). How far does Riley travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 73 × 5 = 365 km.
+Answer: Riley travels 365 km.
+---
+
+Problem: Charlie drives at 54 km/h for 3 hour(s). How far does Charlie travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 54 × 3 = 162 km.
+Answer: Charlie travels 162 km.
+---
+
+Problem: Morgan is 15 years old. Blake is 13 years older than Morgan. How old is Blake?
+Solution:
+  Step 1: Blake's age = Morgan's age + 13 = 15 + 13.
+  Step 2: 15 + 13 = 28.
+Answer: Blake is 28 years old.
+---
+
+Problem: Taylor had 22 flowers. After visiting school, Taylor now has 8 more flowers. How many flowers does Taylor have in total?
+Solution:
+  Step 1: Add the original count to the new count: 22 + 8.
+  Step 2: 22 + 8 = 30.
+Answer: Taylor has 30 flowers in total.
+---
+
+Problem: Dana is 22 years old. Jordan is 5 years older than Dana. How old is Jordan?
+Solution:
+  Step 1: Jordan's age = Dana's age + 5 = 22 + 5.
+  Step 2: 22 + 5 = 27.
+Answer: Jordan is 27 years old.
+---
+
+Problem: Morgan scored 40% of 237 points on a quiz. How many points did Morgan score?
+Solution:
+  Step 1: Convert percent to decimal: 40% = 0.4.
+  Step 2: Multiply: 237 × 0.4 = 94.
+Answer: Morgan scored 94 points.
+---
+
+Problem: Riley had 17 marbles. After visiting school, Riley now has 25 more marbles. How many marbles does Riley have in total?
+Solution:
+  Step 1: Add the original count to the new count: 17 + 25.
+  Step 2: 17 + 25 = 42.
+Answer: Riley has 42 marbles in total.
+---
+
+Problem: Taylor drives at 79 km/h for 1 hour(s). How far does Taylor travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 79 × 1 = 79 km.
+Answer: Taylor travels 79 km.
+---
+
+Problem: Riley scored 20% of 386 points on a quiz. How many points did Riley score?
+Solution:
+  Step 1: Convert percent to decimal: 20% = 0.2.
+  Step 2: Multiply: 386 × 0.2 = 77.
+Answer: Riley scored 77 points.
+---
+
+Problem: Riley drives at 64 km/h for 3 hour(s). How far does Riley travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 64 × 3 = 192 km.
+Answer: Riley travels 192 km.
+---
+
+Problem: Avery buys 10 oranges at 14 dollars each. How much does Avery spend in total?
+Solution:
+  Step 1: Identify the quantity (10) and price per item ($14).
+  Step 2: Multiply: 10 × 14 = 140.
+Answer: Avery spends $140.
+---
+
+Problem: Blake drives at 33 km/h for 3 hour(s). How far does Blake travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 33 × 3 = 99 km.
+Answer: Blake travels 99 km.
+---
+
+Problem: Quinn had 14 cookies. After visiting the park, Quinn now has 25 more cookies. How many cookies does Quinn have in total?
+Solution:
+  Step 1: Add the original count to the new count: 14 + 25.
+  Step 2: 14 + 25 = 39.
+Answer: Quinn has 39 cookies in total.
+---
+
+Problem: Alex buys 11 cards at 2 dollars each. How much does Alex spend in total?
+Solution:
+  Step 1: Identify the quantity (11) and price per item ($2).
+  Step 2: Multiply: 11 × 2 = 22.
+Answer: Alex spends $22.
+---
+
+Problem: Frankie is 23 years old. Riley is 8 years older than Frankie. How old is Riley?
+Solution:
+  Step 1: Riley's age = Frankie's age + 8 = 23 + 8.
+  Step 2: 23 + 8 = 31.
+Answer: Riley is 31 years old.
+---
+
+Problem: Blake had 27 marbles. After visiting school, Blake now has 45 more marbles. How many marbles does Blake have in total?
+Solution:
+  Step 1: Add the original count to the new count: 27 + 45.
+  Step 2: 27 + 45 = 72.
+Answer: Blake has 72 marbles in total.
+---
+
+Problem: Alex had 38 oranges. After visiting school, Alex now has 7 more oranges. How many oranges does Alex have in total?
+Solution:
+  Step 1: Add the original count to the new count: 38 + 7.
+  Step 2: 38 + 7 = 45.
+Answer: Alex has 45 oranges in total.
+---
+
+Problem: Drew had 5 stamps. After visiting the library, Drew now has 9 more stamps. How many stamps does Drew have in total?
+Solution:
+  Step 1: Add the original count to the new count: 5 + 9.
+  Step 2: 5 + 9 = 14.
+Answer: Drew has 14 stamps in total.
+---
+
+Problem: Emery had 6 books. After visiting the library, Emery now has 23 more books. How many books does Emery have in total?
+Solution:
+  Step 1: Add the original count to the new count: 6 + 23.
+  Step 2: 6 + 23 = 29.
+Answer: Emery has 29 books in total.
+---
+
+Problem: Blake scored 50% of 284 points on a quiz. How many points did Blake score?
+Solution:
+  Step 1: Convert percent to decimal: 50% = 0.5.
+  Step 2: Multiply: 284 × 0.5 = 142.
+Answer: Blake scored 142 points.
+---
+
+Problem: Drew has 12 cards to share equally among 3 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (12) by the number of friends (3).
+  Step 2: 12 ÷ 3 = 4.
+Answer: Each friend receives 4 cards.
+---
+
+Problem: Casey had 15 cards. After visiting school, Casey now has 6 more cards. How many cards does Casey have in total?
+Solution:
+  Step 1: Add the original count to the new count: 15 + 6.
+  Step 2: 15 + 6 = 21.
+Answer: Casey has 21 cards in total.
+---
+
+Problem: Charlie drives at 53 km/h for 5 hour(s). How far does Charlie travel?
+Solution:
+  Step 1: Use distance = speed × time.
+  Step 2: Distance = 53 × 5 = 265 km.
+Answer: Charlie travels 265 km.
+---
+
+Problem: Quinn scored 30% of 357 points on a quiz. How many points did Quinn score?
+Solution:
+  Step 1: Convert percent to decimal: 30% = 0.3.
+  Step 2: Multiply: 357 × 0.3 = 107.
+Answer: Quinn scored 107 points.
+---
+
+Problem: Avery has 27 oranges to share equally among 3 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (27) by the number of friends (3).
+  Step 2: 27 ÷ 3 = 9.
+Answer: Each friend receives 9 oranges.
+---
+
+Problem: Charlie scored 40% of 215 points on a quiz. How many points did Charlie score?
+Solution:
+  Step 1: Convert percent to decimal: 40% = 0.4.
+  Step 2: Multiply: 215 × 0.4 = 86.
+Answer: Charlie scored 86 points.
+---
+
+Problem: Riley scored 75% of 261 points on a quiz. How many points did Riley score?
+Solution:
+  Step 1: Convert percent to decimal: 75% = 0.75.
+  Step 2: Multiply: 261 × 0.75 = 195.
+Answer: Riley scored 195 points.
+---
+
+Problem: Alex buys 17 stickers at 4 dollars each. How much does Alex spend in total?
+Solution:
+  Step 1: Identify the quantity (17) and price per item ($4).
+  Step 2: Multiply: 17 × 4 = 68.
+Answer: Alex spends $68.
+---
+
+Problem: Casey buys 20 coins at 4 dollars each. How much does Casey spend in total?
+Solution:
+  Step 1: Identify the quantity (20) and price per item ($4).
+  Step 2: Multiply: 20 × 4 = 80.
+Answer: Casey spends $80.
+---
+
+Problem: Jordan buys 15 pencils at 11 dollars each. How much does Jordan spend in total?
+Solution:
+  Step 1: Identify the quantity (15) and price per item ($11).
+  Step 2: Multiply: 15 × 11 = 165.
+Answer: Jordan spends $165.
+---
+
+Problem: Sam buys 19 cookies at 14 dollars each. How much does Sam spend in total?
+Solution:
+  Step 1: Identify the quantity (19) and price per item ($14).
+  Step 2: Multiply: 19 × 14 = 266.
+Answer: Sam spends $266.
+---
+
+Problem: Jordan buys 11 flowers at 12 dollars each. How much does Jordan spend in total?
+Solution:
+  Step 1: Identify the quantity (11) and price per item ($12).
+  Step 2: Multiply: 11 × 12 = 132.
+Answer: Jordan spends $132.
+---
+
+Problem: Taylor buys 7 toy cars at 2 dollars each. How much does Taylor spend in total?
+Solution:
+  Step 1: Identify the quantity (7) and price per item ($2).
+  Step 2: Multiply: 7 × 2 = 14.
+Answer: Taylor spends $14.
+---
+
+Problem: Charlie has 28 marbles to share equally among 4 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (28) by the number of friends (4).
+  Step 2: 28 ÷ 4 = 7.
+Answer: Each friend receives 7 marbles.
+---
+
+Problem: Blake had 47 oranges. After visiting school, Blake now has 47 more oranges. How many oranges does Blake have in total?
+Solution:
+  Step 1: Add the original count to the new count: 47 + 47.
+  Step 2: 47 + 47 = 94.
+Answer: Blake has 94 oranges in total.
+---
+
+Problem: Dana scored 50% of 470 points on a quiz. How many points did Dana score?
+Solution:
+  Step 1: Convert percent to decimal: 50% = 0.5.
+  Step 2: Multiply: 470 × 0.5 = 235.
+Answer: Dana scored 235 points.
+---
+
+Problem: Frankie had 36 marbles. After visiting the park, Frankie now has 43 more marbles. How many marbles does Frankie have in total?
+Solution:
+  Step 1: Add the original count to the new count: 36 + 43.
+  Step 2: 36 + 43 = 79.
+Answer: Frankie has 79 marbles in total.
+---
+
+Problem: Alex is 22 years old. Morgan is 12 years older than Alex. How old is Morgan?
+Solution:
+  Step 1: Morgan's age = Alex's age + 12 = 22 + 12.
+  Step 2: 22 + 12 = 34.
+Answer: Morgan is 34 years old.
+---
+
+Problem: Riley has 30 flowers to share equally among 6 friends. How many does each friend receive?
+Solution:
+  Step 1: Divide the total (30) by the number of friends (6).
+  Step 2: 30 ÷ 6 = 5.
+Answer: Each friend receives 5 flowers.
+---
+
+Problem: Drew is 30 years old. Morgan is 10 years older than Drew. How old is Morgan?
+Solution:
+  Step 1: Morgan's age = Drew's age + 10 = 30 + 10.
+  Step 2: 30 + 10 = 40.
+Answer: Morgan is 40 years old.
+---
+
+Problem: Drew is 18 years old. Taylor is 1 years older than Drew. How old is Taylor?
+Solution:
+  Step 1: Taylor's age = Drew's age + 1 = 18 + 1.
+  Step 2: 18 + 1 = 19.
+Answer: Taylor is 19 years old.
+---

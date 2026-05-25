@@ -1,0 +1,29 @@
+[Unit]
+Description=SMTX T-301 Retrieval Service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=smtx
+Group=smtx
+WorkingDirectory=/opt/smtx
+EnvironmentFile=-/etc/smtx/retrieval.env
+
+ExecStart=/opt/smtx-venv/bin/python /opt/smtx/inference/retrieval_service.py \
+    --index-path ${INDEX_PATH:-/mnt/index} \
+    --model-name ${RETRIEVAL_MODEL:-all-MiniLM-L6-v2} \
+    --host 0.0.0.0 \
+    --port 8001
+
+Restart=on-failure
+RestartSec=10s
+
+LimitNOFILE=65536
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=smtx-retrieval
+
+[Install]
+WantedBy=multi-user.target

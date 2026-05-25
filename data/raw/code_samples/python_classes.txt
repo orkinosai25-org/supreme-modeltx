@@ -1,0 +1,54 @@
+# Python: Class definitions with inheritance
+
+class Animal:
+    """Base class representing a generic animal."""
+
+    def __init__(self, name: str, sound: str) -> None:
+        self.name = name
+        self.sound = sound
+
+    def speak(self) -> str:
+        return f"{self.name} says {self.sound}!"
+
+    def __repr__(self) -> str:
+        return f"Animal(name={self.name!r})"
+
+
+class Dog(Animal):
+    """A dog that can learn tricks."""
+
+    def __init__(self, name: str) -> None:
+        super().__init__(name, "woof")
+        self.tricks: list = []
+
+    def learn_trick(self, trick: str) -> None:
+        self.tricks.append(trick)
+
+    def perform(self) -> str:
+        if not self.tricks:
+            return f"{self.name} does not know any tricks yet."
+        return f"{self.name} performs: {', '.join(self.tricks)}"
+
+
+class Cat(Animal):
+    """A cat with an indoor preference."""
+
+    def __init__(self, name: str, indoor: bool = True) -> None:
+        super().__init__(name, "meow")
+        self.indoor = indoor
+
+    def status(self) -> str:
+        location = "indoor" if self.indoor else "outdoor"
+        return f"{self.name} is an {location} cat."
+
+
+# Usage
+dog = Dog("Rex")
+dog.learn_trick("sit")
+dog.learn_trick("roll over")
+print(dog.speak())
+print(dog.perform())
+
+cat = Cat("Whiskers")
+print(cat.speak())
+print(cat.status())

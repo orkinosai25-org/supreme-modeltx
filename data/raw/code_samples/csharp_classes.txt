@@ -1,0 +1,42 @@
+// C#: Class with properties and methods
+
+using System;
+
+namespace SmtxSamples
+{
+    public class Vector2
+    {
+        public double X { get; set; }
+        public double Y { get; set; }
+
+        public Vector2(double x, double y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public double Magnitude() => Math.Sqrt(X * X + Y * Y);
+
+        public Vector2 Add(Vector2 other) => new Vector2(X + other.X, Y + other.Y);
+
+        public Vector2 Scale(double factor) => new Vector2(X * factor, Y * factor);
+
+        public double Dot(Vector2 other) => X * other.X + Y * other.Y;
+
+        public override string ToString() => $"({X:F2}, {Y:F2})";
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            var a = new Vector2(3, 4);
+            var b = new Vector2(1, 2);
+
+            Console.WriteLine($"a = {a}, magnitude = {a.Magnitude():F2}");
+            Console.WriteLine($"a + b = {a.Add(b)}");
+            Console.WriteLine($"a * 2 = {a.Scale(2)}");
+            Console.WriteLine($"a dot b = {a.Dot(b)}");
+        }
+    }
+}

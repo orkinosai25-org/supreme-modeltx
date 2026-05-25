@@ -1,0 +1,60 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "eastus"
+    },
+    "prefix": {
+      "value": "smtx"
+    },
+    "environment": {
+      "value": "dev"
+    },
+    "adminUsername": {
+      "value": "smtxadmin"
+    },
+    "deployGpuVm": {
+      "value": false
+    },
+    "deployVms": {
+      "value": true
+    },
+    "apiVmCount": {
+      "value": 2
+    },
+    "frontendVmCount": {
+      "value": 2
+    },
+    "dataVmCount": {
+      "value": 2
+    },
+    "inferenceVmCount": {
+      "value": 1
+    },
+    "trainingVmCount": {
+      "value": 1
+    },
+    "controlVmSize": {
+      "value": "Standard_B2ms"
+    },
+    "apiVmSize": {
+      "value": "Standard_B2ms"
+    },
+    "frontendVmSize": {
+      "value": "Standard_B2ms"
+    },
+    "lifecycleVmSize": {
+      "value": "Standard_B2ms"
+    },
+    "dataVmSize": {
+      "value": "Standard_B4ms"
+    },
+    "inferenceVmSize": {
+      "value": "Standard_D8s_v5"
+    },
+    "trainingVmSize": {
+      "value": "Standard_D16s_v5"
+    }
+  }
+}

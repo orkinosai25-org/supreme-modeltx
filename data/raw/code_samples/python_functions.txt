@@ -1,0 +1,42 @@
+# Python: Function definitions and usage
+
+def greet(name: str) -> str:
+    """Return a greeting string for the given name."""
+    return f"Hello, {name}!"
+
+
+def add(a: float, b: float) -> float:
+    """Return the sum of two numbers."""
+    return a + b
+
+
+def factorial(n: int) -> int:
+    """Return the factorial of a non-negative integer recursively."""
+    if n < 0:
+        raise ValueError("n must be non-negative")
+    if n == 0:
+        return 1
+    return n * factorial(n - 1)
+
+
+def fibonacci(n: int) -> list:
+    """Return the first n Fibonacci numbers."""
+    if n <= 0:
+        return []
+    seq = [0, 1]
+    while len(seq) < n:
+        seq.append(seq[-1] + seq[-2])
+    return seq[:n]
+
+
+def clamp(value: float, minimum: float, maximum: float) -> float:
+    """Clamp value between minimum and maximum."""
+    return max(minimum, min(value, maximum))
+
+
+# Usage examples
+print(greet("World"))
+print(add(3.5, 2.1))
+print(factorial(6))
+print(fibonacci(8))
+print(clamp(15, 0, 10))

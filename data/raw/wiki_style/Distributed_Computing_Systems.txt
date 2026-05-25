@@ -1,0 +1,21 @@
+Distributed Computing Systems
+
+A distributed computing system is a collection of independent computers that appears to its users as a single coherent system. Each node in the system has its own local memory and communicates with other nodes by passing messages over a network. The goal is to coordinate the nodes to perform a common task more efficiently or reliably than any single machine could achieve.
+
+The motivations for distribution include scalability, fault tolerance, geographic distribution, and resource sharing. By dividing work across many nodes, a distributed system can process data volumes or serve request rates that would overwhelm any single server. The failure of individual nodes need not bring down the whole system if the architecture includes appropriate redundancy.
+
+Consistency, availability, and partition tolerance are the three properties described by the CAP theorem. The theorem states that a distributed data store can guarantee at most two of these three properties simultaneously. System designers must therefore make deliberate trade-offs based on the requirements of their application.
+
+Consensus algorithms allow distributed systems to agree on a single value or sequence of operations even when some nodes fail or messages are delayed. The Paxos protocol and its derivatives are widely studied theoretical foundations, while Raft is a protocol designed for greater ease of understanding and implementation.
+
+Distributed file systems spread data across multiple storage nodes, providing fault tolerance through replication and scalability through horizontal partitioning. Each file may be divided into chunks stored on several nodes. A metadata service tracks chunk locations and orchestrates reads and writes from clients.
+
+Message queues decouple producers and consumers in a distributed architecture, allowing them to operate at different speeds without losing data. Durable message brokers persist messages to disk so they survive node restarts. Consumers can be scaled independently to handle varying load.
+
+Remote procedure call frameworks allow a program on one node to invoke a function on another node as if it were a local call, abstracting the complexity of serialisation and network communication. Modern implementations use binary serialisation formats and support multiple programming languages through code generation from interface definitions.
+
+Service meshes provide infrastructure-level features such as load balancing, circuit breaking, mutual authentication, and distributed tracing for microservice architectures without requiring application code changes. A sidecar proxy runs alongside each service instance and intercepts all network traffic.
+
+Clock synchronisation is a fundamental challenge in distributed systems because physical clocks drift and network delays introduce uncertainty. Logical clocks, such as Lamport timestamps, establish a causal ordering of events without requiring precise time synchronisation. Vector clocks extend this by tracking causality across multiple nodes.
+
+Distributed transactions, which span multiple databases or services, require careful coordination to ensure that all participants either commit or roll back together. The two-phase commit protocol achieves this by separating the decision to commit from the actual commit, but introduces a blocking period during which participants hold locks.

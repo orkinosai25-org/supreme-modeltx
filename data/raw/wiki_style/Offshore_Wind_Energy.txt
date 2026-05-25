@@ -1,0 +1,21 @@
+Offshore Wind Energy
+
+Offshore wind energy is the generation of electricity using wind turbines installed in bodies of water, typically on the continental shelf where wind speeds are consistently higher and more reliable than on land. The technology has grown substantially since the first offshore wind farm was commissioned off the coast of Denmark in 1991, and large installations now operate across the North Sea, the Baltic Sea, and waters around the British Isles.
+
+The fundamental components of an offshore wind turbine include a rotor with three aerodynamically shaped blades, a nacelle housing the generator and gearbox, and a tower supported by a foundation structure fixed to the seabed. Monopile foundations, consisting of a steel cylinder driven into the seabed, are the most common type in water depths up to about forty metres. For greater depths, jacket structures, tripods, and floating platforms are employed.
+
+Turbine capacity has increased dramatically over the decades. Early offshore turbines produced less than one megawatt; modern machines routinely exceed twelve megawatts, with prototypes approaching twenty megawatts. Larger rotors capture more kinetic energy from the wind, improving the economics of each installation.
+
+The electrical output from turbines is collected at an offshore substation that steps up the voltage for transmission to shore through subsea cables. High-voltage direct current links are preferred for longer distances because they incur lower losses than alternating current transmission over the same length.
+
+Operation and maintenance of offshore wind farms is logistically demanding because technicians must travel by specialist vessel or helicopter to access turbines in potentially harsh sea conditions. Remote monitoring systems collect thousands of sensor readings per turbine to detect faults early and schedule maintenance proactively.
+
+Environmental assessments conducted before construction examine potential effects on marine mammals, seabird colonies, and benthic habitats. Studies have shown that over time, turbine foundations can function as artificial reefs, supporting increased populations of fish and invertebrates.
+
+Offshore wind has become increasingly cost-competitive with other forms of electricity generation. Auction mechanisms used by several governments allow developers to compete for contracts guaranteeing a minimum price for their electricity, providing revenue certainty for long-term infrastructure investment.
+
+Grid integration of large quantities of offshore wind requires investment in onshore network reinforcement and flexible balancing mechanisms to manage variability. Interconnectors linking national grids allow surplus generation in one country to be exported to neighbours experiencing higher demand or lower generation.
+
+Future developments include larger rotor diameters, floating foundation technologies that unlock deep-water sites, and co-location of offshore wind with hydrogen electrolysis to produce green hydrogen when electricity supply exceeds demand.
+
+The United Kingdom has more installed offshore wind capacity than any other country, a position reflecting both its extensive shallow coastal waters and long-standing policy support for the sector.

@@ -1,0 +1,6 @@
+@SMTX.ControlPlane.Api_HostAddress = http://localhost:5261
+
+GET {{SMTX.ControlPlane.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

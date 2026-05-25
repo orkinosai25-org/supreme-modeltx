@@ -1,0 +1,119 @@
+name: Build and Push Docker Images
+
+on:
+  workflow_dispatch:
+    inputs:
+      resource_group:
+        description: 'Azure Resource Group name'
+        required: true
+        default: 'smtx-rg'
+
+concurrency:
+  group: docker-build-push
+  cancel-in-progress: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  build-and-push:
+    name: Build and Push to ACR
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write   # Required for OIDC token exchange
+      contents: read
+
+    steps:
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/.ghcup
+          sudo rm -rf /usr/local/share/powershell
+          sudo rm -rf /usr/share/swift
+          sudo rm -rf /usr/local/share/chromium
+          sudo rm -rf /usr/local/lib/node_modules
+          sudo docker image prune -af
+          df -h
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Azure (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E45C3D43E5AC40DB8318380C0FD93246 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_01CDF649EE9042BBAB65955AC8A5A538 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A3780EA742DC446B87D82128AC45B190 }}
+
+      - name: Discover ACR login server
+        id: acr
+        run: |
+          RESOURCE_GROUP="${{ github.event.inputs.resource_group || 'smtx-rg' }}"
+          ACR_NAME=$(az acr list --resource-group "$RESOURCE_GROUP" --query "[0].name" -o tsv)
+          if [ -z "$ACR_NAME" ]; then
+            echo "::error::No Azure Container Registry found in resource group '$RESOURCE_GROUP'"
+            exit 1
+          fi
+          ACR_LOGIN_SERVER=$(az acr show --name "$ACR_NAME" --resource-group "$RESOURCE_GROUP" --query loginServer -o tsv)
+          echo "name=${ACR_NAME}" >> "$GITHUB_OUTPUT"
+          echo "login_server=${ACR_LOGIN_SERVER}" >> "$GITHUB_OUTPUT"
+
+      - name: Log in to Azure Container Registry
+        run: |
+          echo "${{ secrets.ACR_PASSWORD }}" | docker login "${{ steps.acr.outputs.login_server }}" \
+            --username "${{ secrets.ACR_USERNAME }}" \
+            --password-stdin
+
+      - name: Build training image
+        run: |
+          docker build \
+            -t ${{ steps.acr.outputs.login_server }}/smtx-train:latest \
+            -t ${{ steps.acr.outputs.login_server }}/smtx-train:${{ github.sha }} \
+            -f scripts/Dockerfile \
+            .
+
+      - name: Build CPU training image
+        run: |
+          docker build \
+            -t ${{ steps.acr.outputs.login_server }}/smtx-train-cpu:latest \
+            -t ${{ steps.acr.outputs.login_server }}/smtx-train-cpu:${{ github.sha }} \
+            -f scripts/Dockerfile.cpu \
+            .
+
+      - name: Build inference image
+        run: |
+          docker build \
+            -t ${{ steps.acr.outputs.login_server }}/smtx-vllm:latest \
+            -t ${{ steps.acr.outputs.login_server }}/smtx-vllm:${{ github.sha }} \
+            -f scripts/Dockerfile.inference \
+            .
+
+      - name: Push training image
+        run: |
+          docker push ${{ steps.acr.outputs.login_server }}/smtx-train:latest
+          docker push ${{ steps.acr.outputs.login_server }}/smtx-train:${{ github.sha }}
+
+      - name: Push CPU training image
+        run: |
+          docker push ${{ steps.acr.outputs.login_server }}/smtx-train-cpu:latest
+          docker push ${{ steps.acr.outputs.login_server }}/smtx-train-cpu:${{ github.sha }}
+
+      - name: Push inference image
+        run: |
+          docker push ${{ steps.acr.outputs.login_server }}/smtx-vllm:latest
+          docker push ${{ steps.acr.outputs.login_server }}/smtx-vllm:${{ github.sha }}
+
+      # ── Validate CPU training image entrypoint ───────────────────────────
+      # Runs the freshly-pushed CPU image with --help to confirm the container
+      # starts, the entrypoint resolves, and the image is functionally healthy.
+      # This is the local sanity check (Step 1) described in the issue.
+      - name: Validate CPU training image entrypoint
+        run: |
+          echo "Running container sanity check (--help)..."
+          docker run --rm \
+            -e TRAINING_PROFILE=cpu-single-node \
+            ${{ steps.acr.outputs.login_server }}/smtx-train-cpu:latest \
+            --help
+          echo "✅ CPU training image entrypoint validated."

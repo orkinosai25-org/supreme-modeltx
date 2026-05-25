@@ -1,0 +1,193 @@
+name: Azure platform setup
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Deployment environment
+        required: true
+        type: choice
+        default: dev
+        options:
+          - dev
+          - prod
+      location:
+        description: Azure deployment location
+        required: true
+        default: uksouth
+      resource_group:
+        description: Resource group to create/use for SMTX dependencies
+        required: true
+        default: sumotx-rg-dev
+      web_app_name:
+        description: Existing Azure Web App name to receive settings wiring
+        required: true
+      frontend_ssh_source_cidr:
+        description: CIDR allowed for frontend SSH access
+        required: true
+        default: 0.0.0.0/0
+      sql_admin_login:
+        description: SQL admin login name
+        required: true
+        default: sumotxsqladmin
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  provision-and-wire:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Azure login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E45C3D43E5AC40DB8318380C0FD93246 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_01CDF649EE9042BBAB65955AC8A5A538 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A3780EA742DC446B87D82128AC45B190 }}
+
+      - name: Resolve SSH key
+        id: ssh
+        shell: bash
+        run: |
+          set -euo pipefail
+          SSH_PUBLIC_KEY="${{ secrets.SSH_PUBLIC_KEY }}"
+          if [ -z "$SSH_PUBLIC_KEY" ]; then
+            echo "::error::SSH_PUBLIC_KEY secret is required for VM provisioning."
+            exit 1
+          fi
+          echo "value=${SSH_PUBLIC_KEY}" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy IaC for SMTX dependencies
+        id: deploy
+        shell: bash
+        env:
+          SQL_ADMIN_PASSWORD: ${{ secrets.SUMOTX_SQL_ADMIN_PASSWORD }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SQL_ADMIN_PASSWORD}" ]; then
+            echo "::error::SUMOTX_SQL_ADMIN_PASSWORD secret is required."
+            exit 1
+          fi
+
+          az deployment sub create \
+            --name "smtx-platform-${{ github.run_number }}" \
+            --location "${{ github.event.inputs.location }}" \
+            --template-file deployment/iac/main.bicep \
+            --parameters \
+              env="${{ github.event.inputs.environment }}" \
+              location="${{ github.event.inputs.location }}" \
+              resourceGroupName="${{ github.event.inputs.resource_group }}" \
+              frontendSshSourceCidr="${{ github.event.inputs.frontend_ssh_source_cidr }}" \
+              sshPublicKey="${{ steps.ssh.outputs.value }}" \
+              sqlAdminLogin="${{ github.event.inputs.sql_admin_login }}" \
+              sqlAdminPassword="${SQL_ADMIN_PASSWORD}" \
+            --query properties.outputs > outputs.json
+
+          cat outputs.json
+
+      - name: Wire Web App settings and connection strings
+        shell: bash
+        env:
+          SQL_ADMIN_PASSWORD: ${{ secrets.SUMOTX_SQL_ADMIN_PASSWORD }}
+        run: |
+          set -euo pipefail
+
+          RESOURCE_GROUP="${{ github.event.inputs.resource_group }}"
+          WEB_APP="${{ github.event.inputs.web_app_name }}"
+
+          SQL_SERVER_FQDN=$(jq -r '.sqlServerFqdn.value' outputs.json)
+          SQL_SERVER_NAME=$(jq -r '.sqlServerName.value' outputs.json)
+          SQL_DATABASE_NAME=$(jq -r '.sqlDatabaseName.value' outputs.json)
+          SQL_ADMIN_LOGIN=$(jq -r '.sqlAdminLogin.value' outputs.json)
+          STORAGE_ACCOUNT_NAME=$(jq -r '.storageAccountName.value' outputs.json)
+          STORAGE_BLOB_ENDPOINT=$(jq -r '.storageBlobEndpoint.value' outputs.json)
+          SEARCH_SERVICE_NAME=$(jq -r '.searchServiceName.value' outputs.json)
+          SEARCH_ENDPOINT=$(jq -r '.searchEndpoint.value' outputs.json)
+          OPENAI_ACCOUNT_NAME=$(jq -r '.openAiAccountName.value' outputs.json)
+          OPENAI_ENDPOINT=$(jq -r '.openAiEndpoint.value' outputs.json)
+          OPENAI_CHAT_DEPLOYMENT=$(jq -r '.openAiChatDeploymentName.value' outputs.json)
+          OPENAI_EMBEDDING_DEPLOYMENT=$(jq -r '.openAiEmbeddingDeploymentName.value' outputs.json)
+
+          WEBAPP_OUTBOUND_IPS=$(az webapp show --resource-group "${RESOURCE_GROUP}" --name "${WEB_APP}" --query outboundIpAddresses -o tsv)
+          IFS=',' read -r -a OUTBOUND_IP_ARRAY <<< "${WEBAPP_OUTBOUND_IPS}"
+          for i in "${!OUTBOUND_IP_ARRAY[@]}"; do
+            IP="${OUTBOUND_IP_ARRAY[$i]}"
+            RULE_NAME="webapp-outbound-${i}"
+            az sql server firewall-rule create \
+              --resource-group "${RESOURCE_GROUP}" \
+              --server "${SQL_SERVER_NAME}" \
+              --name "${RULE_NAME}" \
+              --start-ip-address "${IP}" \
+              --end-ip-address "${IP}" >/dev/null
+          done
+
+          SQL_CONNECTION="Server=tcp:${SQL_SERVER_FQDN},1433;Initial Catalog=${SQL_DATABASE_NAME};Persist Security Info=False;User ID=${SQL_ADMIN_LOGIN};Password=${SQL_ADMIN_PASSWORD};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+
+          az webapp config connection-string set \
+            --resource-group "${RESOURCE_GROUP}" \
+            --name "${WEB_APP}" \
+            --connection-string-type SQLAzure \
+            --settings SumotxControlPlane="${SQL_CONNECTION}" >/dev/null
+
+          az webapp config appsettings set \
+            --resource-group "${RESOURCE_GROUP}" \
+            --name "${WEB_APP}" \
+            --settings \
+              "SMTX__Storage__AccountName=${STORAGE_ACCOUNT_NAME}" \
+              "SMTX__Storage__BlobEndpoint=${STORAGE_BLOB_ENDPOINT}" \
+              "SMTX__Search__ServiceName=${SEARCH_SERVICE_NAME}" \
+              "SMTX__Search__Endpoint=${SEARCH_ENDPOINT}" \
+              "SMTX__OpenAI__AccountName=${OPENAI_ACCOUNT_NAME}" \
+              "SMTX__OpenAI__Endpoint=${OPENAI_ENDPOINT}" \
+              "SMTX__OpenAI__ChatDeployment=${OPENAI_CHAT_DEPLOYMENT}" \
+              "SMTX__OpenAI__EmbeddingDeployment=${OPENAI_EMBEDDING_DEPLOYMENT}" \
+              "ASPNETCORE_ENVIRONMENT=${{ github.event.inputs.environment }}" >/dev/null
+
+      - name: Assign managed identity roles
+        shell: bash
+        run: |
+          set -euo pipefail
+          RESOURCE_GROUP="${{ github.event.inputs.resource_group }}"
+          WEB_APP="${{ github.event.inputs.web_app_name }}"
+
+          az webapp identity assign --resource-group "${RESOURCE_GROUP}" --name "${WEB_APP}" >/dev/null
+          WEBAPP_PRINCIPAL_ID=$(az webapp identity show --resource-group "${RESOURCE_GROUP}" --name "${WEB_APP}" --query principalId -o tsv)
+
+          STORAGE_ACCOUNT_NAME=$(jq -r '.storageAccountName.value' outputs.json)
+          SEARCH_SERVICE_NAME=$(jq -r '.searchServiceName.value' outputs.json)
+          OPENAI_ACCOUNT_NAME=$(jq -r '.openAiAccountName.value' outputs.json)
+
+          STORAGE_SCOPE=$(az storage account show --resource-group "${RESOURCE_GROUP}" --name "${STORAGE_ACCOUNT_NAME}" --query id -o tsv)
+          SEARCH_SCOPE=$(az resource show --resource-group "${RESOURCE_GROUP}" --resource-type "Microsoft.Search/searchServices" --name "${SEARCH_SERVICE_NAME}" --query id -o tsv)
+          OPENAI_SCOPE=$(az cognitiveservices account show --resource-group "${RESOURCE_GROUP}" --name "${OPENAI_ACCOUNT_NAME}" --query id -o tsv)
+
+          ensure_role_assignment() {
+            local role_name="$1"
+            local scope="$2"
+
+            local existing_count
+            existing_count=$(az role assignment list \
+              --assignee-object-id "${WEBAPP_PRINCIPAL_ID}" \
+              --scope "${scope}" \
+              --role "${role_name}" \
+              --query 'length(@)' -o tsv)
+
+            if [ "${existing_count}" = "0" ]; then
+              az role assignment create \
+                --assignee-object-id "${WEBAPP_PRINCIPAL_ID}" \
+                --assignee-principal-type ServicePrincipal \
+                --role "${role_name}" \
+                --scope "${scope}" >/dev/null
+            fi
+          }
+
+          ensure_role_assignment "Storage Blob Data Contributor" "${STORAGE_SCOPE}"
+          ensure_role_assignment "Search Service Contributor" "${SEARCH_SCOPE}"
+          ensure_role_assignment "Cognitive Services OpenAI User" "${OPENAI_SCOPE}"
