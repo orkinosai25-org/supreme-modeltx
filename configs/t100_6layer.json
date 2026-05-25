@@ -1,0 +1,17 @@
+{
+  "vocab_size": 256,
+  "sequence_length": 128,
+  "batch_size": 16,
+  "embedding_dim": 384,
+  "num_heads": 6,
+  "num_layers": 6,
+  "ffw_hidden_dim": 1536,
+  "dropout": 0.1,
+  "learning_rate": 0.0003,
+  "max_steps": 200,
+  "eval_interval": 25,
+  "eval_batches": 4,
+  "checkpoint_dir": "checkpoints",
+  "gradient_clip_norm": 1.0,
+  "use_amp": true
+}
