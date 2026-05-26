@@ -1,0 +1,21 @@
+Neural Network Architectures
+
+A neural network is a computational model composed of layers of interconnected processing units called neurons. Each neuron receives one or more inputs, applies a weighted sum and a non-linear activation function, and passes the result to neurons in the next layer. By stacking many layers and training the weights using gradient descent, neural networks can learn complex mappings from inputs to outputs.
+
+Feedforward networks, the simplest architecture, pass information in one direction from input to output without cycles. They are suited to classification and regression tasks where the input is a fixed-length vector. Shallow feedforward networks with a single hidden layer are universal approximators in theory, but deep networks with many layers learn hierarchical feature representations more efficiently in practice.
+
+Convolutional neural networks exploit the spatial structure of images by applying learnable filters that detect local patterns regardless of their position. Multiple convolutional layers detect progressively more abstract features: early layers respond to edges and textures, while deeper layers recognise shapes and objects. Pooling operations reduce spatial dimensions, making representations invariant to small translations.
+
+Recurrent neural networks process sequential data by maintaining a hidden state that is updated at each time step based on the current input and the previous state. This allows the network to model temporal dependencies. Gated architectures such as long short-term memory and gated recurrent units address the vanishing gradient problem that hampers training of simple recurrent networks over long sequences.
+
+Transformer architectures dispense with recurrence and instead use self-attention mechanisms that allow each position in a sequence to attend directly to all other positions. Scaled dot-product attention computes compatibility scores between query and key vectors, weights value vectors accordingly, and sums them. Multi-head attention applies multiple attention functions in parallel, capturing different aspects of relationships.
+
+Residual connections, which add the input of a layer directly to its output, allow gradients to flow more easily through very deep networks during backpropagation. Networks with hundreds of layers became trainable after residual connections were introduced, enabling significant gains in computer vision benchmarks.
+
+Normalisation layers such as batch normalisation and layer normalisation standardise the activations within a network, accelerating training and reducing sensitivity to weight initialisation. They have become standard components in nearly all modern architectures.
+
+Autoencoders are trained to reconstruct their input through a bottleneck layer that forces the network to learn a compressed representation. Variational autoencoders introduce a probabilistic latent space, enabling generation of new samples by sampling from the learned distribution.
+
+Attention-based sequence-to-sequence models have become the standard approach for machine translation, summarisation, and speech recognition. An encoder processes the source sequence into contextual representations, and a decoder generates the target sequence one token at a time, attending to relevant encoder positions at each step.
+
+Graph neural networks operate on graph-structured data by aggregating features from neighbouring nodes through message-passing operations. They have been applied to molecular property prediction, social network analysis, knowledge graph completion, and recommendation systems.

@@ -1,0 +1,124 @@
+# azure_batch_cpu.yml — SMTX CPU-first Azure Batch pool and job spec
+#
+# Default compute profile: cpu-single-node / cpu-distributed
+# No GPU quota required.
+#
+# VM family: Standard_Dv5 / Dsv5 (CPU-only, sponsorship-compatible)
+# Dedicated CPU node by default to avoid Spot/low-priority eviction issues.
+#
+# Substitute placeholders before use:
+#   <storage_account>   — Azure Storage account name
+#   <SUBSCRIPTION_ID>   — Azure subscription ID
+#
+# Used by .github/workflows/train.yml when training_profile != gpu-accelerated.
+
+# ── Batch pool (CPU-first) ────────────────────────────────────────────────────
+pool:
+  name: smtx-cpu-training-pool
+  # Standard_D16s_v5: 16 vCPUs, 64 GB RAM — no GPU dependency
+  # Switch to Standard_D8s_v5 (8 vCPU) or Standard_D32s_v5 (32 vCPU) as needed.
+  vmSize: Standard_D16s_v5
+  # Dedicated-only pool for reliable scheduling/validation runs.
+  targetLowPriorityNodes: 0
+  targetDedicatedNodes: 1
+  taskSlotsPerNode: 1
+  virtualMachineConfiguration:
+    imageReference:
+      publisher: canonical
+      offer: 0001-com-ubuntu-server-jammy
+      sku: "22_04-lts"
+      version: latest
+    nodeAgentSKUId: "batch.node.ubuntu 22.04"
+  mountConfiguration:
+    - azureFileShareConfiguration:
+        accountName: <storage_account>
+        azureFileUrl: https://<storage_account>.file.core.windows.net/smtxdata
+        relativeMountPath: smtxdata
+        mountOptions: -o vers=3.0,dir_mode=0777,file_mode=0777,serverino
+    - azureFileShareConfiguration:
+        accountName: <storage_account>
+        azureFileUrl: https://<storage_account>.file.core.windows.net/smtxcheckpoints
+        relativeMountPath: smtxcheckpoints
+        mountOptions: -o vers=3.0,dir_mode=0777,file_mode=0777,serverino
+  taskSchedulingPolicy:
+    nodeFillType: Pack
+
+# ── Batch job ─────────────────────────────────────────────────────────────────
+job:
+  id: smtx-t101-cpu-train
+  displayName: SMTX T-101 CPU Training Run
+  priority: 100
+  constraints:
+    # Hard wall-time cap — tasks will never remain active indefinitely.
+    # Adjust to match expected training duration.
+    maxWallClockTime: PT8H
+  poolInfo:
+    poolId: smtx-cpu-training-pool
+  # Job terminates automatically when all tasks complete — no hanging active state.
+  onAllTasksComplete: terminateJob
+  onTaskFailure: performExitOptionsJobAction
+
+# ── Coordinator task (single-node or rank-0 in distributed) ──────────────────
+coordinatorTask:
+  id: train-t101-coordinator
+  displayName: Train T-101 — CPU Coordinator
+  requiredSlots: 1
+  constraints:
+    # Per-task wall-time matches job limit.
+    maxWallClockTime: PT8H
+    # Ensure task exits rather than hangs.
+    retentionTime: PT1H
+  commandLine: >-
+    bash -c "
+      set -euo pipefail
+
+      # ── Pull training image and run ───────────────────────────────────────
+      # TRAINING_PROFILE drives the launch mode inside run_training.sh.
+      # cpu-single-node: plain python
+      # cpu-distributed: torchrun + Gloo
+      bash scripts/run_training.sh
+    "
+  containerSettings:
+    imageName: smtxacr.azurecr.io/smtx-train-cpu:latest
+    containerRunOptions: >-
+      --ipc=host
+      --net=host
+      -v /mnt/batch/tasks/shared/smtxdata:/mnt/data
+      -v /mnt/batch/tasks/shared/smtxcheckpoints:/mnt/checkpoints
+  environmentSettings:
+    # Default profile — override to cpu-distributed for multi-node runs.
+    - name: TRAINING_PROFILE
+      value: "cpu-single-node"
+    - name: CHECKPOINT_DIR
+      value: /mnt/checkpoints/t101-cpu
+    - name: DATA_INPUT_DIR
+      value: /mnt/data/raw
+    - name: DATA_OUTPUT_DIR
+      value: /mnt/data/processed
+    - name: TOKENIZER_PATH
+      value: tmodels/t101
+    - name: NUM_NODES
+      value: "1"
+    - name: MASTER_PORT
+      value: "29500"
+    # OMP_NUM_THREADS is intentionally set below the vCPU count (16 vCPUs on
+    # Standard_D16s_v5) to avoid thread oversubscription. PyTorch spawns its
+    # own internal threads on top of OMP; setting OMP threads equal to vCPUs
+    # causes contention and slower throughput. 4 is a safe cross-platform
+    # default for ML workloads. Tune higher (e.g. 8) only after profiling.
+    - name: OMP_NUM_THREADS
+      value: "4"
+    # Gloo uses TCP by default on CPU nodes; set interface for multi-node.
+    - name: GLOO_SOCKET_IFNAME
+      value: eth0
+    - name: TOKENIZERS_PARALLELISM
+      value: "false"
+  outputFiles:
+    - filePattern: /mnt/checkpoints/t101-cpu/**
+      destination:
+        container:
+          containerUrl: https://<storage_account>.blob.core.windows.net/checkpoints/t101-cpu
+          identityReference:
+            resourceId: /subscriptions/<SUBSCRIPTION_ID>/resourceGroups/smtx-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/smtx-batch-identity
+      uploadOptions:
+        uploadCondition: taskCompletion

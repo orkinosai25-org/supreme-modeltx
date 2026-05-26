@@ -1,0 +1,36 @@
+// JavaScript: Array methods
+
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+// map: transform each element
+const doubled = numbers.map((n) => n * 2);
+console.log("Doubled:", doubled);
+
+// filter: keep elements matching predicate
+const evens = numbers.filter((n) => n % 2 === 0);
+console.log("Evens:", evens);
+
+// reduce: accumulate to single value
+const total = numbers.reduce((acc, n) => acc + n, 0);
+console.log("Sum:", total);
+
+// find and findIndex
+const firstOver5 = numbers.find((n) => n > 5);
+console.log("First over 5:", firstOver5);
+
+// some and every
+console.log("Any > 9:", numbers.some((n) => n > 9));
+console.log("All > 0:", numbers.every((n) => n > 0));
+
+// flat and flatMap
+const nested = [[1, 2], [3, 4], [5]];
+console.log("Flattened:", nested.flat());
+
+const words = ["hello world", "foo bar"];
+const allWords = words.flatMap((s) => s.split(" "));
+console.log("All words:", allWords);
+
+// sort (numeric)
+const unsorted = [5, 2, 8, 1, 9, 3];
+const sorted = [...unsorted].sort((a, b) => a - b);
+console.log("Sorted:", sorted);

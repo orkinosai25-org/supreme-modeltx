@@ -1,0 +1,100 @@
+Photosynthesis is the process by which green plants convert light energy into chemical energy stored as glucose. The reaction takes place primarily in chloroplasts, organelles containing chlorophyll. Sunlight energises electrons driving reactions that split water molecules, releasing oxygen and incorporating carbon dioxide into organic compounds.
+
+Quantum mechanics describes the behaviour of matter and energy at the smallest scales. The wave-particle duality principle holds that elementary particles exhibit both wave-like and particle-like properties. The uncertainty principle states that the position and momentum of a particle cannot both be precisely determined simultaneously.
+
+The Industrial Revolution, beginning in Britain during the eighteenth century, transformed economies from agrarian structures to ones dominated by industry and machine manufacturing. Innovations in steam power, textile production, and iron smelting created new urban settlement patterns. The social consequences included rapid population growth in cities and the emergence of a distinct working class.
+
+The internet is a global network of interconnected computers communicating using standardised protocols. It evolved from ARPANET, a project funded by the United States Department of Defense in the 1960s. Today the internet supports services ranging from electronic mail and the World Wide Web to cloud computing and real-time video streaming.
+
+Semiconductor transistors replaced vacuum tubes as the fundamental building blocks of electronic circuits in the 1950s, enabling miniaturisation. Advances in photolithography have allowed manufacturers to pack billions of transistors onto a single silicon chip. This trajectory of increasing density has underpinned decades of rapid improvement in computational performance.
+
+Crop rotation is a farming practice in which different crops are grown on the same land in successive seasons to maintain soil fertility and reduce pest pressure. Leguminous plants fix atmospheric nitrogen into the soil through symbiotic bacteria in their root nodules. Historic three-field systems divided farmland into winter grain, spring grain, and fallow sections.
+
+Artificial neural networks are computational models loosely inspired by the biological brain, consisting of layers of interconnected nodes. During training, connection weights are adjusted incrementally using backpropagation so that predictions more closely match desired outcomes. Deep learning extends this approach with many hidden layers, allowing networks to learn hierarchical representations.
+
+Natural language processing is a branch of AI concerned with enabling computers to understand, generate, and manipulate human language. Tasks include sentiment analysis, machine translation, summarisation, and question answering. Transformer architectures, introduced in 2017, have become the dominant approach using attention mechanisms.
+
+The National Grid manages the electricity transmission network across Great Britain, balancing supply and demand in real time. High-voltage overhead lines and underground cables carry electricity from power stations and renewable generators to regional distribution networks. The transition to net-zero electricity will require substantial expansion of transmission capacity.
+
+Plate tectonics describes the large-scale motion of the segments of Earth's lithosphere. These rigid plates float on the semi-fluid asthenosphere beneath them and move a few centimetres per year. Interactions at plate boundaries produce earthquakes, volcanoes, and the gradual reshaping of continents over geological timescales.
+
+The periodic table organises all known chemical elements by increasing atomic number and groups them by recurring chemical properties. Elements in the same vertical column share similar valence electron configurations and exhibit analogous chemical behaviour. The arrangement was first proposed in the nineteenth century and extended as new elements were synthesised.
+
+Cloud computing delivers computing resources including servers, storage, databases, and software over the internet on a pay-as-you-use basis. Infrastructure providers manage the underlying hardware and virtualisation layers, allowing customers to scale without capital expenditure. Service models range from infrastructure as a service to platform and software as a service.
+
+Blockchain technology provides a distributed, append-only ledger in which transactions are grouped into cryptographically linked blocks replicated across many nodes. Altering any block would invalidate all subsequent blocks and require majority consensus, making the ledger highly resistant to tampering. Cryptocurrencies were the first widespread application.
+
+Precision agriculture uses satellite imagery, soil sensors, and data analytics to tailor inputs such as water, fertiliser, and pesticide to specific field areas. By applying resources only where and when needed, farmers can reduce costs and environmental impact while maintaining yields. Drones with multispectral cameras identify stressed plants before visible symptoms appear.
+
+Reinforcement learning is a paradigm in which an agent learns to make decisions by interacting with an environment and receiving scalar reward signals. Through repeated trial and error, the agent discovers policies that maximise cumulative reward. The combination of deep neural networks with reinforcement learning has produced superhuman performance in complex strategic games.
+
+Fibre-optic cables transmit data as pulses of light through thin strands of glass or plastic, achieving vastly higher bandwidths than copper wire. A single fibre can carry multiple wavelengths of light simultaneously through wavelength-division multiplexing. Undersea fibre-optic cables form the backbone of international internet connectivity.
+
+Soil health encompasses the physical, chemical, and biological properties determining a soil's capacity to sustain plant growth. Cover cropping, reduced tillage, and organic matter addition promote diverse microbial communities that cycle nutrients and improve soil structure. Degraded soils are more prone to erosion and require greater chemical inputs.
+
+The green revolution of the mid-twentieth century dramatically increased cereal grain yields through high-yielding dwarf varieties, synthetic fertilisers, and expanded irrigation. Wheat and rice yields in many countries doubled or tripled within a decade, averting famine for hundreds of millions. Critics noted increased dependency on external inputs and reduced agricultural biodiversity.
+
+Computer vision is the field of AI enabling machines to interpret visual information from images and video. Convolutional neural networks process images through successive layers of learnable filters detecting progressively more abstract features. Applications include object detection, medical image analysis, and autonomous vehicle perception.
+
+Transfer learning allows a model pre-trained on a large dataset to be fine-tuned for a different task with far less data and computation. Large language models pre-trained on broad text corpora can be adapted to specialised domains such as legal reasoning or code generation. This paradigm has made high-performing AI accessible to organisations that cannot train from scratch.
+
+Edge computing moves data processing closer to the source of data generation, reducing latency and bandwidth costs. In industrial settings, edge devices can analyse sensor data in real time to detect anomalies without relying on network connectivity. The approach complements centralised cloud services, handling time-critical tasks locally.
+
+Wireless communication has evolved through successive generations, from analogue voice calls to multi-gigabit fifth-generation networks. Each generation introduced new radio access technologies and network architectures. Fifth generation leverages millimetre-wave spectrum, massive antenna arrays, and network slicing to support autonomous vehicles and smart factories.
+
+Three-dimensional printing builds physical objects layer by layer from digital models. The technology began with stereolithography and has expanded to fused-deposition modelling, selective laser sintering, and metal powder bed fusion. Industries including aerospace, medicine, and architecture use it to produce prototypes and customised components.
+
+The Silk Road was a network of trade routes connecting East Asia with the Middle East and Europe for more than a millennium. Merchants transported silk, spices, glass, precious metals, and ideas across vast distances. The routes facilitated the spread of religions, technologies, and epidemic diseases.
+
+The Byzantine Empire, continuation of the Eastern Roman Empire, survived the fall of Rome and endured until the Ottoman conquest of Constantinople in 1453. Byzantine scholars preserved and transmitted classical knowledge, profoundly influencing the later European Renaissance. At its height the empire controlled territories spanning the Balkans, Anatolia, and parts of North Africa.
+
+Osmosis is the movement of water molecules across a semi-permeable membrane from a region of lower solute concentration to one of higher concentration, tending to equalise concentrations. This process is fundamental to the functioning of plant and animal cells. Cells regulate their internal environment through selective membrane permeability.
+
+The Global Positioning System uses a constellation of satellites in medium Earth orbit to provide precise location and timing information anywhere on the planet. Each satellite transmits signals that receivers use to calculate distance through trilateration. Modern receivers can determine position with an accuracy of a few metres.
+
+Distributed computing systems coordinate independent computers to appear as a single coherent system. Each node has local memory and communicates by passing messages over a network. Motivations include scalability, fault tolerance, and resource sharing across geographic locations.
+
+The transatlantic slave trade forcibly transported millions of African people to the Americas between the sixteenth and nineteenth centuries. The trade was driven by European demand for sugar, tobacco, and cotton and caused immeasurable human suffering. Its legacy continues to shape social and economic inequalities in many regions today.
+
+Electromagnetism is one of the four fundamental forces of nature, governing interactions between electrically charged particles. James Clerk Maxwell unified electricity and magnetism into a single theoretical framework, showing that changing electric fields generate magnetic fields and vice versa. This mutual induction produces electromagnetic waves including radio waves and visible light.
+
+The standard model of particle physics describes three of the four known fundamental forces and classifies all known elementary particles. It encompasses quarks, leptons, and the gauge bosons mediating the electromagnetic, weak, and strong nuclear forces. The Higgs boson, confirmed experimentally in 2012, gives other fundamental particles their mass.
+
+Pumped hydroelectric storage remains the largest source of stored energy worldwide. Water is pumped from a lower reservoir to a higher one using surplus electricity, then released through turbines to generate electricity on demand. The technology is mature and long-lived but constrained by requirements for suitable reservoir sites.
+
+The United Kingdom has more installed offshore wind capacity than any other country, reflecting its extensive shallow coastal waters and long-standing policy support. Offshore turbines are installed on the continental shelf where wind speeds are consistently higher than on land. The electrical output is transmitted to shore through subsea high-voltage cables.
+
+Lithium-ion batteries are the dominant technology for grid-scale electrical storage today, benefiting from manufacturing scale driven by the electric vehicle industry. They charge and discharge rapidly, respond within milliseconds to grid frequency deviations, and achieve round-trip efficiencies above ninety percent. Their main limitations are finite cycle life and raw material costs.
+
+The Alan Turing Institute was established in 2015 as the national institute for data science and artificial intelligence, serving as a hub for interdisciplinary research. It takes its name from the British mathematician whose theoretical work laid foundations for computing and AI. Collaborations involve academics from across the country together with government and industry partners.
+
+DeepMind, founded in London in 2010, gained global recognition for developing systems achieving superhuman performance in complex games and for applying machine learning to accelerate protein structure prediction. The organisation has continued to publish influential research while exploring applications in healthcare, energy, and scientific discovery. It was acquired by Alphabet in 2014.
+
+Healthcare AI has attracted substantial investment in the United Kingdom partly due to the availability of large longitudinal patient datasets held by the National Health Service. Projects have demonstrated AI systems detecting conditions from medical images with accuracy comparable to specialist clinicians. Clinical deployment requires careful validation and regulatory approval.
+
+The printing press with movable type, developed by Johannes Gutenberg in the mid-fifteenth century, revolutionised the production and distribution of written information in Europe. Books could be produced rapidly and in large quantities, lowering costs and increasing literacy. The technology accelerated the Reformation, scientific exchange, and standardisation of national languages.
+
+Cellular respiration is the set of metabolic reactions through which cells extract energy from organic molecules and store it in adenosine triphosphate. The process occurs in glycolysis, the citric acid cycle, and oxidative phosphorylation. Oxygen serves as the final electron acceptor and water is released as a by-product.
+
+The human genome contains approximately three billion base pairs of DNA encoding around twenty thousand protein-coding genes. Advances in sequencing technologies have dramatically reduced the time and cost of reading an individual's complete genetic code. Comparative genomics analyses similarities and differences across species to illuminate evolutionary relationships.
+
+Ecosystems are dynamic communities of interacting organisms and their physical environment. Energy flows from primary producers such as plants through various levels of consumers to decomposers that return nutrients to the soil. Disruption of any level can trigger cascading effects throughout the entire system.
+
+The M25 motorway, completed in 1986, forms a ring road around Greater London approximately 188 miles in total length. It intersects with numerous radial motorways and has been widened multiple times to accommodate increasing traffic. Smart motorway technology uses variable speed limits and dynamic lane assignment to manage congestion.
+
+Crossrail, branded the Elizabeth line, is a major east-west railway through central London connecting Reading and Heathrow with Shenfield and Abbey Wood. The project involved drilling twin tunnels beneath the city and constructing new stations. The line significantly increased rail capacity across the capital.
+
+Object storage systems provide a flat namespace for storing and retrieving arbitrary binary objects identified by keys. Unlike traditional file systems, object storage scales horizontally to exabytes and decouples storage capacity from compute resources. Data durability is achieved by replicating objects across multiple storage nodes.
+
+Managed database services relieve customers of responsibility for database installation, patching, backups, and failover. Providers offer relational databases, document stores, key-value caches, and graph databases as services. Each service type is tuned for particular access patterns and consistency requirements.
+
+Service meshes provide infrastructure-level features such as load balancing, circuit breaking, mutual authentication, and distributed tracing for microservice architectures. A sidecar proxy runs alongside each service instance and intercepts all inbound and outbound network traffic. This removes cross-cutting concerns from application code.
+
+Generative AI models learn the statistical structure of training data and produce new samples resembling the training distribution. Generative adversarial networks pit a generator against a discriminator, training both simultaneously. Diffusion models learn to reverse a noise process and have achieved state-of-the-art results in image synthesis.
+
+Flow batteries store energy in liquid electrolytes held in external tanks. Because energy capacity scales with tank volume independently of power capacity, they are well suited to long-duration storage. Vanadium redox flow batteries have been deployed at utility scale, with research ongoing into lower-cost chemistries.
+
+Hydrogen produced by electrolysis using surplus renewable electricity can be stored in compressed gas cylinders, liquefied at cryogenic temperatures, or absorbed in solid metal hydride materials. It can be reconverted to electricity in fuel cells or burned in gas turbines. Low round-trip efficiency limits its use to long-duration or seasonal storage contexts.
+
+Soft robotics uses compliant, flexible materials to create actuators that deform continuously rather than rotating at discrete joints. This enables safe interaction with delicate objects and biological tissues. Potential applications include surgery, rehabilitation, and food handling.
+

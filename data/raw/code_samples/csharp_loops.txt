@@ -1,0 +1,39 @@
+// C#: Loop examples
+
+using System;
+using System.Collections.Generic;
+
+class LoopExamples
+{
+    static void Main()
+    {
+        // for loop
+        for (int i = 0; i < 5; i++)
+        {
+            Console.WriteLine($"Iteration {i}");
+        }
+
+        // while loop
+        int count = 0;
+        while (count < 3)
+        {
+            Console.WriteLine($"Count: {count}");
+            count++;
+        }
+
+        // foreach over a list
+        var fruits = new List<string> { "apple", "banana", "cherry" };
+        foreach (var fruit in fruits)
+        {
+            Console.WriteLine($"Fruit: {fruit}");
+        }
+
+        // do-while
+        int x = 0;
+        do
+        {
+            Console.WriteLine($"x = {x}");
+            x++;
+        } while (x < 3);
+    }
+}

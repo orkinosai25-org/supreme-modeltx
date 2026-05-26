@@ -1,0 +1,99 @@
+pool:
+  name: smtx-training-pool
+  vmSize: Standard_NC96ads_A100_v4   # 4× A100 80 GB per node
+  targetDedicatedNodes: 2             # 2 nodes → 8 A100s total for multi-node training
+  taskSlotsPerNode: 1
+  virtualMachineConfiguration:
+    imageReference:
+      publisher: microsoft-dsvm
+      offer: ubuntu-hpc
+      sku: "2204"
+      version: latest
+    nodeAgentSKUId: "batch.node.ubuntu 22.04"
+  mountConfiguration:
+    - azureFileShareConfiguration:
+        accountName: <storage_account>
+        azureFileUrl: https://<storage_account>.file.core.windows.net/smtxdata
+        relativeMountPath: smtxdata
+        mountOptions: -o vers=3.0,dir_mode=0777,file_mode=0777,serverino
+    - azureFileShareConfiguration:
+        accountName: <storage_account>
+        azureFileUrl: https://<storage_account>.file.core.windows.net/smtxcheckpoints
+        relativeMountPath: smtxcheckpoints
+        mountOptions: -o vers=3.0,dir_mode=0777,file_mode=0777,serverino
+  taskSchedulingPolicy:
+    nodeFillType: Pack
+
+job:
+  id: smtx-t101-train
+  displayName: SMTX T-101 Multi-Node Training Run
+  priority: 100
+  constraints:
+    maxWallClockTime: PT48H
+  poolInfo:
+    poolId: smtx-training-pool
+  onAllTasksComplete: terminateJob
+
+# ── Coordinator task (node 0) ──────────────────────────────────────────────────
+coordinatorTask:
+  id: train-t101-coordinator
+  displayName: Train T-101 — Coordinator (node 0)
+  requiredSlots: 1
+  multiInstanceSettings:
+    numberOfInstances: 2           # must match targetDedicatedNodes
+    coordinationCommandLine: >-
+      bash -c "
+        /bin/cp -f $AZ_BATCH_TASK_SHARED_DIR/hostfile /etc/hostfile &&
+        echo 'Coordination complete'
+      "
+  commandLine: >-
+    bash -c "
+      set -euo pipefail
+
+      # ── Build per-node hostfile for DeepSpeed/PDSH ───────────────────────
+      # (Batch has already pulled the image via containerSettings.imageName)
+      AZ_BATCH_HOST_LIST_PADDED=$(echo $AZ_BATCH_HOST_LIST | tr ',' '\n')
+      echo \"$AZ_BATCH_HOST_LIST_PADDED\" > $AZ_BATCH_TASK_SHARED_DIR/hostfile
+      # Annotate with slot count (4 A100s per node from NC96ads_A100_v4)
+      sed -i 's/\$/ slots=4/' $AZ_BATCH_TASK_SHARED_DIR/hostfile
+
+      # ── Run dataset pipeline then multi-node training ────────────────────
+      python training/dataset_pipeline.py \
+        --input-dir /mnt/data/raw \
+        --output-dir /mnt/data/processed && \
+      deepspeed --hostfile $AZ_BATCH_TASK_SHARED_DIR/hostfile \
+        --num_nodes=$NUM_NODES \
+        --num_gpus=$NUM_GPUS_PER_NODE \
+        training/train_t101.py --config training/config_t101.json
+    "
+  containerSettings:
+    imageName: smtxacr.azurecr.io/smtx-train:latest
+    containerRunOptions: "--gpus all --ipc=host --net=host -v /mnt/batch/tasks/shared/smtxdata:/mnt/data -v /mnt/batch/tasks/shared/smtxcheckpoints:/mnt/checkpoints"
+  environmentSettings:
+    - name: NCCL_SOCKET_IFNAME
+      value: eth0
+    - name: NCCL_DEBUG
+      value: INFO
+    - name: CHECKPOINT_DIR
+      value: /mnt/checkpoints/t101-baby
+    - name: DATA_INPUT_DIR
+      value: /mnt/data/raw
+    - name: DATA_OUTPUT_DIR
+      value: /mnt/data/processed
+    - name: TOKENIZER_PATH
+      value: tmodels/t101
+    - name: NUM_NODES
+      value: "2"
+    - name: NUM_GPUS_PER_NODE
+      value: "4"
+    - name: MASTER_PORT
+      value: "29500"
+  outputFiles:
+    - filePattern: /mnt/checkpoints/t101-baby/**
+      destination:
+        container:
+          containerUrl: https://<storage_account>.blob.core.windows.net/smtxcheckpoints/t101-baby
+          identityReference:
+            resourceId: /subscriptions/<SUBSCRIPTION_ID>/resourceGroups/smtx-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/smtx-batch-identity
+      uploadOptions:
+        uploadCondition: taskCompletion

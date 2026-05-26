@@ -1,0 +1,38 @@
+[Unit]
+Description=SMTX vLLM Inference Server (T-101)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=smtx
+Group=smtx
+WorkingDirectory=/opt/smtx
+EnvironmentFile=-/etc/smtx/vllm.env
+
+# Pull latest model weights from Azure Blob via Managed Identity before start
+ExecStartPre=/opt/smtx-venv/bin/python /opt/smtx/scripts/pull_model_weights.py \
+    --storage-account ${STORAGE_ACCOUNT} \
+    --container       ${MODEL_CONTAINER:-smtxmodels} \
+    --blob-prefix     ${MODEL_BLOB_PREFIX:-t101/} \
+    --dest-dir        ${MODEL_PATH:-/mnt/model}
+
+ExecStart=/opt/smtx-venv/bin/python /opt/smtx/inference/vllm_server.py \
+    --model                  ${MODEL_PATH:-/mnt/model} \
+    --host                   0.0.0.0 \
+    --port                   8000 \
+    --gpu_memory_utilization ${GPU_MEMORY_UTILIZATION:-0.90} \
+    --max_model_len          ${MAX_MODEL_LEN:-4096}
+
+Restart=on-failure
+RestartSec=15s
+
+# GPU resource limits
+LimitNOFILE=65536
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=vllm
+
+[Install]
+WantedBy=multi-user.target

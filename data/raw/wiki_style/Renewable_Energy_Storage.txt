@@ -1,0 +1,21 @@
+Renewable Energy Storage
+
+Energy storage is a critical enabler of the transition to renewable electricity, addressing the variability of wind and solar generation by decoupling the times of production and consumption. Without adequate storage, grids must balance supply and demand in real time using flexible thermal generation, constraining the share of renewables that can be integrated without reducing reliability.
+
+Lithium-ion batteries are the dominant technology for grid-scale electrical storage deployed today, benefiting from manufacturing scale and performance improvements driven by the electric vehicle industry. They charge and discharge rapidly, respond within milliseconds to grid frequency deviations, and achieve round-trip efficiencies above ninety percent. Their main limitations are finite cycle life and the cost of raw materials.
+
+Pumped hydroelectric storage remains the largest source of stored energy worldwide. Water is pumped from a lower reservoir to a higher one using surplus electricity, then released through turbines to generate electricity on demand. The technology is mature, long-lived, and capable of providing large energy reserves, but is constrained by geographical requirements for suitable reservoir sites.
+
+Flow batteries store energy in liquid electrolytes held in external tanks, with the reaction occurring as electrolytes are pumped through a cell stack. Because energy capacity scales with tank volume independently of power capacity, flow batteries are well suited to long-duration storage. Vanadium redox flow batteries have been deployed at utility scale, with research ongoing into lower-cost chemistries.
+
+Hydrogen produced by electrolysis using surplus renewable electricity can be stored in compressed gas cylinders, liquefied at cryogenic temperatures, or absorbed in solid metal hydride materials. It can be reconverted to electricity in fuel cells or burned in gas turbines. The low round-trip efficiency of the full cycle limits its application to contexts where long-duration or seasonal storage is needed.
+
+Compressed air energy storage uses electricity to pump air into underground caverns or pressurised vessels, releasing it through expanders to generate electricity when needed. Adiabatic variants capture the heat generated during compression and use it to warm the air during expansion, improving efficiency.
+
+Thermal energy storage stores heat or cold in materials such as molten salt, water, phase-change materials, or crushed rock. Concentrating solar power plants store heat in molten salt tanks to continue generating electricity after sunset. Buildings can store cooling capacity as ice or chilled water produced overnight when electricity is cheaper.
+
+Gravity-based storage systems raise heavy masses during periods of excess generation and lower them to drive generators when electricity is needed. Systems using suspended weights in deep mine shafts, concrete blocks on towers, or weighted rail cars on slopes have been proposed or piloted.
+
+Second-life batteries, retired from electric vehicles after their capacity falls below requirements for transport use, can serve in stationary grid storage where weight and energy density are less critical. Repurposing batteries extends their useful life and reduces the environmental burden of manufacturing new cells.
+
+Grid planning tools increasingly incorporate stochastic modelling of generation and demand to optimise the mix and siting of storage technologies. The optimal solution depends on the duration and frequency of imbalances, the cost of curtailing renewables, and the availability of interconnection to neighbouring regions.

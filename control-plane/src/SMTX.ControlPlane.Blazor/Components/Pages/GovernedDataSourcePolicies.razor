@@ -1,0 +1,323 @@
+@page "/governed-data-source-policies"
+@rendermode InteractiveServer
+@using SMTX.ControlPlane.Core.Entities
+@using SMTX.ControlPlane.Core.Enums
+@using SMTX.ControlPlane.Infrastructure.Services
+@inject GovernedDataSourcePolicyService PolicyService
+
+<PageTitle>Data Source Policies</PageTitle>
+
+<h1>Governed Data Source Policies</h1>
+
+<p>Manage the persisted policy records that gate governed data-source assignment, indexing, and RAG usage.</p>
+
+@if (!string.IsNullOrWhiteSpace(_statusMessage))
+{
+    <div class="alert @(_isError ? "alert-danger" : "alert-success")" role="alert">
+        @_statusMessage
+    </div>
+}
+
+<div class="row g-4">
+    <div class="col-lg-7">
+        <h2 class="h4">Current policy records</h2>
+
+        @if (_policies.Count == 0)
+        {
+            <p>No governed data-source policies have been registered.</p>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Data source</th>
+                            <th>Sensitivity</th>
+                            <th>Use cases</th>
+                            <th>Indexing</th>
+                            <th>RAG</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var policy in _policies)
+                        {
+                            <tr class="@GetRowClass(policy)">
+                                <td>@policy.Name</td>
+                                <td><code>@policy.DataSourceId</code></td>
+                                <td>@policy.MaxDataSensitivity</td>
+                                <td>@string.Join(", ", policy.GetSupportedUseCasesSet().OrderBy(value => value))</td>
+                                <td>@string.Join(", ", policy.GetIndexingProfilesSet().OrderBy(value => value))</td>
+                                <td>@(policy.RagEnabled ? "Enabled" : "Disabled")</td>
+                                <td class="text-nowrap">
+                                    <button class="btn btn-sm btn-outline-primary me-2" @onclick="() => BeginEdit(policy)">Edit</button>
+                                    <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteAsync(policy.Id)">Delete</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="h4 mb-0">@(_editor.Id.HasValue ? "Edit policy" : "Create policy")</h2>
+                    <button class="btn btn-sm btn-outline-secondary" type="button" @onclick="BeginCreate">New</button>
+                </div>
+
+                <EditForm Model="_editor" OnValidSubmit="SaveAsync">
+                    <div class="mb-3">
+                        <label class="form-label" for="policy-data-source-id">Data source ID</label>
+                        <InputText id="policy-data-source-id" class="form-control" @bind-Value="_editor.DataSourceId" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="policy-name">Display name</label>
+                        <InputText id="policy-name" class="form-control" @bind-Value="_editor.Name" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="policy-sensitivity">Maximum data sensitivity</label>
+                        <InputSelect id="policy-sensitivity" class="form-select" @bind-Value="_editor.MaxDataSensitivity">
+                            @foreach (var sensitivity in Enum.GetValues<DataSensitivity>())
+                            {
+                                <option value="@sensitivity">@sensitivity</option>
+                            }
+                        </InputSelect>
+                    </div>
+
+                    <fieldset class="mb-3">
+                        <legend class="fs-6">Supported use cases</legend>
+                        @foreach (var useCase in Enum.GetValues<ModelUseCase>())
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       id="@($"use-case-{useCase}")"
+                                       type="checkbox"
+                                       checked="@_editor.SupportedUseCases.Contains(useCase)"
+                                       @onchange="args => ToggleUseCase(useCase, args.Value is bool isChecked && isChecked)" />
+                                <label class="form-check-label" for="@($"use-case-{useCase}")">@useCase</label>
+                            </div>
+                        }
+                    </fieldset>
+
+                    <fieldset class="mb-3">
+                        <legend class="fs-6">Indexing profiles</legend>
+                        @foreach (var profile in Enum.GetValues<IndexingProfile>())
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       id="@($"indexing-profile-{profile}")"
+                                       type="checkbox"
+                                       checked="@_editor.IndexingProfiles.Contains(profile)"
+                                       @onchange="args => ToggleIndexingProfile(profile, args.Value is bool isChecked && isChecked)" />
+                                <label class="form-check-label" for="@($"indexing-profile-{profile}")">@profile</label>
+                            </div>
+                        }
+                    </fieldset>
+
+                    <div class="form-check mb-3">
+                        <InputCheckbox id="policy-rag-enabled" class="form-check-input" @bind-Value="_editor.RagEnabled" />
+                        <label class="form-check-label" for="policy-rag-enabled">Allow RAG-enabled assignments</label>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-primary" type="submit" disabled="@_isBusy">Save policy</button>
+                        <button class="btn btn-outline-secondary" type="button" @onclick="BeginCreate" disabled="@_isBusy">Reset</button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<GovernedDataSourcePolicy> _policies = [];
+    private readonly PolicyEditor _editor = new();
+    private string? _statusMessage;
+    private bool _isError;
+    private bool _isBusy;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ReloadPoliciesAsync();
+    }
+
+    private async Task ReloadPoliciesAsync()
+    {
+        _policies = await PolicyService.ListAsync(CancellationToken.None);
+    }
+
+    private void BeginCreate()
+    {
+        _editor.LoadFrom(null);
+        ClearStatus();
+    }
+
+    private void BeginEdit(GovernedDataSourcePolicy policy)
+    {
+        _editor.LoadFrom(policy);
+        ClearStatus();
+    }
+
+    private async Task SaveAsync()
+    {
+        try
+        {
+            _isBusy = true;
+
+            if (_editor.Id.HasValue)
+            {
+                var updated = await PolicyService.UpdateAsync(_editor.Id.Value, _editor.ToCommand(), CancellationToken.None);
+                if (updated is null)
+                {
+                    SetStatus("The selected policy record no longer exists.", isError: true);
+                    return;
+                }
+
+                SetStatus($"Saved policy '{updated.Name}'.", isError: false);
+            }
+            else
+            {
+                var created = await PolicyService.CreateAsync(_editor.ToCommand(), CancellationToken.None);
+                SetStatus($"Created policy '{created.Name}'.", isError: false);
+            }
+
+            await ReloadPoliciesAsync();
+            _editor.LoadFrom(null);
+        }
+        catch (InvalidOperationException ex)
+        {
+            SetStatus(ex.Message, isError: true);
+        }
+        finally
+        {
+            _isBusy = false;
+        }
+    }
+
+    private async Task DeleteAsync(Guid id)
+    {
+        try
+        {
+            _isBusy = true;
+
+            var deleted = await PolicyService.DeleteAsync(id, CancellationToken.None);
+            if (!deleted)
+            {
+                SetStatus("The selected policy record no longer exists.", isError: true);
+                return;
+            }
+
+            await ReloadPoliciesAsync();
+            if (_editor.Id == id)
+            {
+                _editor.LoadFrom(null);
+            }
+
+            SetStatus("Deleted policy record.", isError: false);
+        }
+        catch (InvalidOperationException ex)
+        {
+            SetStatus(ex.Message, isError: true);
+        }
+        finally
+        {
+            _isBusy = false;
+        }
+    }
+
+    private void ToggleUseCase(ModelUseCase useCase, bool isSelected)
+    {
+        ToggleSelection(_editor.SupportedUseCases, useCase, isSelected);
+    }
+
+    private void ToggleIndexingProfile(IndexingProfile profile, bool isSelected)
+    {
+        ToggleSelection(_editor.IndexingProfiles, profile, isSelected);
+    }
+
+    private string? GetRowClass(GovernedDataSourcePolicy policy)
+    {
+        return _editor.Id == policy.Id ? "table-primary" : null;
+    }
+
+    private void SetStatus(string message, bool isError)
+    {
+        _statusMessage = message;
+        _isError = isError;
+    }
+
+    private void ClearStatus()
+    {
+        _statusMessage = null;
+        _isError = false;
+    }
+
+    private static void ToggleSelection<TValue>(ICollection<TValue> values, TValue value, bool isSelected)
+    {
+        if (isSelected)
+        {
+            if (!values.Contains(value))
+            {
+                values.Add(value);
+            }
+
+            return;
+        }
+
+        values.Remove(value);
+    }
+
+    private sealed class PolicyEditor
+    {
+        public Guid? Id { get; private set; }
+        public string DataSourceId { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public DataSensitivity MaxDataSensitivity { get; set; } = DataSensitivity.Low;
+        public HashSet<ModelUseCase> SupportedUseCases { get; } = [];
+        public HashSet<IndexingProfile> IndexingProfiles { get; } = [];
+        public bool RagEnabled { get; set; }
+
+        public void LoadFrom(GovernedDataSourcePolicy? policy)
+        {
+            Id = policy?.Id;
+            DataSourceId = policy?.DataSourceId ?? string.Empty;
+            Name = policy?.Name ?? string.Empty;
+            MaxDataSensitivity = policy?.MaxDataSensitivity ?? DataSensitivity.Low;
+            RagEnabled = policy?.RagEnabled ?? false;
+
+            SupportedUseCases.Clear();
+            if (policy is not null)
+            {
+                foreach (var useCase in policy.GetSupportedUseCasesSet())
+                {
+                    SupportedUseCases.Add(useCase);
+                }
+            }
+
+            IndexingProfiles.Clear();
+            if (policy is not null)
+            {
+                foreach (var profile in policy.GetIndexingProfilesSet())
+                {
+                    IndexingProfiles.Add(profile);
+                }
+            }
+        }
+
+        public GovernedDataSourcePolicyUpsert ToCommand() => new(
+            DataSourceId,
+            Name,
+            MaxDataSensitivity,
+            SupportedUseCases.ToArray(),
+            IndexingProfiles.ToArray(),
+            RagEnabled);
+    }
+}

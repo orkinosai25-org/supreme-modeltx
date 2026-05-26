@@ -1,0 +1,42 @@
+# backends.yml — SMTX Inference Backend Registry
+#
+# Declares all inference backends available to the SUMOTX platform.
+# The orchestrator reads this to determine routing and availability.
+#
+# Fields:
+#   name             — backend identifier
+#   modality         — data type served (text, embedding, etc.)
+#   execution        — execution environment (cpu-native, gpu-accelerated)
+#   availability     — default | conditional
+#   requires_gpu     — true if a CUDA device is required
+#   port             — default listening port
+#   description      — human-readable summary
+#
+# SUMOTX hierarchy:
+#   CPU backends are authoritative and run by default.
+#   GPU backends (vLLM) are registered here but remain dormant until
+#   GPU quota is available and VLLM_ENABLED=true is set.
+
+backends:
+  - name: cpu
+    modality: text
+    execution: cpu-native
+    availability: default
+    requires_gpu: false
+    port: 8003
+    description: >
+      Default CPU inference backend using PyTorch + HuggingFace Transformers.
+      No GPU quota required. Serves all T-Series models on CPU.
+      Active by default on the CPU VM.
+
+  - name: vllm
+    modality: text
+    execution: gpu-accelerated
+    availability: conditional
+    requires_gpu: true
+    port: 8000
+    description: >
+      Optional vLLM GPU inference backend.
+      Requires a CUDA-capable VM (NC / ND series).
+      Only activated when GPU quota exists and VLLM_ENABLED=true.
+      Parked (dormant) in CPU-only deployments.

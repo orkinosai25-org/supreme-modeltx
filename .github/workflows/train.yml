@@ -1,0 +1,623 @@
+name: Train SMTX-Baby (T-101)
+
+on:
+  workflow_dispatch:
+    inputs:
+      compute_target:
+        description: 'Where to run training. "vm" uses the provisioned training VM (recommended). "batch" uses Azure Batch (legacy, requires Batch quota).'
+        required: false
+        default: 'vm'
+        type: choice
+        options:
+          - vm
+          - batch
+      training_profile:
+        description: 'Compute profile (CPU-only). cpu-distributed uses multiple CPU threads for faster training.'
+        required: false
+        default: 'cpu-single-node'
+        type: choice
+        options:
+          - cpu-single-node
+          - cpu-distributed
+      resource_group:
+        description: 'Azure Resource Group name'
+        required: true
+        default: 'smtx-rg'
+      data_local_path:
+        description: 'Local path (relative to repo root) containing raw training data to upload'
+        required: false
+        default: 'data/raw'
+      data_input_dir:
+        description: 'Subdirectory inside the smtxdata file share to upload data into'
+        required: false
+        default: 'raw'
+      checkpoint_download_dir:
+        description: 'Local directory to download completed checkpoints into'
+        required: false
+        default: 'checkpoints/t101-baby'
+      job_timeout_minutes:
+        description: 'Maximum minutes to wait for the training job to finish.'
+        required: false
+        default: '480'
+      image_tag:
+        description: 'Docker image tag to validate in ACR alongside smtx-train:latest (e.g. a git commit SHA). Leave empty to skip tag validation.'
+        required: false
+        default: ''
+
+# Prevent concurrent training runs.
+concurrency:
+  group: azure-training
+  cancel-in-progress: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  # ── Job 1: VM-based training (recommended) ──────────────────────────────────
+  train-vm:
+    name: Run Training on VM
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event.inputs.compute_target == 'vm'
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Azure (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E45C3D43E5AC40DB8318380C0FD93246 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_01CDF649EE9042BBAB65955AC8A5A538 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A3780EA742DC446B87D82128AC45B190 }}
+
+      - name: Discover training VM and storage account
+        id: resources
+        run: |
+          RESOURCE_GROUP="${{ github.event.inputs.resource_group }}"
+
+          # Find the first training VM (smtx-training-vm-0)
+          TRAINING_VM=$(az vm list \
+            --resource-group "$RESOURCE_GROUP" \
+            --query "[?tags.layer=='training'] | [0].name" -o tsv)
+          if [ -z "$TRAINING_VM" ]; then
+            echo "::error::No training VM found (layer=training tag) in resource group '$RESOURCE_GROUP'."
+            echo "::error::Run the 'Azure Infrastructure Provisioning' workflow first with deployVms=true."
+            exit 1
+          fi
+
+          STORAGE_ACCOUNT=$(az storage account list \
+            --resource-group "$RESOURCE_GROUP" \
+            --query "[0].name" -o tsv)
+
+          SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+
+          echo "training_vm=${TRAINING_VM}"         >> "$GITHUB_OUTPUT"
+          echo "storage_account=${STORAGE_ACCOUNT}" >> "$GITHUB_OUTPUT"
+          echo "subscription_id=${SUBSCRIPTION_ID}" >> "$GITHUB_OUTPUT"
+          echo "✅ Training VM: ${TRAINING_VM}"
+          echo "✅ Storage account: ${STORAGE_ACCOUNT}"
+
+      - name: Upload dataset to Azure Blob Storage
+        run: |
+          STORAGE_ACCOUNT="${{ steps.resources.outputs.storage_account }}"
+          DATA_LOCAL_PATH="${{ github.event.inputs.data_local_path }}"
+          DATA_INPUT_DIR="${{ github.event.inputs.data_input_dir }}"
+
+          if [ ! -d "$DATA_LOCAL_PATH" ]; then
+            echo "::warning::Local data path '$DATA_LOCAL_PATH' does not exist — skipping upload."
+          else
+            echo "Uploading '$DATA_LOCAL_PATH' → blob container 'smtxdata/${DATA_INPUT_DIR}/' ..."
+            az storage blob upload-batch \
+              --source "$DATA_LOCAL_PATH" \
+              --destination "smtxdata/${DATA_INPUT_DIR}" \
+              --account-name "$STORAGE_ACCOUNT" \
+              --account-key "${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}" \
+              --overwrite true 2>/dev/null || \
+            az storage blob upload-batch \
+              --source "$DATA_LOCAL_PATH" \
+              --destination "smtxdata" \
+              --account-name "$STORAGE_ACCOUNT" \
+              --account-key "${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}" 2>/dev/null || \
+            echo "::warning::Dataset upload skipped (container may not exist yet — VM setup will create it)."
+            echo "Dataset upload complete."
+          fi
+
+      - name: Submit training job via az vm run-command
+        id: submit
+        run: |
+          RESOURCE_GROUP="${{ github.event.inputs.resource_group }}"
+          TRAINING_VM="${{ steps.resources.outputs.training_vm }}"
+          STORAGE_ACCOUNT="${{ steps.resources.outputs.storage_account }}"
+          TRAINING_PROFILE="${{ github.event.inputs.training_profile }}"
+          DATA_INPUT_DIR="${{ github.event.inputs.data_input_dir }}"
+          TIMEOUT_MIN="${{ github.event.inputs.job_timeout_minutes }}"
+
+          echo "Submitting training job to VM '${TRAINING_VM}' (profile: ${TRAINING_PROFILE})..."
+
+          az vm run-command invoke \
+            --resource-group "$RESOURCE_GROUP" \
+            --name "$TRAINING_VM" \
+            --command-id RunShellScript \
+            --scripts "
+              set -euo pipefail
+              export STORAGE_ACCOUNT='${STORAGE_ACCOUNT}'
+              export TRAINING_PROFILE='${TRAINING_PROFILE}'
+              export DATA_DIR='/mnt/smtx-data/${DATA_INPUT_DIR}'
+              export CHECKPOINT_DIR='/mnt/smtx-data/checkpoints/t101-baby'
+              export SMTX_DIR='/opt/smtx'
+              export VENV_DIR='/opt/smtx-venv'
+              export TIMEOUT_MIN='${TIMEOUT_MIN}'
+
+              mkdir -p \"\${CHECKPOINT_DIR}\"
+
+              # Pull latest code
+              if [ -d \"\${SMTX_DIR}/.git\" ]; then
+                git -C \"\${SMTX_DIR}\" pull --ff-only || true
+              fi
+
+              source \"\${VENV_DIR}/bin/activate\"
+
+              # Download data from blob if local data dir is empty
+              if [ ! -d \"\${DATA_DIR}\" ] || [ -z \"\$(ls -A \"\${DATA_DIR}\" 2>/dev/null)\" ]; then
+                echo 'Downloading dataset from Azure Blob...'
+                python3 - <<PYEOF
+              from azure.identity import ManagedIdentityCredential
+              from azure.storage.blob import BlobServiceClient
+              import os
+              import pathlib
+              cred = ManagedIdentityCredential()
+              svc = BlobServiceClient(account_url=f'https://{os.environ[\"STORAGE_ACCOUNT\"]}.blob.core.windows.net', credential=cred)
+              container = svc.get_container_client('smtxdata')
+              dest = pathlib.Path(os.environ['DATA_DIR'])
+              dest.mkdir(parents=True, exist_ok=True)
+              # Filter by the DATA_INPUT_DIR prefix so we only download the
+              # files that were uploaded for this run — not every blob in
+              # the container — and preserve the relative path structure.
+              prefix = os.environ['DATA_INPUT_DIR'].rstrip('/') + '/'
+              for blob in container.list_blobs(name_starts_with=prefix):
+                  rel = pathlib.PurePosixPath(blob.name).relative_to(pathlib.PurePosixPath(prefix.rstrip('/')))
+                  out = dest / rel
+                  out.parent.mkdir(parents=True, exist_ok=True)
+                  out.write_bytes(container.download_blob(blob.name).readall())
+                  print(f'Downloaded {blob.name}')
+              PYEOF
+              fi
+
+              # Run LoRA/QLoRA fine-tuning
+              echo 'Starting LoRA fine-tuning...'
+              python3 \"\${SMTX_DIR}/training/train.py\" \
+                --training_profile \"\${TRAINING_PROFILE}\" \
+                --data_dir \"\${DATA_DIR}\" \
+                --output_dir \"\${CHECKPOINT_DIR}\"
+
+              echo 'Training complete. Uploading checkpoints to Azure Blob...'
+              python3 - <<PYEOF
+              from azure.identity import ManagedIdentityCredential
+              from azure.storage.blob import BlobServiceClient
+              import os
+              import pathlib
+              cred = ManagedIdentityCredential()
+              svc = BlobServiceClient(account_url=f'https://{os.environ[\"STORAGE_ACCOUNT\"]}.blob.core.windows.net', credential=cred)
+              container = svc.get_container_client('checkpoints')
+              ckpt_root = pathlib.Path(os.environ['CHECKPOINT_DIR'])
+              for f in ckpt_root.rglob('*'):
+                  if f.is_file():
+                      # Preserve the relative sub-directory structure so that
+                      # nested checkpoint files (e.g. epoch-1/model.safetensors)
+                      # do not collide with files from other epochs.
+                      rel = f.relative_to(ckpt_root)
+                      blob_name = 't101-baby/' + rel.as_posix()
+                      container.upload_blob(blob_name, f.read_bytes(), overwrite=True)
+                      print(f'Uploaded {blob_name}')
+              PYEOF
+              echo 'Checkpoint upload complete.'
+            "
+
+          echo "✅ Training job submitted and completed on VM '${TRAINING_VM}'."
+
+      - name: Download checkpoint artifacts from Blob Storage
+        run: |
+          STORAGE_ACCOUNT="${{ steps.resources.outputs.storage_account }}"
+          CHECKPOINT_DOWNLOAD_DIR="${{ github.event.inputs.checkpoint_download_dir }}"
+
+          mkdir -p "$CHECKPOINT_DOWNLOAD_DIR"
+
+          echo "Downloading checkpoints from blob container 'checkpoints/t101-baby'..."
+          az storage blob download-batch \
+            --source "checkpoints" \
+            --destination "$CHECKPOINT_DOWNLOAD_DIR" \
+            --pattern "t101-baby/*" \
+            --account-name "$STORAGE_ACCOUNT" \
+            --account-key "${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}" || \
+          echo "::warning::Checkpoint download skipped (container may be empty)."
+
+          echo "Checkpoints downloaded to '${CHECKPOINT_DOWNLOAD_DIR}'."
+          ls -lh "$CHECKPOINT_DOWNLOAD_DIR" || true
+
+      - name: Upload checkpoints as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: smtx-baby-checkpoints
+          path: ${{ github.event.inputs.checkpoint_download_dir }}
+          if-no-files-found: warn
+          retention-days: 30
+
+  # ── Job 2: Legacy Azure Batch path ──────────────────────────────────────────
+  train-batch:
+    name: Submit and Monitor Azure Batch Training Job
+    runs-on: ubuntu-latest
+    # The Azure federated identity credential is scoped to refs/heads/main.
+    if: github.ref == 'refs/heads/main' && github.event.inputs.compute_target == 'batch'
+    permissions:
+      id-token: write   # Required for OIDC token exchange
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 1. Azure login (OIDC) ─────────────────────────────────────────────
+      - name: Log in to Azure (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E45C3D43E5AC40DB8318380C0FD93246 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_01CDF649EE9042BBAB65955AC8A5A538 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A3780EA742DC446B87D82128AC45B190 }}
+
+      # ── 2. Validate training image in ACR ────────────────────────────────────
+      - name: Validate training image in ACR
+        run: |
+          TRAINING_PROFILE="${{ github.event.inputs.training_profile }}"
+          RESOURCE_GROUP="${{ github.event.inputs.resource_group }}"
+
+          # Select the image name based on the compute profile
+          if [ "$TRAINING_PROFILE" = "gpu-accelerated" ]; then
+            IMAGE_NAME="smtx-train"
+          else
+            IMAGE_NAME="smtx-train-cpu"
+          fi
+
+          ACR_NAME=$(az acr list \
+            --resource-group "$RESOURCE_GROUP" \
+            --query "[0].name" -o tsv)
+          if [ -z "$ACR_NAME" ]; then
+            echo "::error::No Azure Container Registry found in resource group '$RESOURCE_GROUP'"
+            exit 1
+          fi
+          echo "Using ACR: ${ACR_NAME}"
+
+          # Validate <image>:latest
+          if az acr repository show \
+               --name "$ACR_NAME" \
+               --image "${IMAGE_NAME}:latest" \
+               --output none 2>/dev/null; then
+            echo "✅ ${IMAGE_NAME}:latest found in ACR."
+          else
+            echo "::error::${IMAGE_NAME}:latest not found in ACR '${ACR_NAME}'. Run the 'Build and Push Docker Images' workflow first."
+            exit 1
+          fi
+
+          # Validate smtx-train:<image_tag> when provided
+          IMAGE_TAG="${{ github.event.inputs.image_tag }}"
+          if [ -n "$IMAGE_TAG" ]; then
+            if az acr repository show \
+                 --name "$ACR_NAME" \
+                 --image "${IMAGE_NAME}:${IMAGE_TAG}" \
+                 --output none 2>/dev/null; then
+              echo "✅ ${IMAGE_NAME}:${IMAGE_TAG} found in ACR."
+            else
+              echo "::error::${IMAGE_NAME}:${IMAGE_TAG} not found in ACR '${ACR_NAME}'. Ensure the Docker image was built and pushed with this tag."
+              exit 1
+            fi
+          fi
+
+      # ── 2b. Container entrypoint sanity check ────────────────────────────────
+      # Pull the image locally and run --help to confirm the container starts and
+      # the entrypoint resolves cleanly before spending quota on a Batch job.
+      - name: Run container entrypoint sanity check
+        run: |
+          TRAINING_PROFILE="${{ github.event.inputs.training_profile }}"
+          RESOURCE_GROUP="${{ github.event.inputs.resource_group }}"
+
+          if [ "$TRAINING_PROFILE" = "gpu-accelerated" ]; then
+            IMAGE_NAME="smtx-train"
+          else
+            IMAGE_NAME="smtx-train-cpu"
+          fi
+
+          ACR_NAME=$(az acr list \
+            --resource-group "$RESOURCE_GROUP" \
+            --query "[0].name" -o tsv)
+          ACR_LOGIN_SERVER=$(az acr show \
+            --name "$ACR_NAME" \
+            --resource-group "$RESOURCE_GROUP" \
+            --query loginServer -o tsv)
+
+          echo "Logging into ACR for local image pull..."
+          az acr login --name "$ACR_NAME"
+
+          echo "Running container sanity check (--help)..."
+          docker run --rm \
+            -e TRAINING_PROFILE="${TRAINING_PROFILE}" \
+            "${ACR_LOGIN_SERVER}/${IMAGE_NAME}:latest" \
+            --help
+          echo "✅ Container entrypoint validated — proceeding with Batch job submission."
+
+      # ── 3. Resolve dynamic resource names ────────────────────────────────
+      - name: Discover storage and Batch account names
+        id: resources
+        run: |
+          RESOURCE_GROUP="${{ github.event.inputs.resource_group }}"
+
+          STORAGE_ACCOUNT=$(az storage account list \
+            --resource-group "$RESOURCE_GROUP" \
+            --query "[0].name" -o tsv)
+          if [ -z "$STORAGE_ACCOUNT" ]; then
+            echo "::error::No storage account found in resource group '$RESOURCE_GROUP'"
+            exit 1
+          fi
+
+          BATCH_ACCOUNT=$(az batch account list \
+            --resource-group "$RESOURCE_GROUP" \
+            --query "[0].name" -o tsv)
+          if [ -z "$BATCH_ACCOUNT" ]; then
+            echo "::error::No Batch account found in resource group '$RESOURCE_GROUP'"
+            exit 1
+          fi
+
+          SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+
+          echo "storage_account=${STORAGE_ACCOUNT}" >> "$GITHUB_OUTPUT"
+          echo "batch_account=${BATCH_ACCOUNT}"      >> "$GITHUB_OUTPUT"
+          echo "subscription_id=${SUBSCRIPTION_ID}" >> "$GITHUB_OUTPUT"
+
+      # ── 4. Upload dataset to Azure File Share (DATA_INPUT_DIR) ────────────
+      - name: Upload dataset to Azure File Share
+        run: |
+          STORAGE_ACCOUNT="${{ steps.resources.outputs.storage_account }}"
+          RESOURCE_GROUP="${{ github.event.inputs.resource_group }}"
+          DATA_LOCAL_PATH="${{ github.event.inputs.data_local_path }}"
+          DATA_INPUT_DIR="${{ github.event.inputs.data_input_dir }}"
+
+          if [ ! -d "$DATA_LOCAL_PATH" ]; then
+            echo "::warning::Local data path '$DATA_LOCAL_PATH' does not exist — skipping upload."
+          else
+            echo "Uploading '$DATA_LOCAL_PATH' → smtxdata/${DATA_INPUT_DIR}/ ..."
+            az storage share-rm create \
+              --resource-group "$RESOURCE_GROUP" \
+              --storage-account "$STORAGE_ACCOUNT" \
+              --name "smtxdata" 2>/dev/null || true
+
+            az storage directory create \
+              --share-name "smtxdata" \
+              --name "$DATA_INPUT_DIR" \
+              --account-name "$STORAGE_ACCOUNT" \
+              --account-key "${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}" \
+              2>/dev/null || true
+
+            az storage file upload-batch \
+                --source "$DATA_LOCAL_PATH" \
+                --destination "smtxdata/$DATA_INPUT_DIR" \
+                --account-name "$STORAGE_ACCOUNT" \
+                --account-key "${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}"
+            echo "Dataset upload complete."
+          fi
+
+      # ── 5. Login to Azure Batch account ──────────────────────────────────
+      - name: Login to Azure Batch account
+        run: |
+          az batch account login \
+            --name "${{ steps.resources.outputs.batch_account }}" \
+            --resource-group "${{ github.event.inputs.resource_group }}"
+
+      # ── 6. Submit Azure Batch job ─────────────────────────────────────────
+      - name: Prepare and submit Azure Batch job
+        id: batch
+        env:
+          AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
+          TRAINING_PROFILE_INPUT: ${{ github.event.inputs.training_profile }}
+        run: |
+          STORAGE_ACCOUNT="${{ steps.resources.outputs.storage_account }}"
+          SUBSCRIPTION_ID="${{ steps.resources.outputs.subscription_id }}"
+          BATCH_ACCOUNT="${{ steps.resources.outputs.batch_account }}"
+          RESOURCE_GROUP="${{ github.event.inputs.resource_group }}"
+          TRAINING_PROFILE="${{ github.event.inputs.training_profile }}"
+
+          # Select the batch spec based on the compute profile.
+          # Default is the CPU spec (no GPU quota required).
+          if [ "$TRAINING_PROFILE" = "gpu-accelerated" ]; then
+            BATCH_SPEC="scripts/azure_batch.yml"
+          else
+            BATCH_SPEC="scripts/azure_batch_cpu.yml"
+          fi
+          echo "Using Batch spec: ${BATCH_SPEC} (profile: ${TRAINING_PROFILE})"
+
+          # Substitute placeholders in the batch spec
+          sed \
+            -e "s|<storage_account>|${STORAGE_ACCOUNT}|g" \
+            -e "s|<SUBSCRIPTION_ID>|${SUBSCRIPTION_ID}|g" \
+            "${BATCH_SPEC}" > /tmp/batch_spec.yml
+
+          # Parse YAML and produce separate JSON files for each resource
+          python3 - <<'PYEOF'
+          import yaml, json, os, sys
+          try:
+              with open("/tmp/batch_spec.yml") as f:
+                  doc = yaml.safe_load(f)
+          except (OSError, yaml.YAMLError) as exc:
+              print(f"error: failed to parse /tmp/batch_spec.yml: {exc}", file=sys.stderr)
+              sys.exit(1)
+
+          pool = doc.get("pool")
+          job  = doc.get("job")
+          task = doc.get("coordinatorTask")
+
+          if not pool:
+              print("error: 'pool' section missing from batch spec", file=sys.stderr)
+              sys.exit(1)
+          if not job:
+              print("error: 'job' section missing from batch spec", file=sys.stderr)
+              sys.exit(1)
+          if not task:
+              print("error: 'coordinatorTask' section missing from batch spec", file=sys.stderr)
+              sys.exit(1)
+
+          # Azure Batch REST API uses 'id', not 'name', for pool identifiers
+          if "name" in pool:
+              pool.setdefault("id", pool.pop("name"))
+              pool.pop("name", None)
+
+          # Azure File Share mounts require accountKey — inject from environment
+          storage_key = os.environ.get("AZURE_STORAGE_ACCOUNT_KEY", "")
+          has_file_shares = any(
+              mount.get("azureFileShareConfiguration") is not None
+              for mount in pool.get("mountConfiguration") or []
+          )
+          if has_file_shares and not storage_key:
+              print("error: AZURE_STORAGE_ACCOUNT_KEY secret is required for Azure File Share mounts but is not set", file=sys.stderr)
+              sys.exit(1)
+          for mount in pool.get("mountConfiguration") or []:
+              afs = mount.get("azureFileShareConfiguration")
+              if afs is not None and not afs.get("accountKey"):
+                  afs["accountKey"] = storage_key
+
+          # Inject TRAINING_PROFILE into task environmentSettings so the
+          # container run_training.sh picks the correct compute profile.
+          training_profile = os.environ.get("TRAINING_PROFILE_INPUT", "cpu-single-node")
+          env_settings = task.setdefault("environmentSettings", [])
+          # Update existing entry if present, otherwise append.
+          existing = next((e for e in env_settings if e.get("name") == "TRAINING_PROFILE"), None)
+          if existing:
+              existing["value"] = training_profile
+          else:
+              env_settings.append({"name": "TRAINING_PROFILE", "value": training_profile})
+
+          with open("/tmp/batch_pool.json", "w") as f:
+              json.dump(pool, f, indent=2)
+          with open("/tmp/batch_job.json", "w") as f:
+              json.dump(job, f, indent=2)
+          with open("/tmp/batch_task.json", "w") as f:
+              json.dump(task, f, indent=2)
+          PYEOF
+
+          # Extract job id defined in the spec
+          JOB_ID=$(python3 - <<'EOF'
+          import json, sys
+          try:
+              with open("/tmp/batch_job.json") as f:
+                  doc = json.load(f)
+              print(doc.get("id", "smtx-t101-train"))
+          except (OSError, json.JSONDecodeError) as exc:
+              print(f"error: failed to parse /tmp/batch_job.json: {exc}", file=sys.stderr)
+              sys.exit(1)
+          EOF
+          )
+          if [ -z "$JOB_ID" ]; then
+            echo "::error::Failed to extract job ID from batch spec"
+            exit 1
+          fi
+          echo "job_id=${JOB_ID}" >> "$GITHUB_OUTPUT"
+
+          # Create pool — tolerate PoolExists error which is expected on re-runs
+          POOL_OUT=$(az batch pool create \
+            --json-file /tmp/batch_pool.json \
+            --account-name "$BATCH_ACCOUNT" 2>&1) || {
+            if echo "$POOL_OUT" | grep -qi "PoolExists\|already exist"; then
+              echo "Pool already exists — continuing."
+            else
+              echo "::error::Failed to create Batch pool: ${POOL_OUT}"
+              exit 1
+            fi
+          }
+
+          # Delete any previous job with the same id so we get a clean run
+          az batch job delete \
+            --job-id "$JOB_ID" \
+            --account-name "$BATCH_ACCOUNT" \
+            --yes 2>/dev/null || true
+
+          # Submit job
+          az batch job create \
+            --json-file /tmp/batch_job.json \
+            --account-name "$BATCH_ACCOUNT"
+
+          # Submit coordinator task
+          az batch task create \
+            --job-id "$JOB_ID" \
+            --json-file /tmp/batch_task.json \
+            --account-name "$BATCH_ACCOUNT"
+
+          echo "Batch job '${JOB_ID}' submitted successfully."
+      # ── 7. Wait for the Batch task to complete ────────────────────────────
+      - name: Monitor training task
+        run: |
+          JOB_ID="${{ steps.batch.outputs.job_id }}"
+          BATCH_ACCOUNT="${{ steps.resources.outputs.batch_account }}"
+          TASK_ID="train-t101-coordinator"
+          TIMEOUT_MINUTES="${{ github.event.inputs.job_timeout_minutes }}"
+          # Validate that the timeout input is a positive integer
+          if ! [[ "$TIMEOUT_MINUTES" =~ ^[1-9][0-9]*$ ]]; then
+            echo "::error::job_timeout_minutes must be a positive integer, got: '${TIMEOUT_MINUTES}'"
+            exit 1
+          fi
+          DEADLINE=$(( $(date +%s) + TIMEOUT_MINUTES * 60 ))
+          POLL_INTERVAL=60  # seconds
+
+          echo "Monitoring task '${TASK_ID}' in job '${JOB_ID}' (timeout: ${TIMEOUT_MINUTES} min)..."
+
+          while true; do
+            TASK_JSON=$(az batch task show \
+              --job-id "$JOB_ID" \
+              --task-id "$TASK_ID" \
+              --account-name "$BATCH_ACCOUNT")
+
+            STATE=$(echo "$TASK_JSON" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('state','unknown'))")
+            echo "$(date -u +"%H:%M:%S UTC")  task state: ${STATE}"
+
+            if [ "$STATE" = "completed" ]; then
+              EXIT_CODE=$(echo "$TASK_JSON" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('executionInfo',{}).get('exitCode',-1))")
+              if [ "$EXIT_CODE" -ne 0 ]; then
+                echo "::error::Training task '${TASK_ID}' completed with non-zero exit code: ${EXIT_CODE}"
+                exit 1
+              fi
+              echo "✅ Training task completed successfully (exit code 0)."
+              break
+            fi
+
+            if [ "$(date +%s)" -ge "$DEADLINE" ]; then
+              echo "::error::Timed out waiting for training task after ${TIMEOUT_MINUTES} minutes."
+              exit 1
+            fi
+
+            sleep "$POLL_INTERVAL"
+          done
+
+      # ── 8. Download checkpoint artifacts ─────────────────────────────────
+      - name: Download checkpoint artifacts from Blob Storage
+        run: |
+          STORAGE_ACCOUNT="${{ steps.resources.outputs.storage_account }}"
+          CHECKPOINT_DOWNLOAD_DIR="${{ github.event.inputs.checkpoint_download_dir }}"
+
+          mkdir -p "$CHECKPOINT_DOWNLOAD_DIR"
+
+          echo "Downloading checkpoints from blob container 'checkpoints/t101-baby' ..."
+          az storage blob download-batch \
+            --source "checkpoints" \
+            --destination "$CHECKPOINT_DOWNLOAD_DIR" \
+            --pattern "t101-baby/*" \
+            --account-name "$STORAGE_ACCOUNT" \
+            --account-key "${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}"
+
+          echo "Checkpoints downloaded to '${CHECKPOINT_DOWNLOAD_DIR}'."
+          ls -lh "$CHECKPOINT_DOWNLOAD_DIR" || true
+
+      - name: Upload checkpoints as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: smtx-baby-checkpoints
+          path: ${{ github.event.inputs.checkpoint_download_dir }}
+          if-no-files-found: warn
+          retention-days: 30

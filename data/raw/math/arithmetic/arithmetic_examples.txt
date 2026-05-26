@@ -1,0 +1,7169 @@
+Problem: 1056 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 1056.
+Step 2: 12 × 88 = 1056, so the quotient is 88.
+Step 3: Remainder = 1056 - 12 × 88 = 0.
+Answer: 1056 ÷ 12 = 88
+---
+
+Problem: 90 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 90.
+Step 2: 3 × 30 = 90, so the quotient is 30.
+Step 3: Remainder = 90 - 3 × 30 = 0.
+Answer: 90 ÷ 3 = 30
+---
+
+Problem: 504 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 504.
+Step 2: 6 × 84 = 504, so the quotient is 84.
+Step 3: Remainder = 504 - 6 × 84 = 0.
+Answer: 504 ÷ 6 = 84
+---
+
+Problem: 18 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 18.
+Step 2: 6 × 3 = 18, so the quotient is 3.
+Step 3: Remainder = 18 - 6 × 3 = 0.
+Answer: 18 ÷ 6 = 3
+---
+
+Problem: 13 - 6 = ?
+Step 1: Write out 13 minus 6.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 13 - 6 = 7.
+Answer: 7
+---
+
+Problem: 317 - 235 = ?
+Step 1: Write out 317 minus 235.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 317 - 235 = 82.
+Answer: 82
+---
+
+Problem: 68 × 85 = ?
+Step 1: Multiply 68 by each digit of 85 separately.
+Step 2: 68 × 5 = 340 (ones place).
+Step 3: 68 × 80 = 5440 (tens place).
+Step 4: Add results: 340 + 5440 = 5780.
+Answer: 68 × 85 = 5780
+---
+
+Problem: 891 - 41 = ?
+Step 1: Write out 891 minus 41.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 891 - 41 = 850.
+Answer: 850
+---
+
+Problem: 42 × 13 = ?
+Step 1: We need to multiply 42 and 13.
+Step 2: Perform the operation carefully.
+Answer: 42 × 13 = 546
+---
+
+Problem: 323 + 218 = ?
+Step 1: Write out the numbers: 323 and 218.
+Step 2: Add the ones digits: 3 + 8 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 323 + 218 = 541
+---
+
+Problem: 160 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 160.
+Step 2: 10 × 16 = 160, so the quotient is 16.
+Step 3: Remainder = 160 - 10 × 16 = 0.
+Answer: 160 ÷ 10 = 16
+---
+
+Problem: 42 + 42 = ?
+Step 1: We need to add 42 and 42.
+Step 2: Perform the operation carefully.
+Answer: 42 + 42 = 84
+---
+
+Problem: 520 + 935 = ?
+Step 1: Write out the numbers: 520 and 935.
+Step 2: Add the ones digits: 0 + 5 = 5.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 520 + 935 = 1455
+---
+
+Problem: 30 + 6 = ?
+Step 1: We need to add 30 and 6.
+Step 2: Perform the operation carefully.
+Answer: 30 + 6 = 36
+---
+
+Problem: 816 - 719 = ?
+Step 1: Write out 816 minus 719.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 816 - 719 = 97.
+Answer: 97
+---
+
+Problem: 364 + 215 = ?
+Step 1: Write out the numbers: 364 and 215.
+Step 2: Add the ones digits: 4 + 5 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 364 + 215 = 579
+---
+
+Problem: 224 + 239 = ?
+Step 1: Write out the numbers: 224 and 239.
+Step 2: Add the ones digits: 4 + 9 = 13.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 224 + 239 = 463
+---
+
+Problem: 124 + 254 = ?
+Step 1: Write out the numbers: 124 and 254.
+Step 2: Add the ones digits: 4 + 4 = 8.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 124 + 254 = 378
+---
+
+Problem: 265 - 63 = ?
+Step 1: Write out 265 minus 63.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 265 - 63 = 202.
+Answer: 202
+---
+
+Problem: 81 - 43 = ?
+Step 1: Write out 81 minus 43.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 81 - 43 = 38.
+Answer: 38
+---
+
+Problem: 8 × 19 = ?
+Step 1: We need to multiply 8 and 19.
+Step 2: Perform the operation carefully.
+Answer: 8 × 19 = 152
+---
+
+Problem: 52 × 77 = ?
+Step 1: Multiply 52 by each digit of 77 separately.
+Step 2: 52 × 7 = 364 (ones place).
+Step 3: 52 × 70 = 3640 (tens place).
+Step 4: Add results: 364 + 3640 = 4004.
+Answer: 52 × 77 = 4004
+---
+
+Problem: 218 - 176 = ?
+Step 1: Write out 218 minus 176.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 218 - 176 = 42.
+Answer: 42
+---
+
+Problem: 38 - 26 = ?
+Step 1: We need to subtract 38 and 26.
+Step 2: Perform the operation carefully.
+Answer: 38 - 26 = 12
+---
+
+Problem: 29 + 5 = ?
+Step 1: We need to add 29 and 5.
+Step 2: Perform the operation carefully.
+Answer: 29 + 5 = 34
+---
+
+Problem: 10 × 16 = ?
+Step 1: We need to multiply 10 and 16.
+Step 2: Perform the operation carefully.
+Answer: 10 × 16 = 160
+---
+
+Problem: 433 + 611 = ?
+Step 1: Write out the numbers: 433 and 611.
+Step 2: Add the ones digits: 3 + 1 = 4.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 433 + 611 = 1044
+---
+
+Problem: 344 - 207 = ?
+Step 1: Write out 344 minus 207.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 344 - 207 = 137.
+Answer: 137
+---
+
+Problem: 210 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 210.
+Step 2: 10 × 21 = 210, so the quotient is 21.
+Step 3: Remainder = 210 - 10 × 21 = 0.
+Answer: 210 ÷ 10 = 21
+---
+
+Problem: 532 ÷ 7 = ?
+Step 1: Determine how many times 7 fits into 532.
+Step 2: 7 × 76 = 532, so the quotient is 76.
+Step 3: Remainder = 532 - 7 × 76 = 0.
+Answer: 532 ÷ 7 = 76
+---
+
+Problem: 41 - 29 = ?
+Step 1: We need to subtract 41 and 29.
+Step 2: Perform the operation carefully.
+Answer: 41 - 29 = 12
+---
+
+Problem: 38 × 62 = ?
+Step 1: Multiply 38 by each digit of 62 separately.
+Step 2: 38 × 2 = 76 (ones place).
+Step 3: 38 × 60 = 2280 (tens place).
+Step 4: Add results: 76 + 2280 = 2356.
+Answer: 38 × 62 = 2356
+---
+
+Problem: 316 - 54 = ?
+Step 1: Write out 316 minus 54.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 316 - 54 = 262.
+Answer: 262
+---
+
+Problem: 850 + 644 = ?
+Step 1: Write out the numbers: 850 and 644.
+Step 2: Add the ones digits: 0 + 4 = 4.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 850 + 644 = 1494
+---
+
+Problem: 352 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 352.
+Step 2: 8 × 44 = 352, so the quotient is 44.
+Step 3: Remainder = 352 - 8 × 44 = 0.
+Answer: 352 ÷ 8 = 44
+---
+
+Problem: 920 + 598 = ?
+Step 1: Write out the numbers: 920 and 598.
+Step 2: Add the ones digits: 0 + 8 = 8.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 920 + 598 = 1518
+---
+
+Problem: 6 × 26 = ?
+Step 1: We need to multiply 6 and 26.
+Step 2: Perform the operation carefully.
+Answer: 6 × 26 = 156
+---
+
+Problem: 880 - 787 = ?
+Step 1: Write out 880 minus 787.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 880 - 787 = 93.
+Answer: 93
+---
+
+Problem: 52 × 93 = ?
+Step 1: Multiply 52 by each digit of 93 separately.
+Step 2: 52 × 3 = 156 (ones place).
+Step 3: 52 × 90 = 4680 (tens place).
+Step 4: Add results: 156 + 4680 = 4836.
+Answer: 52 × 93 = 4836
+---
+
+Problem: 600 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 600.
+Step 2: 10 × 60 = 600, so the quotient is 60.
+Step 3: Remainder = 600 - 10 × 60 = 0.
+Answer: 600 ÷ 10 = 60
+---
+
+Problem: 378 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 378.
+Step 2: 9 × 42 = 378, so the quotient is 42.
+Step 3: Remainder = 378 - 9 × 42 = 0.
+Answer: 378 ÷ 9 = 42
+---
+
+Problem: 277 + 948 = ?
+Step 1: Write out the numbers: 277 and 948.
+Step 2: Add the ones digits: 7 + 8 = 15.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 277 + 948 = 1225
+---
+
+Problem: 833 - 713 = ?
+Step 1: Write out 833 minus 713.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 833 - 713 = 120.
+Answer: 120
+---
+
+Problem: 72 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 72.
+Step 2: 12 × 6 = 72, so the quotient is 6.
+Step 3: Remainder = 72 - 12 × 6 = 0.
+Answer: 72 ÷ 12 = 6
+---
+
+Problem: 465 + 651 = ?
+Step 1: Write out the numbers: 465 and 651.
+Step 2: Add the ones digits: 5 + 1 = 6.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 465 + 651 = 1116
+---
+
+Problem: 21 × 57 = ?
+Step 1: Multiply 21 by each digit of 57 separately.
+Step 2: 21 × 7 = 147 (ones place).
+Step 3: 21 × 50 = 1050 (tens place).
+Step 4: Add results: 147 + 1050 = 1197.
+Answer: 21 × 57 = 1197
+---
+
+Problem: 240 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 240.
+Step 2: 12 × 20 = 240, so the quotient is 20.
+Step 3: Remainder = 240 - 12 × 20 = 0.
+Answer: 240 ÷ 12 = 20
+---
+
+Problem: 225 - 175 = ?
+Step 1: Write out 225 minus 175.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 225 - 175 = 50.
+Answer: 50
+---
+
+Problem: 882 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 882.
+Step 2: 9 × 98 = 882, so the quotient is 98.
+Step 3: Remainder = 882 - 9 × 98 = 0.
+Answer: 882 ÷ 9 = 98
+---
+
+Problem: 593 - 253 = ?
+Step 1: Write out 593 minus 253.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 593 - 253 = 340.
+Answer: 340
+---
+
+Problem: 112 ÷ 2 = ?
+Step 1: Determine how many times 2 fits into 112.
+Step 2: 2 × 56 = 112, so the quotient is 56.
+Step 3: Remainder = 112 - 2 × 56 = 0.
+Answer: 112 ÷ 2 = 56
+---
+
+Problem: 700 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 700.
+Step 2: 10 × 70 = 700, so the quotient is 70.
+Step 3: Remainder = 700 - 10 × 70 = 0.
+Answer: 700 ÷ 10 = 70
+---
+
+Problem: 62 × 87 = ?
+Step 1: Multiply 62 by each digit of 87 separately.
+Step 2: 62 × 7 = 434 (ones place).
+Step 3: 62 × 80 = 4960 (tens place).
+Step 4: Add results: 434 + 4960 = 5394.
+Answer: 62 × 87 = 5394
+---
+
+Problem: 383 + 781 = ?
+Step 1: Write out the numbers: 383 and 781.
+Step 2: Add the ones digits: 3 + 1 = 4.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 383 + 781 = 1164
+---
+
+Problem: 928 + 33 = ?
+Step 1: Write out the numbers: 928 and 33.
+Step 2: Add the ones digits: 8 + 3 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 928 + 33 = 961
+---
+
+Problem: 648 - 322 = ?
+Step 1: Write out 648 minus 322.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 648 - 322 = 326.
+Answer: 326
+---
+
+Problem: 50 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 50.
+Step 2: 10 × 5 = 50, so the quotient is 5.
+Step 3: Remainder = 50 - 10 × 5 = 0.
+Answer: 50 ÷ 10 = 5
+---
+
+Problem: 28 × 32 = ?
+Step 1: We need to multiply 28 and 32.
+Step 2: Perform the operation carefully.
+Answer: 28 × 32 = 896
+---
+
+Problem: 11 × 47 = ?
+Step 1: We need to multiply 11 and 47.
+Step 2: Perform the operation carefully.
+Answer: 11 × 47 = 517
+---
+
+Problem: 89 × 8 = ?
+Step 1: Multiply 89 by each digit of 8 separately.
+Step 2: 89 × 8 = 712 (ones place).
+Answer: 89 × 8 = 712
+---
+
+Problem: 59 × 58 = ?
+Step 1: Multiply 59 by each digit of 58 separately.
+Step 2: 59 × 8 = 472 (ones place).
+Step 3: 59 × 50 = 2950 (tens place).
+Step 4: Add results: 472 + 2950 = 3422.
+Answer: 59 × 58 = 3422
+---
+
+Problem: 10 + 17 = ?
+Step 1: We need to add 10 and 17.
+Step 2: Perform the operation carefully.
+Answer: 10 + 17 = 27
+---
+
+Problem: 144 + 433 = ?
+Step 1: Write out the numbers: 144 and 433.
+Step 2: Add the ones digits: 4 + 3 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 144 + 433 = 577
+---
+
+Problem: 405 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 405.
+Step 2: 9 × 45 = 405, so the quotient is 45.
+Step 3: Remainder = 405 - 9 × 45 = 0.
+Answer: 405 ÷ 9 = 45
+---
+
+Problem: 99 × 75 = ?
+Step 1: Multiply 99 by each digit of 75 separately.
+Step 2: 99 × 5 = 495 (ones place).
+Step 3: 99 × 70 = 6930 (tens place).
+Step 4: Add results: 495 + 6930 = 7425.
+Answer: 99 × 75 = 7425
+---
+
+Problem: 140 - 11 = ?
+Step 1: Write out 140 minus 11.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 140 - 11 = 129.
+Answer: 129
+---
+
+Problem: 474 + 256 = ?
+Step 1: Write out the numbers: 474 and 256.
+Step 2: Add the ones digits: 4 + 6 = 10.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 474 + 256 = 730
+---
+
+Problem: 41 × 34 = ?
+Step 1: Multiply 41 by each digit of 34 separately.
+Step 2: 41 × 4 = 164 (ones place).
+Step 3: 41 × 30 = 1230 (tens place).
+Step 4: Add results: 164 + 1230 = 1394.
+Answer: 41 × 34 = 1394
+---
+
+Problem: 29 + 23 = ?
+Step 1: We need to add 29 and 23.
+Step 2: Perform the operation carefully.
+Answer: 29 + 23 = 52
+---
+
+Problem: 850 - 815 = ?
+Step 1: Write out 850 minus 815.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 850 - 815 = 35.
+Answer: 35
+---
+
+Problem: 349 + 285 = ?
+Step 1: Write out the numbers: 349 and 285.
+Step 2: Add the ones digits: 9 + 5 = 14.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 349 + 285 = 634
+---
+
+Problem: 300 - 264 = ?
+Step 1: Write out 300 minus 264.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 300 - 264 = 36.
+Answer: 36
+---
+
+Problem: 835 - 204 = ?
+Step 1: Write out 835 minus 204.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 835 - 204 = 631.
+Answer: 631
+---
+
+Problem: 501 + 20 = ?
+Step 1: Write out the numbers: 501 and 20.
+Step 2: Add the ones digits: 1 + 0 = 1.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 501 + 20 = 521
+---
+
+Problem: 10 + 37 = ?
+Step 1: We need to add 10 and 37.
+Step 2: Perform the operation carefully.
+Answer: 10 + 37 = 47
+---
+
+Problem: 592 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 592.
+Step 2: 8 × 74 = 592, so the quotient is 74.
+Step 3: Remainder = 592 - 8 × 74 = 0.
+Answer: 592 ÷ 8 = 74
+---
+
+Problem: 34 × 6 = ?
+Step 1: We need to multiply 34 and 6.
+Step 2: Perform the operation carefully.
+Answer: 34 × 6 = 204
+---
+
+Problem: 354 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 354.
+Step 2: 6 × 59 = 354, so the quotient is 59.
+Step 3: Remainder = 354 - 6 × 59 = 0.
+Answer: 354 ÷ 6 = 59
+---
+
+Problem: 9 × 80 = ?
+Step 1: Multiply 9 by each digit of 80 separately.
+Step 2: 9 × 0 = 0 (ones place).
+Step 3: 9 × 80 = 720 (tens place).
+Step 4: Add results: 0 + 720 = 720.
+Answer: 9 × 80 = 720
+---
+
+Problem: 870 - 653 = ?
+Step 1: Write out 870 minus 653.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 870 - 653 = 217.
+Answer: 217
+---
+
+Problem: 39 × 6 = ?
+Step 1: We need to multiply 39 and 6.
+Step 2: Perform the operation carefully.
+Answer: 39 × 6 = 234
+---
+
+Problem: 30 × 53 = ?
+Step 1: Multiply 30 by each digit of 53 separately.
+Step 2: 30 × 3 = 90 (ones place).
+Step 3: 30 × 50 = 1500 (tens place).
+Step 4: Add results: 90 + 1500 = 1590.
+Answer: 30 × 53 = 1590
+---
+
+Problem: 24 + 7 = ?
+Step 1: We need to add 24 and 7.
+Step 2: Perform the operation carefully.
+Answer: 24 + 7 = 31
+---
+
+Problem: 522 + 506 = ?
+Step 1: Write out the numbers: 522 and 506.
+Step 2: Add the ones digits: 2 + 6 = 8.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 522 + 506 = 1028
+---
+
+Problem: 57 - 16 = ?
+Step 1: Write out 57 minus 16.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 57 - 16 = 41.
+Answer: 41
+---
+
+Problem: 180 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 180.
+Step 2: 3 × 60 = 180, so the quotient is 60.
+Step 3: Remainder = 180 - 3 × 60 = 0.
+Answer: 180 ÷ 3 = 60
+---
+
+Problem: 391 + 611 = ?
+Step 1: Write out the numbers: 391 and 611.
+Step 2: Add the ones digits: 1 + 1 = 2.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 391 + 611 = 1002
+---
+
+Problem: 34 × 19 = ?
+Step 1: We need to multiply 34 and 19.
+Step 2: Perform the operation carefully.
+Answer: 34 × 19 = 646
+---
+
+Problem: 29 + 40 = ?
+Step 1: We need to add 29 and 40.
+Step 2: Perform the operation carefully.
+Answer: 29 + 40 = 69
+---
+
+Problem: 235 + 70 = ?
+Step 1: Write out the numbers: 235 and 70.
+Step 2: Add the ones digits: 5 + 0 = 5.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 235 + 70 = 305
+---
+
+Problem: 24 × 95 = ?
+Step 1: Multiply 24 by each digit of 95 separately.
+Step 2: 24 × 5 = 120 (ones place).
+Step 3: 24 × 90 = 2160 (tens place).
+Step 4: Add results: 120 + 2160 = 2280.
+Answer: 24 × 95 = 2280
+---
+
+Problem: 28 + 6 = ?
+Step 1: We need to add 28 and 6.
+Step 2: Perform the operation carefully.
+Answer: 28 + 6 = 34
+---
+
+Problem: 8 × 23 = ?
+Step 1: We need to multiply 8 and 23.
+Step 2: Perform the operation carefully.
+Answer: 8 × 23 = 184
+---
+
+Problem: 55 × 9 = ?
+Step 1: Multiply 55 by each digit of 9 separately.
+Step 2: 55 × 9 = 495 (ones place).
+Answer: 55 × 9 = 495
+---
+
+Problem: 147 - 68 = ?
+Step 1: Write out 147 minus 68.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 147 - 68 = 79.
+Answer: 79
+---
+
+Problem: 228 - 222 = ?
+Step 1: Write out 228 minus 222.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 228 - 222 = 6.
+Answer: 6
+---
+
+Problem: 403 - 254 = ?
+Step 1: Write out 403 minus 254.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 403 - 254 = 149.
+Answer: 149
+---
+
+Problem: 32 × 24 = ?
+Step 1: Multiply 32 by each digit of 24 separately.
+Step 2: 32 × 4 = 128 (ones place).
+Step 3: 32 × 20 = 640 (tens place).
+Step 4: Add results: 128 + 640 = 768.
+Answer: 32 × 24 = 768
+---
+
+Problem: 420 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 420.
+Step 2: 12 × 35 = 420, so the quotient is 35.
+Step 3: Remainder = 420 - 12 × 35 = 0.
+Answer: 420 ÷ 12 = 35
+---
+
+Problem: 914 + 559 = ?
+Step 1: Write out the numbers: 914 and 559.
+Step 2: Add the ones digits: 4 + 9 = 13.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 914 + 559 = 1473
+---
+
+Problem: 49 + 18 = ?
+Step 1: We need to add 49 and 18.
+Step 2: Perform the operation carefully.
+Answer: 49 + 18 = 67
+---
+
+Problem: 94 + 774 = ?
+Step 1: Write out the numbers: 94 and 774.
+Step 2: Add the ones digits: 4 + 4 = 8.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 94 + 774 = 868
+---
+
+Problem: 29 + 29 = ?
+Step 1: We need to add 29 and 29.
+Step 2: Perform the operation carefully.
+Answer: 29 + 29 = 58
+---
+
+Problem: 79 × 79 = ?
+Step 1: Multiply 79 by each digit of 79 separately.
+Step 2: 79 × 9 = 711 (ones place).
+Step 3: 79 × 70 = 5530 (tens place).
+Step 4: Add results: 711 + 5530 = 6241.
+Answer: 79 × 79 = 6241
+---
+
+Problem: 47 × 91 = ?
+Step 1: Multiply 47 by each digit of 91 separately.
+Step 2: 47 × 1 = 47 (ones place).
+Step 3: 47 × 90 = 4230 (tens place).
+Step 4: Add results: 47 + 4230 = 4277.
+Answer: 47 × 91 = 4277
+---
+
+Problem: 38 × 36 = ?
+Step 1: We need to multiply 38 and 36.
+Step 2: Perform the operation carefully.
+Answer: 38 × 36 = 1368
+---
+
+Problem: 28 + 575 = ?
+Step 1: Write out the numbers: 28 and 575.
+Step 2: Add the ones digits: 8 + 5 = 13.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 28 + 575 = 603
+---
+
+Problem: 549 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 549.
+Step 2: 9 × 61 = 549, so the quotient is 61.
+Step 3: Remainder = 549 - 9 × 61 = 0.
+Answer: 549 ÷ 9 = 61
+---
+
+Problem: 335 ÷ 5 = ?
+Step 1: Determine how many times 5 fits into 335.
+Step 2: 5 × 67 = 335, so the quotient is 67.
+Step 3: Remainder = 335 - 5 × 67 = 0.
+Answer: 335 ÷ 5 = 67
+---
+
+Problem: 988 + 217 = ?
+Step 1: Write out the numbers: 988 and 217.
+Step 2: Add the ones digits: 8 + 7 = 15.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 988 + 217 = 1205
+---
+
+Problem: 747 - 308 = ?
+Step 1: Write out 747 minus 308.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 747 - 308 = 439.
+Answer: 439
+---
+
+Problem: 466 - 460 = ?
+Step 1: Write out 466 minus 460.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 466 - 460 = 6.
+Answer: 6
+---
+
+Problem: 442 + 363 = ?
+Step 1: Write out the numbers: 442 and 363.
+Step 2: Add the ones digits: 2 + 3 = 5.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 442 + 363 = 805
+---
+
+Problem: 700 + 664 = ?
+Step 1: Write out the numbers: 700 and 664.
+Step 2: Add the ones digits: 0 + 4 = 4.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 700 + 664 = 1364
+---
+
+Problem: 49 + 36 = ?
+Step 1: We need to add 49 and 36.
+Step 2: Perform the operation carefully.
+Answer: 49 + 36 = 85
+---
+
+Problem: 82 × 29 = ?
+Step 1: Multiply 82 by each digit of 29 separately.
+Step 2: 82 × 9 = 738 (ones place).
+Step 3: 82 × 20 = 1640 (tens place).
+Step 4: Add results: 738 + 1640 = 2378.
+Answer: 82 × 29 = 2378
+---
+
+Problem: 66 ÷ 11 = ?
+Step 1: Determine how many times 11 fits into 66.
+Step 2: 11 × 6 = 66, so the quotient is 6.
+Step 3: Remainder = 66 - 11 × 6 = 0.
+Answer: 66 ÷ 11 = 6
+---
+
+Problem: 830 - 476 = ?
+Step 1: Write out 830 minus 476.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 830 - 476 = 354.
+Answer: 354
+---
+
+Problem: 10 × 85 = ?
+Step 1: Multiply 10 by each digit of 85 separately.
+Step 2: 10 × 5 = 50 (ones place).
+Step 3: 10 × 80 = 800 (tens place).
+Step 4: Add results: 50 + 800 = 850.
+Answer: 10 × 85 = 850
+---
+
+Problem: 265 - 53 = ?
+Step 1: Write out 265 minus 53.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 265 - 53 = 212.
+Answer: 212
+---
+
+Problem: 109 + 892 = ?
+Step 1: Write out the numbers: 109 and 892.
+Step 2: Add the ones digits: 9 + 2 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 109 + 892 = 1001
+---
+
+Problem: 333 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 333.
+Step 2: 9 × 37 = 333, so the quotient is 37.
+Step 3: Remainder = 333 - 9 × 37 = 0.
+Answer: 333 ÷ 9 = 37
+---
+
+Problem: 981 + 782 = ?
+Step 1: Write out the numbers: 981 and 782.
+Step 2: Add the ones digits: 1 + 2 = 3.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 981 + 782 = 1763
+---
+
+Problem: 576 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 576.
+Step 2: 6 × 96 = 576, so the quotient is 96.
+Step 3: Remainder = 576 - 6 × 96 = 0.
+Answer: 576 ÷ 6 = 96
+---
+
+Problem: 48 + 48 = ?
+Step 1: We need to add 48 and 48.
+Step 2: Perform the operation carefully.
+Answer: 48 + 48 = 96
+---
+
+Problem: 21 × 50 = ?
+Step 1: We need to multiply 21 and 50.
+Step 2: Perform the operation carefully.
+Answer: 21 × 50 = 1050
+---
+
+Problem: 486 - 227 = ?
+Step 1: Write out 486 minus 227.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 486 - 227 = 259.
+Answer: 259
+---
+
+Problem: 80 - 77 = ?
+Step 1: Write out 80 minus 77.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 80 - 77 = 3.
+Answer: 3
+---
+
+Problem: 261 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 261.
+Step 2: 3 × 87 = 261, so the quotient is 87.
+Step 3: Remainder = 261 - 3 × 87 = 0.
+Answer: 261 ÷ 3 = 87
+---
+
+Problem: 15 - 13 = ?
+Step 1: We need to subtract 15 and 13.
+Step 2: Perform the operation carefully.
+Answer: 15 - 13 = 2
+---
+
+Problem: 408 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 408.
+Step 2: 12 × 34 = 408, so the quotient is 34.
+Step 3: Remainder = 408 - 12 × 34 = 0.
+Answer: 408 ÷ 12 = 34
+---
+
+Problem: 415 - 68 = ?
+Step 1: Write out 415 minus 68.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 415 - 68 = 347.
+Answer: 347
+---
+
+Problem: 576 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 576.
+Step 2: 12 × 48 = 576, so the quotient is 48.
+Step 3: Remainder = 576 - 12 × 48 = 0.
+Answer: 576 ÷ 12 = 48
+---
+
+Problem: 88 × 50 = ?
+Step 1: Multiply 88 by each digit of 50 separately.
+Step 2: 88 × 0 = 0 (ones place).
+Step 3: 88 × 50 = 4400 (tens place).
+Step 4: Add results: 0 + 4400 = 4400.
+Answer: 88 × 50 = 4400
+---
+
+Problem: 40 × 98 = ?
+Step 1: Multiply 40 by each digit of 98 separately.
+Step 2: 40 × 8 = 320 (ones place).
+Step 3: 40 × 90 = 3600 (tens place).
+Step 4: Add results: 320 + 3600 = 3920.
+Answer: 40 × 98 = 3920
+---
+
+Problem: 811 - 422 = ?
+Step 1: Write out 811 minus 422.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 811 - 422 = 389.
+Answer: 389
+---
+
+Problem: 550 + 128 = ?
+Step 1: Write out the numbers: 550 and 128.
+Step 2: Add the ones digits: 0 + 8 = 8.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 550 + 128 = 678
+---
+
+Problem: 313 - 112 = ?
+Step 1: Write out 313 minus 112.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 313 - 112 = 201.
+Answer: 201
+---
+
+Problem: 907 + 550 = ?
+Step 1: Write out the numbers: 907 and 550.
+Step 2: Add the ones digits: 7 + 0 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 907 + 550 = 1457
+---
+
+Problem: 171 + 417 = ?
+Step 1: Write out the numbers: 171 and 417.
+Step 2: Add the ones digits: 1 + 7 = 8.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 171 + 417 = 588
+---
+
+Problem: 21 + 28 = ?
+Step 1: We need to add 21 and 28.
+Step 2: Perform the operation carefully.
+Answer: 21 + 28 = 49
+---
+
+Problem: 864 - 379 = ?
+Step 1: Write out 864 minus 379.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 864 - 379 = 485.
+Answer: 485
+---
+
+Problem: 372 - 287 = ?
+Step 1: Write out 372 minus 287.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 372 - 287 = 85.
+Answer: 85
+---
+
+Problem: 27 + 23 = ?
+Step 1: We need to add 27 and 23.
+Step 2: Perform the operation carefully.
+Answer: 27 + 23 = 50
+---
+
+Problem: 71 × 61 = ?
+Step 1: Multiply 71 by each digit of 61 separately.
+Step 2: 71 × 1 = 71 (ones place).
+Step 3: 71 × 60 = 4260 (tens place).
+Step 4: Add results: 71 + 4260 = 4331.
+Answer: 71 × 61 = 4331
+---
+
+Problem: 68 - 7 = ?
+Step 1: Write out 68 minus 7.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 68 - 7 = 61.
+Answer: 61
+---
+
+Problem: 152 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 152.
+Step 2: 8 × 19 = 152, so the quotient is 19.
+Step 3: Remainder = 152 - 8 × 19 = 0.
+Answer: 152 ÷ 8 = 19
+---
+
+Problem: 567 + 882 = ?
+Step 1: Write out the numbers: 567 and 882.
+Step 2: Add the ones digits: 7 + 2 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 567 + 882 = 1449
+---
+
+Problem: 104 - 82 = ?
+Step 1: Write out 104 minus 82.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 104 - 82 = 22.
+Answer: 22
+---
+
+Problem: 14 × 42 = ?
+Step 1: We need to multiply 14 and 42.
+Step 2: Perform the operation carefully.
+Answer: 14 × 42 = 588
+---
+
+Problem: 477 - 69 = ?
+Step 1: Write out 477 minus 69.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 477 - 69 = 408.
+Answer: 408
+---
+
+Problem: 740 + 897 = ?
+Step 1: Write out the numbers: 740 and 897.
+Step 2: Add the ones digits: 0 + 7 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 740 + 897 = 1637
+---
+
+Problem: 50 × 40 = ?
+Step 1: We need to multiply 50 and 40.
+Step 2: Perform the operation carefully.
+Answer: 50 × 40 = 2000
+---
+
+Problem: 22 + 7 = ?
+Step 1: We need to add 22 and 7.
+Step 2: Perform the operation carefully.
+Answer: 22 + 7 = 29
+---
+
+Problem: 23 × 61 = ?
+Step 1: Multiply 23 by each digit of 61 separately.
+Step 2: 23 × 1 = 23 (ones place).
+Step 3: 23 × 60 = 1380 (tens place).
+Step 4: Add results: 23 + 1380 = 1403.
+Answer: 23 × 61 = 1403
+---
+
+Problem: 672 + 512 = ?
+Step 1: Write out the numbers: 672 and 512.
+Step 2: Add the ones digits: 2 + 2 = 4.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 672 + 512 = 1184
+---
+
+Problem: 45 - 7 = ?
+Step 1: We need to subtract 45 and 7.
+Step 2: Perform the operation carefully.
+Answer: 45 - 7 = 38
+---
+
+Problem: 84 × 56 = ?
+Step 1: Multiply 84 by each digit of 56 separately.
+Step 2: 84 × 6 = 504 (ones place).
+Step 3: 84 × 50 = 4200 (tens place).
+Step 4: Add results: 504 + 4200 = 4704.
+Answer: 84 × 56 = 4704
+---
+
+Problem: 604 + 285 = ?
+Step 1: Write out the numbers: 604 and 285.
+Step 2: Add the ones digits: 4 + 5 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 604 + 285 = 889
+---
+
+Problem: 531 - 410 = ?
+Step 1: Write out 531 minus 410.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 531 - 410 = 121.
+Answer: 121
+---
+
+Problem: 684 - 87 = ?
+Step 1: Write out 684 minus 87.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 684 - 87 = 597.
+Answer: 597
+---
+
+Problem: 45 × 99 = ?
+Step 1: Multiply 45 by each digit of 99 separately.
+Step 2: 45 × 9 = 405 (ones place).
+Step 3: 45 × 90 = 4050 (tens place).
+Step 4: Add results: 405 + 4050 = 4455.
+Answer: 45 × 99 = 4455
+---
+
+Problem: 40 × 3 = ?
+Step 1: Multiply 40 by each digit of 3 separately.
+Step 2: 40 × 3 = 120 (ones place).
+Answer: 40 × 3 = 120
+---
+
+Problem: 35 - 15 = ?
+Step 1: We need to subtract 35 and 15.
+Step 2: Perform the operation carefully.
+Answer: 35 - 15 = 20
+---
+
+Problem: 518 + 617 = ?
+Step 1: Write out the numbers: 518 and 617.
+Step 2: Add the ones digits: 8 + 7 = 15.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 518 + 617 = 1135
+---
+
+Problem: 462 - 346 = ?
+Step 1: Write out 462 minus 346.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 462 - 346 = 116.
+Answer: 116
+---
+
+Problem: 12 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 12.
+Step 2: 6 × 2 = 12, so the quotient is 2.
+Step 3: Remainder = 12 - 6 × 2 = 0.
+Answer: 12 ÷ 6 = 2
+---
+
+Problem: 522 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 522.
+Step 2: 6 × 87 = 522, so the quotient is 87.
+Step 3: Remainder = 522 - 6 × 87 = 0.
+Answer: 522 ÷ 6 = 87
+---
+
+Problem: 655 + 115 = ?
+Step 1: Write out the numbers: 655 and 115.
+Step 2: Add the ones digits: 5 + 5 = 10.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 655 + 115 = 770
+---
+
+Problem: 235 + 842 = ?
+Step 1: Write out the numbers: 235 and 842.
+Step 2: Add the ones digits: 5 + 2 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 235 + 842 = 1077
+---
+
+Problem: 49 - 48 = ?
+Step 1: We need to subtract 49 and 48.
+Step 2: Perform the operation carefully.
+Answer: 49 - 48 = 1
+---
+
+Problem: 689 - 128 = ?
+Step 1: Write out 689 minus 128.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 689 - 128 = 561.
+Answer: 561
+---
+
+Problem: 363 ÷ 11 = ?
+Step 1: Determine how many times 11 fits into 363.
+Step 2: 11 × 33 = 363, so the quotient is 33.
+Step 3: Remainder = 363 - 11 × 33 = 0.
+Answer: 363 ÷ 11 = 33
+---
+
+Problem: 76 ÷ 2 = ?
+Step 1: Determine how many times 2 fits into 76.
+Step 2: 2 × 38 = 76, so the quotient is 38.
+Step 3: Remainder = 76 - 2 × 38 = 0.
+Answer: 76 ÷ 2 = 38
+---
+
+Problem: 968 ÷ 11 = ?
+Step 1: Determine how many times 11 fits into 968.
+Step 2: 11 × 88 = 968, so the quotient is 88.
+Step 3: Remainder = 968 - 11 × 88 = 0.
+Answer: 968 ÷ 11 = 88
+---
+
+Problem: 774 + 748 = ?
+Step 1: Write out the numbers: 774 and 748.
+Step 2: Add the ones digits: 4 + 8 = 12.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 774 + 748 = 1522
+---
+
+Problem: 78 + 454 = ?
+Step 1: Write out the numbers: 78 and 454.
+Step 2: Add the ones digits: 8 + 4 = 12.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 78 + 454 = 532
+---
+
+Problem: 602 - 41 = ?
+Step 1: Write out 602 minus 41.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 602 - 41 = 561.
+Answer: 561
+---
+
+Problem: 112 + 255 = ?
+Step 1: Write out the numbers: 112 and 255.
+Step 2: Add the ones digits: 2 + 5 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 112 + 255 = 367
+---
+
+Problem: 175 - 114 = ?
+Step 1: Write out 175 minus 114.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 175 - 114 = 61.
+Answer: 61
+---
+
+Problem: 135 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 135.
+Step 2: 9 × 15 = 135, so the quotient is 15.
+Step 3: Remainder = 135 - 9 × 15 = 0.
+Answer: 135 ÷ 9 = 15
+---
+
+Problem: 658 ÷ 7 = ?
+Step 1: Determine how many times 7 fits into 658.
+Step 2: 7 × 94 = 658, so the quotient is 94.
+Step 3: Remainder = 658 - 7 × 94 = 0.
+Answer: 658 ÷ 7 = 94
+---
+
+Problem: 37 × 59 = ?
+Step 1: Multiply 37 by each digit of 59 separately.
+Step 2: 37 × 9 = 333 (ones place).
+Step 3: 37 × 50 = 1850 (tens place).
+Step 4: Add results: 333 + 1850 = 2183.
+Answer: 37 × 59 = 2183
+---
+
+Problem: 666 + 719 = ?
+Step 1: Write out the numbers: 666 and 719.
+Step 2: Add the ones digits: 6 + 9 = 15.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 666 + 719 = 1385
+---
+
+Problem: 61 × 74 = ?
+Step 1: Multiply 61 by each digit of 74 separately.
+Step 2: 61 × 4 = 244 (ones place).
+Step 3: 61 × 70 = 4270 (tens place).
+Step 4: Add results: 244 + 4270 = 4514.
+Answer: 61 × 74 = 4514
+---
+
+Problem: 970 + 81 = ?
+Step 1: Write out the numbers: 970 and 81.
+Step 2: Add the ones digits: 0 + 1 = 1.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 970 + 81 = 1051
+---
+
+Problem: 144 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 144.
+Step 2: 9 × 16 = 144, so the quotient is 16.
+Step 3: Remainder = 144 - 9 × 16 = 0.
+Answer: 144 ÷ 9 = 16
+---
+
+Problem: 183 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 183.
+Step 2: 3 × 61 = 183, so the quotient is 61.
+Step 3: Remainder = 183 - 3 × 61 = 0.
+Answer: 183 ÷ 3 = 61
+---
+
+Problem: 11 - 10 = ?
+Step 1: We need to subtract 11 and 10.
+Step 2: Perform the operation carefully.
+Answer: 11 - 10 = 1
+---
+
+Problem: 197 + 195 = ?
+Step 1: Write out the numbers: 197 and 195.
+Step 2: Add the ones digits: 7 + 5 = 12.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 197 + 195 = 392
+---
+
+Problem: 78 × 38 = ?
+Step 1: Multiply 78 by each digit of 38 separately.
+Step 2: 78 × 8 = 624 (ones place).
+Step 3: 78 × 30 = 2340 (tens place).
+Step 4: Add results: 624 + 2340 = 2964.
+Answer: 78 × 38 = 2964
+---
+
+Problem: 92 - 24 = ?
+Step 1: Write out 92 minus 24.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 92 - 24 = 68.
+Answer: 68
+---
+
+Problem: 117 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 117.
+Step 2: 9 × 13 = 117, so the quotient is 13.
+Step 3: Remainder = 117 - 9 × 13 = 0.
+Answer: 117 ÷ 9 = 13
+---
+
+Problem: 4 - 3 = ?
+Step 1: We need to subtract 4 and 3.
+Step 2: Perform the operation carefully.
+Answer: 4 - 3 = 1
+---
+
+Problem: 38 - 6 = ?
+Step 1: We need to subtract 38 and 6.
+Step 2: Perform the operation carefully.
+Answer: 38 - 6 = 32
+---
+
+Problem: 3 × 75 = ?
+Step 1: Multiply 3 by each digit of 75 separately.
+Step 2: 3 × 5 = 15 (ones place).
+Step 3: 3 × 70 = 210 (tens place).
+Step 4: Add results: 15 + 210 = 225.
+Answer: 3 × 75 = 225
+---
+
+Problem: 624 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 624.
+Step 2: 12 × 52 = 624, so the quotient is 52.
+Step 3: Remainder = 624 - 12 × 52 = 0.
+Answer: 624 ÷ 12 = 52
+---
+
+Problem: 883 + 371 = ?
+Step 1: Write out the numbers: 883 and 371.
+Step 2: Add the ones digits: 3 + 1 = 4.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 883 + 371 = 1254
+---
+
+Problem: 644 - 84 = ?
+Step 1: Write out 644 minus 84.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 644 - 84 = 560.
+Answer: 560
+---
+
+Problem: 404 - 296 = ?
+Step 1: Write out 404 minus 296.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 404 - 296 = 108.
+Answer: 108
+---
+
+Problem: 692 - 419 = ?
+Step 1: Write out 692 minus 419.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 692 - 419 = 273.
+Answer: 273
+---
+
+Problem: 15 - 3 = ?
+Step 1: We need to subtract 15 and 3.
+Step 2: Perform the operation carefully.
+Answer: 15 - 3 = 12
+---
+
+Problem: 327 - 116 = ?
+Step 1: Write out 327 minus 116.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 327 - 116 = 211.
+Answer: 211
+---
+
+Problem: 559 + 430 = ?
+Step 1: Write out the numbers: 559 and 430.
+Step 2: Add the ones digits: 9 + 0 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 559 + 430 = 989
+---
+
+Problem: 24 + 44 = ?
+Step 1: We need to add 24 and 44.
+Step 2: Perform the operation carefully.
+Answer: 24 + 44 = 68
+---
+
+Problem: 54 × 59 = ?
+Step 1: Multiply 54 by each digit of 59 separately.
+Step 2: 54 × 9 = 486 (ones place).
+Step 3: 54 × 50 = 2700 (tens place).
+Step 4: Add results: 486 + 2700 = 3186.
+Answer: 54 × 59 = 3186
+---
+
+Problem: 264 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 264.
+Step 2: 6 × 44 = 264, so the quotient is 44.
+Step 3: Remainder = 264 - 6 × 44 = 0.
+Answer: 264 ÷ 6 = 44
+---
+
+Problem: 24 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 24.
+Step 2: 6 × 4 = 24, so the quotient is 4.
+Step 3: Remainder = 24 - 6 × 4 = 0.
+Answer: 24 ÷ 6 = 4
+---
+
+Problem: 18 - 18 = ?
+Step 1: Write out 18 minus 18.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 18 - 18 = 0.
+Answer: 0
+---
+
+Problem: 16 × 22 = ?
+Step 1: Multiply 16 by each digit of 22 separately.
+Step 2: 16 × 2 = 32 (ones place).
+Step 3: 16 × 20 = 320 (tens place).
+Step 4: Add results: 32 + 320 = 352.
+Answer: 16 × 22 = 352
+---
+
+Problem: 862 + 655 = ?
+Step 1: Write out the numbers: 862 and 655.
+Step 2: Add the ones digits: 2 + 5 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 862 + 655 = 1517
+---
+
+Problem: 546 + 785 = ?
+Step 1: Write out the numbers: 546 and 785.
+Step 2: Add the ones digits: 6 + 5 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 546 + 785 = 1331
+---
+
+Problem: 43 × 23 = ?
+Step 1: We need to multiply 43 and 23.
+Step 2: Perform the operation carefully.
+Answer: 43 × 23 = 989
+---
+
+Problem: 5 × 65 = ?
+Step 1: Multiply 5 by each digit of 65 separately.
+Step 2: 5 × 5 = 25 (ones place).
+Step 3: 5 × 60 = 300 (tens place).
+Step 4: Add results: 25 + 300 = 325.
+Answer: 5 × 65 = 325
+---
+
+Problem: 6 × 33 = ?
+Step 1: We need to multiply 6 and 33.
+Step 2: Perform the operation carefully.
+Answer: 6 × 33 = 198
+---
+
+Problem: 439 - 337 = ?
+Step 1: Write out 439 minus 337.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 439 - 337 = 102.
+Answer: 102
+---
+
+Problem: 434 + 421 = ?
+Step 1: Write out the numbers: 434 and 421.
+Step 2: Add the ones digits: 4 + 1 = 5.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 434 + 421 = 855
+---
+
+Problem: 864 + 787 = ?
+Step 1: Write out the numbers: 864 and 787.
+Step 2: Add the ones digits: 4 + 7 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 864 + 787 = 1651
+---
+
+Problem: 18 + 40 = ?
+Step 1: We need to add 18 and 40.
+Step 2: Perform the operation carefully.
+Answer: 18 + 40 = 58
+---
+
+Problem: 77 × 90 = ?
+Step 1: Multiply 77 by each digit of 90 separately.
+Step 2: 77 × 0 = 0 (ones place).
+Step 3: 77 × 90 = 6930 (tens place).
+Step 4: Add results: 0 + 6930 = 6930.
+Answer: 77 × 90 = 6930
+---
+
+Problem: 32 × 90 = ?
+Step 1: Multiply 32 by each digit of 90 separately.
+Step 2: 32 × 0 = 0 (ones place).
+Step 3: 32 × 90 = 2880 (tens place).
+Step 4: Add results: 0 + 2880 = 2880.
+Answer: 32 × 90 = 2880
+---
+
+Problem: 93 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 93.
+Step 2: 3 × 31 = 93, so the quotient is 31.
+Step 3: Remainder = 93 - 3 × 31 = 0.
+Answer: 93 ÷ 3 = 31
+---
+
+Problem: 47 × 14 = ?
+Step 1: We need to multiply 47 and 14.
+Step 2: Perform the operation carefully.
+Answer: 47 × 14 = 658
+---
+
+Problem: 729 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 729.
+Step 2: 9 × 81 = 729, so the quotient is 81.
+Step 3: Remainder = 729 - 9 × 81 = 0.
+Answer: 729 ÷ 9 = 81
+---
+
+Problem: 668 + 554 = ?
+Step 1: Write out the numbers: 668 and 554.
+Step 2: Add the ones digits: 8 + 4 = 12.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 668 + 554 = 1222
+---
+
+Problem: 61 × 57 = ?
+Step 1: Multiply 61 by each digit of 57 separately.
+Step 2: 61 × 7 = 427 (ones place).
+Step 3: 61 × 50 = 3050 (tens place).
+Step 4: Add results: 427 + 3050 = 3477.
+Answer: 61 × 57 = 3477
+---
+
+Problem: 16 × 71 = ?
+Step 1: Multiply 16 by each digit of 71 separately.
+Step 2: 16 × 1 = 16 (ones place).
+Step 3: 16 × 70 = 1120 (tens place).
+Step 4: Add results: 16 + 1120 = 1136.
+Answer: 16 × 71 = 1136
+---
+
+Problem: 45 × 18 = ?
+Step 1: We need to multiply 45 and 18.
+Step 2: Perform the operation carefully.
+Answer: 45 × 18 = 810
+---
+
+Problem: 582 - 325 = ?
+Step 1: Write out 582 minus 325.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 582 - 325 = 257.
+Answer: 257
+---
+
+Problem: 252 - 222 = ?
+Step 1: Write out 252 minus 222.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 252 - 222 = 30.
+Answer: 30
+---
+
+Problem: 226 + 8 = ?
+Step 1: Write out the numbers: 226 and 8.
+Step 2: Add the ones digits: 6 + 8 = 14.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 226 + 8 = 234
+---
+
+Problem: 1 + 23 = ?
+Step 1: We need to add 1 and 23.
+Step 2: Perform the operation carefully.
+Answer: 1 + 23 = 24
+---
+
+Problem: 97 × 70 = ?
+Step 1: Multiply 97 by each digit of 70 separately.
+Step 2: 97 × 0 = 0 (ones place).
+Step 3: 97 × 70 = 6790 (tens place).
+Step 4: Add results: 0 + 6790 = 6790.
+Answer: 97 × 70 = 6790
+---
+
+Problem: 99 × 90 = ?
+Step 1: Multiply 99 by each digit of 90 separately.
+Step 2: 99 × 0 = 0 (ones place).
+Step 3: 99 × 90 = 8910 (tens place).
+Step 4: Add results: 0 + 8910 = 8910.
+Answer: 99 × 90 = 8910
+---
+
+Problem: 631 - 330 = ?
+Step 1: Write out 631 minus 330.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 631 - 330 = 301.
+Answer: 301
+---
+
+Problem: 388 + 81 = ?
+Step 1: Write out the numbers: 388 and 81.
+Step 2: Add the ones digits: 8 + 1 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 388 + 81 = 469
+---
+
+Problem: 112 - 10 = ?
+Step 1: Write out 112 minus 10.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 112 - 10 = 102.
+Answer: 102
+---
+
+Problem: 72 × 39 = ?
+Step 1: Multiply 72 by each digit of 39 separately.
+Step 2: 72 × 9 = 648 (ones place).
+Step 3: 72 × 30 = 2160 (tens place).
+Step 4: Add results: 648 + 2160 = 2808.
+Answer: 72 × 39 = 2808
+---
+
+Problem: 513 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 513.
+Step 2: 9 × 57 = 513, so the quotient is 57.
+Step 3: Remainder = 513 - 9 × 57 = 0.
+Answer: 513 ÷ 9 = 57
+---
+
+Problem: 161 - 111 = ?
+Step 1: Write out 161 minus 111.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 161 - 111 = 50.
+Answer: 50
+---
+
+Problem: 30 - 22 = ?
+Step 1: We need to subtract 30 and 22.
+Step 2: Perform the operation carefully.
+Answer: 30 - 22 = 8
+---
+
+Problem: 145 - 90 = ?
+Step 1: Write out 145 minus 90.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 145 - 90 = 55.
+Answer: 55
+---
+
+Problem: 912 - 423 = ?
+Step 1: Write out 912 minus 423.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 912 - 423 = 489.
+Answer: 489
+---
+
+Problem: 64 × 29 = ?
+Step 1: Multiply 64 by each digit of 29 separately.
+Step 2: 64 × 9 = 576 (ones place).
+Step 3: 64 × 20 = 1280 (tens place).
+Step 4: Add results: 576 + 1280 = 1856.
+Answer: 64 × 29 = 1856
+---
+
+Problem: 450 ÷ 5 = ?
+Step 1: Determine how many times 5 fits into 450.
+Step 2: 5 × 90 = 450, so the quotient is 90.
+Step 3: Remainder = 450 - 5 × 90 = 0.
+Answer: 450 ÷ 5 = 90
+---
+
+Problem: 15 × 91 = ?
+Step 1: Multiply 15 by each digit of 91 separately.
+Step 2: 15 × 1 = 15 (ones place).
+Step 3: 15 × 90 = 1350 (tens place).
+Step 4: Add results: 15 + 1350 = 1365.
+Answer: 15 × 91 = 1365
+---
+
+Problem: 575 + 552 = ?
+Step 1: Write out the numbers: 575 and 552.
+Step 2: Add the ones digits: 5 + 2 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 575 + 552 = 1127
+---
+
+Problem: 870 + 243 = ?
+Step 1: Write out the numbers: 870 and 243.
+Step 2: Add the ones digits: 0 + 3 = 3.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 870 + 243 = 1113
+---
+
+Problem: 746 + 348 = ?
+Step 1: Write out the numbers: 746 and 348.
+Step 2: Add the ones digits: 6 + 8 = 14.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 746 + 348 = 1094
+---
+
+Problem: 967 - 268 = ?
+Step 1: Write out 967 minus 268.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 967 - 268 = 699.
+Answer: 699
+---
+
+Problem: 160 ÷ 2 = ?
+Step 1: Determine how many times 2 fits into 160.
+Step 2: 2 × 80 = 160, so the quotient is 80.
+Step 3: Remainder = 160 - 2 × 80 = 0.
+Answer: 160 ÷ 2 = 80
+---
+
+Problem: 646 - 577 = ?
+Step 1: Write out 646 minus 577.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 646 - 577 = 69.
+Answer: 69
+---
+
+Problem: 148 ÷ 4 = ?
+Step 1: Determine how many times 4 fits into 148.
+Step 2: 4 × 37 = 148, so the quotient is 37.
+Step 3: Remainder = 148 - 4 × 37 = 0.
+Answer: 148 ÷ 4 = 37
+---
+
+Problem: 5 × 31 = ?
+Step 1: We need to multiply 5 and 31.
+Step 2: Perform the operation carefully.
+Answer: 5 × 31 = 155
+---
+
+Problem: 43 × 29 = ?
+Step 1: Multiply 43 by each digit of 29 separately.
+Step 2: 43 × 9 = 387 (ones place).
+Step 3: 43 × 20 = 860 (tens place).
+Step 4: Add results: 387 + 860 = 1247.
+Answer: 43 × 29 = 1247
+---
+
+Problem: 45 + 24 = ?
+Step 1: We need to add 45 and 24.
+Step 2: Perform the operation carefully.
+Answer: 45 + 24 = 69
+---
+
+Problem: 300 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 300.
+Step 2: 12 × 25 = 300, so the quotient is 25.
+Step 3: Remainder = 300 - 12 × 25 = 0.
+Answer: 300 ÷ 12 = 25
+---
+
+Problem: 560 - 219 = ?
+Step 1: Write out 560 minus 219.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 560 - 219 = 341.
+Answer: 341
+---
+
+Problem: 656 + 705 = ?
+Step 1: Write out the numbers: 656 and 705.
+Step 2: Add the ones digits: 6 + 5 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 656 + 705 = 1361
+---
+
+Problem: 95 × 77 = ?
+Step 1: Multiply 95 by each digit of 77 separately.
+Step 2: 95 × 7 = 665 (ones place).
+Step 3: 95 × 70 = 6650 (tens place).
+Step 4: Add results: 665 + 6650 = 7315.
+Answer: 95 × 77 = 7315
+---
+
+Problem: 903 - 40 = ?
+Step 1: Write out 903 minus 40.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 903 - 40 = 863.
+Answer: 863
+---
+
+Problem: 19 - 8 = ?
+Step 1: We need to subtract 19 and 8.
+Step 2: Perform the operation carefully.
+Answer: 19 - 8 = 11
+---
+
+Problem: 18 × 37 = ?
+Step 1: Multiply 18 by each digit of 37 separately.
+Step 2: 18 × 7 = 126 (ones place).
+Step 3: 18 × 30 = 540 (tens place).
+Step 4: Add results: 126 + 540 = 666.
+Answer: 18 × 37 = 666
+---
+
+Problem: 46 × 6 = ?
+Step 1: We need to multiply 46 and 6.
+Step 2: Perform the operation carefully.
+Answer: 46 × 6 = 276
+---
+
+Problem: 236 + 603 = ?
+Step 1: Write out the numbers: 236 and 603.
+Step 2: Add the ones digits: 6 + 3 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 236 + 603 = 839
+---
+
+Problem: 305 ÷ 5 = ?
+Step 1: Determine how many times 5 fits into 305.
+Step 2: 5 × 61 = 305, so the quotient is 61.
+Step 3: Remainder = 305 - 5 × 61 = 0.
+Answer: 305 ÷ 5 = 61
+---
+
+Problem: 6 + 48 = ?
+Step 1: We need to add 6 and 48.
+Step 2: Perform the operation carefully.
+Answer: 6 + 48 = 54
+---
+
+Problem: 219 - 172 = ?
+Step 1: Write out 219 minus 172.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 219 - 172 = 47.
+Answer: 47
+---
+
+Problem: 712 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 712.
+Step 2: 8 × 89 = 712, so the quotient is 89.
+Step 3: Remainder = 712 - 8 × 89 = 0.
+Answer: 712 ÷ 8 = 89
+---
+
+Problem: 949 + 772 = ?
+Step 1: Write out the numbers: 949 and 772.
+Step 2: Add the ones digits: 9 + 2 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 949 + 772 = 1721
+---
+
+Problem: 170 ÷ 2 = ?
+Step 1: Determine how many times 2 fits into 170.
+Step 2: 2 × 85 = 170, so the quotient is 85.
+Step 3: Remainder = 170 - 2 × 85 = 0.
+Answer: 170 ÷ 2 = 85
+---
+
+Problem: 229 + 143 = ?
+Step 1: Write out the numbers: 229 and 143.
+Step 2: Add the ones digits: 9 + 3 = 12.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 229 + 143 = 372
+---
+
+Problem: 12 + 18 = ?
+Step 1: We need to add 12 and 18.
+Step 2: Perform the operation carefully.
+Answer: 12 + 18 = 30
+---
+
+Problem: 168 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 168.
+Step 2: 3 × 56 = 168, so the quotient is 56.
+Step 3: Remainder = 168 - 3 × 56 = 0.
+Answer: 168 ÷ 3 = 56
+---
+
+Problem: 74 × 40 = ?
+Step 1: Multiply 74 by each digit of 40 separately.
+Step 2: 74 × 0 = 0 (ones place).
+Step 3: 74 × 40 = 2960 (tens place).
+Step 4: Add results: 0 + 2960 = 2960.
+Answer: 74 × 40 = 2960
+---
+
+Problem: 37 × 73 = ?
+Step 1: Multiply 37 by each digit of 73 separately.
+Step 2: 37 × 3 = 111 (ones place).
+Step 3: 37 × 70 = 2590 (tens place).
+Step 4: Add results: 111 + 2590 = 2701.
+Answer: 37 × 73 = 2701
+---
+
+Problem: 480 + 542 = ?
+Step 1: Write out the numbers: 480 and 542.
+Step 2: Add the ones digits: 0 + 2 = 2.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 480 + 542 = 1022
+---
+
+Problem: 49 × 20 = ?
+Step 1: We need to multiply 49 and 20.
+Step 2: Perform the operation carefully.
+Answer: 49 × 20 = 980
+---
+
+Problem: 340 ÷ 5 = ?
+Step 1: Determine how many times 5 fits into 340.
+Step 2: 5 × 68 = 340, so the quotient is 68.
+Step 3: Remainder = 340 - 5 × 68 = 0.
+Answer: 340 ÷ 5 = 68
+---
+
+Problem: 6 + 28 = ?
+Step 1: We need to add 6 and 28.
+Step 2: Perform the operation carefully.
+Answer: 6 + 28 = 34
+---
+
+Problem: 63 × 58 = ?
+Step 1: Multiply 63 by each digit of 58 separately.
+Step 2: 63 × 8 = 504 (ones place).
+Step 3: 63 × 50 = 3150 (tens place).
+Step 4: Add results: 504 + 3150 = 3654.
+Answer: 63 × 58 = 3654
+---
+
+Problem: 43 + 2 = ?
+Step 1: We need to add 43 and 2.
+Step 2: Perform the operation carefully.
+Answer: 43 + 2 = 45
+---
+
+Problem: 79 - 31 = ?
+Step 1: Write out 79 minus 31.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 79 - 31 = 48.
+Answer: 48
+---
+
+Problem: 687 - 499 = ?
+Step 1: Write out 687 minus 499.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 687 - 499 = 188.
+Answer: 188
+---
+
+Problem: 192 - 149 = ?
+Step 1: Write out 192 minus 149.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 192 - 149 = 43.
+Answer: 43
+---
+
+Problem: 237 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 237.
+Step 2: 3 × 79 = 237, so the quotient is 79.
+Step 3: Remainder = 237 - 3 × 79 = 0.
+Answer: 237 ÷ 3 = 79
+---
+
+Problem: 231 + 66 = ?
+Step 1: Write out the numbers: 231 and 66.
+Step 2: Add the ones digits: 1 + 6 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 231 + 66 = 297
+---
+
+Problem: 280 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 280.
+Step 2: 8 × 35 = 280, so the quotient is 35.
+Step 3: Remainder = 280 - 8 × 35 = 0.
+Answer: 280 ÷ 8 = 35
+---
+
+Problem: 90 + 605 = ?
+Step 1: Write out the numbers: 90 and 605.
+Step 2: Add the ones digits: 0 + 5 = 5.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 90 + 605 = 695
+---
+
+Problem: 15 × 33 = ?
+Step 1: We need to multiply 15 and 33.
+Step 2: Perform the operation carefully.
+Answer: 15 × 33 = 495
+---
+
+Problem: 70 × 97 = ?
+Step 1: Multiply 70 by each digit of 97 separately.
+Step 2: 70 × 7 = 490 (ones place).
+Step 3: 70 × 90 = 6300 (tens place).
+Step 4: Add results: 490 + 6300 = 6790.
+Answer: 70 × 97 = 6790
+---
+
+Problem: 333 - 38 = ?
+Step 1: Write out 333 minus 38.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 333 - 38 = 295.
+Answer: 295
+---
+
+Problem: 738 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 738.
+Step 2: 9 × 82 = 738, so the quotient is 82.
+Step 3: Remainder = 738 - 9 × 82 = 0.
+Answer: 738 ÷ 9 = 82
+---
+
+Problem: 723 - 303 = ?
+Step 1: Write out 723 minus 303.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 723 - 303 = 420.
+Answer: 420
+---
+
+Problem: 251 + 168 = ?
+Step 1: Write out the numbers: 251 and 168.
+Step 2: Add the ones digits: 1 + 8 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 251 + 168 = 419
+---
+
+Problem: 24 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 24.
+Step 2: 6 × 4 = 24, so the quotient is 4.
+Step 3: Remainder = 24 - 6 × 4 = 0.
+Answer: 24 ÷ 6 = 4
+---
+
+Problem: 32 × 37 = ?
+Step 1: Multiply 32 by each digit of 37 separately.
+Step 2: 32 × 7 = 224 (ones place).
+Step 3: 32 × 30 = 960 (tens place).
+Step 4: Add results: 224 + 960 = 1184.
+Answer: 32 × 37 = 1184
+---
+
+Problem: 528 - 272 = ?
+Step 1: Write out 528 minus 272.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 528 - 272 = 256.
+Answer: 256
+---
+
+Problem: 659 - 271 = ?
+Step 1: Write out 659 minus 271.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 659 - 271 = 388.
+Answer: 388
+---
+
+Problem: 132 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 132.
+Step 2: 6 × 22 = 132, so the quotient is 22.
+Step 3: Remainder = 132 - 6 × 22 = 0.
+Answer: 132 ÷ 6 = 22
+---
+
+Problem: 128 - 28 = ?
+Step 1: Write out 128 minus 28.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 128 - 28 = 100.
+Answer: 100
+---
+
+Problem: 288 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 288.
+Step 2: 12 × 24 = 288, so the quotient is 24.
+Step 3: Remainder = 288 - 12 × 24 = 0.
+Answer: 288 ÷ 12 = 24
+---
+
+Problem: 56 × 97 = ?
+Step 1: Multiply 56 by each digit of 97 separately.
+Step 2: 56 × 7 = 392 (ones place).
+Step 3: 56 × 90 = 5040 (tens place).
+Step 4: Add results: 392 + 5040 = 5432.
+Answer: 56 × 97 = 5432
+---
+
+Problem: 697 - 661 = ?
+Step 1: Write out 697 minus 661.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 697 - 661 = 36.
+Answer: 36
+---
+
+Problem: 731 + 320 = ?
+Step 1: Write out the numbers: 731 and 320.
+Step 2: Add the ones digits: 1 + 0 = 1.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 731 + 320 = 1051
+---
+
+Problem: 195 + 97 = ?
+Step 1: Write out the numbers: 195 and 97.
+Step 2: Add the ones digits: 5 + 7 = 12.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 195 + 97 = 292
+---
+
+Problem: 49 + 11 = ?
+Step 1: We need to add 49 and 11.
+Step 2: Perform the operation carefully.
+Answer: 49 + 11 = 60
+---
+
+Problem: 20 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 20.
+Step 2: 10 × 2 = 20, so the quotient is 2.
+Step 3: Remainder = 20 - 10 × 2 = 0.
+Answer: 20 ÷ 10 = 2
+---
+
+Problem: 637 - 517 = ?
+Step 1: Write out 637 minus 517.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 637 - 517 = 120.
+Answer: 120
+---
+
+Problem: 755 + 105 = ?
+Step 1: Write out the numbers: 755 and 105.
+Step 2: Add the ones digits: 5 + 5 = 10.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 755 + 105 = 860
+---
+
+Problem: 995 - 272 = ?
+Step 1: Write out 995 minus 272.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 995 - 272 = 723.
+Answer: 723
+---
+
+Problem: 1056 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 1056.
+Step 2: 12 × 88 = 1056, so the quotient is 88.
+Step 3: Remainder = 1056 - 12 × 88 = 0.
+Answer: 1056 ÷ 12 = 88
+---
+
+Problem: 33 - 7 = ?
+Step 1: We need to subtract 33 and 7.
+Step 2: Perform the operation carefully.
+Answer: 33 - 7 = 26
+---
+
+Problem: 90 × 78 = ?
+Step 1: Multiply 90 by each digit of 78 separately.
+Step 2: 90 × 8 = 720 (ones place).
+Step 3: 90 × 70 = 6300 (tens place).
+Step 4: Add results: 720 + 6300 = 7020.
+Answer: 90 × 78 = 7020
+---
+
+Problem: 62 × 72 = ?
+Step 1: Multiply 62 by each digit of 72 separately.
+Step 2: 62 × 2 = 124 (ones place).
+Step 3: 62 × 70 = 4340 (tens place).
+Step 4: Add results: 124 + 4340 = 4464.
+Answer: 62 × 72 = 4464
+---
+
+Problem: 829 + 891 = ?
+Step 1: Write out the numbers: 829 and 891.
+Step 2: Add the ones digits: 9 + 1 = 10.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 829 + 891 = 1720
+---
+
+Problem: 812 + 697 = ?
+Step 1: Write out the numbers: 812 and 697.
+Step 2: Add the ones digits: 2 + 7 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 812 + 697 = 1509
+---
+
+Problem: 56 × 86 = ?
+Step 1: Multiply 56 by each digit of 86 separately.
+Step 2: 56 × 6 = 336 (ones place).
+Step 3: 56 × 80 = 4480 (tens place).
+Step 4: Add results: 336 + 4480 = 4816.
+Answer: 56 × 86 = 4816
+---
+
+Problem: 584 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 584.
+Step 2: 8 × 73 = 584, so the quotient is 73.
+Step 3: Remainder = 584 - 8 × 73 = 0.
+Answer: 584 ÷ 8 = 73
+---
+
+Problem: 10 × 23 = ?
+Step 1: We need to multiply 10 and 23.
+Step 2: Perform the operation carefully.
+Answer: 10 × 23 = 230
+---
+
+Problem: 108 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 108.
+Step 2: 9 × 12 = 108, so the quotient is 12.
+Step 3: Remainder = 108 - 9 × 12 = 0.
+Answer: 108 ÷ 9 = 12
+---
+
+Problem: 166 + 553 = ?
+Step 1: Write out the numbers: 166 and 553.
+Step 2: Add the ones digits: 6 + 3 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 166 + 553 = 719
+---
+
+Problem: 36 - 25 = ?
+Step 1: We need to subtract 36 and 25.
+Step 2: Perform the operation carefully.
+Answer: 36 - 25 = 11
+---
+
+Problem: 48 + 41 = ?
+Step 1: We need to add 48 and 41.
+Step 2: Perform the operation carefully.
+Answer: 48 + 41 = 89
+---
+
+Problem: 827 + 45 = ?
+Step 1: Write out the numbers: 827 and 45.
+Step 2: Add the ones digits: 7 + 5 = 12.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 827 + 45 = 872
+---
+
+Problem: 435 ÷ 5 = ?
+Step 1: Determine how many times 5 fits into 435.
+Step 2: 5 × 87 = 435, so the quotient is 87.
+Step 3: Remainder = 435 - 5 × 87 = 0.
+Answer: 435 ÷ 5 = 87
+---
+
+Problem: 220 + 553 = ?
+Step 1: Write out the numbers: 220 and 553.
+Step 2: Add the ones digits: 0 + 3 = 3.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 220 + 553 = 773
+---
+
+Problem: 496 - 313 = ?
+Step 1: Write out 496 minus 313.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 496 - 313 = 183.
+Answer: 183
+---
+
+Problem: 788 + 657 = ?
+Step 1: Write out the numbers: 788 and 657.
+Step 2: Add the ones digits: 8 + 7 = 15.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 788 + 657 = 1445
+---
+
+Problem: 51 × 76 = ?
+Step 1: Multiply 51 by each digit of 76 separately.
+Step 2: 51 × 6 = 306 (ones place).
+Step 3: 51 × 70 = 3570 (tens place).
+Step 4: Add results: 306 + 3570 = 3876.
+Answer: 51 × 76 = 3876
+---
+
+Problem: 60 × 92 = ?
+Step 1: Multiply 60 by each digit of 92 separately.
+Step 2: 60 × 2 = 120 (ones place).
+Step 3: 60 × 90 = 5400 (tens place).
+Step 4: Add results: 120 + 5400 = 5520.
+Answer: 60 × 92 = 5520
+---
+
+Problem: 350 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 350.
+Step 2: 10 × 35 = 350, so the quotient is 35.
+Step 3: Remainder = 350 - 10 × 35 = 0.
+Answer: 350 ÷ 10 = 35
+---
+
+Problem: 41 × 40 = ?
+Step 1: We need to multiply 41 and 40.
+Step 2: Perform the operation carefully.
+Answer: 41 × 40 = 1640
+---
+
+Problem: 4 × 44 = ?
+Step 1: We need to multiply 4 and 44.
+Step 2: Perform the operation carefully.
+Answer: 4 × 44 = 176
+---
+
+Problem: 282 + 251 = ?
+Step 1: Write out the numbers: 282 and 251.
+Step 2: Add the ones digits: 2 + 1 = 3.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 282 + 251 = 533
+---
+
+Problem: 693 - 544 = ?
+Step 1: Write out 693 minus 544.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 693 - 544 = 149.
+Answer: 149
+---
+
+Problem: 14 × 25 = ?
+Step 1: We need to multiply 14 and 25.
+Step 2: Perform the operation carefully.
+Answer: 14 × 25 = 350
+---
+
+Problem: 36 × 57 = ?
+Step 1: Multiply 36 by each digit of 57 separately.
+Step 2: 36 × 7 = 252 (ones place).
+Step 3: 36 × 50 = 1800 (tens place).
+Step 4: Add results: 252 + 1800 = 2052.
+Answer: 36 × 57 = 2052
+---
+
+Problem: 45 × 3 = ?
+Step 1: Multiply 45 by each digit of 3 separately.
+Step 2: 45 × 3 = 135 (ones place).
+Answer: 45 × 3 = 135
+---
+
+Problem: 22 + 16 = ?
+Step 1: We need to add 22 and 16.
+Step 2: Perform the operation carefully.
+Answer: 22 + 16 = 38
+---
+
+Problem: 33 - 15 = ?
+Step 1: We need to subtract 33 and 15.
+Step 2: Perform the operation carefully.
+Answer: 33 - 15 = 18
+---
+
+Problem: 22 × 9 = ?
+Step 1: We need to multiply 22 and 9.
+Step 2: Perform the operation carefully.
+Answer: 22 × 9 = 198
+---
+
+Problem: 977 + 798 = ?
+Step 1: Write out the numbers: 977 and 798.
+Step 2: Add the ones digits: 7 + 8 = 15.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 977 + 798 = 1775
+---
+
+Problem: 89 × 31 = ?
+Step 1: Multiply 89 by each digit of 31 separately.
+Step 2: 89 × 1 = 89 (ones place).
+Step 3: 89 × 30 = 2670 (tens place).
+Step 4: Add results: 89 + 2670 = 2759.
+Answer: 89 × 31 = 2759
+---
+
+Problem: 252 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 252.
+Step 2: 6 × 42 = 252, so the quotient is 42.
+Step 3: Remainder = 252 - 6 × 42 = 0.
+Answer: 252 ÷ 6 = 42
+---
+
+Problem: 388 ÷ 4 = ?
+Step 1: Determine how many times 4 fits into 388.
+Step 2: 4 × 97 = 388, so the quotient is 97.
+Step 3: Remainder = 388 - 4 × 97 = 0.
+Answer: 388 ÷ 4 = 97
+---
+
+Problem: 703 - 179 = ?
+Step 1: Write out 703 minus 179.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 703 - 179 = 524.
+Answer: 524
+---
+
+Problem: 345 + 105 = ?
+Step 1: Write out the numbers: 345 and 105.
+Step 2: Add the ones digits: 5 + 5 = 10.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 345 + 105 = 450
+---
+
+Problem: 420 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 420.
+Step 2: 10 × 42 = 420, so the quotient is 42.
+Step 3: Remainder = 420 - 10 × 42 = 0.
+Answer: 420 ÷ 10 = 42
+---
+
+Problem: 614 + 332 = ?
+Step 1: Write out the numbers: 614 and 332.
+Step 2: Add the ones digits: 4 + 2 = 6.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 614 + 332 = 946
+---
+
+Problem: 21 - 5 = ?
+Step 1: We need to subtract 21 and 5.
+Step 2: Perform the operation carefully.
+Answer: 21 - 5 = 16
+---
+
+Problem: 50 × 45 = ?
+Step 1: Multiply 50 by each digit of 45 separately.
+Step 2: 50 × 5 = 250 (ones place).
+Step 3: 50 × 40 = 2000 (tens place).
+Step 4: Add results: 250 + 2000 = 2250.
+Answer: 50 × 45 = 2250
+---
+
+Problem: 651 + 176 = ?
+Step 1: Write out the numbers: 651 and 176.
+Step 2: Add the ones digits: 1 + 6 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 651 + 176 = 827
+---
+
+Problem: 51 × 55 = ?
+Step 1: Multiply 51 by each digit of 55 separately.
+Step 2: 51 × 5 = 255 (ones place).
+Step 3: 51 × 50 = 2550 (tens place).
+Step 4: Add results: 255 + 2550 = 2805.
+Answer: 51 × 55 = 2805
+---
+
+Problem: 541 + 894 = ?
+Step 1: Write out the numbers: 541 and 894.
+Step 2: Add the ones digits: 1 + 4 = 5.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 541 + 894 = 1435
+---
+
+Problem: 672 ÷ 7 = ?
+Step 1: Determine how many times 7 fits into 672.
+Step 2: 7 × 96 = 672, so the quotient is 96.
+Step 3: Remainder = 672 - 7 × 96 = 0.
+Answer: 672 ÷ 7 = 96
+---
+
+Problem: 171 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 171.
+Step 2: 3 × 57 = 171, so the quotient is 57.
+Step 3: Remainder = 171 - 3 × 57 = 0.
+Answer: 171 ÷ 3 = 57
+---
+
+Problem: 606 - 566 = ?
+Step 1: Write out 606 minus 566.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 606 - 566 = 40.
+Answer: 40
+---
+
+Problem: 349 + 115 = ?
+Step 1: Write out the numbers: 349 and 115.
+Step 2: Add the ones digits: 9 + 5 = 14.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 349 + 115 = 464
+---
+
+Problem: 996 + 513 = ?
+Step 1: Write out the numbers: 996 and 513.
+Step 2: Add the ones digits: 6 + 3 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 996 + 513 = 1509
+---
+
+Problem: 50 - 25 = ?
+Step 1: We need to subtract 50 and 25.
+Step 2: Perform the operation carefully.
+Answer: 50 - 25 = 25
+---
+
+Problem: 621 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 621.
+Step 2: 9 × 69 = 621, so the quotient is 69.
+Step 3: Remainder = 621 - 9 × 69 = 0.
+Answer: 621 ÷ 9 = 69
+---
+
+Problem: 41 × 15 = ?
+Step 1: Multiply 41 by each digit of 15 separately.
+Step 2: 41 × 5 = 205 (ones place).
+Step 3: 41 × 10 = 410 (tens place).
+Step 4: Add results: 205 + 410 = 615.
+Answer: 41 × 15 = 615
+---
+
+Problem: 545 - 324 = ?
+Step 1: Write out 545 minus 324.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 545 - 324 = 221.
+Answer: 221
+---
+
+Problem: 690 + 670 = ?
+Step 1: Write out the numbers: 690 and 670.
+Step 2: Add the ones digits: 0 + 0 = 0.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 690 + 670 = 1360
+---
+
+Problem: 722 + 72 = ?
+Step 1: Write out the numbers: 722 and 72.
+Step 2: Add the ones digits: 2 + 2 = 4.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 722 + 72 = 794
+---
+
+Problem: 6 + 21 = ?
+Step 1: We need to add 6 and 21.
+Step 2: Perform the operation carefully.
+Answer: 6 + 21 = 27
+---
+
+Problem: 80 × 87 = ?
+Step 1: Multiply 80 by each digit of 87 separately.
+Step 2: 80 × 7 = 560 (ones place).
+Step 3: 80 × 80 = 6400 (tens place).
+Step 4: Add results: 560 + 6400 = 6960.
+Answer: 80 × 87 = 6960
+---
+
+Problem: 715 + 433 = ?
+Step 1: Write out the numbers: 715 and 433.
+Step 2: Add the ones digits: 5 + 3 = 8.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 715 + 433 = 1148
+---
+
+Problem: 449 + 922 = ?
+Step 1: Write out the numbers: 449 and 922.
+Step 2: Add the ones digits: 9 + 2 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 449 + 922 = 1371
+---
+
+Problem: 546 ÷ 7 = ?
+Step 1: Determine how many times 7 fits into 546.
+Step 2: 7 × 78 = 546, so the quotient is 78.
+Step 3: Remainder = 546 - 7 × 78 = 0.
+Answer: 546 ÷ 7 = 78
+---
+
+Problem: 92 ÷ 4 = ?
+Step 1: Determine how many times 4 fits into 92.
+Step 2: 4 × 23 = 92, so the quotient is 23.
+Step 3: Remainder = 92 - 4 × 23 = 0.
+Answer: 92 ÷ 4 = 23
+---
+
+Problem: 178 - 98 = ?
+Step 1: Write out 178 minus 98.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 178 - 98 = 80.
+Answer: 80
+---
+
+Problem: 97 × 71 = ?
+Step 1: Multiply 97 by each digit of 71 separately.
+Step 2: 97 × 1 = 97 (ones place).
+Step 3: 97 × 70 = 6790 (tens place).
+Step 4: Add results: 97 + 6790 = 6887.
+Answer: 97 × 71 = 6887
+---
+
+Problem: 325 - 187 = ?
+Step 1: Write out 325 minus 187.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 325 - 187 = 138.
+Answer: 138
+---
+
+Problem: 71 × 12 = ?
+Step 1: Multiply 71 by each digit of 12 separately.
+Step 2: 71 × 2 = 142 (ones place).
+Step 3: 71 × 10 = 710 (tens place).
+Step 4: Add results: 142 + 710 = 852.
+Answer: 71 × 12 = 852
+---
+
+Problem: 36 ÷ 4 = ?
+Step 1: Determine how many times 4 fits into 36.
+Step 2: 4 × 9 = 36, so the quotient is 9.
+Step 3: Remainder = 36 - 4 × 9 = 0.
+Answer: 36 ÷ 4 = 9
+---
+
+Problem: 702 + 333 = ?
+Step 1: Write out the numbers: 702 and 333.
+Step 2: Add the ones digits: 2 + 3 = 5.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 702 + 333 = 1035
+---
+
+Problem: 922 - 454 = ?
+Step 1: Write out 922 minus 454.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 922 - 454 = 468.
+Answer: 468
+---
+
+Problem: 93 × 64 = ?
+Step 1: Multiply 93 by each digit of 64 separately.
+Step 2: 93 × 4 = 372 (ones place).
+Step 3: 93 × 60 = 5580 (tens place).
+Step 4: Add results: 372 + 5580 = 5952.
+Answer: 93 × 64 = 5952
+---
+
+Problem: 32 × 36 = ?
+Step 1: Multiply 32 by each digit of 36 separately.
+Step 2: 32 × 6 = 192 (ones place).
+Step 3: 32 × 30 = 960 (tens place).
+Step 4: Add results: 192 + 960 = 1152.
+Answer: 32 × 36 = 1152
+---
+
+Problem: 530 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 530.
+Step 2: 10 × 53 = 530, so the quotient is 53.
+Step 3: Remainder = 530 - 10 × 53 = 0.
+Answer: 530 ÷ 10 = 53
+---
+
+Problem: 180 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 180.
+Step 2: 6 × 30 = 180, so the quotient is 30.
+Step 3: Remainder = 180 - 6 × 30 = 0.
+Answer: 180 ÷ 6 = 30
+---
+
+Problem: 99 × 55 = ?
+Step 1: Multiply 99 by each digit of 55 separately.
+Step 2: 99 × 5 = 495 (ones place).
+Step 3: 99 × 50 = 4950 (tens place).
+Step 4: Add results: 495 + 4950 = 5445.
+Answer: 99 × 55 = 5445
+---
+
+Problem: 244 + 286 = ?
+Step 1: Write out the numbers: 244 and 286.
+Step 2: Add the ones digits: 4 + 6 = 10.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 244 + 286 = 530
+---
+
+Problem: 1008 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 1008.
+Step 2: 12 × 84 = 1008, so the quotient is 84.
+Step 3: Remainder = 1008 - 12 × 84 = 0.
+Answer: 1008 ÷ 12 = 84
+---
+
+Problem: 982 - 774 = ?
+Step 1: Write out 982 minus 774.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 982 - 774 = 208.
+Answer: 208
+---
+
+Problem: 25 - 19 = ?
+Step 1: We need to subtract 25 and 19.
+Step 2: Perform the operation carefully.
+Answer: 25 - 19 = 6
+---
+
+Problem: 50 - 24 = ?
+Step 1: We need to subtract 50 and 24.
+Step 2: Perform the operation carefully.
+Answer: 50 - 24 = 26
+---
+
+Problem: 26 × 5 = ?
+Step 1: We need to multiply 26 and 5.
+Step 2: Perform the operation carefully.
+Answer: 26 × 5 = 130
+---
+
+Problem: 69 × 46 = ?
+Step 1: Multiply 69 by each digit of 46 separately.
+Step 2: 69 × 6 = 414 (ones place).
+Step 3: 69 × 40 = 2760 (tens place).
+Step 4: Add results: 414 + 2760 = 3174.
+Answer: 69 × 46 = 3174
+---
+
+Problem: 12 × 22 = ?
+Step 1: Multiply 12 by each digit of 22 separately.
+Step 2: 12 × 2 = 24 (ones place).
+Step 3: 12 × 20 = 240 (tens place).
+Step 4: Add results: 24 + 240 = 264.
+Answer: 12 × 22 = 264
+---
+
+Problem: 520 + 624 = ?
+Step 1: Write out the numbers: 520 and 624.
+Step 2: Add the ones digits: 0 + 4 = 4.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 520 + 624 = 1144
+---
+
+Problem: 93 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 93.
+Step 2: 3 × 31 = 93, so the quotient is 31.
+Step 3: Remainder = 93 - 3 × 31 = 0.
+Answer: 93 ÷ 3 = 31
+---
+
+Problem: 612 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 612.
+Step 2: 12 × 51 = 612, so the quotient is 51.
+Step 3: Remainder = 612 - 12 × 51 = 0.
+Answer: 612 ÷ 12 = 51
+---
+
+Problem: 328 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 328.
+Step 2: 8 × 41 = 328, so the quotient is 41.
+Step 3: Remainder = 328 - 8 × 41 = 0.
+Answer: 328 ÷ 8 = 41
+---
+
+Problem: 852 + 827 = ?
+Step 1: Write out the numbers: 852 and 827.
+Step 2: Add the ones digits: 2 + 7 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 852 + 827 = 1679
+---
+
+Problem: 697 + 739 = ?
+Step 1: Write out the numbers: 697 and 739.
+Step 2: Add the ones digits: 7 + 9 = 16.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 697 + 739 = 1436
+---
+
+Problem: 48 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 48.
+Step 2: 8 × 6 = 48, so the quotient is 6.
+Step 3: Remainder = 48 - 8 × 6 = 0.
+Answer: 48 ÷ 8 = 6
+---
+
+Problem: 801 - 286 = ?
+Step 1: Write out 801 minus 286.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 801 - 286 = 515.
+Answer: 515
+---
+
+Problem: 28 + 2 = ?
+Step 1: We need to add 28 and 2.
+Step 2: Perform the operation carefully.
+Answer: 28 + 2 = 30
+---
+
+Problem: 21 - 19 = ?
+Step 1: We need to subtract 21 and 19.
+Step 2: Perform the operation carefully.
+Answer: 21 - 19 = 2
+---
+
+Problem: 542 - 202 = ?
+Step 1: Write out 542 minus 202.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 542 - 202 = 340.
+Answer: 340
+---
+
+Problem: 82 × 33 = ?
+Step 1: Multiply 82 by each digit of 33 separately.
+Step 2: 82 × 3 = 246 (ones place).
+Step 3: 82 × 30 = 2460 (tens place).
+Step 4: Add results: 246 + 2460 = 2706.
+Answer: 82 × 33 = 2706
+---
+
+Problem: 7 × 98 = ?
+Step 1: Multiply 7 by each digit of 98 separately.
+Step 2: 7 × 8 = 56 (ones place).
+Step 3: 7 × 90 = 630 (tens place).
+Step 4: Add results: 56 + 630 = 686.
+Answer: 7 × 98 = 686
+---
+
+Problem: 25 × 26 = ?
+Step 1: Multiply 25 by each digit of 26 separately.
+Step 2: 25 × 6 = 150 (ones place).
+Step 3: 25 × 20 = 500 (tens place).
+Step 4: Add results: 150 + 500 = 650.
+Answer: 25 × 26 = 650
+---
+
+Problem: 23 - 1 = ?
+Step 1: We need to subtract 23 and 1.
+Step 2: Perform the operation carefully.
+Answer: 23 - 1 = 22
+---
+
+Problem: 820 + 883 = ?
+Step 1: Write out the numbers: 820 and 883.
+Step 2: Add the ones digits: 0 + 3 = 3.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 820 + 883 = 1703
+---
+
+Problem: 37 + 33 = ?
+Step 1: We need to add 37 and 33.
+Step 2: Perform the operation carefully.
+Answer: 37 + 33 = 70
+---
+
+Problem: 105 ÷ 7 = ?
+Step 1: Determine how many times 7 fits into 105.
+Step 2: 7 × 15 = 105, so the quotient is 15.
+Step 3: Remainder = 105 - 7 × 15 = 0.
+Answer: 105 ÷ 7 = 15
+---
+
+Problem: 70 × 63 = ?
+Step 1: Multiply 70 by each digit of 63 separately.
+Step 2: 70 × 3 = 210 (ones place).
+Step 3: 70 × 60 = 4200 (tens place).
+Step 4: Add results: 210 + 4200 = 4410.
+Answer: 70 × 63 = 4410
+---
+
+Problem: 19 - 15 = ?
+Step 1: Write out 19 minus 15.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 19 - 15 = 4.
+Answer: 4
+---
+
+Problem: 91 ÷ 7 = ?
+Step 1: Determine how many times 7 fits into 91.
+Step 2: 7 × 13 = 91, so the quotient is 13.
+Step 3: Remainder = 91 - 7 × 13 = 0.
+Answer: 91 ÷ 7 = 13
+---
+
+Problem: 5 × 12 = ?
+Step 1: Multiply 5 by each digit of 12 separately.
+Step 2: 5 × 2 = 10 (ones place).
+Step 3: 5 × 10 = 50 (tens place).
+Step 4: Add results: 10 + 50 = 60.
+Answer: 5 × 12 = 60
+---
+
+Problem: 101 + 52 = ?
+Step 1: Write out the numbers: 101 and 52.
+Step 2: Add the ones digits: 1 + 2 = 3.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 101 + 52 = 153
+---
+
+Problem: 584 - 10 = ?
+Step 1: Write out 584 minus 10.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 584 - 10 = 574.
+Answer: 574
+---
+
+Problem: 39 - 31 = ?
+Step 1: We need to subtract 39 and 31.
+Step 2: Perform the operation carefully.
+Answer: 39 - 31 = 8
+---
+
+Problem: 42 - 2 = ?
+Step 1: We need to subtract 42 and 2.
+Step 2: Perform the operation carefully.
+Answer: 42 - 2 = 40
+---
+
+Problem: 958 + 904 = ?
+Step 1: Write out the numbers: 958 and 904.
+Step 2: Add the ones digits: 8 + 4 = 12.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 958 + 904 = 1862
+---
+
+Problem: 777 - 159 = ?
+Step 1: Write out 777 minus 159.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 777 - 159 = 618.
+Answer: 618
+---
+
+Problem: 10 + 11 = ?
+Step 1: We need to add 10 and 11.
+Step 2: Perform the operation carefully.
+Answer: 10 + 11 = 21
+---
+
+Problem: 799 - 134 = ?
+Step 1: Write out 799 minus 134.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 799 - 134 = 665.
+Answer: 665
+---
+
+Problem: 966 + 581 = ?
+Step 1: Write out the numbers: 966 and 581.
+Step 2: Add the ones digits: 6 + 1 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 966 + 581 = 1547
+---
+
+Problem: 46 - 41 = ?
+Step 1: We need to subtract 46 and 41.
+Step 2: Perform the operation carefully.
+Answer: 46 - 41 = 5
+---
+
+Problem: 300 ÷ 4 = ?
+Step 1: Determine how many times 4 fits into 300.
+Step 2: 4 × 75 = 300, so the quotient is 75.
+Step 3: Remainder = 300 - 4 × 75 = 0.
+Answer: 300 ÷ 4 = 75
+---
+
+Problem: 432 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 432.
+Step 2: 9 × 48 = 432, so the quotient is 48.
+Step 3: Remainder = 432 - 9 × 48 = 0.
+Answer: 432 ÷ 9 = 48
+---
+
+Problem: 39 + 1 = ?
+Step 1: We need to add 39 and 1.
+Step 2: Perform the operation carefully.
+Answer: 39 + 1 = 40
+---
+
+Problem: 650 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 650.
+Step 2: 10 × 65 = 650, so the quotient is 65.
+Step 3: Remainder = 650 - 10 × 65 = 0.
+Answer: 650 ÷ 10 = 65
+---
+
+Problem: 47 × 35 = ?
+Step 1: Multiply 47 by each digit of 35 separately.
+Step 2: 47 × 5 = 235 (ones place).
+Step 3: 47 × 30 = 1410 (tens place).
+Step 4: Add results: 235 + 1410 = 1645.
+Answer: 47 × 35 = 1645
+---
+
+Problem: 30 × 85 = ?
+Step 1: Multiply 30 by each digit of 85 separately.
+Step 2: 30 × 5 = 150 (ones place).
+Step 3: 30 × 80 = 2400 (tens place).
+Step 4: Add results: 150 + 2400 = 2550.
+Answer: 30 × 85 = 2550
+---
+
+Problem: 15 - 7 = ?
+Step 1: We need to subtract 15 and 7.
+Step 2: Perform the operation carefully.
+Answer: 15 - 7 = 8
+---
+
+Problem: 69 - 8 = ?
+Step 1: Write out 69 minus 8.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 69 - 8 = 61.
+Answer: 61
+---
+
+Problem: 301 + 446 = ?
+Step 1: Write out the numbers: 301 and 446.
+Step 2: Add the ones digits: 1 + 6 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 301 + 446 = 747
+---
+
+Problem: 20 × 11 = ?
+Step 1: Multiply 20 by each digit of 11 separately.
+Step 2: 20 × 1 = 20 (ones place).
+Step 3: 20 × 10 = 200 (tens place).
+Step 4: Add results: 20 + 200 = 220.
+Answer: 20 × 11 = 220
+---
+
+Problem: 775 - 322 = ?
+Step 1: Write out 775 minus 322.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 775 - 322 = 453.
+Answer: 453
+---
+
+Problem: 272 + 143 = ?
+Step 1: Write out the numbers: 272 and 143.
+Step 2: Add the ones digits: 2 + 3 = 5.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 272 + 143 = 415
+---
+
+Problem: 524 - 162 = ?
+Step 1: Write out 524 minus 162.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 524 - 162 = 362.
+Answer: 362
+---
+
+Problem: 881 + 339 = ?
+Step 1: Write out the numbers: 881 and 339.
+Step 2: Add the ones digits: 1 + 9 = 10.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 881 + 339 = 1220
+---
+
+Problem: 607 - 579 = ?
+Step 1: Write out 607 minus 579.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 607 - 579 = 28.
+Answer: 28
+---
+
+Problem: 31 + 96 = ?
+Step 1: Write out the numbers: 31 and 96.
+Step 2: Add the ones digits: 1 + 6 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 31 + 96 = 127
+---
+
+Problem: 966 + 12 = ?
+Step 1: Write out the numbers: 966 and 12.
+Step 2: Add the ones digits: 6 + 2 = 8.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 966 + 12 = 978
+---
+
+Problem: 45 × 48 = ?
+Step 1: We need to multiply 45 and 48.
+Step 2: Perform the operation carefully.
+Answer: 45 × 48 = 2160
+---
+
+Problem: 689 - 649 = ?
+Step 1: Write out 689 minus 649.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 689 - 649 = 40.
+Answer: 40
+---
+
+Problem: 48 × 34 = ?
+Step 1: We need to multiply 48 and 34.
+Step 2: Perform the operation carefully.
+Answer: 48 × 34 = 1632
+---
+
+Problem: 43 - 34 = ?
+Step 1: We need to subtract 43 and 34.
+Step 2: Perform the operation carefully.
+Answer: 43 - 34 = 9
+---
+
+Problem: 630 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 630.
+Step 2: 9 × 70 = 630, so the quotient is 70.
+Step 3: Remainder = 630 - 9 × 70 = 0.
+Answer: 630 ÷ 9 = 70
+---
+
+Problem: 342 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 342.
+Step 2: 6 × 57 = 342, so the quotient is 57.
+Step 3: Remainder = 342 - 6 × 57 = 0.
+Answer: 342 ÷ 6 = 57
+---
+
+Problem: 819 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 819.
+Step 2: 9 × 91 = 819, so the quotient is 91.
+Step 3: Remainder = 819 - 9 × 91 = 0.
+Answer: 819 ÷ 9 = 91
+---
+
+Problem: 29 × 96 = ?
+Step 1: Multiply 29 by each digit of 96 separately.
+Step 2: 29 × 6 = 174 (ones place).
+Step 3: 29 × 90 = 2610 (tens place).
+Step 4: Add results: 174 + 2610 = 2784.
+Answer: 29 × 96 = 2784
+---
+
+Problem: 74 × 81 = ?
+Step 1: Multiply 74 by each digit of 81 separately.
+Step 2: 74 × 1 = 74 (ones place).
+Step 3: 74 × 80 = 5920 (tens place).
+Step 4: Add results: 74 + 5920 = 5994.
+Answer: 74 × 81 = 5994
+---
+
+Problem: 87 × 88 = ?
+Step 1: Multiply 87 by each digit of 88 separately.
+Step 2: 87 × 8 = 696 (ones place).
+Step 3: 87 × 80 = 6960 (tens place).
+Step 4: Add results: 696 + 6960 = 7656.
+Answer: 87 × 88 = 7656
+---
+
+Problem: 472 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 472.
+Step 2: 8 × 59 = 472, so the quotient is 59.
+Step 3: Remainder = 472 - 8 × 59 = 0.
+Answer: 472 ÷ 8 = 59
+---
+
+Problem: 47 - 27 = ?
+Step 1: We need to subtract 47 and 27.
+Step 2: Perform the operation carefully.
+Answer: 47 - 27 = 20
+---
+
+Problem: 540 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 540.
+Step 2: 6 × 90 = 540, so the quotient is 90.
+Step 3: Remainder = 540 - 6 × 90 = 0.
+Answer: 540 ÷ 6 = 90
+---
+
+Problem: 27 × 11 = ?
+Step 1: Multiply 27 by each digit of 11 separately.
+Step 2: 27 × 1 = 27 (ones place).
+Step 3: 27 × 10 = 270 (tens place).
+Step 4: Add results: 27 + 270 = 297.
+Answer: 27 × 11 = 297
+---
+
+Problem: 47 - 44 = ?
+Step 1: We need to subtract 47 and 44.
+Step 2: Perform the operation carefully.
+Answer: 47 - 44 = 3
+---
+
+Problem: 16 - 7 = ?
+Step 1: We need to subtract 16 and 7.
+Step 2: Perform the operation carefully.
+Answer: 16 - 7 = 9
+---
+
+Problem: 863 - 557 = ?
+Step 1: Write out 863 minus 557.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 863 - 557 = 306.
+Answer: 306
+---
+
+Problem: 68 × 50 = ?
+Step 1: Multiply 68 by each digit of 50 separately.
+Step 2: 68 × 0 = 0 (ones place).
+Step 3: 68 × 50 = 3400 (tens place).
+Step 4: Add results: 0 + 3400 = 3400.
+Answer: 68 × 50 = 3400
+---
+
+Problem: 90 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 90.
+Step 2: 9 × 10 = 90, so the quotient is 10.
+Step 3: Remainder = 90 - 9 × 10 = 0.
+Answer: 90 ÷ 9 = 10
+---
+
+Problem: 979 ÷ 11 = ?
+Step 1: Determine how many times 11 fits into 979.
+Step 2: 11 × 89 = 979, so the quotient is 89.
+Step 3: Remainder = 979 - 11 × 89 = 0.
+Answer: 979 ÷ 11 = 89
+---
+
+Problem: 540 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 540.
+Step 2: 6 × 90 = 540, so the quotient is 90.
+Step 3: Remainder = 540 - 6 × 90 = 0.
+Answer: 540 ÷ 6 = 90
+---
+
+Problem: 24 × 6 = ?
+Step 1: We need to multiply 24 and 6.
+Step 2: Perform the operation carefully.
+Answer: 24 × 6 = 144
+---
+
+Problem: 244 ÷ 4 = ?
+Step 1: Determine how many times 4 fits into 244.
+Step 2: 4 × 61 = 244, so the quotient is 61.
+Step 3: Remainder = 244 - 4 × 61 = 0.
+Answer: 244 ÷ 4 = 61
+---
+
+Problem: 779 - 254 = ?
+Step 1: Write out 779 minus 254.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 779 - 254 = 525.
+Answer: 525
+---
+
+Problem: 64 × 82 = ?
+Step 1: Multiply 64 by each digit of 82 separately.
+Step 2: 64 × 2 = 128 (ones place).
+Step 3: 64 × 80 = 5120 (tens place).
+Step 4: Add results: 128 + 5120 = 5248.
+Answer: 64 × 82 = 5248
+---
+
+Problem: 96 × 14 = ?
+Step 1: Multiply 96 by each digit of 14 separately.
+Step 2: 96 × 4 = 384 (ones place).
+Step 3: 96 × 10 = 960 (tens place).
+Step 4: Add results: 384 + 960 = 1344.
+Answer: 96 × 14 = 1344
+---
+
+Problem: 129 + 132 = ?
+Step 1: Write out the numbers: 129 and 132.
+Step 2: Add the ones digits: 9 + 2 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 129 + 132 = 261
+---
+
+Problem: 828 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 828.
+Step 2: 12 × 69 = 828, so the quotient is 69.
+Step 3: Remainder = 828 - 12 × 69 = 0.
+Answer: 828 ÷ 12 = 69
+---
+
+Problem: 368 - 157 = ?
+Step 1: Write out 368 minus 157.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 368 - 157 = 211.
+Answer: 211
+---
+
+Problem: 204 + 734 = ?
+Step 1: Write out the numbers: 204 and 734.
+Step 2: Add the ones digits: 4 + 4 = 8.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 204 + 734 = 938
+---
+
+Problem: 363 - 161 = ?
+Step 1: Write out 363 minus 161.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 363 - 161 = 202.
+Answer: 202
+---
+
+Problem: 180 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 180.
+Step 2: 9 × 20 = 180, so the quotient is 20.
+Step 3: Remainder = 180 - 9 × 20 = 0.
+Answer: 180 ÷ 9 = 20
+---
+
+Problem: 98 × 55 = ?
+Step 1: Multiply 98 by each digit of 55 separately.
+Step 2: 98 × 5 = 490 (ones place).
+Step 3: 98 × 50 = 4900 (tens place).
+Step 4: Add results: 490 + 4900 = 5390.
+Answer: 98 × 55 = 5390
+---
+
+Problem: 94 × 77 = ?
+Step 1: Multiply 94 by each digit of 77 separately.
+Step 2: 94 × 7 = 658 (ones place).
+Step 3: 94 × 70 = 6580 (tens place).
+Step 4: Add results: 658 + 6580 = 7238.
+Answer: 94 × 77 = 7238
+---
+
+Problem: 5 + 33 = ?
+Step 1: We need to add 5 and 33.
+Step 2: Perform the operation carefully.
+Answer: 5 + 33 = 38
+---
+
+Problem: 256 ÷ 4 = ?
+Step 1: Determine how many times 4 fits into 256.
+Step 2: 4 × 64 = 256, so the quotient is 64.
+Step 3: Remainder = 256 - 4 × 64 = 0.
+Answer: 256 ÷ 4 = 64
+---
+
+Problem: 528 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 528.
+Step 2: 8 × 66 = 528, so the quotient is 66.
+Step 3: Remainder = 528 - 8 × 66 = 0.
+Answer: 528 ÷ 8 = 66
+---
+
+Problem: 12 + 39 = ?
+Step 1: We need to add 12 and 39.
+Step 2: Perform the operation carefully.
+Answer: 12 + 39 = 51
+---
+
+Problem: 608 - 489 = ?
+Step 1: Write out 608 minus 489.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 608 - 489 = 119.
+Answer: 119
+---
+
+Problem: 200 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 200.
+Step 2: 8 × 25 = 200, so the quotient is 25.
+Step 3: Remainder = 200 - 8 × 25 = 0.
+Answer: 200 ÷ 8 = 25
+---
+
+Problem: 318 - 208 = ?
+Step 1: Write out 318 minus 208.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 318 - 208 = 110.
+Answer: 110
+---
+
+Problem: 804 + 485 = ?
+Step 1: Write out the numbers: 804 and 485.
+Step 2: Add the ones digits: 4 + 5 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 804 + 485 = 1289
+---
+
+Problem: 896 + 946 = ?
+Step 1: Write out the numbers: 896 and 946.
+Step 2: Add the ones digits: 6 + 6 = 12.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 896 + 946 = 1842
+---
+
+Problem: 64 × 15 = ?
+Step 1: Multiply 64 by each digit of 15 separately.
+Step 2: 64 × 5 = 320 (ones place).
+Step 3: 64 × 10 = 640 (tens place).
+Step 4: Add results: 320 + 640 = 960.
+Answer: 64 × 15 = 960
+---
+
+Problem: 91 × 4 = ?
+Step 1: Multiply 91 by each digit of 4 separately.
+Step 2: 91 × 4 = 364 (ones place).
+Answer: 91 × 4 = 364
+---
+
+Problem: 12 × 3 = ?
+Step 1: We need to multiply 12 and 3.
+Step 2: Perform the operation carefully.
+Answer: 12 × 3 = 36
+---
+
+Problem: 33 × 98 = ?
+Step 1: Multiply 33 by each digit of 98 separately.
+Step 2: 33 × 8 = 264 (ones place).
+Step 3: 33 × 90 = 2970 (tens place).
+Step 4: Add results: 264 + 2970 = 3234.
+Answer: 33 × 98 = 3234
+---
+
+Problem: 45 × 25 = ?
+Step 1: Multiply 45 by each digit of 25 separately.
+Step 2: 45 × 5 = 225 (ones place).
+Step 3: 45 × 20 = 900 (tens place).
+Step 4: Add results: 225 + 900 = 1125.
+Answer: 45 × 25 = 1125
+---
+
+Problem: 250 - 173 = ?
+Step 1: Write out 250 minus 173.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 250 - 173 = 77.
+Answer: 77
+---
+
+Problem: 33 ÷ 11 = ?
+Step 1: Determine how many times 11 fits into 33.
+Step 2: 11 × 3 = 33, so the quotient is 3.
+Step 3: Remainder = 33 - 11 × 3 = 0.
+Answer: 33 ÷ 11 = 3
+---
+
+Problem: 717 - 153 = ?
+Step 1: Write out 717 minus 153.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 717 - 153 = 564.
+Answer: 564
+---
+
+Problem: 267 - 27 = ?
+Step 1: Write out 267 minus 27.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 267 - 27 = 240.
+Answer: 240
+---
+
+Problem: 33 - 29 = ?
+Step 1: We need to subtract 33 and 29.
+Step 2: Perform the operation carefully.
+Answer: 33 - 29 = 4
+---
+
+Problem: 39 - 33 = ?
+Step 1: We need to subtract 39 and 33.
+Step 2: Perform the operation carefully.
+Answer: 39 - 33 = 6
+---
+
+Problem: 56 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 56.
+Step 2: 8 × 7 = 56, so the quotient is 7.
+Step 3: Remainder = 56 - 8 × 7 = 0.
+Answer: 56 ÷ 8 = 7
+---
+
+Problem: 237 - 52 = ?
+Step 1: Write out 237 minus 52.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 237 - 52 = 185.
+Answer: 185
+---
+
+Problem: 44 × 25 = ?
+Step 1: We need to multiply 44 and 25.
+Step 2: Perform the operation carefully.
+Answer: 44 × 25 = 1100
+---
+
+Problem: 53 × 94 = ?
+Step 1: Multiply 53 by each digit of 94 separately.
+Step 2: 53 × 4 = 212 (ones place).
+Step 3: 53 × 90 = 4770 (tens place).
+Step 4: Add results: 212 + 4770 = 4982.
+Answer: 53 × 94 = 4982
+---
+
+Problem: 916 - 110 = ?
+Step 1: Write out 916 minus 110.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 916 - 110 = 806.
+Answer: 806
+---
+
+Problem: 79 × 78 = ?
+Step 1: Multiply 79 by each digit of 78 separately.
+Step 2: 79 × 8 = 632 (ones place).
+Step 3: 79 × 70 = 5530 (tens place).
+Step 4: Add results: 632 + 5530 = 6162.
+Answer: 79 × 78 = 6162
+---
+
+Problem: 162 ÷ 2 = ?
+Step 1: Determine how many times 2 fits into 162.
+Step 2: 2 × 81 = 162, so the quotient is 81.
+Step 3: Remainder = 162 - 2 × 81 = 0.
+Answer: 162 ÷ 2 = 81
+---
+
+Problem: 371 ÷ 7 = ?
+Step 1: Determine how many times 7 fits into 371.
+Step 2: 7 × 53 = 371, so the quotient is 53.
+Step 3: Remainder = 371 - 7 × 53 = 0.
+Answer: 371 ÷ 7 = 53
+---
+
+Problem: 56 × 41 = ?
+Step 1: Multiply 56 by each digit of 41 separately.
+Step 2: 56 × 1 = 56 (ones place).
+Step 3: 56 × 40 = 2240 (tens place).
+Step 4: Add results: 56 + 2240 = 2296.
+Answer: 56 × 41 = 2296
+---
+
+Problem: 1056 ÷ 11 = ?
+Step 1: Determine how many times 11 fits into 1056.
+Step 2: 11 × 96 = 1056, so the quotient is 96.
+Step 3: Remainder = 1056 - 11 × 96 = 0.
+Answer: 1056 ÷ 11 = 96
+---
+
+Problem: 78 × 17 = ?
+Step 1: Multiply 78 by each digit of 17 separately.
+Step 2: 78 × 7 = 546 (ones place).
+Step 3: 78 × 10 = 780 (tens place).
+Step 4: Add results: 546 + 780 = 1326.
+Answer: 78 × 17 = 1326
+---
+
+Problem: 585 + 591 = ?
+Step 1: Write out the numbers: 585 and 591.
+Step 2: Add the ones digits: 5 + 1 = 6.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 585 + 591 = 1176
+---
+
+Problem: 898 + 736 = ?
+Step 1: Write out the numbers: 898 and 736.
+Step 2: Add the ones digits: 8 + 6 = 14.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 898 + 736 = 1634
+---
+
+Problem: 293 - 23 = ?
+Step 1: Write out 293 minus 23.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 293 - 23 = 270.
+Answer: 270
+---
+
+Problem: 120 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 120.
+Step 2: 8 × 15 = 120, so the quotient is 15.
+Step 3: Remainder = 120 - 8 × 15 = 0.
+Answer: 120 ÷ 8 = 15
+---
+
+Problem: 426 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 426.
+Step 2: 6 × 71 = 426, so the quotient is 71.
+Step 3: Remainder = 426 - 6 × 71 = 0.
+Answer: 426 ÷ 6 = 71
+---
+
+Problem: 347 + 22 = ?
+Step 1: Write out the numbers: 347 and 22.
+Step 2: Add the ones digits: 7 + 2 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 347 + 22 = 369
+---
+
+Problem: 76 × 5 = ?
+Step 1: Multiply 76 by each digit of 5 separately.
+Step 2: 76 × 5 = 380 (ones place).
+Answer: 76 × 5 = 380
+---
+
+Problem: 48 × 83 = ?
+Step 1: Multiply 48 by each digit of 83 separately.
+Step 2: 48 × 3 = 144 (ones place).
+Step 3: 48 × 80 = 3840 (tens place).
+Step 4: Add results: 144 + 3840 = 3984.
+Answer: 48 × 83 = 3984
+---
+
+Problem: 690 - 389 = ?
+Step 1: Write out 690 minus 389.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 690 - 389 = 301.
+Answer: 301
+---
+
+Problem: 203 ÷ 7 = ?
+Step 1: Determine how many times 7 fits into 203.
+Step 2: 7 × 29 = 203, so the quotient is 29.
+Step 3: Remainder = 203 - 7 × 29 = 0.
+Answer: 203 ÷ 7 = 29
+---
+
+Problem: 43 + 22 = ?
+Step 1: We need to add 43 and 22.
+Step 2: Perform the operation carefully.
+Answer: 43 + 22 = 65
+---
+
+Problem: 39 × 31 = ?
+Step 1: Multiply 39 by each digit of 31 separately.
+Step 2: 39 × 1 = 39 (ones place).
+Step 3: 39 × 30 = 1170 (tens place).
+Step 4: Add results: 39 + 1170 = 1209.
+Answer: 39 × 31 = 1209
+---
+
+Problem: 47 + 678 = ?
+Step 1: Write out the numbers: 47 and 678.
+Step 2: Add the ones digits: 7 + 8 = 15.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 47 + 678 = 725
+---
+
+Problem: 73 × 99 = ?
+Step 1: Multiply 73 by each digit of 99 separately.
+Step 2: 73 × 9 = 657 (ones place).
+Step 3: 73 × 90 = 6570 (tens place).
+Step 4: Add results: 657 + 6570 = 7227.
+Answer: 73 × 99 = 7227
+---
+
+Problem: 10 × 55 = ?
+Step 1: Multiply 10 by each digit of 55 separately.
+Step 2: 10 × 5 = 50 (ones place).
+Step 3: 10 × 50 = 500 (tens place).
+Step 4: Add results: 50 + 500 = 550.
+Answer: 10 × 55 = 550
+---
+
+Problem: 76 × 49 = ?
+Step 1: Multiply 76 by each digit of 49 separately.
+Step 2: 76 × 9 = 684 (ones place).
+Step 3: 76 × 40 = 3040 (tens place).
+Step 4: Add results: 684 + 3040 = 3724.
+Answer: 76 × 49 = 3724
+---
+
+Problem: 12 - 7 = ?
+Step 1: Write out 12 minus 7.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 12 - 7 = 5.
+Answer: 5
+---
+
+Problem: 97 × 74 = ?
+Step 1: Multiply 97 by each digit of 74 separately.
+Step 2: 97 × 4 = 388 (ones place).
+Step 3: 97 × 70 = 6790 (tens place).
+Step 4: Add results: 388 + 6790 = 7178.
+Answer: 97 × 74 = 7178
+---
+
+Problem: 390 ÷ 5 = ?
+Step 1: Determine how many times 5 fits into 390.
+Step 2: 5 × 78 = 390, so the quotient is 78.
+Step 3: Remainder = 390 - 5 × 78 = 0.
+Answer: 390 ÷ 5 = 78
+---
+
+Problem: 38 + 21 = ?
+Step 1: We need to add 38 and 21.
+Step 2: Perform the operation carefully.
+Answer: 38 + 21 = 59
+---
+
+Problem: 14 + 20 = ?
+Step 1: We need to add 14 and 20.
+Step 2: Perform the operation carefully.
+Answer: 14 + 20 = 34
+---
+
+Problem: 93 × 38 = ?
+Step 1: Multiply 93 by each digit of 38 separately.
+Step 2: 93 × 8 = 744 (ones place).
+Step 3: 93 × 30 = 2790 (tens place).
+Step 4: Add results: 744 + 2790 = 3534.
+Answer: 93 × 38 = 3534
+---
+
+Problem: 22 × 2 = ?
+Step 1: Multiply 22 by each digit of 2 separately.
+Step 2: 22 × 2 = 44 (ones place).
+Answer: 22 × 2 = 44
+---
+
+Problem: 935 ÷ 11 = ?
+Step 1: Determine how many times 11 fits into 935.
+Step 2: 11 × 85 = 935, so the quotient is 85.
+Step 3: Remainder = 935 - 11 × 85 = 0.
+Answer: 935 ÷ 11 = 85
+---
+
+Problem: 941 + 1 = ?
+Step 1: Write out the numbers: 941 and 1.
+Step 2: Add the ones digits: 1 + 1 = 2.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 941 + 1 = 942
+---
+
+Problem: 426 - 318 = ?
+Step 1: Write out 426 minus 318.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 426 - 318 = 108.
+Answer: 108
+---
+
+Problem: 91 × 34 = ?
+Step 1: Multiply 91 by each digit of 34 separately.
+Step 2: 91 × 4 = 364 (ones place).
+Step 3: 91 × 30 = 2730 (tens place).
+Step 4: Add results: 364 + 2730 = 3094.
+Answer: 91 × 34 = 3094
+---
+
+Problem: 59 × 4 = ?
+Step 1: Multiply 59 by each digit of 4 separately.
+Step 2: 59 × 4 = 236 (ones place).
+Answer: 59 × 4 = 236
+---
+
+Problem: 12 + 17 = ?
+Step 1: We need to add 12 and 17.
+Step 2: Perform the operation carefully.
+Answer: 12 + 17 = 29
+---
+
+Problem: 18 + 29 = ?
+Step 1: We need to add 18 and 29.
+Step 2: Perform the operation carefully.
+Answer: 18 + 29 = 47
+---
+
+Problem: 46 + 29 = ?
+Step 1: We need to add 46 and 29.
+Step 2: Perform the operation carefully.
+Answer: 46 + 29 = 75
+---
+
+Problem: 599 - 200 = ?
+Step 1: Write out 599 minus 200.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 599 - 200 = 399.
+Answer: 399
+---
+
+Problem: 498 + 493 = ?
+Step 1: Write out the numbers: 498 and 493.
+Step 2: Add the ones digits: 8 + 3 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 498 + 493 = 991
+---
+
+Problem: 719 + 960 = ?
+Step 1: Write out the numbers: 719 and 960.
+Step 2: Add the ones digits: 9 + 0 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 719 + 960 = 1679
+---
+
+Problem: 92 × 29 = ?
+Step 1: Multiply 92 by each digit of 29 separately.
+Step 2: 92 × 9 = 828 (ones place).
+Step 3: 92 × 20 = 1840 (tens place).
+Step 4: Add results: 828 + 1840 = 2668.
+Answer: 92 × 29 = 2668
+---
+
+Problem: 63 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 63.
+Step 2: 3 × 21 = 63, so the quotient is 21.
+Step 3: Remainder = 63 - 3 × 21 = 0.
+Answer: 63 ÷ 3 = 21
+---
+
+Problem: 92 × 70 = ?
+Step 1: Multiply 92 by each digit of 70 separately.
+Step 2: 92 × 0 = 0 (ones place).
+Step 3: 92 × 70 = 6440 (tens place).
+Step 4: Add results: 0 + 6440 = 6440.
+Answer: 92 × 70 = 6440
+---
+
+Problem: 54 × 44 = ?
+Step 1: Multiply 54 by each digit of 44 separately.
+Step 2: 54 × 4 = 216 (ones place).
+Step 3: 54 × 40 = 2160 (tens place).
+Step 4: Add results: 216 + 2160 = 2376.
+Answer: 54 × 44 = 2376
+---
+
+Problem: 419 - 125 = ?
+Step 1: Write out 419 minus 125.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 419 - 125 = 294.
+Answer: 294
+---
+
+Problem: 124 - 10 = ?
+Step 1: Write out 124 minus 10.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 124 - 10 = 114.
+Answer: 114
+---
+
+Problem: 970 + 563 = ?
+Step 1: Write out the numbers: 970 and 563.
+Step 2: Add the ones digits: 0 + 3 = 3.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 970 + 563 = 1533
+---
+
+Problem: 35 × 50 = ?
+Step 1: Multiply 35 by each digit of 50 separately.
+Step 2: 35 × 0 = 0 (ones place).
+Step 3: 35 × 50 = 1750 (tens place).
+Step 4: Add results: 0 + 1750 = 1750.
+Answer: 35 × 50 = 1750
+---
+
+Problem: 781 + 183 = ?
+Step 1: Write out the numbers: 781 and 183.
+Step 2: Add the ones digits: 1 + 3 = 4.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 781 + 183 = 964
+---
+
+Problem: 433 + 33 = ?
+Step 1: Write out the numbers: 433 and 33.
+Step 2: Add the ones digits: 3 + 3 = 6.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 433 + 33 = 466
+---
+
+Problem: 83 × 98 = ?
+Step 1: Multiply 83 by each digit of 98 separately.
+Step 2: 83 × 8 = 664 (ones place).
+Step 3: 83 × 90 = 7470 (tens place).
+Step 4: Add results: 664 + 7470 = 8134.
+Answer: 83 × 98 = 8134
+---
+
+Problem: 516 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 516.
+Step 2: 6 × 86 = 516, so the quotient is 86.
+Step 3: Remainder = 516 - 6 × 86 = 0.
+Answer: 516 ÷ 6 = 86
+---
+
+Problem: 28 × 12 = ?
+Step 1: We need to multiply 28 and 12.
+Step 2: Perform the operation carefully.
+Answer: 28 × 12 = 336
+---
+
+Problem: 78 × 91 = ?
+Step 1: Multiply 78 by each digit of 91 separately.
+Step 2: 78 × 1 = 78 (ones place).
+Step 3: 78 × 90 = 7020 (tens place).
+Step 4: Add results: 78 + 7020 = 7098.
+Answer: 78 × 91 = 7098
+---
+
+Problem: 957 - 953 = ?
+Step 1: Write out 957 minus 953.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 957 - 953 = 4.
+Answer: 4
+---
+
+Problem: 48 ÷ 4 = ?
+Step 1: Determine how many times 4 fits into 48.
+Step 2: 4 × 12 = 48, so the quotient is 12.
+Step 3: Remainder = 48 - 4 × 12 = 0.
+Answer: 48 ÷ 4 = 12
+---
+
+Problem: 167 + 380 = ?
+Step 1: Write out the numbers: 167 and 380.
+Step 2: Add the ones digits: 7 + 0 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 167 + 380 = 547
+---
+
+Problem: 108 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 108.
+Step 2: 12 × 9 = 108, so the quotient is 9.
+Step 3: Remainder = 108 - 12 × 9 = 0.
+Answer: 108 ÷ 12 = 9
+---
+
+Problem: 39 × 10 = ?
+Step 1: We need to multiply 39 and 10.
+Step 2: Perform the operation carefully.
+Answer: 39 × 10 = 390
+---
+
+Problem: 29 × 27 = ?
+Step 1: We need to multiply 29 and 27.
+Step 2: Perform the operation carefully.
+Answer: 29 × 27 = 783
+---
+
+Problem: 20 + 30 = ?
+Step 1: We need to add 20 and 30.
+Step 2: Perform the operation carefully.
+Answer: 20 + 30 = 50
+---
+
+Problem: 13 × 39 = ?
+Step 1: Multiply 13 by each digit of 39 separately.
+Step 2: 13 × 9 = 117 (ones place).
+Step 3: 13 × 30 = 390 (tens place).
+Step 4: Add results: 117 + 390 = 507.
+Answer: 13 × 39 = 507
+---
+
+Problem: 58 × 11 = ?
+Step 1: Multiply 58 by each digit of 11 separately.
+Step 2: 58 × 1 = 58 (ones place).
+Step 3: 58 × 10 = 580 (tens place).
+Step 4: Add results: 58 + 580 = 638.
+Answer: 58 × 11 = 638
+---
+
+Problem: 66 + 395 = ?
+Step 1: Write out the numbers: 66 and 395.
+Step 2: Add the ones digits: 6 + 5 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 66 + 395 = 461
+---
+
+Problem: 160 + 221 = ?
+Step 1: Write out the numbers: 160 and 221.
+Step 2: Add the ones digits: 0 + 1 = 1.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 160 + 221 = 381
+---
+
+Problem: 602 ÷ 7 = ?
+Step 1: Determine how many times 7 fits into 602.
+Step 2: 7 × 86 = 602, so the quotient is 86.
+Step 3: Remainder = 602 - 7 × 86 = 0.
+Answer: 602 ÷ 7 = 86
+---
+
+Problem: 705 - 550 = ?
+Step 1: Write out 705 minus 550.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 705 - 550 = 155.
+Answer: 155
+---
+
+Problem: 40 × 77 = ?
+Step 1: Multiply 40 by each digit of 77 separately.
+Step 2: 40 × 7 = 280 (ones place).
+Step 3: 40 × 70 = 2800 (tens place).
+Step 4: Add results: 280 + 2800 = 3080.
+Answer: 40 × 77 = 3080
+---
+
+Problem: 212 ÷ 4 = ?
+Step 1: Determine how many times 4 fits into 212.
+Step 2: 4 × 53 = 212, so the quotient is 53.
+Step 3: Remainder = 212 - 4 × 53 = 0.
+Answer: 212 ÷ 4 = 53
+---
+
+Problem: 27 × 56 = ?
+Step 1: Multiply 27 by each digit of 56 separately.
+Step 2: 27 × 6 = 162 (ones place).
+Step 3: 27 × 50 = 1350 (tens place).
+Step 4: Add results: 162 + 1350 = 1512.
+Answer: 27 × 56 = 1512
+---
+
+Problem: 32 × 94 = ?
+Step 1: Multiply 32 by each digit of 94 separately.
+Step 2: 32 × 4 = 128 (ones place).
+Step 3: 32 × 90 = 2880 (tens place).
+Step 4: Add results: 128 + 2880 = 3008.
+Answer: 32 × 94 = 3008
+---
+
+Problem: 77 × 86 = ?
+Step 1: Multiply 77 by each digit of 86 separately.
+Step 2: 77 × 6 = 462 (ones place).
+Step 3: 77 × 80 = 6160 (tens place).
+Step 4: Add results: 462 + 6160 = 6622.
+Answer: 77 × 86 = 6622
+---
+
+Problem: 857 + 16 = ?
+Step 1: Write out the numbers: 857 and 16.
+Step 2: Add the ones digits: 7 + 6 = 13.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 857 + 16 = 873
+---
+
+Problem: 41 × 78 = ?
+Step 1: Multiply 41 by each digit of 78 separately.
+Step 2: 41 × 8 = 328 (ones place).
+Step 3: 41 × 70 = 2870 (tens place).
+Step 4: Add results: 328 + 2870 = 3198.
+Answer: 41 × 78 = 3198
+---
+
+Problem: 27 × 18 = ?
+Step 1: We need to multiply 27 and 18.
+Step 2: Perform the operation carefully.
+Answer: 27 × 18 = 486
+---
+
+Problem: 470 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 470.
+Step 2: 10 × 47 = 470, so the quotient is 47.
+Step 3: Remainder = 470 - 10 × 47 = 0.
+Answer: 470 ÷ 10 = 47
+---
+
+Problem: 169 - 70 = ?
+Step 1: Write out 169 minus 70.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 169 - 70 = 99.
+Answer: 99
+---
+
+Problem: 64 × 5 = ?
+Step 1: Multiply 64 by each digit of 5 separately.
+Step 2: 64 × 5 = 320 (ones place).
+Answer: 64 × 5 = 320
+---
+
+Problem: 938 - 562 = ?
+Step 1: Write out 938 minus 562.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 938 - 562 = 376.
+Answer: 376
+---
+
+Problem: 171 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 171.
+Step 2: 3 × 57 = 171, so the quotient is 57.
+Step 3: Remainder = 171 - 3 × 57 = 0.
+Answer: 171 ÷ 3 = 57
+---
+
+Problem: 687 + 274 = ?
+Step 1: Write out the numbers: 687 and 274.
+Step 2: Add the ones digits: 7 + 4 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 687 + 274 = 961
+---
+
+Problem: 118 + 699 = ?
+Step 1: Write out the numbers: 118 and 699.
+Step 2: Add the ones digits: 8 + 9 = 17.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 118 + 699 = 817
+---
+
+Problem: 707 + 206 = ?
+Step 1: Write out the numbers: 707 and 206.
+Step 2: Add the ones digits: 7 + 6 = 13.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 707 + 206 = 913
+---
+
+Problem: 770 - 567 = ?
+Step 1: Write out 770 minus 567.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 770 - 567 = 203.
+Answer: 203
+---
+
+Problem: 31 + 26 = ?
+Step 1: We need to add 31 and 26.
+Step 2: Perform the operation carefully.
+Answer: 31 + 26 = 57
+---
+
+Problem: 38 + 14 = ?
+Step 1: We need to add 38 and 14.
+Step 2: Perform the operation carefully.
+Answer: 38 + 14 = 52
+---
+
+Problem: 675 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 675.
+Step 2: 9 × 75 = 675, so the quotient is 75.
+Step 3: Remainder = 675 - 9 × 75 = 0.
+Answer: 675 ÷ 9 = 75
+---
+
+Problem: 405 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 405.
+Step 2: 9 × 45 = 405, so the quotient is 45.
+Step 3: Remainder = 405 - 9 × 45 = 0.
+Answer: 405 ÷ 9 = 45
+---
+
+Problem: 23 + 33 = ?
+Step 1: We need to add 23 and 33.
+Step 2: Perform the operation carefully.
+Answer: 23 + 33 = 56
+---
+
+Problem: 9 × 23 = ?
+Step 1: Multiply 9 by each digit of 23 separately.
+Step 2: 9 × 3 = 27 (ones place).
+Step 3: 9 × 20 = 180 (tens place).
+Step 4: Add results: 27 + 180 = 207.
+Answer: 9 × 23 = 207
+---
+
+Problem: 737 + 270 = ?
+Step 1: Write out the numbers: 737 and 270.
+Step 2: Add the ones digits: 7 + 0 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 737 + 270 = 1007
+---
+
+Problem: 49 × 28 = ?
+Step 1: We need to multiply 49 and 28.
+Step 2: Perform the operation carefully.
+Answer: 49 × 28 = 1372
+---
+
+Problem: 30 - 22 = ?
+Step 1: We need to subtract 30 and 22.
+Step 2: Perform the operation carefully.
+Answer: 30 - 22 = 8
+---
+
+Problem: 24 + 20 = ?
+Step 1: We need to add 24 and 20.
+Step 2: Perform the operation carefully.
+Answer: 24 + 20 = 44
+---
+
+Problem: 71 + 779 = ?
+Step 1: Write out the numbers: 71 and 779.
+Step 2: Add the ones digits: 1 + 9 = 10.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 71 + 779 = 850
+---
+
+Problem: 31 × 51 = ?
+Step 1: Multiply 31 by each digit of 51 separately.
+Step 2: 31 × 1 = 31 (ones place).
+Step 3: 31 × 50 = 1550 (tens place).
+Step 4: Add results: 31 + 1550 = 1581.
+Answer: 31 × 51 = 1581
+---
+
+Problem: 49 - 14 = ?
+Step 1: We need to subtract 49 and 14.
+Step 2: Perform the operation carefully.
+Answer: 49 - 14 = 35
+---
+
+Problem: 20 + 31 = ?
+Step 1: We need to add 20 and 31.
+Step 2: Perform the operation carefully.
+Answer: 20 + 31 = 51
+---
+
+Problem: 49 - 7 = ?
+Step 1: Write out 49 minus 7.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 49 - 7 = 42.
+Answer: 42
+---
+
+Problem: 49 + 49 = ?
+Step 1: We need to add 49 and 49.
+Step 2: Perform the operation carefully.
+Answer: 49 + 49 = 98
+---
+
+Problem: 814 - 594 = ?
+Step 1: Write out 814 minus 594.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 814 - 594 = 220.
+Answer: 220
+---
+
+Problem: 168 - 49 = ?
+Step 1: Write out 168 minus 49.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 168 - 49 = 119.
+Answer: 119
+---
+
+Problem: 15 × 28 = ?
+Step 1: We need to multiply 15 and 28.
+Step 2: Perform the operation carefully.
+Answer: 15 × 28 = 420
+---
+
+Problem: 33 × 13 = ?
+Step 1: Multiply 33 by each digit of 13 separately.
+Step 2: 33 × 3 = 99 (ones place).
+Step 3: 33 × 10 = 330 (tens place).
+Step 4: Add results: 99 + 330 = 429.
+Answer: 33 × 13 = 429
+---
+
+Problem: 79 × 30 = ?
+Step 1: Multiply 79 by each digit of 30 separately.
+Step 2: 79 × 0 = 0 (ones place).
+Step 3: 79 × 30 = 2370 (tens place).
+Step 4: Add results: 0 + 2370 = 2370.
+Answer: 79 × 30 = 2370
+---
+
+Problem: 9 + 48 = ?
+Step 1: We need to add 9 and 48.
+Step 2: Perform the operation carefully.
+Answer: 9 + 48 = 57
+---
+
+Problem: 294 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 294.
+Step 2: 3 × 98 = 294, so the quotient is 98.
+Step 3: Remainder = 294 - 3 × 98 = 0.
+Answer: 294 ÷ 3 = 98
+---
+
+Problem: 571 + 225 = ?
+Step 1: Write out the numbers: 571 and 225.
+Step 2: Add the ones digits: 1 + 5 = 6.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 571 + 225 = 796
+---
+
+Problem: 406 + 906 = ?
+Step 1: Write out the numbers: 406 and 906.
+Step 2: Add the ones digits: 6 + 6 = 12.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 406 + 906 = 1312
+---
+
+Problem: 97 × 93 = ?
+Step 1: Multiply 97 by each digit of 93 separately.
+Step 2: 97 × 3 = 291 (ones place).
+Step 3: 97 × 90 = 8730 (tens place).
+Step 4: Add results: 291 + 8730 = 9021.
+Answer: 97 × 93 = 9021
+---
+
+Problem: 846 - 472 = ?
+Step 1: Write out 846 minus 472.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 846 - 472 = 374.
+Answer: 374
+---
+
+Problem: 43 × 28 = ?
+Step 1: We need to multiply 43 and 28.
+Step 2: Perform the operation carefully.
+Answer: 43 × 28 = 1204
+---
+
+Problem: 971 - 900 = ?
+Step 1: Write out 971 minus 900.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 971 - 900 = 71.
+Answer: 71
+---
+
+Problem: 36 × 43 = ?
+Step 1: Multiply 36 by each digit of 43 separately.
+Step 2: 36 × 3 = 108 (ones place).
+Step 3: 36 × 40 = 1440 (tens place).
+Step 4: Add results: 108 + 1440 = 1548.
+Answer: 36 × 43 = 1548
+---
+
+Problem: 685 - 198 = ?
+Step 1: Write out 685 minus 198.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 685 - 198 = 487.
+Answer: 487
+---
+
+Problem: 894 - 753 = ?
+Step 1: Write out 894 minus 753.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 894 - 753 = 141.
+Answer: 141
+---
+
+Problem: 23 × 4 = ?
+Step 1: We need to multiply 23 and 4.
+Step 2: Perform the operation carefully.
+Answer: 23 × 4 = 92
+---
+
+Problem: 10 - 9 = ?
+Step 1: We need to subtract 10 and 9.
+Step 2: Perform the operation carefully.
+Answer: 10 - 9 = 1
+---
+
+Problem: 21 × 25 = ?
+Step 1: We need to multiply 21 and 25.
+Step 2: Perform the operation carefully.
+Answer: 21 × 25 = 525
+---
+
+Problem: 22 + 50 = ?
+Step 1: We need to add 22 and 50.
+Step 2: Perform the operation carefully.
+Answer: 22 + 50 = 72
+---
+
+Problem: 6 × 31 = ?
+Step 1: Multiply 6 by each digit of 31 separately.
+Step 2: 6 × 1 = 6 (ones place).
+Step 3: 6 × 30 = 180 (tens place).
+Step 4: Add results: 6 + 180 = 186.
+Answer: 6 × 31 = 186
+---
+
+Problem: 68 - 66 = ?
+Step 1: Write out 68 minus 66.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 68 - 66 = 2.
+Answer: 2
+---
+
+Problem: 977 - 905 = ?
+Step 1: Write out 977 minus 905.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 977 - 905 = 72.
+Answer: 72
+---
+
+Problem: 35 × 82 = ?
+Step 1: Multiply 35 by each digit of 82 separately.
+Step 2: 35 × 2 = 70 (ones place).
+Step 3: 35 × 80 = 2800 (tens place).
+Step 4: Add results: 70 + 2800 = 2870.
+Answer: 35 × 82 = 2870
+---
+
+Problem: 390 + 285 = ?
+Step 1: Write out the numbers: 390 and 285.
+Step 2: Add the ones digits: 0 + 5 = 5.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 390 + 285 = 675
+---
+
+Problem: 34 × 27 = ?
+Step 1: We need to multiply 34 and 27.
+Step 2: Perform the operation carefully.
+Answer: 34 × 27 = 918
+---
+
+Problem: 619 + 271 = ?
+Step 1: Write out the numbers: 619 and 271.
+Step 2: Add the ones digits: 9 + 1 = 10.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 619 + 271 = 890
+---
+
+Problem: 10 + 5 = ?
+Step 1: We need to add 10 and 5.
+Step 2: Perform the operation carefully.
+Answer: 10 + 5 = 15
+---
+
+Problem: 35 × 86 = ?
+Step 1: Multiply 35 by each digit of 86 separately.
+Step 2: 35 × 6 = 210 (ones place).
+Step 3: 35 × 80 = 2800 (tens place).
+Step 4: Add results: 210 + 2800 = 3010.
+Answer: 35 × 86 = 3010
+---
+
+Problem: 571 - 1 = ?
+Step 1: Write out 571 minus 1.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 571 - 1 = 570.
+Answer: 570
+---
+
+Problem: 150 ÷ 2 = ?
+Step 1: Determine how many times 2 fits into 150.
+Step 2: 2 × 75 = 150, so the quotient is 75.
+Step 3: Remainder = 150 - 2 × 75 = 0.
+Answer: 150 ÷ 2 = 75
+---
+
+Problem: 479 + 885 = ?
+Step 1: Write out the numbers: 479 and 885.
+Step 2: Add the ones digits: 9 + 5 = 14.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 479 + 885 = 1364
+---
+
+Problem: 342 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 342.
+Step 2: 6 × 57 = 342, so the quotient is 57.
+Step 3: Remainder = 342 - 6 × 57 = 0.
+Answer: 342 ÷ 6 = 57
+---
+
+Problem: 30 × 84 = ?
+Step 1: Multiply 30 by each digit of 84 separately.
+Step 2: 30 × 4 = 120 (ones place).
+Step 3: 30 × 80 = 2400 (tens place).
+Step 4: Add results: 120 + 2400 = 2520.
+Answer: 30 × 84 = 2520
+---
+
+Problem: 231 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 231.
+Step 2: 3 × 77 = 231, so the quotient is 77.
+Step 3: Remainder = 231 - 3 × 77 = 0.
+Answer: 231 ÷ 3 = 77
+---
+
+Problem: 100 + 675 = ?
+Step 1: Write out the numbers: 100 and 675.
+Step 2: Add the ones digits: 0 + 5 = 5.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 100 + 675 = 775
+---
+
+Problem: 470 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 470.
+Step 2: 10 × 47 = 470, so the quotient is 47.
+Step 3: Remainder = 470 - 10 × 47 = 0.
+Answer: 470 ÷ 10 = 47
+---
+
+Problem: 258 + 995 = ?
+Step 1: Write out the numbers: 258 and 995.
+Step 2: Add the ones digits: 8 + 5 = 13.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 258 + 995 = 1253
+---
+
+Problem: 7 × 8 = ?
+Step 1: Multiply 7 by each digit of 8 separately.
+Step 2: 7 × 8 = 56 (ones place).
+Answer: 7 × 8 = 56
+---
+
+Problem: 319 ÷ 11 = ?
+Step 1: Determine how many times 11 fits into 319.
+Step 2: 11 × 29 = 319, so the quotient is 29.
+Step 3: Remainder = 319 - 11 × 29 = 0.
+Answer: 319 ÷ 11 = 29
+---
+
+Problem: 418 - 169 = ?
+Step 1: Write out 418 minus 169.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 418 - 169 = 249.
+Answer: 249
+---
+
+Problem: 54 ÷ 2 = ?
+Step 1: Determine how many times 2 fits into 54.
+Step 2: 2 × 27 = 54, so the quotient is 27.
+Step 3: Remainder = 54 - 2 × 27 = 0.
+Answer: 54 ÷ 2 = 27
+---
+
+Problem: 370 ÷ 5 = ?
+Step 1: Determine how many times 5 fits into 370.
+Step 2: 5 × 74 = 370, so the quotient is 74.
+Step 3: Remainder = 370 - 5 × 74 = 0.
+Answer: 370 ÷ 5 = 74
+---
+
+Problem: 160 ÷ 2 = ?
+Step 1: Determine how many times 2 fits into 160.
+Step 2: 2 × 80 = 160, so the quotient is 80.
+Step 3: Remainder = 160 - 2 × 80 = 0.
+Answer: 160 ÷ 2 = 80
+---
+
+Problem: 456 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 456.
+Step 2: 6 × 76 = 456, so the quotient is 76.
+Step 3: Remainder = 456 - 6 × 76 = 0.
+Answer: 456 ÷ 6 = 76
+---
+
+Problem: 420 - 31 = ?
+Step 1: Write out 420 minus 31.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 420 - 31 = 389.
+Answer: 389
+---
+
+Problem: 744 - 352 = ?
+Step 1: Write out 744 minus 352.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 744 - 352 = 392.
+Answer: 392
+---
+
+Problem: 20 - 12 = ?
+Step 1: We need to subtract 20 and 12.
+Step 2: Perform the operation carefully.
+Answer: 20 - 12 = 8
+---
+
+Problem: 176 - 46 = ?
+Step 1: Write out 176 minus 46.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 176 - 46 = 130.
+Answer: 130
+---
+
+Problem: 22 + 50 = ?
+Step 1: We need to add 22 and 50.
+Step 2: Perform the operation carefully.
+Answer: 22 + 50 = 72
+---
+
+Problem: 932 - 816 = ?
+Step 1: Write out 932 minus 816.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 932 - 816 = 116.
+Answer: 116
+---
+
+Problem: 254 - 68 = ?
+Step 1: Write out 254 minus 68.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 254 - 68 = 186.
+Answer: 186
+---
+
+Problem: 382 - 221 = ?
+Step 1: Write out 382 minus 221.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 382 - 221 = 161.
+Answer: 161
+---
+
+Problem: 136 + 741 = ?
+Step 1: Write out the numbers: 136 and 741.
+Step 2: Add the ones digits: 6 + 1 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 136 + 741 = 877
+---
+
+Problem: 485 + 249 = ?
+Step 1: Write out the numbers: 485 and 249.
+Step 2: Add the ones digits: 5 + 9 = 14.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 485 + 249 = 734
+---
+
+Problem: 295 - 36 = ?
+Step 1: Write out 295 minus 36.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 295 - 36 = 259.
+Answer: 259
+---
+
+Problem: 73 + 725 = ?
+Step 1: Write out the numbers: 73 and 725.
+Step 2: Add the ones digits: 3 + 5 = 8.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 73 + 725 = 798
+---
+
+Problem: 5 × 12 = ?
+Step 1: We need to multiply 5 and 12.
+Step 2: Perform the operation carefully.
+Answer: 5 × 12 = 60
+---
+
+Problem: 3 × 47 = ?
+Step 1: We need to multiply 3 and 47.
+Step 2: Perform the operation carefully.
+Answer: 3 × 47 = 141
+---
+
+Problem: 547 + 747 = ?
+Step 1: Write out the numbers: 547 and 747.
+Step 2: Add the ones digits: 7 + 7 = 14.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 547 + 747 = 1294
+---
+
+Problem: 7 × 46 = ?
+Step 1: We need to multiply 7 and 46.
+Step 2: Perform the operation carefully.
+Answer: 7 × 46 = 322
+---
+
+Problem: 60 × 43 = ?
+Step 1: Multiply 60 by each digit of 43 separately.
+Step 2: 60 × 3 = 180 (ones place).
+Step 3: 60 × 40 = 2400 (tens place).
+Step 4: Add results: 180 + 2400 = 2580.
+Answer: 60 × 43 = 2580
+---
+
+Problem: 539 ÷ 11 = ?
+Step 1: Determine how many times 11 fits into 539.
+Step 2: 11 × 49 = 539, so the quotient is 49.
+Step 3: Remainder = 539 - 11 × 49 = 0.
+Answer: 539 ÷ 11 = 49
+---
+
+Problem: 10 + 43 = ?
+Step 1: We need to add 10 and 43.
+Step 2: Perform the operation carefully.
+Answer: 10 + 43 = 53
+---
+
+Problem: 180 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 180.
+Step 2: 3 × 60 = 180, so the quotient is 60.
+Step 3: Remainder = 180 - 3 × 60 = 0.
+Answer: 180 ÷ 3 = 60
+---
+
+Problem: 324 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 324.
+Step 2: 6 × 54 = 324, so the quotient is 54.
+Step 3: Remainder = 324 - 6 × 54 = 0.
+Answer: 324 ÷ 6 = 54
+---
+
+Problem: 186 ÷ 2 = ?
+Step 1: Determine how many times 2 fits into 186.
+Step 2: 2 × 93 = 186, so the quotient is 93.
+Step 3: Remainder = 186 - 2 × 93 = 0.
+Answer: 186 ÷ 2 = 93
+---
+
+Problem: 88 + 750 = ?
+Step 1: Write out the numbers: 88 and 750.
+Step 2: Add the ones digits: 8 + 0 = 8.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 88 + 750 = 838
+---
+
+Problem: 228 - 131 = ?
+Step 1: Write out 228 minus 131.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 228 - 131 = 97.
+Answer: 97
+---
+
+Problem: 31 × 17 = ?
+Step 1: Multiply 31 by each digit of 17 separately.
+Step 2: 31 × 7 = 217 (ones place).
+Step 3: 31 × 10 = 310 (tens place).
+Step 4: Add results: 217 + 310 = 527.
+Answer: 31 × 17 = 527
+---
+
+Problem: 74 × 7 = ?
+Step 1: Multiply 74 by each digit of 7 separately.
+Step 2: 74 × 7 = 518 (ones place).
+Answer: 74 × 7 = 518
+---
+
+Problem: 243 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 243.
+Step 2: 3 × 81 = 243, so the quotient is 81.
+Step 3: Remainder = 243 - 3 × 81 = 0.
+Answer: 243 ÷ 3 = 81
+---
+
+Problem: 7 × 32 = ?
+Step 1: We need to multiply 7 and 32.
+Step 2: Perform the operation carefully.
+Answer: 7 × 32 = 224
+---
+
+Problem: 295 ÷ 5 = ?
+Step 1: Determine how many times 5 fits into 295.
+Step 2: 5 × 59 = 295, so the quotient is 59.
+Step 3: Remainder = 295 - 5 × 59 = 0.
+Answer: 295 ÷ 5 = 59
+---
+
+Problem: 533 - 119 = ?
+Step 1: Write out 533 minus 119.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 533 - 119 = 414.
+Answer: 414
+---
+
+Problem: 60 + 247 = ?
+Step 1: Write out the numbers: 60 and 247.
+Step 2: Add the ones digits: 0 + 7 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 60 + 247 = 307
+---
+
+Problem: 640 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 640.
+Step 2: 8 × 80 = 640, so the quotient is 80.
+Step 3: Remainder = 640 - 8 × 80 = 0.
+Answer: 640 ÷ 8 = 80
+---
+
+Problem: 26 × 9 = ?
+Step 1: We need to multiply 26 and 9.
+Step 2: Perform the operation carefully.
+Answer: 26 × 9 = 234
+---
+
+Problem: 50 × 63 = ?
+Step 1: Multiply 50 by each digit of 63 separately.
+Step 2: 50 × 3 = 150 (ones place).
+Step 3: 50 × 60 = 3000 (tens place).
+Step 4: Add results: 150 + 3000 = 3150.
+Answer: 50 × 63 = 3150
+---
+
+Problem: 2 × 47 = ?
+Step 1: Multiply 2 by each digit of 47 separately.
+Step 2: 2 × 7 = 14 (ones place).
+Step 3: 2 × 40 = 80 (tens place).
+Step 4: Add results: 14 + 80 = 94.
+Answer: 2 × 47 = 94
+---
+
+Problem: 19 - 8 = ?
+Step 1: We need to subtract 19 and 8.
+Step 2: Perform the operation carefully.
+Answer: 19 - 8 = 11
+---
+
+Problem: 36 - 24 = ?
+Step 1: We need to subtract 36 and 24.
+Step 2: Perform the operation carefully.
+Answer: 36 - 24 = 12
+---
+
+Problem: 720 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 720.
+Step 2: 12 × 60 = 720, so the quotient is 60.
+Step 3: Remainder = 720 - 12 × 60 = 0.
+Answer: 720 ÷ 12 = 60
+---
+
+Problem: 349 - 15 = ?
+Step 1: Write out 349 minus 15.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 349 - 15 = 334.
+Answer: 334
+---
+
+Problem: 324 + 411 = ?
+Step 1: Write out the numbers: 324 and 411.
+Step 2: Add the ones digits: 4 + 1 = 5.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 324 + 411 = 735
+---
+
+Problem: 113 + 157 = ?
+Step 1: Write out the numbers: 113 and 157.
+Step 2: Add the ones digits: 3 + 7 = 10.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 113 + 157 = 270
+---
+
+Problem: 120 ÷ 2 = ?
+Step 1: Determine how many times 2 fits into 120.
+Step 2: 2 × 60 = 120, so the quotient is 60.
+Step 3: Remainder = 120 - 2 × 60 = 0.
+Answer: 120 ÷ 2 = 60
+---
+
+Problem: 498 + 836 = ?
+Step 1: Write out the numbers: 498 and 836.
+Step 2: Add the ones digits: 8 + 6 = 14.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 498 + 836 = 1334
+---
+
+Problem: 17 × 73 = ?
+Step 1: Multiply 17 by each digit of 73 separately.
+Step 2: 17 × 3 = 51 (ones place).
+Step 3: 17 × 70 = 1190 (tens place).
+Step 4: Add results: 51 + 1190 = 1241.
+Answer: 17 × 73 = 1241
+---
+
+Problem: 46 × 70 = ?
+Step 1: Multiply 46 by each digit of 70 separately.
+Step 2: 46 × 0 = 0 (ones place).
+Step 3: 46 × 70 = 3220 (tens place).
+Step 4: Add results: 0 + 3220 = 3220.
+Answer: 46 × 70 = 3220
+---
+
+Problem: 891 - 789 = ?
+Step 1: Write out 891 minus 789.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 891 - 789 = 102.
+Answer: 102
+---
+
+Problem: 38 × 92 = ?
+Step 1: Multiply 38 by each digit of 92 separately.
+Step 2: 38 × 2 = 76 (ones place).
+Step 3: 38 × 90 = 3420 (tens place).
+Step 4: Add results: 76 + 3420 = 3496.
+Answer: 38 × 92 = 3496
+---
+
+Problem: 26 + 48 = ?
+Step 1: We need to add 26 and 48.
+Step 2: Perform the operation carefully.
+Answer: 26 + 48 = 74
+---
+
+Problem: 40 + 30 = ?
+Step 1: We need to add 40 and 30.
+Step 2: Perform the operation carefully.
+Answer: 40 + 30 = 70
+---
+
+Problem: 518 ÷ 7 = ?
+Step 1: Determine how many times 7 fits into 518.
+Step 2: 7 × 74 = 518, so the quotient is 74.
+Step 3: Remainder = 518 - 7 × 74 = 0.
+Answer: 518 ÷ 7 = 74
+---
+
+Problem: 45 × 37 = ?
+Step 1: Multiply 45 by each digit of 37 separately.
+Step 2: 45 × 7 = 315 (ones place).
+Step 3: 45 × 30 = 1350 (tens place).
+Step 4: Add results: 315 + 1350 = 1665.
+Answer: 45 × 37 = 1665
+---
+
+Problem: 910 - 251 = ?
+Step 1: Write out 910 minus 251.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 910 - 251 = 659.
+Answer: 659
+---
+
+Problem: 24 × 2 = ?
+Step 1: We need to multiply 24 and 2.
+Step 2: Perform the operation carefully.
+Answer: 24 × 2 = 48
+---
+
+Problem: 302 - 217 = ?
+Step 1: Write out 302 minus 217.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 302 - 217 = 85.
+Answer: 85
+---
+
+Problem: 22 - 7 = ?
+Step 1: We need to subtract 22 and 7.
+Step 2: Perform the operation carefully.
+Answer: 22 - 7 = 15
+---
+
+Problem: 29 × 30 = ?
+Step 1: We need to multiply 29 and 30.
+Step 2: Perform the operation carefully.
+Answer: 29 × 30 = 870
+---
+
+Problem: 41 × 86 = ?
+Step 1: Multiply 41 by each digit of 86 separately.
+Step 2: 41 × 6 = 246 (ones place).
+Step 3: 41 × 80 = 3280 (tens place).
+Step 4: Add results: 246 + 3280 = 3526.
+Answer: 41 × 86 = 3526
+---
+
+Problem: 184 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 184.
+Step 2: 8 × 23 = 184, so the quotient is 23.
+Step 3: Remainder = 184 - 8 × 23 = 0.
+Answer: 184 ÷ 8 = 23
+---
+
+Problem: 662 + 101 = ?
+Step 1: Write out the numbers: 662 and 101.
+Step 2: Add the ones digits: 2 + 1 = 3.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 662 + 101 = 763
+---
+
+Problem: 256 ÷ 4 = ?
+Step 1: Determine how many times 4 fits into 256.
+Step 2: 4 × 64 = 256, so the quotient is 64.
+Step 3: Remainder = 256 - 4 × 64 = 0.
+Answer: 256 ÷ 4 = 64
+---
+
+Problem: 73 + 527 = ?
+Step 1: Write out the numbers: 73 and 527.
+Step 2: Add the ones digits: 3 + 7 = 10.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 73 + 527 = 600
+---
+
+Problem: 902 - 234 = ?
+Step 1: Write out 902 minus 234.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 902 - 234 = 668.
+Answer: 668
+---
+
+Problem: 840 - 255 = ?
+Step 1: Write out 840 minus 255.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 840 - 255 = 585.
+Answer: 585
+---
+
+Problem: 8 × 34 = ?
+Step 1: Multiply 8 by each digit of 34 separately.
+Step 2: 8 × 4 = 32 (ones place).
+Step 3: 8 × 30 = 240 (tens place).
+Step 4: Add results: 32 + 240 = 272.
+Answer: 8 × 34 = 272
+---
+
+Problem: 12 × 33 = ?
+Step 1: Multiply 12 by each digit of 33 separately.
+Step 2: 12 × 3 = 36 (ones place).
+Step 3: 12 × 30 = 360 (tens place).
+Step 4: Add results: 36 + 360 = 396.
+Answer: 12 × 33 = 396
+---
+
+Problem: 33 + 825 = ?
+Step 1: Write out the numbers: 33 and 825.
+Step 2: Add the ones digits: 3 + 5 = 8.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 33 + 825 = 858
+---
+
+Problem: 763 - 174 = ?
+Step 1: Write out 763 minus 174.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 763 - 174 = 589.
+Answer: 589
+---
+
+Problem: 34 ÷ 2 = ?
+Step 1: Determine how many times 2 fits into 34.
+Step 2: 2 × 17 = 34, so the quotient is 17.
+Step 3: Remainder = 34 - 2 × 17 = 0.
+Answer: 34 ÷ 2 = 17
+---
+
+Problem: 55 - 46 = ?
+Step 1: Write out 55 minus 46.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 55 - 46 = 9.
+Answer: 9
+---
+
+Problem: 1104 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 1104.
+Step 2: 12 × 92 = 1104, so the quotient is 92.
+Step 3: Remainder = 1104 - 12 × 92 = 0.
+Answer: 1104 ÷ 12 = 92
+---
+
+Problem: 643 + 164 = ?
+Step 1: Write out the numbers: 643 and 164.
+Step 2: Add the ones digits: 3 + 4 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 643 + 164 = 807
+---
+
+Problem: 27 × 4 = ?
+Step 1: Multiply 27 by each digit of 4 separately.
+Step 2: 27 × 4 = 108 (ones place).
+Answer: 27 × 4 = 108
+---
+
+Problem: 747 + 56 = ?
+Step 1: Write out the numbers: 747 and 56.
+Step 2: Add the ones digits: 7 + 6 = 13.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 747 + 56 = 803
+---
+
+Problem: 49 × 23 = ?
+Step 1: Multiply 49 by each digit of 23 separately.
+Step 2: 49 × 3 = 147 (ones place).
+Step 3: 49 × 20 = 980 (tens place).
+Step 4: Add results: 147 + 980 = 1127.
+Answer: 49 × 23 = 1127
+---
+
+Problem: 937 + 659 = ?
+Step 1: Write out the numbers: 937 and 659.
+Step 2: Add the ones digits: 7 + 9 = 16.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 937 + 659 = 1596
+---
+
+Problem: 20 × 23 = ?
+Step 1: We need to multiply 20 and 23.
+Step 2: Perform the operation carefully.
+Answer: 20 × 23 = 460
+---
+
+Problem: 372 + 900 = ?
+Step 1: Write out the numbers: 372 and 900.
+Step 2: Add the ones digits: 2 + 0 = 2.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 372 + 900 = 1272
+---
+
+Problem: 2 × 39 = ?
+Step 1: We need to multiply 2 and 39.
+Step 2: Perform the operation carefully.
+Answer: 2 × 39 = 78
+---
+
+Problem: 43 × 25 = ?
+Step 1: Multiply 43 by each digit of 25 separately.
+Step 2: 43 × 5 = 215 (ones place).
+Step 3: 43 × 20 = 860 (tens place).
+Step 4: Add results: 215 + 860 = 1075.
+Answer: 43 × 25 = 1075
+---
+
+Problem: 84 ÷ 2 = ?
+Step 1: Determine how many times 2 fits into 84.
+Step 2: 2 × 42 = 84, so the quotient is 42.
+Step 3: Remainder = 84 - 2 × 42 = 0.
+Answer: 84 ÷ 2 = 42
+---
+
+Problem: 10 × 5 = ?
+Step 1: We need to multiply 10 and 5.
+Step 2: Perform the operation carefully.
+Answer: 10 × 5 = 50
+---
+
+Problem: 333 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 333.
+Step 2: 9 × 37 = 333, so the quotient is 37.
+Step 3: Remainder = 333 - 9 × 37 = 0.
+Answer: 333 ÷ 9 = 37
+---
+
+Problem: 423 - 62 = ?
+Step 1: Write out 423 minus 62.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 423 - 62 = 361.
+Answer: 361
+---
+
+Problem: 44 × 42 = ?
+Step 1: We need to multiply 44 and 42.
+Step 2: Perform the operation carefully.
+Answer: 44 × 42 = 1848
+---
+
+Problem: 372 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 372.
+Step 2: 12 × 31 = 372, so the quotient is 31.
+Step 3: Remainder = 372 - 12 × 31 = 0.
+Answer: 372 ÷ 12 = 31
+---
+
+Problem: 662 - 269 = ?
+Step 1: Write out 662 minus 269.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 662 - 269 = 393.
+Answer: 393
+---
+
+Problem: 574 - 438 = ?
+Step 1: Write out 574 minus 438.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 574 - 438 = 136.
+Answer: 136
+---
+
+Problem: 945 + 544 = ?
+Step 1: Write out the numbers: 945 and 544.
+Step 2: Add the ones digits: 5 + 4 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 945 + 544 = 1489
+---
+
+Problem: 99 × 28 = ?
+Step 1: Multiply 99 by each digit of 28 separately.
+Step 2: 99 × 8 = 792 (ones place).
+Step 3: 99 × 20 = 1980 (tens place).
+Step 4: Add results: 792 + 1980 = 2772.
+Answer: 99 × 28 = 2772
+---
+
+Problem: 50 + 9 = ?
+Step 1: We need to add 50 and 9.
+Step 2: Perform the operation carefully.
+Answer: 50 + 9 = 59
+---
+
+Problem: 94 × 26 = ?
+Step 1: Multiply 94 by each digit of 26 separately.
+Step 2: 94 × 6 = 564 (ones place).
+Step 3: 94 × 20 = 1880 (tens place).
+Step 4: Add results: 564 + 1880 = 2444.
+Answer: 94 × 26 = 2444
+---
+
+Problem: 38 - 18 = ?
+Step 1: We need to subtract 38 and 18.
+Step 2: Perform the operation carefully.
+Answer: 38 - 18 = 20
+---
+
+Problem: 828 + 883 = ?
+Step 1: Write out the numbers: 828 and 883.
+Step 2: Add the ones digits: 8 + 3 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 828 + 883 = 1711
+---
+
+Problem: 95 + 390 = ?
+Step 1: Write out the numbers: 95 and 390.
+Step 2: Add the ones digits: 5 + 0 = 5.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 95 + 390 = 485
+---
+
+Problem: 204 + 157 = ?
+Step 1: Write out the numbers: 204 and 157.
+Step 2: Add the ones digits: 4 + 7 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 204 + 157 = 361
+---
+
+Problem: 298 - 108 = ?
+Step 1: Write out 298 minus 108.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 298 - 108 = 190.
+Answer: 190
+---
+
+Problem: 915 - 896 = ?
+Step 1: Write out 915 minus 896.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 915 - 896 = 19.
+Answer: 19
+---
+
+Problem: 27 - 3 = ?
+Step 1: We need to subtract 27 and 3.
+Step 2: Perform the operation carefully.
+Answer: 27 - 3 = 24
+---
+
+Problem: 620 - 445 = ?
+Step 1: Write out 620 minus 445.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 620 - 445 = 175.
+Answer: 175
+---
+
+Problem: 29 - 15 = ?
+Step 1: We need to subtract 29 and 15.
+Step 2: Perform the operation carefully.
+Answer: 29 - 15 = 14
+---
+
+Problem: 34 - 8 = ?
+Step 1: We need to subtract 34 and 8.
+Step 2: Perform the operation carefully.
+Answer: 34 - 8 = 26
+---
+
+Problem: 48 × 24 = ?
+Step 1: Multiply 48 by each digit of 24 separately.
+Step 2: 48 × 4 = 192 (ones place).
+Step 3: 48 × 20 = 960 (tens place).
+Step 4: Add results: 192 + 960 = 1152.
+Answer: 48 × 24 = 1152
+---
+
+Problem: 9 × 39 = ?
+Step 1: We need to multiply 9 and 39.
+Step 2: Perform the operation carefully.
+Answer: 9 × 39 = 351
+---
+
+Problem: 38 × 91 = ?
+Step 1: Multiply 38 by each digit of 91 separately.
+Step 2: 38 × 1 = 38 (ones place).
+Step 3: 38 × 90 = 3420 (tens place).
+Step 4: Add results: 38 + 3420 = 3458.
+Answer: 38 × 91 = 3458
+---
+
+Problem: 253 + 763 = ?
+Step 1: Write out the numbers: 253 and 763.
+Step 2: Add the ones digits: 3 + 3 = 6.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 253 + 763 = 1016
+---
+
+Problem: 78 ÷ 2 = ?
+Step 1: Determine how many times 2 fits into 78.
+Step 2: 2 × 39 = 78, so the quotient is 39.
+Step 3: Remainder = 78 - 2 × 39 = 0.
+Answer: 78 ÷ 2 = 39
+---
+
+Problem: 234 - 46 = ?
+Step 1: Write out 234 minus 46.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 234 - 46 = 188.
+Answer: 188
+---
+
+Problem: 807 - 436 = ?
+Step 1: Write out 807 minus 436.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 807 - 436 = 371.
+Answer: 371
+---
+
+Problem: 29 × 61 = ?
+Step 1: Multiply 29 by each digit of 61 separately.
+Step 2: 29 × 1 = 29 (ones place).
+Step 3: 29 × 60 = 1740 (tens place).
+Step 4: Add results: 29 + 1740 = 1769.
+Answer: 29 × 61 = 1769
+---
+
+Problem: 153 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 153.
+Step 2: 3 × 51 = 153, so the quotient is 51.
+Step 3: Remainder = 153 - 3 × 51 = 0.
+Answer: 153 ÷ 3 = 51
+---
+
+Problem: 647 + 61 = ?
+Step 1: Write out the numbers: 647 and 61.
+Step 2: Add the ones digits: 7 + 1 = 8.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 647 + 61 = 708
+---
+
+Problem: 656 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 656.
+Step 2: 8 × 82 = 656, so the quotient is 82.
+Step 3: Remainder = 656 - 8 × 82 = 0.
+Answer: 656 ÷ 8 = 82
+---
+
+Problem: 997 + 945 = ?
+Step 1: Write out the numbers: 997 and 945.
+Step 2: Add the ones digits: 7 + 5 = 12.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 997 + 945 = 1942
+---
+
+Problem: 72 × 11 = ?
+Step 1: Multiply 72 by each digit of 11 separately.
+Step 2: 72 × 1 = 72 (ones place).
+Step 3: 72 × 10 = 720 (tens place).
+Step 4: Add results: 72 + 720 = 792.
+Answer: 72 × 11 = 792
+---
+
+Problem: 446 - 426 = ?
+Step 1: Write out 446 minus 426.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 446 - 426 = 20.
+Answer: 20
+---
+
+Problem: 434 - 323 = ?
+Step 1: Write out 434 minus 323.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 434 - 323 = 111.
+Answer: 111
+---
+
+Problem: 161 - 2 = ?
+Step 1: Write out 161 minus 2.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 161 - 2 = 159.
+Answer: 159
+---
+
+Problem: 726 ÷ 11 = ?
+Step 1: Determine how many times 11 fits into 726.
+Step 2: 11 × 66 = 726, so the quotient is 66.
+Step 3: Remainder = 726 - 11 × 66 = 0.
+Answer: 726 ÷ 11 = 66
+---
+
+Problem: 17 + 4 = ?
+Step 1: We need to add 17 and 4.
+Step 2: Perform the operation carefully.
+Answer: 17 + 4 = 21
+---
+
+Problem: 275 + 68 = ?
+Step 1: Write out the numbers: 275 and 68.
+Step 2: Add the ones digits: 5 + 8 = 13.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 275 + 68 = 343
+---
+
+Problem: 900 + 581 = ?
+Step 1: Write out the numbers: 900 and 581.
+Step 2: Add the ones digits: 0 + 1 = 1.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 900 + 581 = 1481
+---
+
+Problem: 566 + 301 = ?
+Step 1: Write out the numbers: 566 and 301.
+Step 2: Add the ones digits: 6 + 1 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 566 + 301 = 867
+---
+
+Problem: 62 × 4 = ?
+Step 1: Multiply 62 by each digit of 4 separately.
+Step 2: 62 × 4 = 248 (ones place).
+Answer: 62 × 4 = 248
+---
+
+Problem: 672 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 672.
+Step 2: 8 × 84 = 672, so the quotient is 84.
+Step 3: Remainder = 672 - 8 × 84 = 0.
+Answer: 672 ÷ 8 = 84
+---
+
+Problem: 344 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 344.
+Step 2: 8 × 43 = 344, so the quotient is 43.
+Step 3: Remainder = 344 - 8 × 43 = 0.
+Answer: 344 ÷ 8 = 43
+---
+
+Problem: 409 + 688 = ?
+Step 1: Write out the numbers: 409 and 688.
+Step 2: Add the ones digits: 9 + 8 = 17.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 409 + 688 = 1097
+---
+
+Problem: 748 + 471 = ?
+Step 1: Write out the numbers: 748 and 471.
+Step 2: Add the ones digits: 8 + 1 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 748 + 471 = 1219
+---
+
+Problem: 686 + 498 = ?
+Step 1: Write out the numbers: 686 and 498.
+Step 2: Add the ones digits: 6 + 8 = 14.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 686 + 498 = 1184
+---
+
+Problem: 129 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 129.
+Step 2: 3 × 43 = 129, so the quotient is 43.
+Step 3: Remainder = 129 - 3 × 43 = 0.
+Answer: 129 ÷ 3 = 43
+---
+
+Problem: 105 ÷ 7 = ?
+Step 1: Determine how many times 7 fits into 105.
+Step 2: 7 × 15 = 105, so the quotient is 15.
+Step 3: Remainder = 105 - 7 × 15 = 0.
+Answer: 105 ÷ 7 = 15
+---
+
+Problem: 72 × 44 = ?
+Step 1: Multiply 72 by each digit of 44 separately.
+Step 2: 72 × 4 = 288 (ones place).
+Step 3: 72 × 40 = 2880 (tens place).
+Step 4: Add results: 288 + 2880 = 3168.
+Answer: 72 × 44 = 3168
+---
+
+Problem: 745 - 714 = ?
+Step 1: Write out 745 minus 714.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 745 - 714 = 31.
+Answer: 31
+---
+
+Problem: 28 × 55 = ?
+Step 1: Multiply 28 by each digit of 55 separately.
+Step 2: 28 × 5 = 140 (ones place).
+Step 3: 28 × 50 = 1400 (tens place).
+Step 4: Add results: 140 + 1400 = 1540.
+Answer: 28 × 55 = 1540
+---
+
+Problem: 249 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 249.
+Step 2: 3 × 83 = 249, so the quotient is 83.
+Step 3: Remainder = 249 - 3 × 83 = 0.
+Answer: 249 ÷ 3 = 83
+---
+
+Problem: 590 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 590.
+Step 2: 10 × 59 = 590, so the quotient is 59.
+Step 3: Remainder = 590 - 10 × 59 = 0.
+Answer: 590 ÷ 10 = 59
+---
+
+Problem: 470 + 147 = ?
+Step 1: Write out the numbers: 470 and 147.
+Step 2: Add the ones digits: 0 + 7 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 470 + 147 = 617
+---
+
+Problem: 474 + 389 = ?
+Step 1: Write out the numbers: 474 and 389.
+Step 2: Add the ones digits: 4 + 9 = 13.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 474 + 389 = 863
+---
+
+Problem: 3 × 29 = ?
+Step 1: We need to multiply 3 and 29.
+Step 2: Perform the operation carefully.
+Answer: 3 × 29 = 87
+---
+
+Problem: 930 - 367 = ?
+Step 1: Write out 930 minus 367.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 930 - 367 = 563.
+Answer: 563
+---
+
+Problem: 50 × 37 = ?
+Step 1: Multiply 50 by each digit of 37 separately.
+Step 2: 50 × 7 = 350 (ones place).
+Step 3: 50 × 30 = 1500 (tens place).
+Step 4: Add results: 350 + 1500 = 1850.
+Answer: 50 × 37 = 1850
+---
+
+Problem: 47 - 23 = ?
+Step 1: We need to subtract 47 and 23.
+Step 2: Perform the operation carefully.
+Answer: 47 - 23 = 24
+---
+
+Problem: 13 × 50 = ?
+Step 1: We need to multiply 13 and 50.
+Step 2: Perform the operation carefully.
+Answer: 13 × 50 = 650
+---
+
+Problem: 38 - 36 = ?
+Step 1: We need to subtract 38 and 36.
+Step 2: Perform the operation carefully.
+Answer: 38 - 36 = 2
+---
+
+Problem: 297 + 82 = ?
+Step 1: Write out the numbers: 297 and 82.
+Step 2: Add the ones digits: 7 + 2 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 297 + 82 = 379
+---
+
+Problem: 32 × 18 = ?
+Step 1: Multiply 32 by each digit of 18 separately.
+Step 2: 32 × 8 = 256 (ones place).
+Step 3: 32 × 10 = 320 (tens place).
+Step 4: Add results: 256 + 320 = 576.
+Answer: 32 × 18 = 576
+---
+
+Problem: 644 - 344 = ?
+Step 1: Write out 644 minus 344.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 644 - 344 = 300.
+Answer: 300
+---
+
+Problem: 5 × 33 = ?
+Step 1: Multiply 5 by each digit of 33 separately.
+Step 2: 5 × 3 = 15 (ones place).
+Step 3: 5 × 30 = 150 (tens place).
+Step 4: Add results: 15 + 150 = 165.
+Answer: 5 × 33 = 165
+---
+
+Problem: 1092 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 1092.
+Step 2: 12 × 91 = 1092, so the quotient is 91.
+Step 3: Remainder = 1092 - 12 × 91 = 0.
+Answer: 1092 ÷ 12 = 91
+---
+
+Problem: 827 + 417 = ?
+Step 1: Write out the numbers: 827 and 417.
+Step 2: Add the ones digits: 7 + 7 = 14.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 827 + 417 = 1244
+---
+
+Problem: 74 × 86 = ?
+Step 1: Multiply 74 by each digit of 86 separately.
+Step 2: 74 × 6 = 444 (ones place).
+Step 3: 74 × 80 = 5920 (tens place).
+Step 4: Add results: 444 + 5920 = 6364.
+Answer: 74 × 86 = 6364
+---
+
+Problem: 156 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 156.
+Step 2: 6 × 26 = 156, so the quotient is 26.
+Step 3: Remainder = 156 - 6 × 26 = 0.
+Answer: 156 ÷ 6 = 26
+---
+
+Problem: 324 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 324.
+Step 2: 9 × 36 = 324, so the quotient is 36.
+Step 3: Remainder = 324 - 9 × 36 = 0.
+Answer: 324 ÷ 9 = 36
+---
+
+Problem: 81 × 21 = ?
+Step 1: Multiply 81 by each digit of 21 separately.
+Step 2: 81 × 1 = 81 (ones place).
+Step 3: 81 × 20 = 1620 (tens place).
+Step 4: Add results: 81 + 1620 = 1701.
+Answer: 81 × 21 = 1701
+---
+
+Problem: 369 - 329 = ?
+Step 1: Write out 369 minus 329.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 369 - 329 = 40.
+Answer: 40
+---
+
+Problem: 889 - 482 = ?
+Step 1: Write out 889 minus 482.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 889 - 482 = 407.
+Answer: 407
+---
+
+Problem: 240 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 240.
+Step 2: 8 × 30 = 240, so the quotient is 30.
+Step 3: Remainder = 240 - 8 × 30 = 0.
+Answer: 240 ÷ 8 = 30
+---
+
+Problem: 529 - 317 = ?
+Step 1: Write out 529 minus 317.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 529 - 317 = 212.
+Answer: 212
+---
+
+Problem: 45 - 42 = ?
+Step 1: We need to subtract 45 and 42.
+Step 2: Perform the operation carefully.
+Answer: 45 - 42 = 3
+---
+
+Problem: 162 + 465 = ?
+Step 1: Write out the numbers: 162 and 465.
+Step 2: Add the ones digits: 2 + 5 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 162 + 465 = 627
+---
+
+Problem: 456 - 1 = ?
+Step 1: Write out 456 minus 1.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 456 - 1 = 455.
+Answer: 455
+---
+
+Problem: 36 - 9 = ?
+Step 1: We need to subtract 36 and 9.
+Step 2: Perform the operation carefully.
+Answer: 36 - 9 = 27
+---
+
+Problem: 64 × 11 = ?
+Step 1: Multiply 64 by each digit of 11 separately.
+Step 2: 64 × 1 = 64 (ones place).
+Step 3: 64 × 10 = 640 (tens place).
+Step 4: Add results: 64 + 640 = 704.
+Answer: 64 × 11 = 704
+---
+
+Problem: 550 + 460 = ?
+Step 1: Write out the numbers: 550 and 460.
+Step 2: Add the ones digits: 0 + 0 = 0.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 550 + 460 = 1010
+---
+
+Problem: 840 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 840.
+Step 2: 10 × 84 = 840, so the quotient is 84.
+Step 3: Remainder = 840 - 10 × 84 = 0.
+Answer: 840 ÷ 10 = 84
+---
+
+Problem: 25 × 8 = ?
+Step 1: Multiply 25 by each digit of 8 separately.
+Step 2: 25 × 8 = 200 (ones place).
+Answer: 25 × 8 = 200
+---
+
+Problem: 270 + 765 = ?
+Step 1: Write out the numbers: 270 and 765.
+Step 2: Add the ones digits: 0 + 5 = 5.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 270 + 765 = 1035
+---
+
+Problem: 70 × 5 = ?
+Step 1: Multiply 70 by each digit of 5 separately.
+Step 2: 70 × 5 = 350 (ones place).
+Answer: 70 × 5 = 350
+---
+
+Problem: 42 × 22 = ?
+Step 1: We need to multiply 42 and 22.
+Step 2: Perform the operation carefully.
+Answer: 42 × 22 = 924
+---
+
+Problem: 225 + 142 = ?
+Step 1: Write out the numbers: 225 and 142.
+Step 2: Add the ones digits: 5 + 2 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 225 + 142 = 367
+---
+
+Problem: 568 - 37 = ?
+Step 1: Write out 568 minus 37.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 568 - 37 = 531.
+Answer: 531
+---
+
+Problem: 42 × 17 = ?
+Step 1: Multiply 42 by each digit of 17 separately.
+Step 2: 42 × 7 = 294 (ones place).
+Step 3: 42 × 10 = 420 (tens place).
+Step 4: Add results: 294 + 420 = 714.
+Answer: 42 × 17 = 714
+---
+
+Problem: 38 × 7 = ?
+Step 1: We need to multiply 38 and 7.
+Step 2: Perform the operation carefully.
+Answer: 38 × 7 = 266
+---
+
+Problem: 26 × 12 = ?
+Step 1: Multiply 26 by each digit of 12 separately.
+Step 2: 26 × 2 = 52 (ones place).
+Step 3: 26 × 10 = 260 (tens place).
+Step 4: Add results: 52 + 260 = 312.
+Answer: 26 × 12 = 312
+---
+
+Problem: 356 ÷ 4 = ?
+Step 1: Determine how many times 4 fits into 356.
+Step 2: 4 × 89 = 356, so the quotient is 89.
+Step 3: Remainder = 356 - 4 × 89 = 0.
+Answer: 356 ÷ 4 = 89
+---
+
+Problem: 3 × 68 = ?
+Step 1: Multiply 3 by each digit of 68 separately.
+Step 2: 3 × 8 = 24 (ones place).
+Step 3: 3 × 60 = 180 (tens place).
+Step 4: Add results: 24 + 180 = 204.
+Answer: 3 × 68 = 204
+---
+
+Problem: 48 - 22 = ?
+Step 1: We need to subtract 48 and 22.
+Step 2: Perform the operation carefully.
+Answer: 48 - 22 = 26
+---
+
+Problem: 225 - 111 = ?
+Step 1: Write out 225 minus 111.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 225 - 111 = 114.
+Answer: 114
+---
+
+Problem: 13 + 39 = ?
+Step 1: We need to add 13 and 39.
+Step 2: Perform the operation carefully.
+Answer: 13 + 39 = 52
+---
+
+Problem: 8 × 46 = ?
+Step 1: Multiply 8 by each digit of 46 separately.
+Step 2: 8 × 6 = 48 (ones place).
+Step 3: 8 × 40 = 320 (tens place).
+Step 4: Add results: 48 + 320 = 368.
+Answer: 8 × 46 = 368
+---
+
+Problem: 85 ÷ 5 = ?
+Step 1: Determine how many times 5 fits into 85.
+Step 2: 5 × 17 = 85, so the quotient is 17.
+Step 3: Remainder = 85 - 5 × 17 = 0.
+Answer: 85 ÷ 5 = 17
+---
+
+Problem: 90 × 21 = ?
+Step 1: Multiply 90 by each digit of 21 separately.
+Step 2: 90 × 1 = 90 (ones place).
+Step 3: 90 × 20 = 1800 (tens place).
+Step 4: Add results: 90 + 1800 = 1890.
+Answer: 90 × 21 = 1890
+---
+
+Problem: 34 × 12 = ?
+Step 1: Multiply 34 by each digit of 12 separately.
+Step 2: 34 × 2 = 68 (ones place).
+Step 3: 34 × 10 = 340 (tens place).
+Step 4: Add results: 68 + 340 = 408.
+Answer: 34 × 12 = 408
+---
+
+Problem: 924 - 769 = ?
+Step 1: Write out 924 minus 769.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 924 - 769 = 155.
+Answer: 155
+---
+
+Problem: 17 × 12 = ?
+Step 1: We need to multiply 17 and 12.
+Step 2: Perform the operation carefully.
+Answer: 17 × 12 = 204
+---
+
+Problem: 315 + 246 = ?
+Step 1: Write out the numbers: 315 and 246.
+Step 2: Add the ones digits: 5 + 6 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 315 + 246 = 561
+---
+
+Problem: 930 - 816 = ?
+Step 1: Write out 930 minus 816.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 930 - 816 = 114.
+Answer: 114
+---
+
+Problem: 577 - 131 = ?
+Step 1: Write out 577 minus 131.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 577 - 131 = 446.
+Answer: 446
+---
+
+Problem: 497 ÷ 7 = ?
+Step 1: Determine how many times 7 fits into 497.
+Step 2: 7 × 71 = 497, so the quotient is 71.
+Step 3: Remainder = 497 - 7 × 71 = 0.
+Answer: 497 ÷ 7 = 71
+---
+
+Problem: 10 × 4 = ?
+Step 1: We need to multiply 10 and 4.
+Step 2: Perform the operation carefully.
+Answer: 10 × 4 = 40
+---
+
+Problem: 216 ÷ 4 = ?
+Step 1: Determine how many times 4 fits into 216.
+Step 2: 4 × 54 = 216, so the quotient is 54.
+Step 3: Remainder = 216 - 4 × 54 = 0.
+Answer: 216 ÷ 4 = 54
+---
+
+Problem: 44 × 38 = ?
+Step 1: We need to multiply 44 and 38.
+Step 2: Perform the operation carefully.
+Answer: 44 × 38 = 1672
+---
+
+Problem: 35 - 12 = ?
+Step 1: Write out 35 minus 12.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 35 - 12 = 23.
+Answer: 23
+---
+
+Problem: 993 + 96 = ?
+Step 1: Write out the numbers: 993 and 96.
+Step 2: Add the ones digits: 3 + 6 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 993 + 96 = 1089
+---
+
+Problem: 594 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 594.
+Step 2: 6 × 99 = 594, so the quotient is 99.
+Step 3: Remainder = 594 - 6 × 99 = 0.
+Answer: 594 ÷ 6 = 99
+---
+
+Problem: 612 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 612.
+Step 2: 12 × 51 = 612, so the quotient is 51.
+Step 3: Remainder = 612 - 12 × 51 = 0.
+Answer: 612 ÷ 12 = 51
+---
+
+Problem: 47 - 17 = ?
+Step 1: We need to subtract 47 and 17.
+Step 2: Perform the operation carefully.
+Answer: 47 - 17 = 30
+---
+
+Problem: 25 + 35 = ?
+Step 1: We need to add 25 and 35.
+Step 2: Perform the operation carefully.
+Answer: 25 + 35 = 60
+---
+
+Problem: 15 × 57 = ?
+Step 1: Multiply 15 by each digit of 57 separately.
+Step 2: 15 × 7 = 105 (ones place).
+Step 3: 15 × 50 = 750 (tens place).
+Step 4: Add results: 105 + 750 = 855.
+Answer: 15 × 57 = 855
+---
+
+Problem: 63 × 16 = ?
+Step 1: Multiply 63 by each digit of 16 separately.
+Step 2: 63 × 6 = 378 (ones place).
+Step 3: 63 × 10 = 630 (tens place).
+Step 4: Add results: 378 + 630 = 1008.
+Answer: 63 × 16 = 1008
+---
+
+Problem: 46 - 29 = ?
+Step 1: We need to subtract 46 and 29.
+Step 2: Perform the operation carefully.
+Answer: 46 - 29 = 17
+---
+
+Problem: 19 × 21 = ?
+Step 1: Multiply 19 by each digit of 21 separately.
+Step 2: 19 × 1 = 19 (ones place).
+Step 3: 19 × 20 = 380 (tens place).
+Step 4: Add results: 19 + 380 = 399.
+Answer: 19 × 21 = 399
+---
+
+Problem: 44 - 37 = ?
+Step 1: We need to subtract 44 and 37.
+Step 2: Perform the operation carefully.
+Answer: 44 - 37 = 7
+---
+
+Problem: 128 - 67 = ?
+Step 1: Write out 128 minus 67.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 128 - 67 = 61.
+Answer: 61
+---
+
+Problem: 456 - 311 = ?
+Step 1: Write out 456 minus 311.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 456 - 311 = 145.
+Answer: 145
+---
+
+Problem: 234 + 792 = ?
+Step 1: Write out the numbers: 234 and 792.
+Step 2: Add the ones digits: 4 + 2 = 6.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 234 + 792 = 1026
+---
+
+Problem: 281 - 233 = ?
+Step 1: Write out 281 minus 233.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 281 - 233 = 48.
+Answer: 48
+---
+
+Problem: 45 + 50 = ?
+Step 1: We need to add 45 and 50.
+Step 2: Perform the operation carefully.
+Answer: 45 + 50 = 95
+---
+
+Problem: 1 + 32 = ?
+Step 1: We need to add 1 and 32.
+Step 2: Perform the operation carefully.
+Answer: 1 + 32 = 33
+---
+
+Problem: 723 - 570 = ?
+Step 1: Write out 723 minus 570.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 723 - 570 = 153.
+Answer: 153
+---
+
+Problem: 120 - 49 = ?
+Step 1: Write out 120 minus 49.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 120 - 49 = 71.
+Answer: 71
+---
+
+Problem: 634 + 907 = ?
+Step 1: Write out the numbers: 634 and 907.
+Step 2: Add the ones digits: 4 + 7 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 634 + 907 = 1541
+---
+
+Problem: 6 × 40 = ?
+Step 1: We need to multiply 6 and 40.
+Step 2: Perform the operation carefully.
+Answer: 6 × 40 = 240
+---
+
+Problem: 34 - 34 = ?
+Step 1: We need to subtract 34 and 34.
+Step 2: Perform the operation carefully.
+Answer: 34 - 34 = 0
+---
+
+Problem: 354 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 354.
+Step 2: 6 × 59 = 354, so the quotient is 59.
+Step 3: Remainder = 354 - 6 × 59 = 0.
+Answer: 354 ÷ 6 = 59
+---
+
+Problem: 19 - 5 = ?
+Step 1: We need to subtract 19 and 5.
+Step 2: Perform the operation carefully.
+Answer: 19 - 5 = 14
+---
+
+Problem: 170 + 272 = ?
+Step 1: Write out the numbers: 170 and 272.
+Step 2: Add the ones digits: 0 + 2 = 2.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 170 + 272 = 442
+---
+
+Problem: 34 × 20 = ?
+Step 1: We need to multiply 34 and 20.
+Step 2: Perform the operation carefully.
+Answer: 34 × 20 = 680
+---
+
+Problem: 188 + 286 = ?
+Step 1: Write out the numbers: 188 and 286.
+Step 2: Add the ones digits: 8 + 6 = 14.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 188 + 286 = 474
+---
+
+Problem: 341 ÷ 11 = ?
+Step 1: Determine how many times 11 fits into 341.
+Step 2: 11 × 31 = 341, so the quotient is 31.
+Step 3: Remainder = 341 - 11 × 31 = 0.
+Answer: 341 ÷ 11 = 31
+---
+
+Problem: 36 × 80 = ?
+Step 1: Multiply 36 by each digit of 80 separately.
+Step 2: 36 × 0 = 0 (ones place).
+Step 3: 36 × 80 = 2880 (tens place).
+Step 4: Add results: 0 + 2880 = 2880.
+Answer: 36 × 80 = 2880
+---
+
+Problem: 22 + 50 = ?
+Step 1: We need to add 22 and 50.
+Step 2: Perform the operation carefully.
+Answer: 22 + 50 = 72
+---
+
+Problem: 40 × 89 = ?
+Step 1: Multiply 40 by each digit of 89 separately.
+Step 2: 40 × 9 = 360 (ones place).
+Step 3: 40 × 80 = 3200 (tens place).
+Step 4: Add results: 360 + 3200 = 3560.
+Answer: 40 × 89 = 3560
+---
+
+Problem: 93 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 93.
+Step 2: 3 × 31 = 93, so the quotient is 31.
+Step 3: Remainder = 93 - 3 × 31 = 0.
+Answer: 93 ÷ 3 = 31
+---
+
+Problem: 540 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 540.
+Step 2: 10 × 54 = 540, so the quotient is 54.
+Step 3: Remainder = 540 - 10 × 54 = 0.
+Answer: 540 ÷ 10 = 54
+---
+
+Problem: 44 - 10 = ?
+Step 1: We need to subtract 44 and 10.
+Step 2: Perform the operation carefully.
+Answer: 44 - 10 = 34
+---
+
+Problem: 63 + 413 = ?
+Step 1: Write out the numbers: 63 and 413.
+Step 2: Add the ones digits: 3 + 3 = 6.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 63 + 413 = 476
+---
+
+Problem: 190 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 190.
+Step 2: 10 × 19 = 190, so the quotient is 19.
+Step 3: Remainder = 190 - 10 × 19 = 0.
+Answer: 190 ÷ 10 = 19
+---
+
+Problem: 44 - 7 = ?
+Step 1: We need to subtract 44 and 7.
+Step 2: Perform the operation carefully.
+Answer: 44 - 7 = 37
+---
+
+Problem: 321 - 147 = ?
+Step 1: Write out 321 minus 147.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 321 - 147 = 174.
+Answer: 174
+---
+
+Problem: 75 × 82 = ?
+Step 1: Multiply 75 by each digit of 82 separately.
+Step 2: 75 × 2 = 150 (ones place).
+Step 3: 75 × 80 = 6000 (tens place).
+Step 4: Add results: 150 + 6000 = 6150.
+Answer: 75 × 82 = 6150
+---
+
+Problem: 105 - 105 = ?
+Step 1: Write out 105 minus 105.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 105 - 105 = 0.
+Answer: 0
+---
+
+Problem: 888 + 104 = ?
+Step 1: Write out the numbers: 888 and 104.
+Step 2: Add the ones digits: 8 + 4 = 12.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 888 + 104 = 992
+---
+
+Problem: 676 + 487 = ?
+Step 1: Write out the numbers: 676 and 487.
+Step 2: Add the ones digits: 6 + 7 = 13.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 676 + 487 = 1163
+---
+
+Problem: 206 - 108 = ?
+Step 1: Write out 206 minus 108.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 206 - 108 = 98.
+Answer: 98
+---
+
+Problem: 68 ÷ 2 = ?
+Step 1: Determine how many times 2 fits into 68.
+Step 2: 2 × 34 = 68, so the quotient is 34.
+Step 3: Remainder = 68 - 2 × 34 = 0.
+Answer: 68 ÷ 2 = 34
+---
+
+Problem: 324 ÷ 4 = ?
+Step 1: Determine how many times 4 fits into 324.
+Step 2: 4 × 81 = 324, so the quotient is 81.
+Step 3: Remainder = 324 - 4 × 81 = 0.
+Answer: 324 ÷ 4 = 81
+---
+
+Problem: 21 × 36 = ?
+Step 1: Multiply 21 by each digit of 36 separately.
+Step 2: 21 × 6 = 126 (ones place).
+Step 3: 21 × 30 = 630 (tens place).
+Step 4: Add results: 126 + 630 = 756.
+Answer: 21 × 36 = 756
+---
+
+Problem: 24 ÷ 4 = ?
+Step 1: Determine how many times 4 fits into 24.
+Step 2: 4 × 6 = 24, so the quotient is 6.
+Step 3: Remainder = 24 - 4 × 6 = 0.
+Answer: 24 ÷ 4 = 6
+---
+
+Problem: 4 + 977 = ?
+Step 1: Write out the numbers: 4 and 977.
+Step 2: Add the ones digits: 4 + 7 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 4 + 977 = 981
+---
+
+Problem: 810 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 810.
+Step 2: 9 × 90 = 810, so the quotient is 90.
+Step 3: Remainder = 810 - 9 × 90 = 0.
+Answer: 810 ÷ 9 = 90
+---
+
+Problem: 490 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 490.
+Step 2: 10 × 49 = 490, so the quotient is 49.
+Step 3: Remainder = 490 - 10 × 49 = 0.
+Answer: 490 ÷ 10 = 49
+---
+
+Problem: 1164 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 1164.
+Step 2: 12 × 97 = 1164, so the quotient is 97.
+Step 3: Remainder = 1164 - 12 × 97 = 0.
+Answer: 1164 ÷ 12 = 97
+---
+
+Problem: 8 × 34 = ?
+Step 1: We need to multiply 8 and 34.
+Step 2: Perform the operation carefully.
+Answer: 8 × 34 = 272
+---
+
+Problem: 494 - 407 = ?
+Step 1: Write out 494 minus 407.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 494 - 407 = 87.
+Answer: 87
+---
+
+Problem: 21 - 2 = ?
+Step 1: We need to subtract 21 and 2.
+Step 2: Perform the operation carefully.
+Answer: 21 - 2 = 19
+---
+
+Problem: 18 - 13 = ?
+Step 1: We need to subtract 18 and 13.
+Step 2: Perform the operation carefully.
+Answer: 18 - 13 = 5
+---
+
+Problem: 160 - 7 = ?
+Step 1: Write out 160 minus 7.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 160 - 7 = 153.
+Answer: 153
+---
+
+Problem: 41 - 21 = ?
+Step 1: We need to subtract 41 and 21.
+Step 2: Perform the operation carefully.
+Answer: 41 - 21 = 20
+---
+
+Problem: 372 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 372.
+Step 2: 6 × 62 = 372, so the quotient is 62.
+Step 3: Remainder = 372 - 6 × 62 = 0.
+Answer: 372 ÷ 6 = 62
+---
+
+Problem: 527 - 501 = ?
+Step 1: Write out 527 minus 501.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 527 - 501 = 26.
+Answer: 26
+---
+
+Problem: 31 × 24 = ?
+Step 1: We need to multiply 31 and 24.
+Step 2: Perform the operation carefully.
+Answer: 31 × 24 = 744
+---
+
+Problem: 470 - 133 = ?
+Step 1: Write out 470 minus 133.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 470 - 133 = 337.
+Answer: 337
+---
+
+Problem: 87 ÷ 3 = ?
+Step 1: Determine how many times 3 fits into 87.
+Step 2: 3 × 29 = 87, so the quotient is 29.
+Step 3: Remainder = 87 - 3 × 29 = 0.
+Answer: 87 ÷ 3 = 29
+---
+
+Problem: 876 + 239 = ?
+Step 1: Write out the numbers: 876 and 239.
+Step 2: Add the ones digits: 6 + 9 = 15.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 876 + 239 = 1115
+---
+
+Problem: 66 × 84 = ?
+Step 1: Multiply 66 by each digit of 84 separately.
+Step 2: 66 × 4 = 264 (ones place).
+Step 3: 66 × 80 = 5280 (tens place).
+Step 4: Add results: 264 + 5280 = 5544.
+Answer: 66 × 84 = 5544
+---
+
+Problem: 39 - 4 = ?
+Step 1: We need to subtract 39 and 4.
+Step 2: Perform the operation carefully.
+Answer: 39 - 4 = 35
+---
+
+Problem: 293 - 267 = ?
+Step 1: Write out 293 minus 267.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 293 - 267 = 26.
+Answer: 26
+---
+
+Problem: 826 + 164 = ?
+Step 1: Write out the numbers: 826 and 164.
+Step 2: Add the ones digits: 6 + 4 = 10.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 826 + 164 = 990
+---
+
+Problem: 81 × 30 = ?
+Step 1: Multiply 81 by each digit of 30 separately.
+Step 2: 81 × 0 = 0 (ones place).
+Step 3: 81 × 30 = 2430 (tens place).
+Step 4: Add results: 0 + 2430 = 2430.
+Answer: 81 × 30 = 2430
+---
+
+Problem: 28 × 37 = ?
+Step 1: We need to multiply 28 and 37.
+Step 2: Perform the operation carefully.
+Answer: 28 × 37 = 1036
+---
+
+Problem: 24 × 35 = ?
+Step 1: We need to multiply 24 and 35.
+Step 2: Perform the operation carefully.
+Answer: 24 × 35 = 840
+---
+
+Problem: 90 × 33 = ?
+Step 1: Multiply 90 by each digit of 33 separately.
+Step 2: 90 × 3 = 270 (ones place).
+Step 3: 90 × 30 = 2700 (tens place).
+Step 4: Add results: 270 + 2700 = 2970.
+Answer: 90 × 33 = 2970
+---
+
+Problem: 10 × 53 = ?
+Step 1: Multiply 10 by each digit of 53 separately.
+Step 2: 10 × 3 = 30 (ones place).
+Step 3: 10 × 50 = 500 (tens place).
+Step 4: Add results: 30 + 500 = 530.
+Answer: 10 × 53 = 530
+---
+
+Problem: 99 × 69 = ?
+Step 1: Multiply 99 by each digit of 69 separately.
+Step 2: 99 × 9 = 891 (ones place).
+Step 3: 99 × 60 = 5940 (tens place).
+Step 4: Add results: 891 + 5940 = 6831.
+Answer: 99 × 69 = 6831
+---
+
+Problem: 217 + 936 = ?
+Step 1: Write out the numbers: 217 and 936.
+Step 2: Add the ones digits: 7 + 6 = 13.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 217 + 936 = 1153
+---
+
+Problem: 84 - 59 = ?
+Step 1: Write out 84 minus 59.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 84 - 59 = 25.
+Answer: 25
+---
+
+Problem: 63 × 37 = ?
+Step 1: Multiply 63 by each digit of 37 separately.
+Step 2: 63 × 7 = 441 (ones place).
+Step 3: 63 × 30 = 1890 (tens place).
+Step 4: Add results: 441 + 1890 = 2331.
+Answer: 63 × 37 = 2331
+---
+
+Problem: 49 + 882 = ?
+Step 1: Write out the numbers: 49 and 882.
+Step 2: Add the ones digits: 9 + 2 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 49 + 882 = 931
+---
+
+Problem: 760 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 760.
+Step 2: 10 × 76 = 760, so the quotient is 76.
+Step 3: Remainder = 760 - 10 × 76 = 0.
+Answer: 760 ÷ 10 = 76
+---
+
+Problem: 400 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 400.
+Step 2: 8 × 50 = 400, so the quotient is 50.
+Step 3: Remainder = 400 - 8 × 50 = 0.
+Answer: 400 ÷ 8 = 50
+---
+
+Problem: 877 + 564 = ?
+Step 1: Write out the numbers: 877 and 564.
+Step 2: Add the ones digits: 7 + 4 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 877 + 564 = 1441
+---
+
+Problem: 64 × 30 = ?
+Step 1: Multiply 64 by each digit of 30 separately.
+Step 2: 64 × 0 = 0 (ones place).
+Step 3: 64 × 30 = 1920 (tens place).
+Step 4: Add results: 0 + 1920 = 1920.
+Answer: 64 × 30 = 1920
+---
+
+Problem: 62 × 39 = ?
+Step 1: Multiply 62 by each digit of 39 separately.
+Step 2: 62 × 9 = 558 (ones place).
+Step 3: 62 × 30 = 1860 (tens place).
+Step 4: Add results: 558 + 1860 = 2418.
+Answer: 62 × 39 = 2418
+---
+
+Problem: 730 - 310 = ?
+Step 1: Write out 730 minus 310.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 730 - 310 = 420.
+Answer: 420
+---
+
+Problem: 984 - 770 = ?
+Step 1: Write out 984 minus 770.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 984 - 770 = 214.
+Answer: 214
+---
+
+Problem: 108 ÷ 9 = ?
+Step 1: Determine how many times 9 fits into 108.
+Step 2: 9 × 12 = 108, so the quotient is 12.
+Step 3: Remainder = 108 - 9 × 12 = 0.
+Answer: 108 ÷ 9 = 12
+---
+
+Problem: 26 + 760 = ?
+Step 1: Write out the numbers: 26 and 760.
+Step 2: Add the ones digits: 6 + 0 = 6.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 26 + 760 = 786
+---
+
+Problem: 19 × 61 = ?
+Step 1: Multiply 19 by each digit of 61 separately.
+Step 2: 19 × 1 = 19 (ones place).
+Step 3: 19 × 60 = 1140 (tens place).
+Step 4: Add results: 19 + 1140 = 1159.
+Answer: 19 × 61 = 1159
+---
+
+Problem: 283 - 82 = ?
+Step 1: Write out 283 minus 82.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 283 - 82 = 201.
+Answer: 201
+---
+
+Problem: 666 + 383 = ?
+Step 1: Write out the numbers: 666 and 383.
+Step 2: Add the ones digits: 6 + 3 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 666 + 383 = 1049
+---
+
+Problem: 496 ÷ 8 = ?
+Step 1: Determine how many times 8 fits into 496.
+Step 2: 8 × 62 = 496, so the quotient is 62.
+Step 3: Remainder = 496 - 8 × 62 = 0.
+Answer: 496 ÷ 8 = 62
+---
+
+Problem: 636 - 542 = ?
+Step 1: Write out 636 minus 542.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 636 - 542 = 94.
+Answer: 94
+---
+
+Problem: 60 × 11 = ?
+Step 1: Multiply 60 by each digit of 11 separately.
+Step 2: 60 × 1 = 60 (ones place).
+Step 3: 60 × 10 = 600 (tens place).
+Step 4: Add results: 60 + 600 = 660.
+Answer: 60 × 11 = 660
+---
+
+Problem: 60 × 36 = ?
+Step 1: Multiply 60 by each digit of 36 separately.
+Step 2: 60 × 6 = 360 (ones place).
+Step 3: 60 × 30 = 1800 (tens place).
+Step 4: Add results: 360 + 1800 = 2160.
+Answer: 60 × 36 = 2160
+---
+
+Problem: 160 ÷ 4 = ?
+Step 1: Determine how many times 4 fits into 160.
+Step 2: 4 × 40 = 160, so the quotient is 40.
+Step 3: Remainder = 160 - 4 × 40 = 0.
+Answer: 160 ÷ 4 = 40
+---
+
+Problem: 226 + 460 = ?
+Step 1: Write out the numbers: 226 and 460.
+Step 2: Add the ones digits: 6 + 0 = 6.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 226 + 460 = 686
+---
+
+Problem: 91 × 18 = ?
+Step 1: Multiply 91 by each digit of 18 separately.
+Step 2: 91 × 8 = 728 (ones place).
+Step 3: 91 × 10 = 910 (tens place).
+Step 4: Add results: 728 + 910 = 1638.
+Answer: 91 × 18 = 1638
+---
+
+Problem: 888 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 888.
+Step 2: 12 × 74 = 888, so the quotient is 74.
+Step 3: Remainder = 888 - 12 × 74 = 0.
+Answer: 888 ÷ 12 = 74
+---
+
+Problem: 54 × 64 = ?
+Step 1: Multiply 54 by each digit of 64 separately.
+Step 2: 54 × 4 = 216 (ones place).
+Step 3: 54 × 60 = 3240 (tens place).
+Step 4: Add results: 216 + 3240 = 3456.
+Answer: 54 × 64 = 3456
+---
+
+Problem: 32 × 30 = ?
+Step 1: We need to multiply 32 and 30.
+Step 2: Perform the operation carefully.
+Answer: 32 × 30 = 960
+---
+
+Problem: 22 × 43 = ?
+Step 1: We need to multiply 22 and 43.
+Step 2: Perform the operation carefully.
+Answer: 22 × 43 = 946
+---
+
+Problem: 11 × 24 = ?
+Step 1: We need to multiply 11 and 24.
+Step 2: Perform the operation carefully.
+Answer: 11 × 24 = 264
+---
+
+Problem: 795 + 58 = ?
+Step 1: Write out the numbers: 795 and 58.
+Step 2: Add the ones digits: 5 + 8 = 13.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 795 + 58 = 853
+---
+
+Problem: 41 × 75 = ?
+Step 1: Multiply 41 by each digit of 75 separately.
+Step 2: 41 × 5 = 205 (ones place).
+Step 3: 41 × 70 = 2870 (tens place).
+Step 4: Add results: 205 + 2870 = 3075.
+Answer: 41 × 75 = 3075
+---
+
+Problem: 560 ÷ 7 = ?
+Step 1: Determine how many times 7 fits into 560.
+Step 2: 7 × 80 = 560, so the quotient is 80.
+Step 3: Remainder = 560 - 7 × 80 = 0.
+Answer: 560 ÷ 7 = 80
+---
+
+Problem: 37 + 14 = ?
+Step 1: We need to add 37 and 14.
+Step 2: Perform the operation carefully.
+Answer: 37 + 14 = 51
+---
+
+Problem: 396 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 396.
+Step 2: 6 × 66 = 396, so the quotient is 66.
+Step 3: Remainder = 396 - 6 × 66 = 0.
+Answer: 396 ÷ 6 = 66
+---
+
+Problem: 51 × 45 = ?
+Step 1: Multiply 51 by each digit of 45 separately.
+Step 2: 51 × 5 = 255 (ones place).
+Step 3: 51 × 40 = 2040 (tens place).
+Step 4: Add results: 255 + 2040 = 2295.
+Answer: 51 × 45 = 2295
+---
+
+Problem: 171 - 113 = ?
+Step 1: Write out 171 minus 113.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 171 - 113 = 58.
+Answer: 58
+---
+
+Problem: 855 + 374 = ?
+Step 1: Write out the numbers: 855 and 374.
+Step 2: Add the ones digits: 5 + 4 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 855 + 374 = 1229
+---
+
+Problem: 115 + 952 = ?
+Step 1: Write out the numbers: 115 and 952.
+Step 2: Add the ones digits: 5 + 2 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 115 + 952 = 1067
+---
+
+Problem: 238 - 7 = ?
+Step 1: Write out 238 minus 7.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 238 - 7 = 231.
+Answer: 231
+---
+
+Problem: 388 - 146 = ?
+Step 1: Write out 388 minus 146.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 388 - 146 = 242.
+Answer: 242
+---
+
+Problem: 831 - 686 = ?
+Step 1: Write out 831 minus 686.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 831 - 686 = 145.
+Answer: 145
+---
+
+Problem: 180 ÷ 10 = ?
+Step 1: Determine how many times 10 fits into 180.
+Step 2: 10 × 18 = 180, so the quotient is 18.
+Step 3: Remainder = 180 - 10 × 18 = 0.
+Answer: 180 ÷ 10 = 18
+---
+
+Problem: 641 + 306 = ?
+Step 1: Write out the numbers: 641 and 306.
+Step 2: Add the ones digits: 1 + 6 = 7.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 641 + 306 = 947
+---
+
+Problem: 18 × 81 = ?
+Step 1: Multiply 18 by each digit of 81 separately.
+Step 2: 18 × 1 = 18 (ones place).
+Step 3: 18 × 80 = 1440 (tens place).
+Step 4: Add results: 18 + 1440 = 1458.
+Answer: 18 × 81 = 1458
+---
+
+Problem: 14 × 26 = ?
+Step 1: Multiply 14 by each digit of 26 separately.
+Step 2: 14 × 6 = 84 (ones place).
+Step 3: 14 × 20 = 280 (tens place).
+Step 4: Add results: 84 + 280 = 364.
+Answer: 14 × 26 = 364
+---
+
+Problem: 602 ÷ 7 = ?
+Step 1: Determine how many times 7 fits into 602.
+Step 2: 7 × 86 = 602, so the quotient is 86.
+Step 3: Remainder = 602 - 7 × 86 = 0.
+Answer: 602 ÷ 7 = 86
+---
+
+Problem: 156 ÷ 2 = ?
+Step 1: Determine how many times 2 fits into 156.
+Step 2: 2 × 78 = 156, so the quotient is 78.
+Step 3: Remainder = 156 - 2 × 78 = 0.
+Answer: 156 ÷ 2 = 78
+---
+
+Problem: 21 × 21 = ?
+Step 1: Multiply 21 by each digit of 21 separately.
+Step 2: 21 × 1 = 21 (ones place).
+Step 3: 21 × 20 = 420 (tens place).
+Step 4: Add results: 21 + 420 = 441.
+Answer: 21 × 21 = 441
+---
+
+Problem: 603 + 568 = ?
+Step 1: Write out the numbers: 603 and 568.
+Step 2: Add the ones digits: 3 + 8 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 603 + 568 = 1171
+---
+
+Problem: 38 + 36 = ?
+Step 1: We need to add 38 and 36.
+Step 2: Perform the operation carefully.
+Answer: 38 + 36 = 74
+---
+
+Problem: 974 - 912 = ?
+Step 1: Write out 974 minus 912.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 974 - 912 = 62.
+Answer: 62
+---
+
+Problem: 443 - 425 = ?
+Step 1: Write out 443 minus 425.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 443 - 425 = 18.
+Answer: 18
+---
+
+Problem: 7 + 778 = ?
+Step 1: Write out the numbers: 7 and 778.
+Step 2: Add the ones digits: 7 + 8 = 15.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 7 + 778 = 785
+---
+
+Problem: 599 + 439 = ?
+Step 1: Write out the numbers: 599 and 439.
+Step 2: Add the ones digits: 9 + 9 = 18.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 599 + 439 = 1038
+---
+
+Problem: 49 × 38 = ?
+Step 1: We need to multiply 49 and 38.
+Step 2: Perform the operation carefully.
+Answer: 49 × 38 = 1862
+---
+
+Problem: 693 + 759 = ?
+Step 1: Write out the numbers: 693 and 759.
+Step 2: Add the ones digits: 3 + 9 = 12.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 693 + 759 = 1452
+---
+
+Problem: 231 ÷ 7 = ?
+Step 1: Determine how many times 7 fits into 231.
+Step 2: 7 × 33 = 231, so the quotient is 33.
+Step 3: Remainder = 231 - 7 × 33 = 0.
+Answer: 231 ÷ 7 = 33
+---
+
+Problem: 16 × 74 = ?
+Step 1: Multiply 16 by each digit of 74 separately.
+Step 2: 16 × 4 = 64 (ones place).
+Step 3: 16 × 70 = 1120 (tens place).
+Step 4: Add results: 64 + 1120 = 1184.
+Answer: 16 × 74 = 1184
+---
+
+Problem: 49 × 10 = ?
+Step 1: Multiply 49 by each digit of 10 separately.
+Step 2: 49 × 0 = 0 (ones place).
+Step 3: 49 × 10 = 490 (tens place).
+Step 4: Add results: 0 + 490 = 490.
+Answer: 49 × 10 = 490
+---
+
+Problem: 120 ÷ 4 = ?
+Step 1: Determine how many times 4 fits into 120.
+Step 2: 4 × 30 = 120, so the quotient is 30.
+Step 3: Remainder = 120 - 4 × 30 = 0.
+Answer: 120 ÷ 4 = 30
+---
+
+Problem: 1152 ÷ 12 = ?
+Step 1: Determine how many times 12 fits into 1152.
+Step 2: 12 × 96 = 1152, so the quotient is 96.
+Step 3: Remainder = 1152 - 12 × 96 = 0.
+Answer: 1152 ÷ 12 = 96
+---
+
+Problem: 952 + 553 = ?
+Step 1: Write out the numbers: 952 and 553.
+Step 2: Add the ones digits: 2 + 3 = 5.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 952 + 553 = 1505
+---
+
+Problem: 6 - 5 = ?
+Step 1: We need to subtract 6 and 5.
+Step 2: Perform the operation carefully.
+Answer: 6 - 5 = 1
+---
+
+Problem: 336 ÷ 7 = ?
+Step 1: Determine how many times 7 fits into 336.
+Step 2: 7 × 48 = 336, so the quotient is 48.
+Step 3: Remainder = 336 - 7 × 48 = 0.
+Answer: 336 ÷ 7 = 48
+---
+
+Problem: 55 × 64 = ?
+Step 1: Multiply 55 by each digit of 64 separately.
+Step 2: 55 × 4 = 220 (ones place).
+Step 3: 55 × 60 = 3300 (tens place).
+Step 4: Add results: 220 + 3300 = 3520.
+Answer: 55 × 64 = 3520
+---
+
+Problem: 43 - 17 = ?
+Step 1: We need to subtract 43 and 17.
+Step 2: Perform the operation carefully.
+Answer: 43 - 17 = 26
+---
+
+Problem: 33 × 25 = ?
+Step 1: We need to multiply 33 and 25.
+Step 2: Perform the operation carefully.
+Answer: 33 × 25 = 825
+---
+
+Problem: 764 - 341 = ?
+Step 1: Write out 764 minus 341.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 764 - 341 = 423.
+Answer: 423
+---
+
+Problem: 592 + 197 = ?
+Step 1: Write out the numbers: 592 and 197.
+Step 2: Add the ones digits: 2 + 7 = 9.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 592 + 197 = 789
+---
+
+Problem: 622 + 434 = ?
+Step 1: Write out the numbers: 622 and 434.
+Step 2: Add the ones digits: 2 + 4 = 6.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 622 + 434 = 1056
+---
+
+Problem: 530 + 463 = ?
+Step 1: Write out the numbers: 530 and 463.
+Step 2: Add the ones digits: 0 + 3 = 3.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 530 + 463 = 993
+---
+
+Problem: 39 × 2 = ?
+Step 1: We need to multiply 39 and 2.
+Step 2: Perform the operation carefully.
+Answer: 39 × 2 = 78
+---
+
+Problem: 640 - 583 = ?
+Step 1: Write out 640 minus 583.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 640 - 583 = 57.
+Answer: 57
+---
+
+Problem: 74 ÷ 2 = ?
+Step 1: Determine how many times 2 fits into 74.
+Step 2: 2 × 37 = 74, so the quotient is 37.
+Step 3: Remainder = 74 - 2 × 37 = 0.
+Answer: 74 ÷ 2 = 37
+---
+
+Problem: 492 ÷ 6 = ?
+Step 1: Determine how many times 6 fits into 492.
+Step 2: 6 × 82 = 492, so the quotient is 82.
+Step 3: Remainder = 492 - 6 × 82 = 0.
+Answer: 492 ÷ 6 = 82
+---
+
+Problem: 4 × 19 = ?
+Step 1: We need to multiply 4 and 19.
+Step 2: Perform the operation carefully.
+Answer: 4 × 19 = 76
+---
+
+Problem: 769 + 274 = ?
+Step 1: Write out the numbers: 769 and 274.
+Step 2: Add the ones digits: 9 + 4 = 13.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 769 + 274 = 1043
+---
+
+Problem: 39 × 4 = ?
+Step 1: We need to multiply 39 and 4.
+Step 2: Perform the operation carefully.
+Answer: 39 × 4 = 156
+---
+
+Problem: 204 - 66 = ?
+Step 1: Write out 204 minus 66.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 204 - 66 = 138.
+Answer: 138
+---
+
+Problem: 868 + 353 = ?
+Step 1: Write out the numbers: 868 and 353.
+Step 2: Add the ones digits: 8 + 3 = 11.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 868 + 353 = 1221
+---
+
+Problem: 743 - 322 = ?
+Step 1: Write out 743 minus 322.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 743 - 322 = 421.
+Answer: 421
+---
+
+Problem: 61 - 36 = ?
+Step 1: Write out 61 minus 36.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 61 - 36 = 25.
+Answer: 25
+---
+
+Problem: 409 + 371 = ?
+Step 1: Write out the numbers: 409 and 371.
+Step 2: Add the ones digits: 9 + 1 = 10.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 409 + 371 = 780
+---
+
+Problem: 172 - 122 = ?
+Step 1: Write out 172 minus 122.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 172 - 122 = 50.
+Answer: 50
+---
+
+Problem: 912 - 71 = ?
+Step 1: Write out 912 minus 71.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 912 - 71 = 841.
+Answer: 841
+---
+
+Problem: 540 - 476 = ?
+Step 1: Write out 540 minus 476.
+Step 2: Subtract digit by digit from right to left, borrowing when needed.
+Step 3: 540 - 476 = 64.
+Answer: 64
+---
+
+Problem: 62 × 84 = ?
+Step 1: Multiply 62 by each digit of 84 separately.
+Step 2: 62 × 4 = 248 (ones place).
+Step 3: 62 × 80 = 4960 (tens place).
+Step 4: Add results: 248 + 4960 = 5208.
+Answer: 62 × 84 = 5208
+---
+
+Problem: 44 × 42 = ?
+Step 1: Multiply 44 by each digit of 42 separately.
+Step 2: 44 × 2 = 88 (ones place).
+Step 3: 44 × 40 = 1760 (tens place).
+Step 4: Add results: 88 + 1760 = 1848.
+Answer: 44 × 42 = 1848
+---
+
+Problem: 74 + 624 = ?
+Step 1: Write out the numbers: 74 and 624.
+Step 2: Add the ones digits: 4 + 4 = 8.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 74 + 624 = 698
+---
+
+Problem: 96 × 71 = ?
+Step 1: Multiply 96 by each digit of 71 separately.
+Step 2: 96 × 1 = 96 (ones place).
+Step 3: 96 × 70 = 6720 (tens place).
+Step 4: Add results: 96 + 6720 = 6816.
+Answer: 96 × 71 = 6816
+---
+
+Problem: 100 + 368 = ?
+Step 1: Write out the numbers: 100 and 368.
+Step 2: Add the ones digits: 0 + 8 = 8.
+Step 3: Add the tens and hundreds, carrying if necessary.
+Step 4: Combine all parts.
+Answer: 100 + 368 = 468
+---
+
+Problem: 50 - 22 = ?
+Step 1: We need to subtract 50 and 22.
+Step 2: Perform the operation carefully.
+Answer: 50 - 22 = 28
+---

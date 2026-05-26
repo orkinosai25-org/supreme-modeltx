@@ -1,0 +1,251 @@
+name: Azure Infrastructure Provisioning
+
+on:
+  workflow_dispatch:
+    inputs:
+      resource_group:
+        description: 'Azure Resource Group name'
+        required: true
+        default: 'smtx-rg'
+      location:
+        description: 'Azure region'
+        required: true
+        default: 'eastus'
+      environment:
+        description: 'Environment (dev, staging, prod)'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+      deploy_gpu_vm:
+        description: 'Deploy GPU VM, CPU VM, and App Service (requires GPU quota)'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+      deploy_vms:
+        description: 'Deploy all VM layers (control, API, frontend, lifecycle, data, training). Default: true.'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+      api_vm_count:
+        description: 'Number of API/backend VMs (1–10)'
+        required: false
+        default: '2'
+      frontend_vm_count:
+        description: 'Number of frontend/web VMs (1–10)'
+        required: false
+        default: '2'
+      data_vm_count:
+        description: 'Number of data/governance VMs (1–8)'
+        required: false
+        default: '2'
+      training_vm_count:
+        description: 'Number of CPU LLM training VMs (1–10). Start with 1.'
+        required: false
+        default: '1'
+      inference_vm_count:
+        description: 'Number of CPU inference VMs (1–5)'
+        required: false
+        default: '1'
+      training_vm_size:
+        description: 'Training VM size (CPU-only). Larger = faster multi-threaded fine-tuning.'
+        required: false
+        default: 'Standard_B4ms'
+        type: choice
+        options:
+          - Standard_B4ms
+          - Standard_D16s_v5
+          - Standard_D32s_v5
+          - Standard_E16s_v5
+          - Standard_E32s_v5
+      inference_vm_size:
+        description: 'Inference VM size (CPU-only). Larger = bigger quantised models supported.'
+        required: false
+        default: 'Standard_B2ms'
+        type: choice
+        options:
+          - Standard_B2ms
+          - Standard_D8s_v5
+          - Standard_D16s_v5
+          - Standard_E8s_v5
+          - Standard_E16s_v5
+
+# Prevent concurrent infra deployments; a queued run waits for the in-progress one.
+concurrency:
+  group: azure-infra-deploy
+  cancel-in-progress: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  provision:
+    name: Provision Azure Infrastructure
+    runs-on: ubuntu-latest
+    # The Azure federated identity credential (github-oidc-main) is scoped to
+    # refs/heads/main.  Dispatching from any other branch will fail at the
+    # Azure login step with AADSTS700213.
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      id-token: write   # Required for OIDC token exchange
+      contents: write   # Required to commit infra/outputs.md
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # Full history needed for git pull --rebase at the end
+
+      - name: Log in to Azure (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E45C3D43E5AC40DB8318380C0FD93246 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_01CDF649EE9042BBAB65955AC8A5A538 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A3780EA742DC446B87D82128AC45B190 }}
+          audience: api://AzureADTokenExchange
+
+      - name: Create Resource Group
+        uses: azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az group create \
+              --name "${{ github.event.inputs.resource_group }}" \
+              --location "${{ github.event.inputs.location }}" \
+              --tags environment="${{ github.event.inputs.environment }}" project=smtx
+
+      - name: Resolve SSH public key
+        id: ssh
+        shell: bash
+        run: |
+          set -euo pipefail
+          SSH_PUBLIC_KEY="${{ secrets.SSH_PUBLIC_KEY }}"
+          if [ -z "$SSH_PUBLIC_KEY" ]; then
+            echo "::warning::SSH_PUBLIC_KEY secret is not set. Generating a temporary deployment-only key (SSH login will not be possible after provisioning)."
+            umask 077
+            TMP_KEY="$(mktemp "${RUNNER_TEMP:-/tmp}/smtx-github-actions-ssh-key.XXXXXX")"
+            ssh-keygen -t ed25519 -N "" -f "$TMP_KEY" -C "github-actions@${{ github.repository }}" >/dev/null
+            SSH_PUBLIC_KEY="$(cat "${TMP_KEY}.pub")"
+            rm -f "$TMP_KEY" "${TMP_KEY}.pub"
+          fi
+          echo "ssh_public_key=${SSH_PUBLIC_KEY}" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy Bicep template
+        id: deploy
+        uses: azure/arm-deploy@v2
+        with:
+          resourceGroupName: ${{ github.event.inputs.resource_group }}
+          template: infra/main.bicep
+          parameters: >
+            infra/parameters.json
+            location=${{ github.event.inputs.location }}
+            environment=${{ github.event.inputs.environment }}
+            sshPublicKey=${{ steps.ssh.outputs.ssh_public_key }}
+            deployGpuVm=${{ github.event.inputs.deploy_gpu_vm }}
+            deployVms=${{ github.event.inputs.deploy_vms }}
+            apiVmCount=${{ github.event.inputs.api_vm_count || '2' }}
+            frontendVmCount=${{ github.event.inputs.frontend_vm_count || '2' }}
+            dataVmCount=${{ github.event.inputs.data_vm_count || '2' }}
+            inferenceVmCount=${{ github.event.inputs.inference_vm_count || '1' }}
+            trainingVmCount=${{ github.event.inputs.training_vm_count || '1' }}
+            inferenceVmSize=${{ github.event.inputs.inference_vm_size || 'Standard_B2ms' }}
+            trainingVmSize=${{ github.event.inputs.training_vm_size || 'Standard_B4ms' }}
+          deploymentName: smtx-infra-${{ github.run_number }}
+          failOnStdErr: false
+
+      - name: Deploy RBAC role assignments
+        id: deploy-rbac
+        continue-on-error: true
+        uses: azure/arm-deploy@v2
+        with:
+          resourceGroupName: ${{ github.event.inputs.resource_group }}
+          template: infra/rbac.bicep
+          parameters: >
+            gpuVmPrincipalId=${{ steps.deploy.outputs.gpuVmPrincipalId }}
+            cpuVmPrincipalId=${{ steps.deploy.outputs.cpuVmPrincipalId }}
+            appServicePrincipalId=${{ steps.deploy.outputs.appServicePrincipalId }}
+            controlVmPrincipalId=${{ steps.deploy.outputs.controlVmPrincipalId }}
+            apiVmPrincipalId=${{ steps.deploy.outputs.apiVmPrincipalId }}
+            frontendVmPrincipalId=${{ steps.deploy.outputs.frontendVmPrincipalId }}
+            lifecycleVmPrincipalId=${{ steps.deploy.outputs.lifecycleVmPrincipalId }}
+            dataVmPrincipalId=${{ steps.deploy.outputs.dataVmPrincipalId }}
+            trainingVmPrincipalId=${{ steps.deploy.outputs.trainingVmPrincipalId }}
+            inferenceVmPrincipalId=${{ steps.deploy.outputs.inferenceVmPrincipalId }}
+            storageAccountName=${{ steps.deploy.outputs.storageAccountName }}
+            keyVaultName=${{ steps.deploy.outputs.keyVaultName }}
+          deploymentName: smtx-rbac-${{ github.run_number }}
+          failOnStdErr: false
+
+      - name: Write outputs to infra/outputs.md
+        run: |
+          RESOURCE_GROUP="${{ github.event.inputs.resource_group }}"
+          SUBSCRIPTION_ID="${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A3780EA742DC446B87D82128AC45B190 }}"
+          RUN_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+          cat > infra/outputs.md << EOF
+          # SMTX Infrastructure Deployment Outputs
+
+          **Deployment:** smtx-infra-${{ github.run_number }}
+          **Environment:** ${{ github.event.inputs.environment }}
+          **Resource Group:** ${RESOURCE_GROUP}
+          **Location:** ${{ github.event.inputs.location }}
+          **Workflow Run:** ${RUN_URL}
+          **Deployed at:** $(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+          ---
+
+          ## Resource IDs
+
+          | Resource | Name | Resource ID |
+          |----------|------|-------------|
+          | Resource Group | ${RESOURCE_GROUP} | /subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP} |
+          | Storage Account | ${{ steps.deploy.outputs.storageAccountName }} | ${{ steps.deploy.outputs.storageAccountId }} |
+          | Container Registry | ${{ steps.deploy.outputs.acrLoginServer }} | ${{ steps.deploy.outputs.acrId }} |
+          | Batch Account | ${{ steps.deploy.outputs.batchAccountName }} | ${{ steps.deploy.outputs.batchAccountId }} |
+          | Key Vault | ${{ steps.deploy.outputs.keyVaultName }} | ${{ steps.deploy.outputs.keyVaultId }} |
+          | Virtual Network | — | ${{ steps.deploy.outputs.vnetId }} |
+
+          ## Compute — Inference layer (GPU/CPU VM)
+
+          | Resource | Name | Private IP |
+          |----------|------|------------|
+          | GPU VM | ${{ steps.deploy.outputs.gpuVmName }} | ${{ steps.deploy.outputs.gpuVmPrivateIp }} |
+          | CPU VM | ${{ steps.deploy.outputs.cpuVmName }} | ${{ steps.deploy.outputs.cpuVmPrivateIp }} |
+
+          ## Compute — VM Layers (new)
+
+          | Layer | VM Name(s) | IP(s) |
+          |-------|-----------|-------|
+          | Control / Orchestration | ${{ steps.deploy.outputs.controlVmName }} | ${{ steps.deploy.outputs.controlVmPrivateIp }} |
+          | API / Backend | ${{ steps.deploy.outputs.apiVmNames }} | ${{ steps.deploy.outputs.apiVmPrivateIps }} |
+          | Frontend / Web | ${{ steps.deploy.outputs.frontendVmNames }} | ${{ steps.deploy.outputs.frontendPublicIps }} |
+          | Model Lifecycle | ${{ steps.deploy.outputs.lifecycleVmName }} | ${{ steps.deploy.outputs.lifecycleVmPrivateIp }} |
+          | Data / Governance | ${{ steps.deploy.outputs.dataVmNames }} | ${{ steps.deploy.outputs.dataVmPrivateIps }} |
+          | CPU Inference | ${{ steps.deploy.outputs.inferenceVmNames }} | ${{ steps.deploy.outputs.inferenceVmPrivateIps }} |
+          | CPU LLM Training | ${{ steps.deploy.outputs.trainingVmNames }} | ${{ steps.deploy.outputs.trainingVmPrivateIps }} |
+
+          ## Application
+
+          | Resource | Value |
+          |----------|-------|
+          | T-X Orchestrator URL | ${{ steps.deploy.outputs.txOrchestratorUrl }} |
+          | App Insights Connection String | ${{ steps.deploy.outputs.appInsightsConnectionString }} |
+          EOF
+
+      - name: Commit infra/outputs.md
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add infra/outputs.md
+          git diff --cached --quiet || git commit -m "chore: update infra/outputs.md for run ${{ github.run_number }} [skip ci]"
+          git pull --rebase origin "${{ github.ref_name }}"
+          git push

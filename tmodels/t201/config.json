@@ -1,0 +1,19 @@
+{
+  "model_type": "t201",
+  "version": "0.1.0",
+  "base_model": "t101",
+  "architecture": "transformer",
+  "num_hidden_layers": 40,
+  "hidden_size": 5120,
+  "intermediate_size": 13824,
+  "num_attention_heads": 40,
+  "max_position_embeddings": 8192,
+  "vocab_size": 32000,
+  "hidden_act": "swiGLU",
+  "torch_dtype": "bfloat16",
+  "fine_tuning": {
+    "method": "orpo",
+    "dataset": "synthetic_cot",
+    "benchmarks": ["gsm8k", "arc", "math"]
+  }
+}

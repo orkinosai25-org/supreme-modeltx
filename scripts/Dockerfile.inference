@@ -1,0 +1,42 @@
+FROM pytorch/pytorch:2.3.0-cuda12.1-cudnn8-runtime
+
+LABEL maintainer="SMTX Project" \
+      version="0.2.0" \
+      description="SMTX vLLM inference container"
+
+WORKDIR /workspace
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    wget \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install inference dependencies
+RUN pip install --no-cache-dir \
+    vllm>=0.4.0 \
+    fastapi>=0.111.0 \
+    uvicorn[standard]>=0.29.0 \
+    pydantic>=2.0.0 \
+    azure-storage-blob>=12.20.0 \
+    azure-identity>=1.16.0
+
+# Copy inference source
+COPY inference/ /workspace/inference/
+
+# Model weights are mounted at runtime from Azure Blob Storage
+# (pulled by entrypoint via Managed Identity before starting vLLM)
+RUN mkdir -p /mnt/model
+
+ENV PYTHONPATH=/workspace \
+    MODEL_PATH=/mnt/model \
+    HOST=0.0.0.0 \
+    PORT=8000 \
+    GPU_MEMORY_UTILIZATION=0.90 \
+    MAX_MODEL_LEN=4096
+
+EXPOSE 8000
+
+ENTRYPOINT ["python", "inference/vllm_server.py"]
+CMD ["--model", "/mnt/model", "--host", "0.0.0.0", "--port", "8000"]

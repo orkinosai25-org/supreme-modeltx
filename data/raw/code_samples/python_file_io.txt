@@ -1,0 +1,42 @@
+# Python: File read and write operations
+import json
+from pathlib import Path
+
+DATA_FILE = Path("sample_data.json")
+TEXT_FILE = Path("sample_log.txt")
+
+
+def write_text(path: Path, lines: list) -> None:
+    """Write a list of strings to a text file."""
+    with open(path, "w", encoding="utf-8") as f:
+        for line in lines:
+            f.write(line + "\n")
+
+
+def read_text(path: Path) -> list:
+    """Read lines from a text file, stripping newlines."""
+    with open(path, "r", encoding="utf-8") as f:
+        return [line.rstrip("\n") for line in f]
+
+
+def write_json(path: Path, data: dict) -> None:
+    """Serialise a dictionary to a JSON file."""
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2)
+
+
+def read_json(path: Path) -> dict:
+    """Load a JSON file and return the parsed object."""
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+# Demo
+write_text(TEXT_FILE, ["First line", "Second line", "Third line"])
+lines = read_text(TEXT_FILE)
+print("Lines read:", lines)
+
+config = {"model": "t101", "layers": 24, "heads": 16}
+write_json(DATA_FILE, config)
+loaded = read_json(DATA_FILE)
+print("Config loaded:", loaded)

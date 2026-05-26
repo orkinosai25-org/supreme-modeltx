@@ -1,0 +1,11 @@
+{
+  "model_type": "tx",
+  "version": "0.1.0",
+  "role": "orchestrator_governance",
+  "routing_strategy": "confidence_weighted",
+  "modules": ["t101", "t201", "t301", "t501"],
+  "confidence_threshold": 0.75,
+  "max_candidates": 4,
+  "judgment_mode": "highest_confidence",
+  "audit_log": true
+}

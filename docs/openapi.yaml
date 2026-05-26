@@ -1,0 +1,1267 @@
+openapi: 3.1.0
+info:
+  title: SUMOTX Platform API
+  description: '
+
+    ## SUMOTX Platform API — v0.1
+
+
+    **SUMOTX** exposes a versioned OpenAPI interface for provisioning, training,
+
+    and managing AI workloads on Azure.
+
+
+    ### Authentication
+
+
+    All endpoints (except `GET /v1/health` and `POST /v1/auth/token`) require a
+
+    **Bearer token**.  Exchange your API key for a token via `POST /v1/auth/token`,
+
+    then include it as:
+
+
+    ```
+
+    Authorization: Bearer <token>
+
+    ```
+
+
+    ### Versioning
+
+
+    All endpoints are prefixed with `/v1`.  Breaking changes will be published
+
+    under a new version prefix.
+
+
+    ### API domains
+
+
+    | Domain | Description |
+
+    |---|---|
+
+    | `/v1/auth` | Token issuance |
+
+    | `/v1/projects` | Project / workspace management |
+
+    | `/v1/deployments` | One-click Azure infrastructure provisioning |
+
+    | `/v1/training-runs` | Fine-tuning job lifecycle |
+
+    | `/v1/models` | Model registry |
+
+    | `/v1/chat` | Inference / chat completions |
+
+    | `/v1/health` | Platform health & readiness |
+
+    '
+  contact:
+    name: SUMOTX Engineering
+    url: https://github.com/orkinosai25-org/SMTX
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 0.1.0
+paths:
+  /v1/health:
+    get:
+      tags:
+      - Health
+      summary: Platform health check
+      description: Returns the overall platform status and the health of each downstream
+        service (inference, retrieval, verification).  Suitable for Azure health probes,
+        Kubernetes readiness checks, and uptime monitoring.
+      operationId: health_v1_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+  /v1/auth/token:
+    post:
+      tags:
+      - Authentication
+      summary: Exchange API key for Bearer token
+      description: 'Validates the supplied API key and returns a short-lived Bearer
+        token. Include the token in subsequent requests as `Authorization: Bearer
+        <token>`. Entra ID / Azure AD integration is planned for a later release.'
+      operationId: get_token_v1_auth_token_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects:
+    get:
+      tags:
+      - Projects
+      summary: List projects
+      description: Returns all projects accessible to the authenticated principal.
+      operationId: list_projects_v1_projects_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectList'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Projects
+      summary: Create a project
+      description: Creates a new project workspace.  Projects are the top-level isolation
+        boundary for deployments, training runs, and model artefacts.
+      operationId: create_project_v1_projects_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/projects/{project_id}:
+    get:
+      tags:
+      - Projects
+      summary: Get a project
+      description: Returns metadata for a single project by its unique identifier.
+      operationId: get_project_v1_projects__project_id__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Project Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '404':
+          description: Project not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/deployments:
+    post:
+      tags:
+      - Deployments
+      summary: Trigger one-click Azure deployment
+      description: 'Provisions the full Azure infrastructure stack for a model deployment:
+        GPU VM, Batch pools, Storage accounts, networking, and identity wiring.  Returns
+        immediately with `status: pending`; poll `GET /v1/deployments/{id}/status`
+        to track progress.'
+      operationId: create_deployment_v1_deployments_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeploymentCreate'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/deployments/{deployment_id}/status:
+    get:
+      tags:
+      - Deployments
+      summary: Get deployment status
+      description: 'Returns the current provisioning status of a deployment.  Status
+        transitions: `pending` → `provisioning` → `running` (or `failed`).'
+      operationId: get_deployment_status_v1_deployments__deployment_id__status_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: deployment_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Deployment Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentStatusResponse'
+        '404':
+          description: Deployment not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/training-runs:
+    get:
+      tags:
+      - Training
+      summary: List training runs
+      description: Returns all training runs for the authenticated principal.
+      operationId: list_training_runs_v1_training_runs_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingRunList'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Training
+      summary: Submit a training run
+      description: 'Submits a new fine-tuning job to Azure Batch.  Returns immediately
+        with `status: queued`; poll `GET /v1/training-runs/{id}` to track progress.'
+      operationId: create_training_run_v1_training_runs_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrainingRunCreate'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingRun'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/training-runs/{run_id}:
+    get:
+      tags:
+      - Training
+      summary: Get a training run
+      description: Returns full metadata and current status for a single training
+        run.
+      operationId: get_training_run_v1_training_runs__run_id__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: run_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Run Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingRun'
+        '404':
+          description: Training run not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/training-runs/{run_id}/logs:
+    get:
+      tags:
+      - Training
+      summary: Stream training run logs
+      description: Returns the captured log output for a training run.  Logs are sourced
+        from the Azure Batch task stdout/stderr.
+      operationId: get_training_run_logs_v1_training_runs__run_id__logs_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: run_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Run Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingRunLogs'
+        '404':
+          description: Training run not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/models:
+    get:
+      tags:
+      - Models
+      summary: List models
+      description: Returns all models registered in the SUMOTX model registry.
+      operationId: list_models_v1_models_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelList'
+      security:
+      - HTTPBearer: []
+  /v1/models/{model_id}:
+    get:
+      tags:
+      - Models
+      summary: Get a model
+      description: Returns full metadata for a registered model.
+      operationId: get_model_v1_models__model_id__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: model_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Model Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelInfo'
+        '404':
+          description: Model not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/models/{model_id}/promote:
+    post:
+      tags:
+      - Models
+      summary: Promote a model
+      description: Promotes a model to the target stage (experimental → staging →
+        production).  This is a governance gate that prevents untested models from
+        serving production traffic.
+      operationId: promote_model_v1_models__model_id__promote_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: model_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Model Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PromoteRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelInfo'
+        '404':
+          description: Model not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/chat/completions:
+    post:
+      tags:
+      - Chat
+      summary: Chat completion
+      description: 'Sends a list of messages to the SUMOTX T-X pipeline and returns
+        a single chat completion.  The pipeline runs T-101 (inference), T-201 (reasoning),
+        T-301 (retrieval), and T-501 (verification) before returning the final response.  Streaming
+        responses are planned for a future release (`stream: true` is accepted but
+        treated as `false`).'
+      operationId: chat_completions_v1_chat_completions_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatCompletionRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatCompletionResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    ChatChoice:
+      properties:
+        index:
+          type: integer
+          title: Index
+        message:
+          $ref: '#/components/schemas/ChatMessage'
+        finish_reason:
+          type: string
+          title: Finish Reason
+      type: object
+      required:
+      - index
+      - message
+      - finish_reason
+      title: ChatChoice
+    ChatCompletionRequest:
+      properties:
+        model:
+          type: string
+          title: Model
+          description: Model identifier to use for completion.
+          default: t101
+        messages:
+          items:
+            $ref: '#/components/schemas/ChatMessage'
+          type: array
+          minItems: 1
+          title: Messages
+        max_tokens:
+          type: integer
+          maximum: 4096.0
+          minimum: 1.0
+          title: Max Tokens
+          default: 512
+        temperature:
+          type: number
+          maximum: 2.0
+          minimum: 0.0
+          title: Temperature
+          default: 0.7
+        top_p:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Top P
+          default: 0.95
+        stream:
+          type: boolean
+          title: Stream
+          description: Streaming is reserved for a future release.
+          default: false
+      type: object
+      required:
+      - messages
+      title: ChatCompletionRequest
+      examples:
+      - max_tokens: 256
+        messages:
+        - content: You are a helpful AI assistant.
+          role: system
+        - content: Explain transformer architecture in two sentences.
+          role: user
+        model: t101
+        stream: false
+        temperature: 0.7
+        top_p: 0.95
+    ChatCompletionResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        object:
+          type: string
+          title: Object
+          default: chat.completion
+        created:
+          type: integer
+          title: Created
+          description: Unix timestamp of creation.
+        model:
+          type: string
+          title: Model
+        choices:
+          items:
+            $ref: '#/components/schemas/ChatChoice'
+          type: array
+          title: Choices
+        usage:
+          $ref: '#/components/schemas/ChatUsage'
+      type: object
+      required:
+      - created
+      - model
+      - choices
+      - usage
+      title: ChatCompletionResponse
+      examples:
+      - choices:
+        - finish_reason: stop
+          index: 0
+          message:
+            content: A transformer uses self-attention to weigh token relationships...
+            role: assistant
+        created: 1704067200
+        id: chatcmpl_a1b2c3d4
+        model: t101
+        object: chat.completion
+        usage:
+          completion_tokens: 42
+          prompt_tokens: 30
+          total_tokens: 72
+    ChatMessage:
+      properties:
+        role:
+          type: string
+          pattern: ^(system|user|assistant)$
+          title: Role
+          description: Message author role.
+        content:
+          type: string
+          title: Content
+          description: Message text content.
+      type: object
+      required:
+      - role
+      - content
+      title: ChatMessage
+    ChatUsage:
+      properties:
+        prompt_tokens:
+          type: integer
+          title: Prompt Tokens
+        completion_tokens:
+          type: integer
+          title: Completion Tokens
+        total_tokens:
+          type: integer
+          title: Total Tokens
+      type: object
+      required:
+      - prompt_tokens
+      - completion_tokens
+      - total_tokens
+      title: ChatUsage
+    Deployment:
+      properties:
+        id:
+          type: string
+          title: Id
+        project_id:
+          type: string
+          title: Project Id
+        model_id:
+          type: string
+          title: Model Id
+        azure_region:
+          type: string
+          title: Azure Region
+        vm_sku:
+          type: string
+          title: Vm Sku
+        min_replicas:
+          type: integer
+          title: Min Replicas
+        max_replicas:
+          type: integer
+          title: Max Replicas
+        environment:
+          type: string
+          title: Environment
+        status:
+          $ref: '#/components/schemas/DeploymentStatus'
+          default: pending
+        endpoint_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Endpoint Url
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - project_id
+      - model_id
+      - azure_region
+      - vm_sku
+      - min_replicas
+      - max_replicas
+      - environment
+      title: Deployment
+    DeploymentCreate:
+      properties:
+        project_id:
+          type: string
+          title: Project Id
+          description: Target project identifier.
+        model_id:
+          type: string
+          title: Model Id
+          description: Model to deploy (from the model registry).
+        azure_region:
+          type: string
+          title: Azure Region
+          description: Azure region for provisioning.
+          default: eastus
+        vm_sku:
+          type: string
+          title: Vm Sku
+          description: GPU VM SKU for inference.
+          default: Standard_NC6s_v3
+        min_replicas:
+          type: integer
+          maximum: 10.0
+          minimum: 1.0
+          title: Min Replicas
+          default: 1
+        max_replicas:
+          type: integer
+          maximum: 50.0
+          minimum: 1.0
+          title: Max Replicas
+          default: 3
+        environment:
+          type: string
+          pattern: ^(dev|staging|prod)$
+          title: Environment
+          default: dev
+      type: object
+      required:
+      - project_id
+      - model_id
+      title: DeploymentCreate
+      examples:
+      - azure_region: eastus
+        environment: prod
+        max_replicas: 3
+        min_replicas: 1
+        model_id: model_t101_v1
+        project_id: proj_a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        vm_sku: Standard_NC6s_v3
+    DeploymentStatus:
+      type: string
+      enum:
+      - pending
+      - provisioning
+      - running
+      - failed
+      - stopped
+      title: DeploymentStatus
+    DeploymentStatusResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        status:
+          $ref: '#/components/schemas/DeploymentStatus'
+        endpoint_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Endpoint Url
+        message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Message
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - status
+      title: DeploymentStatusResponse
+      examples:
+      - endpoint_url: https://smtx-prod-orchestrator.azurewebsites.net
+        id: depl_a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        message: Deployment healthy — 2/2 replicas ready.
+        status: running
+        updated_at: '2025-01-01T00:05:00Z'
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    HealthResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+          description: 'Overall platform status: ok | degraded.'
+        version:
+          type: string
+          title: Version
+        services:
+          items:
+            $ref: '#/components/schemas/ServiceHealth'
+          type: array
+          title: Services
+      type: object
+      required:
+      - status
+      - version
+      - services
+      title: HealthResponse
+      examples:
+      - services:
+        - latency_ms: 1.2
+          name: api
+          status: ok
+        - latency_ms: 45.3
+          name: inference
+          status: ok
+        - latency_ms: 12.1
+          name: retrieval
+          status: ok
+        - latency_ms: 18.7
+          name: verification
+          status: ok
+        status: ok
+        version: 0.1.0
+    ModelInfo:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+        version:
+          type: string
+          title: Version
+        base_model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Base Model
+        project_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Project Id
+        stage:
+          $ref: '#/components/schemas/ModelStage'
+          default: experimental
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        parameters:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Parameters
+          description: Total parameter count.
+        artifact_path:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Artifact Path
+          description: Azure Blob Storage path to model weights.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+      type: object
+      required:
+      - name
+      - version
+      title: ModelInfo
+      examples:
+      - artifact_path: az://smtx-models/t101-customer-support-v1/
+        base_model: tmodels/t101
+        created_at: '2025-01-02T12:00:00Z'
+        description: T-101 fine-tuned on customer support corpus.
+        id: model_t101_v1
+        name: t101-customer-support-v1
+        parameters: 7000000000
+        project_id: proj_a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        stage: staging
+        version: 1.0.0
+    ModelList:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/ModelInfo'
+          type: array
+          title: Items
+        total:
+          type: integer
+          title: Total
+      type: object
+      required:
+      - items
+      - total
+      title: ModelList
+    ModelStage:
+      type: string
+      enum:
+      - experimental
+      - staging
+      - production
+      - archived
+      title: ModelStage
+    Project:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        tags:
+          additionalProperties:
+            type: string
+          type: object
+          title: Tags
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - name
+      title: Project
+      examples:
+      - created_at: '2025-01-01T00:00:00Z'
+        description: Fine-tuning T-101 on customer support data.
+        id: proj_a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        name: my-llm-project
+        tags:
+          env: dev
+          team: ml
+        updated_at: '2025-01-01T00:00:00Z'
+    ProjectCreate:
+      properties:
+        name:
+          type: string
+          maxLength: 128
+          minLength: 1
+          title: Name
+          description: Human-readable project name.
+        description:
+          anyOf:
+          - type: string
+            maxLength: 512
+          - type: 'null'
+          title: Description
+        tags:
+          additionalProperties:
+            type: string
+          type: object
+          title: Tags
+          description: Arbitrary key-value metadata.
+      type: object
+      required:
+      - name
+      title: ProjectCreate
+      examples:
+      - description: Fine-tuning T-101 on customer support data.
+        name: my-llm-project
+        tags:
+          env: dev
+          team: ml
+    ProjectList:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/Project'
+          type: array
+          title: Items
+        total:
+          type: integer
+          title: Total
+      type: object
+      required:
+      - items
+      - total
+      title: ProjectList
+    PromoteRequest:
+      properties:
+        stage:
+          $ref: '#/components/schemas/ModelStage'
+          description: Target stage to promote the model to.
+      type: object
+      required:
+      - stage
+      title: PromoteRequest
+      examples:
+      - stage: production
+    ServiceHealth:
+      properties:
+        name:
+          type: string
+          title: Name
+        status:
+          type: string
+          title: Status
+          description: ok | degraded | unreachable
+        latency_ms:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Latency Ms
+      type: object
+      required:
+      - name
+      - status
+      title: ServiceHealth
+    TokenRequest:
+      properties:
+        api_key:
+          type: string
+          title: Api Key
+          description: API key issued by SUMOTX.
+      type: object
+      required:
+      - api_key
+      title: TokenRequest
+      examples:
+      - api_key: smtx_sk_live_xxxxxxxxxxxx
+    TokenResponse:
+      properties:
+        access_token:
+          type: string
+          title: Access Token
+          description: Bearer token for subsequent requests.
+        token_type:
+          type: string
+          title: Token Type
+          default: bearer
+        expires_in:
+          type: integer
+          title: Expires In
+          description: Token lifetime in seconds.
+          default: 3600
+      type: object
+      required:
+      - access_token
+      title: TokenResponse
+      examples:
+      - access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        expires_in: 3600
+        token_type: bearer
+    TrainingLogEntry:
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+        level:
+          type: string
+          title: Level
+          description: 'Log level: INFO, WARNING, ERROR.'
+        message:
+          type: string
+          title: Message
+      type: object
+      required:
+      - timestamp
+      - level
+      - message
+      title: TrainingLogEntry
+    TrainingRun:
+      properties:
+        id:
+          type: string
+          title: Id
+        project_id:
+          type: string
+          title: Project Id
+        base_model:
+          type: string
+          title: Base Model
+        dataset_path:
+          type: string
+          title: Dataset Path
+        num_epochs:
+          type: integer
+          title: Num Epochs
+        batch_size:
+          type: integer
+          title: Batch Size
+        learning_rate:
+          type: number
+          title: Learning Rate
+        warmup_steps:
+          type: integer
+          title: Warmup Steps
+        output_model_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Output Model Name
+        status:
+          $ref: '#/components/schemas/TrainingRunStatus'
+          default: queued
+        azure_batch_job_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Azure Batch Job Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - project_id
+      - base_model
+      - dataset_path
+      - num_epochs
+      - batch_size
+      - learning_rate
+      - warmup_steps
+      title: TrainingRun
+    TrainingRunCreate:
+      properties:
+        project_id:
+          type: string
+          title: Project Id
+          description: Target project identifier.
+        base_model:
+          type: string
+          title: Base Model
+          description: Base model path or registry ID.
+          default: tmodels/t101
+        dataset_path:
+          type: string
+          title: Dataset Path
+          description: Azure Blob Storage path to the training dataset.
+        num_epochs:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Num Epochs
+          default: 3
+        batch_size:
+          type: integer
+          maximum: 256.0
+          minimum: 1.0
+          title: Batch Size
+          default: 8
+        learning_rate:
+          type: number
+          exclusiveMinimum: 0.0
+          title: Learning Rate
+          default: 2.0e-05
+        warmup_steps:
+          type: integer
+          minimum: 0.0
+          title: Warmup Steps
+          default: 100
+        output_model_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Output Model Name
+          description: Name under which to register the fine-tuned model.
+      type: object
+      required:
+      - project_id
+      - dataset_path
+      title: TrainingRunCreate
+      examples:
+      - base_model: tmodels/t101
+        batch_size: 8
+        dataset_path: az://smtx-data/training/customer-support-v2.jsonl
+        learning_rate: 2.0e-05
+        num_epochs: 3
+        output_model_name: t101-customer-support-v1
+        project_id: proj_a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        warmup_steps: 100
+    TrainingRunList:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/TrainingRun'
+          type: array
+          title: Items
+        total:
+          type: integer
+          title: Total
+      type: object
+      required:
+      - items
+      - total
+      title: TrainingRunList
+    TrainingRunLogs:
+      properties:
+        run_id:
+          type: string
+          title: Run Id
+        logs:
+          items:
+            $ref: '#/components/schemas/TrainingLogEntry'
+          type: array
+          title: Logs
+      type: object
+      required:
+      - run_id
+      - logs
+      title: TrainingRunLogs
+    TrainingRunStatus:
+      type: string
+      enum:
+      - queued
+      - running
+      - completed
+      - failed
+      - cancelled
+      title: TrainingRunStatus
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API key
+      description: Obtain a token from `POST /v1/auth/token` and supply it here.  In
+        production, rotate the underlying `SUMOTX_API_KEY` environment variable.
+tags:
+- name: Health
+  description: Platform health and readiness probes.
+- name: Authentication
+  description: API key → Bearer token exchange.
+- name: Projects
+  description: Project / workspace management.
+- name: Deployments
+  description: One-click Azure infrastructure provisioning and lifecycle.
+- name: Training
+  description: Fine-tuning job submission and monitoring.
+- name: Models
+  description: Model registry — list, inspect, and promote models.
+- name: Chat
+  description: Inference and chat-completion endpoints backed by the T-X pipeline.

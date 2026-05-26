@@ -1,0 +1,184 @@
+name: Scale VM Layer
+
+# One-click workflow to increase the VM count for any SMTX architectural layer.
+# Uses the same idempotent Bicep templates as the main infra workflow.
+# Running with a higher count adds VMs; running with the same count is a no-op.
+#
+# Usage example — add a third training VM:
+#   layer: training
+#   new_vm_count: 2          (was 1)
+#   training_vm_size: Standard_E32s_v5   (optional CPU scale-up: 32 vCPU / 256 GiB)
+
+on:
+  workflow_dispatch:
+    inputs:
+      resource_group:
+        description: 'Azure Resource Group name'
+        required: true
+        default: 'smtx-rg'
+      location:
+        description: 'Azure region'
+        required: true
+        default: 'eastus'
+      environment:
+        description: 'Environment (dev, staging, prod)'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+      layer:
+        description: 'SMTX layer to scale'
+        required: true
+        type: choice
+        options:
+          - api
+          - frontend
+          - data
+          - inference
+          - training
+      new_vm_count:
+        description: >
+          New total VM count for the selected layer.
+          api/frontend/training: 1–10 | data: 1–8 | inference: 1–5
+        required: true
+        default: '2'
+      training_vm_size:
+        description: 'Training VM size (CPU-only, only used when layer=training)'
+        required: false
+        default: 'Standard_D16s_v5'
+        type: choice
+        options:
+          - Standard_D16s_v5
+          - Standard_D32s_v5
+          - Standard_E16s_v5
+          - Standard_E32s_v5
+      inference_vm_size:
+        description: 'Inference VM size (CPU-only, only used when layer=inference)'
+        required: false
+        default: 'Standard_D8s_v5'
+        type: choice
+        options:
+          - Standard_D8s_v5
+          - Standard_D16s_v5
+          - Standard_E8s_v5
+          - Standard_E16s_v5
+
+# Prevent concurrent scale operations on the same resource group.
+concurrency:
+  group: azure-infra-deploy
+  cancel-in-progress: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  scale:
+    name: Scale ${{ github.event.inputs.layer }} layer to ${{ github.event.inputs.new_vm_count }} VM(s)
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      id-token: write
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Log in to Azure (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E45C3D43E5AC40DB8318380C0FD93246 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_01CDF649EE9042BBAB65955AC8A5A538 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A3780EA742DC446B87D82128AC45B190 }}
+          audience: api://AzureADTokenExchange
+
+      - name: Validate VM count for layer
+        run: |
+          LAYER="${{ github.event.inputs.layer }}"
+          COUNT="${{ github.event.inputs.new_vm_count }}"
+
+          if ! [[ "$COUNT" =~ ^[1-9][0-9]*$ ]]; then
+            echo "::error::new_vm_count must be a positive integer, got: '${COUNT}'"
+            exit 1
+          fi
+
+          case "$LAYER" in
+            api|frontend|training)
+              MAX=10
+              ;;
+            inference)
+              MAX=5
+              ;;
+            data)
+              MAX=8
+              ;;
+            *)
+              echo "::error::Unknown layer '${LAYER}'. Must be one of: api, frontend, data, inference, training."
+              exit 1
+              ;;
+          esac
+
+          if [ "$COUNT" -gt "$MAX" ]; then
+            echo "::error::Layer '$LAYER' supports at most $MAX VMs, but new_vm_count=$COUNT was requested."
+            exit 1
+          fi
+
+          echo "✅ Scaling layer '$LAYER' to $COUNT VM(s) (max $MAX)."
+
+      - name: Build override parameters for selected layer
+        id: params
+        run: |
+          LAYER="${{ github.event.inputs.layer }}"
+          COUNT="${{ github.event.inputs.new_vm_count }}"
+          TRAINING_SIZE="${{ github.event.inputs.training_vm_size }}"
+          INFERENCE_SIZE="${{ github.event.inputs.inference_vm_size }}"
+
+          # Build the layer-specific override string
+          case "$LAYER" in
+            api)
+              echo "override=apiVmCount=${COUNT}" >> "$GITHUB_OUTPUT"
+              ;;
+            frontend)
+              echo "override=frontendVmCount=${COUNT}" >> "$GITHUB_OUTPUT"
+              ;;
+            data)
+              echo "override=dataVmCount=${COUNT}" >> "$GITHUB_OUTPUT"
+              ;;
+            inference)
+              echo "override=inferenceVmCount=${COUNT} inferenceVmSize=${INFERENCE_SIZE}" >> "$GITHUB_OUTPUT"
+              ;;
+            training)
+              echo "override=trainingVmCount=${COUNT} trainingVmSize=${TRAINING_SIZE}" >> "$GITHUB_OUTPUT"
+              ;;
+          esac
+
+      - name: Deploy Bicep template (full re-apply with updated count)
+        id: deploy
+        uses: azure/arm-deploy@v2
+        with:
+          resourceGroupName: ${{ github.event.inputs.resource_group }}
+          template: infra/main.bicep
+          parameters: >
+            infra/parameters.json
+            location=${{ github.event.inputs.location }}
+            environment=${{ github.event.inputs.environment }}
+            sshPublicKey=${{ secrets.SSH_PUBLIC_KEY }}
+            deployVms=true
+            ${{ steps.params.outputs.override }}
+          deploymentName: smtx-scale-${{ github.event.inputs.layer }}-${{ github.run_number }}
+          failOnStdErr: false
+
+      - name: Summary
+        run: |
+          LAYER="${{ github.event.inputs.layer }}"
+          COUNT="${{ github.event.inputs.new_vm_count }}"
+          echo "## ✅ Scaling complete" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Layer **${LAYER}** now has **${COUNT} VM(s)**." >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "To add more VMs, run this workflow again with a higher count." >> "$GITHUB_STEP_SUMMARY"

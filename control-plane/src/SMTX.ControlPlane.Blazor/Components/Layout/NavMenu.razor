@@ -1,0 +1,35 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">SUMOTX Control Plane</a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="nav flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Dashboard
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="training-jobs">
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Training Jobs
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="models">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Models
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="governed-data-source-policies">
+                <span class="bi bi-shield-lock-fill-nav-menu" aria-hidden="true"></span> Data Source Policies
+            </NavLink>
+        </div>
+    </nav>
+</div>
