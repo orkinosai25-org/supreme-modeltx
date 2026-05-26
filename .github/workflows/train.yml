@@ -186,12 +186,12 @@ jobs:
               PYEOF
               fi
 
-              # Run LoRA/QLoRA fine-tuning
-              echo 'Starting LoRA fine-tuning...'
-              python3 \"\${SMTX_DIR}/training/train.py\" \
-                --training_profile \"\${TRAINING_PROFILE}\" \
-                --data_dir \"\${DATA_DIR}\" \
-                --output_dir \"\${CHECKPOINT_DIR}\"
+              # Run T-101 training via canonical launcher so profile/config
+              # selection stays aligned with scripts/run_training.sh.
+              echo 'Starting T-101 training...'
+              export DATA_INPUT_DIR=\"\${DATA_DIR}\"
+              export DATA_OUTPUT_DIR=\"\${SMTX_DIR}/data\"
+              bash \"\${SMTX_DIR}/scripts/run_training.sh\"
 
               echo 'Training complete. Uploading checkpoints to Azure Blob...'
               python3 - <<PYEOF
