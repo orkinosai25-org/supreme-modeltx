@@ -204,6 +204,7 @@ python scripts/e2e_test.py --orchestrator-url https://<tx-url>
 ## Documentation
 
 - [Architecture Overview](docs/architecture.md)
+- [Repository readiness review](docs/repository-readiness-review.md)
 - [New Design Overview](docs/new-design.md)
 - [Development Roadmap](docs/roadmap.md)
 - [Azure Infrastructure](docs/azure.md)
