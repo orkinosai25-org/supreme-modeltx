@@ -1,4 +1,4 @@
-"""SMTX tokenizer wrapper.
+"""ModelTX tokenizer wrapper.
 
 Wraps HuggingFace ``tokenizers`` / ``sentencepiece`` to provide a
 unified interface for the supreme-modeltx engine. Training a custom
@@ -21,7 +21,7 @@ _SPECIAL_TOKENS = {
 }
 
 
-class SMTXTokenizer:
+class ModelTXTokenizer:
     """Byte-Pair Encoding tokenizer for the T-Series model family.
 
     On first use, either load a pre-trained tokenizer from ``vocab_path``

@@ -21,11 +21,13 @@ A self-contained PyTorch training and inference stack:
 ### B. `platform_api` — API-First Business Platform
 An OpenAI-compatible API surface for enterprise integration:
 
-- `POST /v1/chat/completions`
+- `POST /v1/chat/completions` _(scaffold: returns a placeholder response; full inference routing is a planned next step)_
 - `GET /v1/models`
 - `GET /v1/usage`
 - `POST /v1/keys`
 - Per-tenant metering, API key authentication, model registry
+
+> **Foundation scaffold** — this repository provides the architecture and structure for a sovereign LLM platform. The model training, tokenizer, and API layers are functional scaffolds designed to be extended. Production deployment requires connecting the API to a trained model checkpoint and replacing in-memory stores with persistent backends.
 
 ---
 
@@ -74,8 +76,6 @@ pip install -e ".[dev]"
 ### Run tests
 
 ```bash
-python -m unittest discover -s tests -v
-# or
 pytest tests/ -v
 ```
 
@@ -88,7 +88,7 @@ python -m compileall src
 ### Run the platform API
 
 ```bash
-uvicorn supreme_modeltx.platform_api.api.app:app --factory --reload
+uvicorn "supreme_modeltx.platform_api.api.app:create_app" --factory --reload
 ```
 
 ---

@@ -1,5 +1,8 @@
 """tokenizer sub-package."""
 
-from supreme_modeltx.model_core.tokenizer.smtx_tokenizer import SMTXTokenizer
+from supreme_modeltx.model_core.tokenizer.modeltx_tokenizer import ModelTXTokenizer
 
-__all__ = ["SMTXTokenizer"]
+# Backward-compatible alias
+SMTXTokenizer = ModelTXTokenizer
+
+__all__ = ["ModelTXTokenizer", "SMTXTokenizer"]
