@@ -6,7 +6,8 @@
 
 ## What Is This?
 
-`supreme-modeltx` is built around two first-class domains:
+`supreme-modeltx` is built around two first-class domains.
+It is currently a **foundation scaffold**: core architecture and interfaces are in place, while some production integrations remain intentionally stubbed.
 
 ### A. `model_core` — Sovereign LLM Engine
 A self-contained PyTorch training and inference stack:
@@ -26,6 +27,8 @@ An OpenAI-compatible API surface for enterprise integration:
 - `GET /v1/usage`
 - `POST /v1/keys`
 - Per-tenant metering, API key authentication, model registry
+
+`POST /v1/chat/completions` is scaffolded today and currently returns a placeholder completion path rather than a full production inference routing stack.
 
 ---
 
@@ -88,8 +91,15 @@ python -m compileall src
 ### Run the platform API
 
 ```bash
-uvicorn supreme_modeltx.platform_api.api.app:app --factory --reload
+uvicorn supreme_modeltx.platform_api.api.app:create_app --factory --reload
 ```
+
+---
+
+## Reused vs Newly Introduced
+
+- **Reused from existing repository foundation:** control-plane (`control-plane/`), infrastructure (`infra/`), deployment/runtime scripts (`scripts/`), and broad architecture/documentation direction.
+- **Newly introduced in this scaffold line:** Python package under `src/supreme_modeltx/` with `model_core` (trainable PyTorch-first LLM scaffolding), `platform_api` (FastAPI-first business API scaffolding), and aligned tests under `tests/`.
 
 ---
 

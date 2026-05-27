@@ -55,6 +55,7 @@ The platform API exposes an OpenAI-compatible surface for enterprise integration
 - `POST /v1/keys` — API key provisioning
 
 All endpoints are authenticated via bearer API keys, with tenant-scoped metering.
+At this scaffold stage, `/v1/chat/completions` is wired as a placeholder response path until full model-serving integration is completed.
 
 ## Sovereignty Principles
 

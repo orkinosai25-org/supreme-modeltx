@@ -16,7 +16,7 @@ The `platform_api` package provides an API-first business surface for `supreme-m
 |--------|------|-------------|
 | `GET`  | `/health` | Health check |
 | `GET`  | `/v1/models` | List available models |
-| `POST` | `/v1/chat/completions` | Chat generation |
+| `POST` | `/v1/chat/completions` | Chat generation (scaffold placeholder response path) |
 | `GET`  | `/v1/usage` | Usage summary for tenant |
 | `POST` | `/v1/keys` | Issue API key |
 
@@ -61,7 +61,7 @@ platform_api/
 
 ```bash
 pip install -e ".[dev]"
-uvicorn supreme_modeltx.platform_api.api.app:app --factory --reload
+uvicorn supreme_modeltx.platform_api.api.app:create_app --factory --reload
 ```
 
 Or with a custom factory:
