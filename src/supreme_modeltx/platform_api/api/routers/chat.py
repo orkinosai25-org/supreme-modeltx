@@ -20,6 +20,6 @@ async def chat_completions(
     return ChatResponse(
         id="stub-0001",
         model=request.model,
-        choices=[{"index": 0, "message": reply, "finish_reason": "stop"}],
+        choices=[{"index": 0, "message": reply.model_dump(), "finish_reason": "stop"}],
         usage={"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0},
     )
