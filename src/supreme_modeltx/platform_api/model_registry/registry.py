@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field
 class ModelRecord(BaseModel):
     """Metadata for a registered model version."""
 
-    model_id: str = Field(description="Unique model identifier, e.g. 'smtx-t301-v1'.")
+    model_id: str = Field(description="Unique model identifier, e.g. 'supmtx-t301-v1'.")
     display_name: str
     version: str
     base_model: str = Field(description="T-Series family member, e.g. 't301'.")

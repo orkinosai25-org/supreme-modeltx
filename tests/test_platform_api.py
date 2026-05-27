@@ -19,7 +19,7 @@ from supreme_modeltx.platform_api.deployment.manager import DeploymentManager
 class TestAPIKey:
     def test_create_returns_key_and_secret(self):
         key, secret = APIKey.create(tenant_id="acme")
-        assert key.key_id.startswith("smtx_")
+        assert key.key_id.startswith("supmtx_")
         assert len(secret) > 16
         assert not key.revoked
 
@@ -74,12 +74,12 @@ class TestModelRegistry:
     def test_register_and_retrieve(self):
         registry = ModelRegistry()
         record = registry.register(
-            model_id="smtx-t101-v1",
-            display_name="SMTX T101 v1",
+            model_id="supmtx-t101-v1",
+            display_name="T101 v1",
             version="1.0.0",
             base_model="t101",
         )
-        assert registry.get("smtx-t101-v1") is record
+        assert registry.get("supmtx-t101-v1") is record
 
     def test_list_available_empty(self):
         registry = ModelRegistry()
@@ -88,8 +88,8 @@ class TestModelRegistry:
     def test_list_available_with_checkpoint(self):
         registry = ModelRegistry()
         registry.register(
-            model_id="smtx-t101-v1",
-            display_name="SMTX T101",
+            model_id="supmtx-t101-v1",
+            display_name="T101",
             version="1.0.0",
             base_model="t101",
             checkpoint_path="/checkpoints/t101",
@@ -99,14 +99,14 @@ class TestModelRegistry:
     def test_default_model(self):
         registry = ModelRegistry()
         registry.register(
-            model_id="smtx-t101-v1",
+            model_id="supmtx-t101-v1",
             display_name="T101",
             version="1.0.0",
             base_model="t101",
             checkpoint_path="/ckpt",
             is_default=True,
         )
-        assert registry.get_default().model_id == "smtx-t101-v1"
+        assert registry.get_default().model_id == "supmtx-t101-v1"
 
     def test_deprecate(self):
         registry = ModelRegistry()
@@ -178,13 +178,13 @@ class TestTenantStore:
 class TestDeploymentManager:
     def test_create_deployment(self):
         mgr = DeploymentManager()
-        record = mgr.create_deployment("dep-1", "smtx-t101-v1", "tenant-1")
+        record = mgr.create_deployment("dep-1", "supmtx-t101-v1", "tenant-1")
         assert record.status == "pending"
         assert mgr.get("dep-1") is record
 
     def test_update_status(self):
         mgr = DeploymentManager()
-        mgr.create_deployment("dep-1", "smtx-t101-v1", "tenant-1")
+        mgr.create_deployment("dep-1", "supmtx-t101-v1", "tenant-1")
         assert mgr.update_status("dep-1", "running")
         assert mgr.get("dep-1").status == "running"
 
@@ -206,8 +206,8 @@ def client_with_key():
     token_store = TokenStore()
     registry = ModelRegistry()
     registry.register(
-        model_id="smtx-t101-v1",
-        display_name="SMTX T101",
+        model_id="supmtx-t101-v1",
+        display_name="T101",
         version="1.0.0",
         base_model="t101",
         checkpoint_path="/ckpt",
@@ -250,7 +250,7 @@ class TestChatEndpoint:
     def test_chat_completions(self, client_with_key):
         client, auth = client_with_key
         payload = {
-            "model": "smtx-t101-v1",
+            "model": "supmtx-t101-v1",
             "messages": [{"role": "user", "content": "Hello, world!"}],
         }
         resp = client.post(
@@ -282,7 +282,7 @@ class TestUsageEndpoint:
     def test_usage_returns_summary(self, client_with_key):
         client, auth = client_with_key
         payload = {
-            "model": "smtx-t101-v1",
+            "model": "supmtx-t101-v1",
             "messages": [{"role": "user", "content": "Test usage"}],
         }
         client.post(

@@ -38,7 +38,7 @@ class APIKey(BaseModel):
         dk = hashlib.pbkdf2_hmac("sha256", raw_secret.encode(), salt, _PBKDF2_ITERATIONS)
         hashed = salt.hex() + ":" + dk.hex()
         key = cls(
-            key_id=f"smtx_{secrets.token_hex(8)}",
+            key_id=f"supmtx_{secrets.token_hex(8)}",
             tenant_id=tenant_id,
             project_id=project_id,
             hashed_secret=hashed,
