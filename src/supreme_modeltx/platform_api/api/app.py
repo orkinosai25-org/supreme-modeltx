@@ -16,12 +16,16 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from supreme_modeltx.platform_api.api.routers import (
+    audit,
     auth,
     chat,
+    embeddings,
+    health,
+    keys,
     models,
     projects,
+    responses,
     usage,
-    health,
 )
 
 logger = logging.getLogger(__name__)
@@ -51,8 +55,12 @@ def create_app() -> FastAPI:
     application.include_router(auth.router, prefix="/v1/auth", tags=["Auth"])
     application.include_router(models.router, prefix="/v1/models", tags=["Models"])
     application.include_router(chat.router, prefix="/v1/chat", tags=["Chat"])
+    application.include_router(responses.router, prefix="/v1/responses", tags=["Responses"])
+    application.include_router(embeddings.router, prefix="/v1/embeddings", tags=["Embeddings"])
     application.include_router(projects.router, prefix="/v1/projects", tags=["Projects"])
     application.include_router(usage.router, prefix="/v1/usage", tags=["Usage"])
+    application.include_router(keys.router, prefix="/v1/keys", tags=["Keys"])
+    application.include_router(audit.router, prefix="/v1/audit", tags=["Audit"])
 
     @application.on_event("startup")
     async def _startup() -> None:
