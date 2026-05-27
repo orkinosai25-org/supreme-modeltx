@@ -30,7 +30,10 @@ def get_device(prefer: str | None = None) -> torch.device:
     Returns:
         A :class:`torch.device` ready for use.
     """
-    prefer = (prefer or os.environ.get("SMTX_DEVICE", "")).lower().strip()
+    prefer = (
+        prefer
+        or os.environ.get("SUPREME_MODELTX_DEVICE", os.environ.get("SMTX_DEVICE", ""))
+    ).lower().strip()
 
     if prefer == "cuda":
         if not torch.cuda.is_available():

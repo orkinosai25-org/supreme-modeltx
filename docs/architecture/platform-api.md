@@ -6,6 +6,8 @@
 
 It is built with **FastAPI** and exposes an **OpenAI-compatible** chat completions and responses interface alongside platform-specific endpoints for project management, usage reporting, model registry access, API key management, and audit logging.
 
+> This is a foundation scaffold, not a finished production platform. Core boundaries and contracts are intentionally in place, while persistence, production auth lifecycle, and model-serving integrations remain follow-up work.
+
 ---
 
 ## Module breakdown
@@ -33,7 +35,7 @@ It is built with **FastAPI** and exposes an **OpenAI-compatible** chat completio
 - `keys.py` — `issue_key(project_id)`, `verify_api_key(key)`, `revoke_key(key)`
   - Keys are stored as scrypt hashes (never plain text)
   - Constant-time comparison (`hmac.compare_digest`) to resist timing attacks
-  - Dev key seeded from `SMTX_API_KEY` environment variable
+- Dev key seeded from `SUPREME_MODELTX_API_KEY` environment variable (legacy `SMTX_API_KEY` still supported)
 - `key_store.py` — `KeyMetadataStore` — tracks key_id, label, prefix, project for the keys router
   - Stores metadata only (no plain key, no hash)
 
@@ -104,7 +106,13 @@ All endpoints except `/health` require a Bearer token:
 Authorization: Bearer <api-key>
 ```
 
-Keys are issued per-project via `POST /v1/keys`. The dev key defaults to the value of `SMTX_API_KEY` (default: `"dev-secret"` — change in production).
+Keys are issued per-project via `POST /v1/keys`. The dev key defaults to the value of `SUPREME_MODELTX_API_KEY` (legacy `SMTX_API_KEY` fallback; default: `"dev-secret"` — change in production).
+
+Run locally with Uvicorn using the app factory:
+
+```bash
+uvicorn supreme_modeltx.platform_api.api.app:create_app --factory --reload
+```
 
 ---
 
@@ -121,4 +129,3 @@ Keys are issued per-project via `POST /v1/keys`. The dev key defaults to the val
 - [ ] Deployment CRUD with Kubernetes/container backend
 - [ ] Fine-tuning job submission (`POST /v1/fine_tunes`)
 - [ ] Batch inference (`POST /v1/batches`)
-

@@ -29,7 +29,7 @@ class TestApiKeys:
     def test_verify_dev_key(self):
         # The dev key is seeded from env (default: "dev-secret")
         import os
-        dev_key = os.environ.get("SMTX_API_KEY", "dev-secret")
+        dev_key = os.environ.get("SUPREME_MODELTX_API_KEY", os.environ.get("SMTX_API_KEY", "dev-secret"))
         project_id = verify_api_key(dev_key)
         assert project_id is not None
 

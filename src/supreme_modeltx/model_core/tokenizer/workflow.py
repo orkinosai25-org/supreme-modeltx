@@ -10,7 +10,7 @@ use TokenizerWorkflow rather than importing sentencepiece directly,
 so the underlying implementation can be swapped without API changes.
 
 SentencePiece training:
-  smtx-tokenizer-train is a thin wrapper around the spm.SentencePieceTrainer,
+  modeltx-tokenizer-train is a thin wrapper around the spm.SentencePieceTrainer,
   which should be trained on the sovereign pretraining corpus before
   any model training begins.
 

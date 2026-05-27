@@ -1,6 +1,6 @@
 # Supreme ModelTX
 
-**Supreme ModelTX** is a British sovereign LLM platform — a PyTorch-first model development stack paired with an API-first business access layer.
+**Supreme ModelTX** is a British sovereign LLM platform scaffold — a PyTorch-first model development stack paired with an API-first business access layer.
 
 > **Sovereign AI, designed and built in Britain.**  
 > Our platform gives UK organisations a path to owning their AI infrastructure end-to-end: from pretraining data and tokenisation through to governed deployment and auditable usage metering.
@@ -72,7 +72,7 @@ python -m supreme_modeltx.model_core.training.trainer --dry-run
 ### Run the platform API
 
 ```bash
-SMTX_API_KEY=my-key uvicorn supreme_modeltx.platform_api.api.app:app --port 9000 --reload
+SUPREME_MODELTX_API_KEY=my-key uvicorn supreme_modeltx.platform_api.api.app:create_app --factory --reload
 # Docs at: http://localhost:9000/docs
 ```
 

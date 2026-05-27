@@ -8,7 +8,8 @@ seeded from the environment.
 Security notes:
   - Keys are derived using hashlib.scrypt (computationally expensive) to
     resist offline brute-force attacks if the key store is ever exfiltrated.
-  - A fixed, deterministic salt is used per-deployment (set SMTX_KEY_SALT).
+  - A fixed, deterministic salt is used per-deployment
+    (set SUPREME_MODELTX_KEY_SALT; legacy SMTX_KEY_SALT also supported).
     In production, use a per-key random salt stored alongside the hash.
   - Keys are compared with hmac.compare_digest to resist timing attacks.
   - Never log API key values.
@@ -35,7 +36,10 @@ _SCRYPT_P = 1
 _SCRYPT_KEYLEN = 32
 
 # Per-deployment salt (in production: unique per instance, stored securely).
-_SALT = os.environ.get("SMTX_KEY_SALT", "smtx-default-dev-salt-2025").encode()
+_SALT = os.environ.get(
+    "SUPREME_MODELTX_KEY_SALT",
+    os.environ.get("SMTX_KEY_SALT", "supreme-modeltx-default-dev-salt-2026"),
+).encode()
 
 # ---------------------------------------------------------------------------
 # In-memory key store (replace with DB-backed store in production)
@@ -58,9 +62,12 @@ def _hash_key(key: str) -> str:
 
 
 def _seed_from_env() -> None:
-    """Seed dev key from SMTX_API_KEY env var (development only)."""
-    env_key = os.environ.get("SMTX_API_KEY", "dev-secret")
-    project_id = os.environ.get("SMTX_DEV_PROJECT_ID", "dev-project")
+    """Seed dev key from environment (development only)."""
+    env_key = os.environ.get("SUPREME_MODELTX_API_KEY", os.environ.get("SMTX_API_KEY", "dev-secret"))
+    project_id = os.environ.get(
+        "SUPREME_MODELTX_DEV_PROJECT_ID",
+        os.environ.get("SMTX_DEV_PROJECT_ID", "dev-project"),
+    )
     _KEY_STORE[_hash_key(env_key)] = project_id
     logger.debug("Dev API key seeded for project: %s", project_id)
 
@@ -73,7 +80,7 @@ def issue_key(project_id: str) -> str:
 
     Returns the plain-text key (shown once; store securely).
     """
-    key = secrets.token_hex(32)
+    key = f"supmtx_{secrets.token_hex(32)}"
     _KEY_STORE[_hash_key(key)] = project_id
     logger.info("Issued API key for project: %s", project_id)
     return key

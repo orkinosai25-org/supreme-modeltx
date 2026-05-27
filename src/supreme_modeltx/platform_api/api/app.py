@@ -5,7 +5,7 @@ This is the main entry point for the Supreme ModelTX business API.
 It mounts all sub-routers and provides OpenAPI documentation.
 
 Usage:
-    uvicorn supreme_modeltx.platform_api.api.app:app --host 0.0.0.0 --port 9000 --reload
+    uvicorn supreme_modeltx.platform_api.api.app:create_app --factory --reload
 """
 
 from __future__ import annotations
@@ -75,7 +75,13 @@ app = create_app()
 def main() -> None:
     """Run the API server (used as console_scripts entrypoint)."""
     import uvicorn
-    uvicorn.run("supreme_modeltx.platform_api.api.app:app", host="0.0.0.0", port=9000, reload=False)
+    uvicorn.run(
+        "supreme_modeltx.platform_api.api.app:create_app",
+        host="0.0.0.0",
+        port=9000,
+        reload=False,
+        factory=True,
+    )
 
 
 if __name__ == "__main__":

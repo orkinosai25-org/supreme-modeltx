@@ -4,6 +4,8 @@
 
 Supreme ModelTX is organised around two distinct, independently deployable layers.
 
+> This repository is currently a scaffold/foundation release: architecture, interfaces, and validation scaffolding are in place, while production persistence and fully trained model deployments are follow-up phases.
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                     supreme-modeltx                             │
