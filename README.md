@@ -1,224 +1,159 @@
-# SMTX — Supreme Model T‑X
+# Supreme ModelTX
 
-SMTX is a **governed AI control plane** for customer-owned Azure environments.
+**Supreme ModelTX** is a British sovereign LLM platform scaffold — a PyTorch-first model development stack paired with an API-first business access layer.
 
-The platform is positioned around enterprise AI lifecycle control:
-
-- Register models and execution configurations
-- Apply policy and human approval gates before deployment
-- Route inference through grounded retrieval and verification services
-- Keep auditable records of control-plane and runtime decisions
-- Preserve customer boundary ownership for data, models, and infrastructure
-
-Lifecycle focus: **register → approve → deploy → ground → audit**.
-
-The goal is not “GPU-first AI hosting.” The goal is to make AI deployment, operation, and assurance governable inside regulated environments.
+> **Sovereign AI, designed and built in Britain.**  
+> Our platform gives UK organisations a path to owning their AI infrastructure end-to-end: from pretraining data and tokenisation through to governed deployment and auditable usage metering.
 
 ---
 
-## Product Direction
-
-SMTX currently includes control-plane APIs, orchestration services, and modular runtime components that can be deployed in customer-owned Azure infrastructure.
-
-Near-term product identity:
-
-- **Control-plane-first**: orchestration, policy boundaries, lifecycle management
-- **Governance-first**: approval workflows, auditability expectations, role separation
-- **Grounding-first**: retrieval/verification patterns for enterprise knowledge sources (including SharePoint-driven ingestion flows)
-- **Provider-flexible**: supports open and hosted model providers behind governed execution boundaries
-
-Long-term ambition (subordinate to product delivery):
-
-- Continue maturing the **T-Series** model and runtime architecture (`T-101`, `T-201`, `T-301`, `T-501`, `T-X`) as an optional execution and differentiation layer, without making frontier-scale training the immediate product identity.
-
-Current implemented surface (repository snapshot):
-
-- Control-plane API and admin shell: `control-plane/src/SMTX.ControlPlane.Api`, `control-plane/src/SMTX.ControlPlane.Blazor`
-- Runtime services: `inference/inference_service.py`, `inference/retrieval_service.py`, `inference/verification_service.py`, `inference/cpu_inference_server.py`
-- Optional accelerated runtime path: `inference/vllm_server.py` (GPU-conditional)
-- Orchestrator pipeline: `tmodels/tx/orchestrator.py`
-- Azure deployment and workflows: `infra/main.bicep`, `.github/workflows/*.yml`
-
----
-
-## Repository Structure
+## Two first-class layers
 
 ```
-SMTX/
-├── README.md
+supreme-modeltx/
+├── src/supreme_modeltx/
+│   ├── model_core/       ← PyTorch-native LLM development
+│   └── platform_api/     ← API-first business access
+```
+
+### 1. `model_core` — Model Development Stack
+
+| Module | Purpose |
+|---|---|
+| `config/` | Pydantic schema for model, training, data, and tokenizer settings |
+| `models/t_series/` | T-series decoder-only transformers (T-Dev-6L baseline today; T-101 roadmap) |
+| `models/common/` | RoPE, GQA attention, RMSNorm, SwiGLU building blocks |
+| `training/` | Training loop, checkpoint, optimizer, scheduler, mixed precision, distributed |
+| `data/` | Manifest-driven JSONL/Parquet/HF Datasets ingestion with sequence packing |
+| `tokenizer/` | SentencePiece-oriented tokenizer workflow boundary |
+| `eval/` | Perplexity, validation hooks |
+| `inference/` | Checkpoint loading, autoregressive generation, nucleus/top-k sampling |
+
+### 2. `platform_api` — Business API Platform
+
+| Module | Purpose |
+|---|---|
+| `api/` | FastAPI application with OpenAPI docs (`/docs`) |
+| `auth/` | API key issuance and verification |
+| `tenants/` | Project / tenant management |
+| `usage/` | Token usage metering and rate-limit scaffolding |
+| `model_registry/` | Model catalogue with stage tracking |
+| `deployment/` | Deployment lifecycle management |
+
+---
+
+## Quick start
+
+### Install
+
+```bash
+# Core (model_core only):
+pip install -e ".[train]"
+
+# API platform:
+pip install -e ".[api]"
+
+# Development (everything + tests):
+pip install -e ".[train,api,eval,dev]"
+```
+
+### Smoke test — model instantiation and tiny forward pass
+
+```bash
+python -m pytest tests/smoke/ -v
+```
+
+### Smoke test — 2-step CPU training dry run
+
+```bash
+python -m supreme_modeltx.model_core.training.trainer --dry-run
+```
+
+### Run the platform API
+
+```bash
+SUPREME_MODELTX_API_KEY=my-key uvicorn supreme_modeltx.platform_api.api.app:create_app --factory --reload
+# Docs at: http://localhost:9000/docs
+```
+
+### Run all tests
+
+```bash
+python -m pytest tests/ -v
+```
+
+---
+
+## Architecture
+
+See [`docs/architecture/overview.md`](docs/architecture/overview.md) for a full description of the two-layer architecture.
+
+See [`docs/sovereignty/principles.md`](docs/sovereignty/principles.md) for the sovereignty design principles.
+
+---
+
+## T-series model family
+
+| Model | Status | Params | Context |
+|---|---|---|---|
+| **T-Dev-6L** | ✅ Scaffold complete, CPU smoke-testable | ~58M | 512 |
+| **T-101** | 🔜 Architecture designed, training pending GPU allocation | 7B | 4096 |
+| T-201 (reasoning) | 🗺 Roadmap | — | — |
+| T-301 (retrieval) | 🗺 Roadmap | — | — |
+
+---
+
+## Repository structure
+
+```
+supreme-modeltx/
+├── src/supreme_modeltx/          ← main Python package
+│   ├── model_core/               ← LLM development layer
+│   └── platform_api/             ← business API layer
+├── tests/
+│   ├── unit/                     ← config & schema unit tests
+│   └── smoke/                    ← model instantiation & forward-pass smoke tests
 ├── docs/
-│    ├── architecture.md
-│    ├── azure.md           ← deployment runbooks
-│    ├── roadmap.md
-│    ├── brand-assets.md
-│    ├── test-results.md    ← auto-generated by e2e_test.py
-│    └── sumotx/
-│         ├── overview.md   ← SUMOTX platform overview
-│         ├── architecture.md
-│         ├── api.md
-│         ├── deployment.md
-│         └── stack.md      ← reference technology stack
-├── tmodels/
-│    ├── t101/
-│    ├── t201/
-│    ├── t301/
-│    ├── t501/
-│    └── tx/
-│         └── orchestrator.py  ← T-X App Service entry point
-├── training/
-│    ├── train_t101.py
-│    ├── dataset_pipeline.py
-│    ├── config_t101.json
-│    └── deepspeed_config.json
-├── inference/
-│    ├── vllm_server.py
-│    ├── inference_service.py   ← stateless reloadable inference skeleton
-│    ├── retrieval_service.py
-│    └── verification_service.py
-├── control-plane/
-│    └── src/
-│         ├── SMTX.ControlPlane.Api/      ← C# ASP.NET Core control-plane API
-│         └── SMTX.ControlPlane.Blazor/   ← Blazor Server admin shell
-└── scripts/
-     ├── Dockerfile              ← training image
-     ├── Dockerfile.inference    ← vLLM inference image
-     ├── azure_batch.yml         ← Batch pool + multi-node job template
-     ├── run_training.sh         ← automated training launcher
-     ├── health_check.sh         ← endpoint health + smoke test
-     ├── pull_model_weights.py   ← Azure Blob → local model download
-     ├── e2e_test.py             ← end-to-end integration test
-     ├── vllm.service            ← systemd unit for GPU VM
-     ├── smtx-retrieval.service  ← systemd unit for T-301
-     └── smtx-verification.service ← systemd unit for T-501
+│   ├── architecture/             ← architecture docs
+│   └── sovereignty/              ← sovereignty principles
+├── data/raw/                     ← sample pretraining data
+├── control-plane/                ← C# ASP.NET Core governance control plane (retained)
+├── infra/                        ← Bicep infrastructure definitions
+├── pyproject.toml                ← package metadata and dependencies
+├── THIRD_PARTY_NOTICES.md        ← open-source provenance
+└── .github/workflows/            ← CI workflows
 ```
 
 ---
 
-## Quick Start
+## Development
 
-```bash
-# Clone the repo
-git clone https://github.com/orkinosai25-org/SMTX.git
-cd SMTX
+This repository is at **scaffold stage**: the architecture and module boundaries are established, core primitives are implemented and tested, and the design is ready for GPU-backed training experiments.
 
-# Build control-plane services
-dotnet build control-plane/SMTX.ControlPlane.slnx --configuration Release
+What is **not yet** in this repository:
+- Trained model weights (pending GPU allocation)
+- Full SentencePiece tokenizer trained on sovereign corpus
+- Production-ready distributed training at scale (FSDP/DeepSpeed wiring is started)
+- Production database backends for the platform API
 
-# Run control-plane API (new terminal)
-dotnet run --project control-plane/src/SMTX.ControlPlane.Api
-```
+See [`docs/architecture/overview.md`](docs/architecture/overview.md) for the full roadmap.
 
 ---
 
-## Model Runtime and Training (Supporting Capability)
+## Sovereignty
 
-SMTX can operate with CPU-first execution profiles in customer-owned Azure environments, with optional GPU acceleration when available and approved.
-
-The model/runtime toolchain (including T-Series training and inference utilities) is treated as a supporting capability of the governed control plane.
-
-## How to Train SMTX‑Baby (T‑101)
-
-> Full runbook: [docs/azure.md — Runbook: Training](docs/azure.md#runbook--training)
-
-### Local (single node development)
-
-```bash
-# 1. Prepare raw data under data/raw/
-mkdir -p data/raw data/processed
-
-# 2. Run the automated training launcher
-#    It runs dataset_pipeline.py first, then launches DeepSpeed.
-export CHECKPOINT_DIR=checkpoints/t101-baby
-export DATA_INPUT_DIR=data/raw
-export DATA_OUTPUT_DIR=data/processed
-bash scripts/run_training.sh
-```
-
-### Azure Batch (optional accelerated mode)
-
-```bash
-# 1. Build and push training image to ACR
-az acr login --name smtxacr
-docker build -t smtxacr.azurecr.io/smtx-train:latest -f scripts/Dockerfile .
-docker push smtxacr.azurecr.io/smtx-train:latest
-
-# 2. Submit job (see scripts/azure_batch.yml)
-az batch job create --json-file scripts/azure_batch.yml \
-  --account-name smtxbatch --resource-group smtx-rg
-
-# 3. Monitor
-az batch task show --job-id smtx-t101-train \
-  --task-id train-t101-coordinator --account-name smtxbatch
-```
-
-Checkpoints are written to `/mnt/checkpoints/t101-baby` (Azure file share)
-and automatically uploaded to Azure Blob Storage on job completion.
+This platform is designed with sovereignty as a first principle — not just branding. See [`docs/sovereignty/principles.md`](docs/sovereignty/principles.md).
 
 ---
 
-## How to Deploy SMTX‑101 (Inference Runtime)
+## Provenance
 
-> Full runbook: [docs/azure.md — Runbook: Inference](docs/azure.md#runbook--inference)
+This repository builds on ideas and patterns from well-known open-source AI research projects. See [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) for full attribution.
 
-### 1. Build and push inference image
-
-```bash
-az acr login --name smtxacr
-docker build -t smtxacr.azurecr.io/smtx-vllm:latest -f scripts/Dockerfile.inference .
-docker push smtxacr.azurecr.io/smtx-vllm:latest
-```
-
-### 2. Deploy infrastructure
-
-```bash
-az deployment group create \
-  --resource-group smtx-rg \
-  --template-file infra/main.bicep \
-  --parameters @infra/parameters.json
-```
-
-### 3. Start inference service
-
-```bash
-# Example (optional vLLM path when GPU is enabled):
-sudo cp scripts/vllm.service /etc/systemd/system/
-sudo systemctl enable --now vllm
-
-# Health check
-bash scripts/health_check.sh --smoke-test
-```
-
-### 4. Deploy T-X Orchestrator (App Service)
-
-See [docs/azure.md — Runbook: T-X Orchestrator](docs/azure.md#runbook--t-x-orchestrator-app-service).
-
-### 5. Run end-to-end test
-
-```bash
-python scripts/e2e_test.py --orchestrator-url https://<tx-url>
-# Results saved to docs/test-results.md
-```
+The codebase is original. We are not a fork of DeepSeek, LLaMA, or any other project; we draw inspiration from open research in the same way that all serious LLM implementations do.
 
 ---
 
-## Documentation
+## Licence
 
-- [Architecture Overview](docs/architecture.md)
-- [Repository readiness review](docs/repository-readiness-review.md)
-- [New Design Overview](docs/new-design.md)
-- [Development Roadmap](docs/roadmap.md)
-- [Azure Infrastructure](docs/azure.md)
-
-### SUMOTX Platform
-
-- [SUMOTX Overview](docs/sumotx/overview.md)
-- [Architecture](docs/sumotx/architecture.md)
-- [API Reference](docs/sumotx/api.md)
-- [Deployment Model](docs/sumotx/deployment.md)
-- [Technology Stack](docs/sumotx/stack.md)
-
----
-
-## License
-
-Apache 2.0 — open, free, sovereign.
+See [LICENSE](LICENSE).
