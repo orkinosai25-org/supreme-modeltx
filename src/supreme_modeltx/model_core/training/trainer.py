@@ -30,7 +30,11 @@ import torch
 import torch.nn as nn
 
 from supreme_modeltx.model_core.config.schema import SMTXConfig
+from supreme_modeltx.model_core.data.manifest import DataManifest
+from supreme_modeltx.model_core.data.preprocessing import tokenize_and_pack
+from supreme_modeltx.model_core.data.sources import iter_source
 from supreme_modeltx.model_core.models.t_series.baseline import TSeriesBaseline
+from supreme_modeltx.model_core.tokenizer.workflow import TokenizerWorkflow
 from supreme_modeltx.model_core.training.checkpoint import (
     find_latest_checkpoint,
     load_checkpoint,
@@ -72,6 +76,56 @@ def _dummy_data_iter(cfg: SMTXConfig, device: torch.device) -> Iterator[dict[str
             vocab_size=cfg.model.vocab_size,
             device=device,
         )
+
+
+def _iter_manifest_text(manifest: DataManifest) -> Iterator[str]:
+    """Infinite text iterator over manifest sources."""
+    while True:
+        for source in manifest.sources:
+            yield from iter_source(source)
+
+
+def _manifest_data_iter(cfg: SMTXConfig, device: torch.device) -> Iterator[dict[str, torch.Tensor]]:
+    """Infinite iterator of token batches from configured manifest sources."""
+    tokenizer_path = cfg.data.tokenizer_path or cfg.tokenizer.model_path
+    if not tokenizer_path:
+        raise ValueError(
+            "A tokenizer path is required for manifest-based training "
+            "(set data.tokenizer_path or tokenizer.model_path)."
+        )
+
+    manifest = DataManifest.from_file(cfg.data.manifest_path)
+    if not manifest.sources:
+        raise ValueError(f"Manifest has no sources: {cfg.data.manifest_path}")
+
+    tokenizer = TokenizerWorkflow(tokenizer_path, backend=cfg.tokenizer.backend)
+    seq_len = min(cfg.data.max_seq_len, cfg.model.max_position_embeddings)
+    packed_iter = tokenize_and_pack(
+        text_iter=_iter_manifest_text(manifest),
+        tokenizer_fn=tokenizer.as_callable(),
+        max_seq_len=seq_len,
+        pack=cfg.data.pack_sequences,
+        eos_id=cfg.model.eos_token_id,
+    )
+    pad_id = cfg.model.pad_token_id
+
+    while True:
+        sequences = list(next(packed_iter) for _ in range(cfg.training.batch_size))
+        input_ids = torch.full((cfg.training.batch_size, seq_len), pad_id, dtype=torch.long)
+        for i, seq in enumerate(sequences):
+            seq = seq[:seq_len]
+            input_ids[i, : seq.numel()] = seq
+        input_ids = input_ids.to(device)
+        yield {"input_ids": input_ids, "labels": input_ids.clone()}
+
+
+def _build_data_iter(cfg: SMTXConfig, device: torch.device) -> Iterator[dict[str, torch.Tensor]]:
+    """Build the configured training data iterator."""
+    if cfg.data.manifest_path:
+        logger.info("Using manifest dataset: %s", cfg.data.manifest_path)
+        return _manifest_data_iter(cfg, device)
+    logger.info("No manifest configured; using synthetic data iterator.")
+    return _dummy_data_iter(cfg, device)
 
 
 # ── Training loop ──────────────────────────────────────────────────────────────
@@ -117,7 +171,7 @@ def train(cfg: SMTXConfig, *, dry_run: bool = False) -> None:
         logger.info("Resumed from step %d", start_step)
 
     autocast = get_autocast_context(cfg.training.precision.dtype, device_type=device.type)
-    data_iter = _dummy_data_iter(cfg, device)
+    data_iter = _build_data_iter(cfg, device)
 
     max_steps = 2 if dry_run else cfg.training.max_steps
     accum_steps = cfg.training.gradient_accumulation_steps
