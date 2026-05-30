@@ -22,6 +22,7 @@ classifiers = [
 
 dependencies = [
     "torch>=2.3.0",
+    "sentencepiece>=0.2.0",
     "pydantic>=2.0.0",
     "pyyaml>=6.0.0",
 ]

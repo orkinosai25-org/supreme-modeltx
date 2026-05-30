@@ -108,6 +108,44 @@ Point training/inference config at the produced model path:
 }
 ```
 
+### First real T-Dev-6L training experiment (manifest + checkpoint + perplexity)
+
+Canonical config:
+
+- `configs/real_training/t_dev_6l_first_run.json`
+
+This run uses:
+
+- manifest: `data/manifests/t_dev_6l_first_run.yaml`
+- tokenizer artifact: `artifacts/tokenizers/t-dev-6l/v1/tokenizer.model`
+- checkpoint directory: `artifacts/runs/t_dev_6l_first_run/checkpoints/`
+
+Run:
+
+```bash
+python -m supreme_modeltx.model_core.training.trainer \
+  --config configs/real_training/t_dev_6l_first_run.json
+```
+
+Expected outputs:
+
+- checkpoint files: `artifacts/runs/t_dev_6l_first_run/checkpoints/step_*.pt`
+- training loss logs
+- validation logs with loss and perplexity (from `model_core/eval/perplexity.py`)
+- resume logs when checkpoint files already exist (`Resumed from step ...`)
+
+Example log lines:
+
+```text
+step=10/20 | loss=7.9315 | lr=3.00e-04
+eval step=10/20 | val_loss=7.8122 | perplexity=2471.83
+```
+
+Limitations of this first real run:
+
+- single-process local execution focus (not multi-node scale)
+- tiny processed dataset slices for wiring validation, not benchmark quality
+
 ### Run the platform API
 
 ```bash

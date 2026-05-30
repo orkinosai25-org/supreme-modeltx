@@ -1,0 +1,6 @@
+{"text":"Sovereign model training starts with validated local corpora."}
+{"text":"T-Dev-6L provides a compact six-layer baseline for iteration."}
+{"text":"Manifest-driven ingestion keeps data source provenance explicit."}
+{"text":"Versioned tokenizers enable reproducible checkpoints and runs."}
+{"text":"Checkpoint save and resume should work on small CPU experiments."}
+{"text":"Loss should trend down during early supervised warm-up steps."}

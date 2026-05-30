@@ -1,0 +1,11 @@
+version: "1"
+description: T-Dev-6L first real training run manifest
+sources:
+  - name: train-small
+    backend: jsonl
+    path: data/processed/train_small.jsonl
+    split: train
+  - name: val-small
+    backend: jsonl
+    path: data/processed/val_small.jsonl
+    split: validation

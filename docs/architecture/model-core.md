@@ -65,6 +65,20 @@ torchrun --nproc_per_node=8 -m supreme_modeltx.model_core.training.trainer --con
 python -m supreme_modeltx.model_core.training.trainer --dry-run
 ```
 
+First real experiment command:
+
+```bash
+python -m supreme_modeltx.model_core.training.trainer \
+  --config configs/real_training/t_dev_6l_first_run.json
+```
+
+This canonical run wires:
+
+- manifest-backed ingestion from `data/manifests/t_dev_6l_first_run.yaml`
+- SentencePiece tokenizer artifact at `artifacts/tokenizers/t-dev-6l/v1/tokenizer.model`
+- checkpoint save/resume at `artifacts/runs/t_dev_6l_first_run/checkpoints/step_*.pt`
+- validation loss + perplexity logs via `eval/evaluate_perplexity`
+
 ### `data/`
 - `manifest.py` — `DataManifest` / `DataSource` Pydantic schema; load from YAML/JSON
 - `sources.py` — `iter_source()` adapter for jsonl / text / parquet / hf_dataset backends
@@ -94,6 +108,7 @@ Training + inference config should reference the produced `.model` via:
 
 ### `eval/`
 - `perplexity.py` — `evaluate_perplexity()` and `ValidationHook`
+  - trainer uses this path for periodic validation metrics (`val_loss`, `perplexity`)
 
 ### `inference/`
 - `engine.py` — `InferenceEngine`: load checkpoint, autoregressive generate
@@ -125,7 +140,7 @@ It is designed to be:
 ## Roadmap for model_core
 
 - [x] SentencePiece tokenizer training pipeline on sovereign corpus (local-first, versioned artifacts)
-- [ ] Real data manifest for `data/raw/` → packed dataset
+- [x] First real manifest/tokenizer/training/checkpoint/perplexity run for T-Dev-6L
 - [ ] FSDP wrapping in the distributed trainer
 - [ ] T-101 (7B) config and first training run with GPU allocation
 - [ ] lm-eval-harness integration for standardised benchmarking
