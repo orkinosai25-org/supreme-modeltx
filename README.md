@@ -69,6 +69,45 @@ python -m pytest tests/smoke/ -v
 python -m supreme_modeltx.model_core.training.trainer --dry-run
 ```
 
+### Train a versioned tokenizer (T-Dev-6L)
+
+```bash
+# local-first corpus training (defaults to INPUT_PATH=data/raw)
+bash scripts/train_tokenizer.sh
+
+# explicit run via module/entrypoint
+python -m supreme_modeltx.model_core.tokenizer.train \
+  --input-path data/raw \
+  --artifact-root artifacts/tokenizers \
+  --model-variant t-dev-6l \
+  --version v1 \
+  --vocab-size 32000
+```
+
+Tokenizer artifacts are versioned at:
+
+```text
+artifacts/tokenizers/<model-variant>/<version>/
+  tokenizer.model
+  tokenizer.vocab
+  metadata.json
+  training_corpus.txt
+```
+
+Point training/inference config at the produced model path:
+
+```json
+{
+  "tokenizer": {
+    "backend": "sentencepiece",
+    "model_path": "artifacts/tokenizers/t-dev-6l/v1/tokenizer.model"
+  },
+  "data": {
+    "tokenizer_path": "artifacts/tokenizers/t-dev-6l/v1/tokenizer.model"
+  }
+}
+```
+
 ### Run the platform API
 
 ```bash
@@ -132,7 +171,7 @@ This repository is at **scaffold stage**: the architecture and module boundaries
 
 What is **not yet** in this repository:
 - Trained model weights (pending GPU allocation)
-- Full SentencePiece tokenizer trained on sovereign corpus
+- Production-scale tokenizer pipeline beyond the local-first versioned workflow
 - Production-ready distributed training at scale (FSDP/DeepSpeed wiring is started)
 - Production database backends for the platform API
 
