@@ -90,6 +90,29 @@ class TestModelRegistry:
         assert registry.deregister("to-remove") is True
         assert registry.get_model("to-remove") is None
 
+    def test_persists_checkpoint_metadata_across_instances(self, tmp_path):
+        db_path = str(tmp_path / "model_registry.sqlite3")
+        ModelRegistry(db_path=db_path).register(
+            ModelEntry(
+                id="served-checkpoint",
+                name="Served Checkpoint",
+                family="t-series",
+                variant="t-real",
+                stage="production",
+                checkpoint_path="/models/real.ckpt",
+                tokenizer_path="/models/tokenizer.model",
+                model_config_path="/models/config.json",
+                inference_dtype="bfloat16",
+                is_available=True,
+            )
+        )
+        fetched = ModelRegistry(db_path=db_path).get_model("served-checkpoint")
+        assert fetched is not None
+        assert fetched.checkpoint_path == "/models/real.ckpt"
+        assert fetched.tokenizer_path == "/models/tokenizer.model"
+        assert fetched.model_config_path == "/models/config.json"
+        assert fetched.inference_dtype == "bfloat16"
+
 
 class TestProjectStore:
     def test_dev_project_seeded(self, tmp_path):

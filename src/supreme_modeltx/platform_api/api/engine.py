@@ -21,6 +21,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Optional
 
 import torch
+from supreme_modeltx.platform_api.model_registry.registry import ModelEntry, ModelRegistry
 
 if TYPE_CHECKING:
     from supreme_modeltx.model_core.inference.engine import InferenceEngine
@@ -134,6 +135,52 @@ def initialize_engine() -> None:
         )
         tokenizer = TokenizerWorkflow(tokenizer_path)
         _engine_backend = _InferenceBackend(engine=engine, tokenizer=tokenizer)
+        _register_loaded_model(
+            checkpoint_path=checkpoint_path,
+            tokenizer_path=tokenizer_path,
+            model_config_path=model_config_path,
+            dtype=dtype,
+            model_family=model_config.model_family,
+            model_variant=model_config.model_variant,
+            context_length=model_config.max_position_embeddings,
+        )
         logger.info("InferenceEngine loaded from checkpoint: %s", checkpoint_path)
     except Exception:
         logger.exception("Failed to load InferenceEngine — inference disabled.")
+
+
+def _register_loaded_model(
+    *,
+    checkpoint_path: str,
+    tokenizer_path: str,
+    model_config_path: str,
+    dtype: str,
+    model_family: str,
+    model_variant: str,
+    context_length: int,
+) -> None:
+    """Persist metadata for the currently served checkpoint-backed model."""
+    checkpoint = Path(checkpoint_path).resolve()
+    tokenizer = Path(tokenizer_path).resolve()
+    model_id = os.environ.get("SMTX_MODEL_ID", f"served-{checkpoint.stem}")
+    model_name = os.environ.get("SMTX_MODEL_NAME", checkpoint.stem)
+    raw_stage = os.environ.get("SMTX_MODEL_STAGE", "production")
+    stage = raw_stage if raw_stage in {"development", "staging", "production", "deprecated"} else "production"
+
+    registry = ModelRegistry()
+    registry.register(
+        ModelEntry(
+            id=model_id,
+            name=model_name,
+            family=model_family,
+            variant=model_variant,
+            stage=stage,
+            description="Runtime-served checkpoint model.",
+            context_length=context_length,
+            checkpoint_path=str(checkpoint),
+            tokenizer_path=str(tokenizer),
+            model_config_path=str(Path(model_config_path).resolve()) if model_config_path else None,
+            inference_dtype=dtype,
+            is_available=True,
+        )
+    )

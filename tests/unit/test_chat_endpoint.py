@@ -14,7 +14,9 @@ from fastapi.testclient import TestClient
 
 from supreme_modeltx.platform_api.api import engine as engine_module
 from supreme_modeltx.platform_api.api.engine import _format_prompt, _InferenceBackend
+from supreme_modeltx.platform_api.api.routers import models as models_router_module
 from supreme_modeltx.platform_api.api.schemas import ChatMessage
+from supreme_modeltx.platform_api.model_registry.registry import ModelEntry, ModelRegistry
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -152,6 +154,29 @@ class TestChatCompletionsEndpoint:
         assert captured["temperature"] == pytest.approx(0.3)
         assert captured["top_p"] == pytest.approx(0.85)
 
+    def test_models_endpoint_exposes_checkpoint_metadata(self, monkeypatch, tmp_path):
+        db_path = str(tmp_path / "models.sqlite3")
+        registry = ModelRegistry(db_path=db_path)
+        registry.register(
+            ModelEntry(
+                id="served-real",
+                name="Served Real",
+                variant="t-real",
+                stage="production",
+                checkpoint_path="/models/served-real.pt",
+                tokenizer_path="/models/tokenizer.model",
+                inference_dtype="float16",
+            )
+        )
+        monkeypatch.setattr(models_router_module, "_registry", registry)
+        client = _make_client()
+        resp = client.get("/v1/models/", headers=_AUTH_HEADERS)
+        assert resp.status_code == 200
+        served = next(model for model in resp.json() if model["id"] == "served-real")
+        assert served["checkpoint_path"] == "/models/served-real.pt"
+        assert served["tokenizer_path"] == "/models/tokenizer.model"
+        assert served["inference_dtype"] == "float16"
+
 
 # ── Tests: initialize_engine no-ops ───────────────────────────────────────────
 
@@ -182,3 +207,48 @@ class TestInitializeEngine:
         monkeypatch.setattr(engine_module, "_engine_backend", sentinel)
         engine_module.initialize_engine()
         assert engine_module._engine_backend is sentinel
+
+    def test_registers_loaded_checkpoint_in_model_registry(self, monkeypatch, tmp_path):
+        db_path = str(tmp_path / "platform.sqlite3")
+        checkpoint = tmp_path / "model.pt"
+        tokenizer = tmp_path / "tokenizer.model"
+        checkpoint.write_bytes(b"weights")
+        tokenizer.write_text("tok")
+
+        class _MockInferenceEngine:
+            def __init__(self, model_config, checkpoint_path, dtype):
+                self.model_config = model_config
+                self.checkpoint_path = checkpoint_path
+                self.dtype = dtype
+
+            def generate(self, *args, **kwargs):
+                return None
+
+        class _MockTokenizerWorkflow:
+            def __init__(self, path):
+                self.path = path
+
+            def encode(self, text):
+                return [1]
+
+            def decode(self, ids):
+                return "ok"
+
+        import supreme_modeltx.model_core.inference.engine as inference_engine_module
+        import supreme_modeltx.model_core.tokenizer.workflow as tokenizer_workflow_module
+
+        monkeypatch.setattr(engine_module, "_engine_backend", None)
+        monkeypatch.setenv("SUPREME_MODELTX_PLATFORM_DB_PATH", db_path)
+        monkeypatch.setenv("SMTX_CHECKPOINT_PATH", str(checkpoint))
+        monkeypatch.setenv("SMTX_TOKENIZER_PATH", str(tokenizer))
+        monkeypatch.setenv("SMTX_MODEL_ID", "runtime-real-model")
+        monkeypatch.setenv("SMTX_MODEL_NAME", "Runtime Real Model")
+        monkeypatch.setattr(inference_engine_module, "InferenceEngine", _MockInferenceEngine)
+        monkeypatch.setattr(tokenizer_workflow_module, "TokenizerWorkflow", _MockTokenizerWorkflow)
+
+        engine_module.initialize_engine()
+        entry = ModelRegistry(db_path=db_path).get_model("runtime-real-model")
+        assert entry is not None
+        assert entry.checkpoint_path == str(checkpoint.resolve())
+        assert entry.tokenizer_path == str(tokenizer.resolve())
+        assert entry.is_available is True
