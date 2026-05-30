@@ -40,19 +40,19 @@ It is built with **FastAPI** and exposes an **OpenAI-compatible** chat completio
   - Stores metadata only (no plain key, no hash)
 
 ### `audit/`
-- `log.py` — `AuditEvent`, `AuditLog` — append-only in-memory audit log
+- `log.py` — `AuditEvent`, `AuditLog` — append-only SQLite-backed audit log
   - Records event type, project, model, timestamp, and metadata
   - Queryable by project_id, event_type, time range, and limit
-  - Production: replace with PostgreSQL or ClickHouse
+  - Uses `SUPREME_MODELTX_PLATFORM_DB_PATH` (defaults to a temp-file SQLite DB)
 
 ### `tenants/`
 - `models.py` — `Project`, `ProjectCreate` Pydantic models
-- `store.py` — `ProjectStore` (in-memory; replace with DB for production)
+- `store.py` — `ProjectStore` (SQLite-backed)
 
 ### `usage/`
 - `metering.py` — `UsageEvent`, `UsageSummary`, `UsageLedger`
   - Records prompt tokens, completion tokens, and request counts per project
-  - In-memory for scaffolding; production backend should be ClickHouse or TimescaleDB
+  - SQLite-backed for local persistence
 
 ### `model_registry/`
 - `registry.py` — `ModelEntry`, `ModelRegistry`
@@ -118,7 +118,7 @@ uvicorn supreme_modeltx.platform_api.api.app:create_app --factory --reload
 
 ## Roadmap for platform_api
 
-- [ ] PostgreSQL / SQLite backend for project and usage persistence
+- [x] SQLite backend for projects, keys, usage, and audit logs
 - [ ] API key rotation and expiry
 - [ ] Per-project rate limiting (token bucket or sliding window)
 - [ ] Real chat completions dispatch to InferenceEngine
