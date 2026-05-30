@@ -92,13 +92,13 @@ class TestModelRegistry:
 
 
 class TestProjectStore:
-    def test_dev_project_seeded(self):
-        store = ProjectStore()
+    def test_dev_project_seeded(self, tmp_path):
+        store = ProjectStore(db_path=str(tmp_path / "projects.sqlite3"))
         projects = store.list_projects()
         assert any(p.id == "dev-project" for p in projects)
 
-    def test_create_and_get(self):
-        store = ProjectStore()
+    def test_create_and_get(self, tmp_path):
+        store = ProjectStore(db_path=str(tmp_path / "projects.sqlite3"))
         body = ProjectCreate(name="My Project", description="Test", owner_email="test@example.com")
         created = store.create_project(body)
         assert created.name == "My Project"
@@ -106,20 +106,26 @@ class TestProjectStore:
         assert fetched is not None
         assert fetched.owner_email == "test@example.com"
 
-    def test_get_nonexistent(self):
-        store = ProjectStore()
+    def test_get_nonexistent(self, tmp_path):
+        store = ProjectStore(db_path=str(tmp_path / "projects.sqlite3"))
         assert store.get_project("nonexistent-xyz") is None
+
+    def test_persists_across_instances(self, tmp_path):
+        db_path = str(tmp_path / "projects.sqlite3")
+        ProjectStore(db_path=db_path).create_project(ProjectCreate(name="Persisted"))
+        projects = ProjectStore(db_path=db_path).list_projects()
+        assert any(p.name == "Persisted" for p in projects)
 
 
 class TestUsageLedger:
-    def test_empty_summary(self):
-        ledger = UsageLedger()
+    def test_empty_summary(self, tmp_path):
+        ledger = UsageLedger(db_path=str(tmp_path / "usage.sqlite3"))
         summary = ledger.summarise("no-events-project")
         assert summary.total_requests == 0
         assert summary.total_prompt_tokens == 0
 
-    def test_record_and_summarise(self):
-        ledger = UsageLedger()
+    def test_record_and_summarise(self, tmp_path):
+        ledger = UsageLedger(db_path=str(tmp_path / "usage.sqlite3"))
         ledger.record(UsageEvent(project_id="proj-a", model_id="t-dev-6l", prompt_tokens=10, completion_tokens=20))
         ledger.record(UsageEvent(project_id="proj-a", model_id="t-dev-6l", prompt_tokens=5, completion_tokens=15))
         ledger.record(UsageEvent(project_id="proj-b", model_id="t-dev-6l", prompt_tokens=100, completion_tokens=50))
@@ -130,6 +136,14 @@ class TestUsageLedger:
         # proj-b not included
         sb = ledger.summarise("proj-b")
         assert sb.total_requests == 1
+
+    def test_persists_across_instances(self, tmp_path):
+        db_path = str(tmp_path / "usage.sqlite3")
+        UsageLedger(db_path=db_path).record(
+            UsageEvent(project_id="persist-proj", model_id="t-dev-6l", prompt_tokens=7, completion_tokens=3)
+        )
+        summary = UsageLedger(db_path=db_path).summarise("persist-proj")
+        assert summary.total_requests == 1
 
 
 class TestDeploymentService:
@@ -163,44 +177,44 @@ class TestDeploymentService:
 
 
 class TestAuditLog:
-    def test_empty_query(self):
-        log = AuditLog()
+    def test_empty_query(self, tmp_path):
+        log = AuditLog(db_path=str(tmp_path / "audit.sqlite3"))
         events = log.query()
         assert events == []
 
-    def test_record_and_query(self):
-        log = AuditLog()
+    def test_record_and_query(self, tmp_path):
+        log = AuditLog(db_path=str(tmp_path / "audit.sqlite3"))
         log.record(AuditEvent(project_id="proj-a", event_type="chat.completion", model="t-dev-6l"))
         log.record(AuditEvent(project_id="proj-b", event_type="embeddings", model="t-dev-6l"))
         all_events = log.query()
         assert len(all_events) == 2
 
-    def test_filter_by_project(self):
-        log = AuditLog()
+    def test_filter_by_project(self, tmp_path):
+        log = AuditLog(db_path=str(tmp_path / "audit.sqlite3"))
         log.record(AuditEvent(project_id="proj-a", event_type="chat.completion"))
         log.record(AuditEvent(project_id="proj-b", event_type="chat.completion"))
         a_events = log.query(project_id="proj-a")
         assert len(a_events) == 1
         assert a_events[0].project_id == "proj-a"
 
-    def test_filter_by_event_type(self):
-        log = AuditLog()
+    def test_filter_by_event_type(self, tmp_path):
+        log = AuditLog(db_path=str(tmp_path / "audit.sqlite3"))
         log.record(AuditEvent(project_id="proj-a", event_type="chat.completion"))
         log.record(AuditEvent(project_id="proj-a", event_type="embeddings"))
         chat_events = log.query(event_type="chat.completion")
         assert len(chat_events) == 1
         assert chat_events[0].event_type == "chat.completion"
 
-    def test_limit(self):
-        log = AuditLog()
+    def test_limit(self, tmp_path):
+        log = AuditLog(db_path=str(tmp_path / "audit.sqlite3"))
         for i in range(10):
             log.record(AuditEvent(project_id="proj-a", event_type="chat.completion"))
         limited = log.query(limit=3)
         assert len(limited) == 3
 
-    def test_newest_first(self):
+    def test_newest_first(self, tmp_path):
         from datetime import datetime, timezone, timedelta
-        log = AuditLog()
+        log = AuditLog(db_path=str(tmp_path / "audit.sqlite3"))
         early = AuditEvent(project_id="p", event_type="e1")
         late = AuditEvent(project_id="p", event_type="e2")
         log.record(early)
@@ -209,11 +223,17 @@ class TestAuditLog:
         # newest first — last recorded should be first
         assert events[0].event_type == "e2"
 
+    def test_persists_across_instances(self, tmp_path):
+        db_path = str(tmp_path / "audit.sqlite3")
+        AuditLog(db_path=db_path).record(AuditEvent(project_id="p", event_type="persisted"))
+        events = AuditLog(db_path=db_path).query(project_id="p")
+        assert len(events) == 1
+
 
 class TestKeyMetadataStore:
-    def _store(self):
+    def _store(self, tmp_path):
         from datetime import datetime, timezone
-        store = KeyMetadataStore()
+        store = KeyMetadataStore(db_path=str(tmp_path / "keys.sqlite3"))
         store.register(
             key_id="key-001",
             project_id="proj-a",
@@ -223,26 +243,26 @@ class TestKeyMetadataStore:
         )
         return store
 
-    def test_register_and_get(self):
-        store = self._store()
+    def test_register_and_get(self, tmp_path):
+        store = self._store(tmp_path)
         meta = store.get_by_id("key-001")
         assert meta is not None
         assert meta.project_id == "proj-a"
         assert meta.label == "prod-key"
         assert meta.key_prefix == "abcd1234"
 
-    def test_get_nonexistent(self):
-        store = KeyMetadataStore()
+    def test_get_nonexistent(self, tmp_path):
+        store = KeyMetadataStore(db_path=str(tmp_path / "keys.sqlite3"))
         assert store.get_by_id("no-such-key") is None
 
-    def test_list_all(self):
-        store = self._store()
+    def test_list_all(self, tmp_path):
+        store = self._store(tmp_path)
         keys = store.list_keys()
         assert len(keys) == 1
 
-    def test_list_by_project(self):
+    def test_list_by_project(self, tmp_path):
         from datetime import datetime, timezone
-        store = self._store()
+        store = self._store(tmp_path)
         store.register(
             key_id="key-002",
             project_id="proj-b",
@@ -254,14 +274,27 @@ class TestKeyMetadataStore:
         assert len(a_keys) == 1
         assert a_keys[0].key_id == "key-001"
 
-    def test_remove(self):
-        store = self._store()
+    def test_remove(self, tmp_path):
+        store = self._store(tmp_path)
         assert store.remove("key-001") is True
         assert store.get_by_id("key-001") is None
 
-    def test_remove_nonexistent(self):
-        store = KeyMetadataStore()
+    def test_remove_nonexistent(self, tmp_path):
+        store = KeyMetadataStore(db_path=str(tmp_path / "keys.sqlite3"))
         assert store.remove("ghost") is False
+
+    def test_persists_across_instances(self, tmp_path):
+        from datetime import datetime, timezone
+
+        db_path = str(tmp_path / "keys.sqlite3")
+        KeyMetadataStore(db_path=db_path).register(
+            key_id="persist-key",
+            project_id="persist-project",
+            label="persist-label",
+            key_prefix="persist-",
+            created_at=datetime.now(timezone.utc),
+        )
+        assert KeyMetadataStore(db_path=db_path).get_by_id("persist-key") is not None
 
 
 class TestNewSchemas:

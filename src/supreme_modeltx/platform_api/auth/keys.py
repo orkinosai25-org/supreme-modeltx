@@ -22,7 +22,10 @@ import hmac
 import logging
 import os
 import secrets
+from datetime import datetime, timezone
 from typing import Optional
+
+from supreme_modeltx.platform_api.persistence.sqlite import connect, resolve_db_path
 
 logger = logging.getLogger(__name__)
 
@@ -41,11 +44,7 @@ _SALT = os.environ.get(
     os.environ.get("SMTX_KEY_SALT", "supreme-modeltx-default-dev-salt-2026"),
 ).encode()
 
-# ---------------------------------------------------------------------------
-# In-memory key store (replace with DB-backed store in production)
-# ---------------------------------------------------------------------------
-# Maps scrypt_hex(key) → project_id
-_KEY_STORE: dict[str, str] = {}
+_DB_PATH = resolve_db_path()
 
 
 def _hash_key(key: str) -> str:
@@ -68,7 +67,24 @@ def _seed_from_env() -> None:
         "SUPREME_MODELTX_DEV_PROJECT_ID",
         os.environ.get("SMTX_DEV_PROJECT_ID", "dev-project"),
     )
-    _KEY_STORE[_hash_key(env_key)] = project_id
+    with connect(_DB_PATH) as conn:
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS api_keys (
+                key_hash TEXT PRIMARY KEY,
+                project_id TEXT NOT NULL,
+                created_at TEXT NOT NULL
+            )
+            """
+        )
+        conn.execute(
+            """
+            INSERT OR REPLACE INTO api_keys (key_hash, project_id, created_at)
+            VALUES (?, ?, ?)
+            """,
+            (_hash_key(env_key), project_id, datetime.now(timezone.utc).isoformat()),
+        )
+        conn.commit()
     logger.debug("Dev API key seeded for project: %s", project_id)
 
 
@@ -81,7 +97,15 @@ def issue_key(project_id: str) -> str:
     Returns the plain-text key (shown once; store securely).
     """
     key = f"supmtx_{secrets.token_hex(32)}"
-    _KEY_STORE[_hash_key(key)] = project_id
+    with connect(_DB_PATH) as conn:
+        conn.execute(
+            """
+            INSERT OR REPLACE INTO api_keys (key_hash, project_id, created_at)
+            VALUES (?, ?, ?)
+            """,
+            (_hash_key(key), project_id, datetime.now(timezone.utc).isoformat()),
+        )
+        conn.commit()
     logger.info("Issued API key for project: %s", project_id)
     return key
 
@@ -89,8 +113,10 @@ def issue_key(project_id: str) -> str:
 def verify_api_key(key: str) -> Optional[str]:
     """Return the project_id associated with *key*, or None if invalid."""
     key_hash = _hash_key(key)
-    # Use constant-time comparison to avoid timing attacks
-    for stored_hash, project_id in _KEY_STORE.items():
+    with connect(_DB_PATH) as conn:
+        rows = conn.execute("SELECT key_hash, project_id FROM api_keys").fetchall()
+    # Use constant-time comparison to avoid timing attacks.
+    for stored_hash, project_id in rows:
         if hmac.compare_digest(stored_hash, key_hash):
             return project_id
     return None
@@ -99,7 +125,7 @@ def verify_api_key(key: str) -> Optional[str]:
 def revoke_key(key: str) -> bool:
     """Remove a key from the store. Returns True if it existed."""
     key_hash = _hash_key(key)
-    if key_hash in _KEY_STORE:
-        del _KEY_STORE[key_hash]
-        return True
-    return False
+    with connect(_DB_PATH) as conn:
+        result = conn.execute("DELETE FROM api_keys WHERE key_hash = ?", (key_hash,))
+        conn.commit()
+    return result.rowcount > 0
