@@ -9,6 +9,8 @@ They verify:
   4. The training loop runs for 2 steps without error (dry run)
   5. Sampling utilities work on random logits
 """
+import json
+
 import torch
 import pytest
 
@@ -19,6 +21,7 @@ from supreme_modeltx.model_core.models.common.attention import (
     precompute_freqs_cis,
 )
 from supreme_modeltx.model_core.inference.sampling import sample_tokens
+from supreme_modeltx.model_core.training import trainer as trainer_module
 from supreme_modeltx.model_core.training.trainer import train
 
 
@@ -166,4 +169,40 @@ class TestTrainingDryRun:
         cfg.training.gradient_accumulation_steps = 1
         cfg.training.log_every_n_steps = 1
         # dry_run=True runs exactly 2 steps
+        train(cfg, dry_run=True)
+
+    def test_dry_run_with_manifest_pipeline(self, tmp_path, monkeypatch):
+        class _DummyTokenizerWorkflow:
+            def __init__(self, model_path, backend="sentencepiece"):
+                self.model_path = model_path
+                self.backend = backend
+
+            def as_callable(self):
+                return lambda text: [ord(ch) % 256 for ch in text][:32] or [1]
+
+        monkeypatch.setattr(trainer_module, "TokenizerWorkflow", _DummyTokenizerWorkflow)
+
+        text_path = tmp_path / "train.txt"
+        text_path.write_text("hello world\nthis is real data\n", encoding="utf-8")
+
+        manifest_path = tmp_path / "manifest.json"
+        manifest_path.write_text(
+            json.dumps(
+                {
+                    "version": "1",
+                    "sources": [{"name": "local", "backend": "text", "path": str(text_path)}],
+                }
+            ),
+            encoding="utf-8",
+        )
+
+        cfg = SMTXConfig()
+        cfg.model = _tiny_config()
+        cfg.training.batch_size = 2
+        cfg.training.gradient_accumulation_steps = 1
+        cfg.training.log_every_n_steps = 1
+        cfg.data.manifest_path = str(manifest_path)
+        cfg.data.tokenizer_path = str(tmp_path / "dummy.model")
+        cfg.data.max_seq_len = 16
+
         train(cfg, dry_run=True)
