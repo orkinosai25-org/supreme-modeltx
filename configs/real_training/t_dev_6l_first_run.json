@@ -1,0 +1,65 @@
+{
+  "model": {
+    "model_variant": "t-dev-6l",
+    "vocab_size": 32000,
+    "hidden_size": 256,
+    "num_hidden_layers": 6,
+    "num_attention_heads": 8,
+    "num_key_value_heads": 8,
+    "intermediate_size": 1024,
+    "max_position_embeddings": 256,
+    "torch_dtype": "float32",
+    "pad_token_id": 3,
+    "bos_token_id": 1,
+    "eos_token_id": 2
+  },
+  "tokenizer": {
+    "backend": "sentencepiece",
+    "model_path": "artifacts/tokenizers/t-dev-6l/v1/tokenizer.model"
+  },
+  "data": {
+    "manifest_path": "data/manifests/t_dev_6l_first_run.yaml",
+    "train_split": "train",
+    "validation_split": "validation",
+    "tokenizer_path": "artifacts/tokenizers/t-dev-6l/v1/tokenizer.model",
+    "max_seq_len": 128,
+    "pack_sequences": true
+  },
+  "training": {
+    "seed": 42,
+    "max_steps": 20,
+    "batch_size": 2,
+    "gradient_accumulation_steps": 1,
+    "log_every_n_steps": 5,
+    "eval_every_n_steps": 10,
+    "eval_max_batches": 4,
+    "precision": {
+      "enabled": false,
+      "dtype": "float32"
+    },
+    "optimizer": {
+      "name": "adamw",
+      "lr": 0.0003,
+      "weight_decay": 0.01,
+      "beta1": 0.9,
+      "beta2": 0.95,
+      "eps": 1e-8,
+      "grad_clip": 1.0
+    },
+    "scheduler": {
+      "name": "constant",
+      "warmup_steps": 0,
+      "min_lr_ratio": 1.0
+    },
+    "checkpoint": {
+      "save_dir": "artifacts/runs/t_dev_6l_first_run/checkpoints",
+      "save_every_n_steps": 10,
+      "keep_last_n": 2
+    },
+    "distributed": {
+      "backend": "auto",
+      "fsdp_enabled": false,
+      "fsdp_sharding_strategy": "full"
+    }
+  }
+}

@@ -117,6 +117,7 @@ class TrainingConfig(BaseModel):
 
     log_every_n_steps: int = Field(50, ge=1)
     eval_every_n_steps: int = Field(500, ge=1)
+    eval_max_batches: int = Field(10, ge=1)
 
 
 # ── Data configuration ─────────────────────────────────────────────────────────
@@ -125,6 +126,8 @@ class DataConfig(BaseModel):
     """Dataset manifest and preprocessing settings."""
 
     manifest_path: Optional[str] = None
+    train_split: str = "train"
+    validation_split: Optional[str] = "validation"
     data_dirs: list[str] = Field(default_factory=list)
     format: Literal["jsonl", "parquet", "hf_dataset", "text"] = "jsonl"
     hf_dataset_name: Optional[str] = None

@@ -1,0 +1,2 @@
+{"text":"Validation perplexity confirms the training loop is wired correctly."}
+{"text":"A held-out split helps verify checkpointed model quality changes."}

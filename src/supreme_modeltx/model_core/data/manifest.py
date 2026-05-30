@@ -37,6 +37,7 @@ class DataSource(BaseModel):
     path: str | None = None
     hf_name: str | None = None
     hf_split: str = "train"
+    split: str = Field("train", description="Logical split label (e.g. train, validation, test).")
     weight: float = Field(1.0, gt=0.0, description="Sampling weight relative to other sources.")
     text_field: str = Field("text", description="JSON key containing the text, for jsonl backends.")
 

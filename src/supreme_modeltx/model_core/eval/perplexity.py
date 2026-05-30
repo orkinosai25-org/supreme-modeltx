@@ -29,7 +29,7 @@ def evaluate_perplexity(
     batch_iter: Iterable[dict[str, torch.Tensor]],
     device: torch.device,
     max_batches: int | None = None,
-) -> float:
+) -> tuple[float, float]:
     """Compute perplexity on a sequence of batches.
 
     Each batch must contain ``"input_ids"`` and ``"labels"`` tensors.
@@ -41,8 +41,9 @@ def evaluate_perplexity(
         max_batches: Maximum number of batches to evaluate (None = all).
 
     Returns:
-        Perplexity as a float.
+        Tuple of ``(avg_nll_loss, perplexity)``.
     """
+    was_training = model.training
     model.eval()
     total_loss = 0.0
     total_tokens = 0
@@ -62,13 +63,16 @@ def evaluate_perplexity(
         total_tokens += n_tokens
 
     if total_tokens == 0:
-        return float("inf")
+        if was_training:
+            model.train()
+        return float("inf"), float("inf")
 
     avg_nll = total_loss / total_tokens
     perplexity = math.exp(min(avg_nll, 100.0))  # clamp to avoid overflow
-    logger.info("Perplexity: %.2f (avg NLL: %.4f, tokens: %d)", perplexity, avg_nll, total_tokens)
-    model.train()
-    return perplexity
+    logger.info("Validation loss: %.4f | perplexity: %.2f | tokens: %d", avg_nll, perplexity, total_tokens)
+    if was_training:
+        model.train()
+    return avg_nll, perplexity
 
 
 class ValidationHook:
@@ -96,7 +100,7 @@ class ValidationHook:
         self.eval_every_n_steps = eval_every_n_steps
         self.max_batches = max_batches
 
-    def __call__(self, step: int) -> float | None:
+    def __call__(self, step: int) -> tuple[float, float] | None:
         """Call at each training step; returns perplexity when evaluated, else None."""
         if step % self.eval_every_n_steps == 0:
             return evaluate_perplexity(
