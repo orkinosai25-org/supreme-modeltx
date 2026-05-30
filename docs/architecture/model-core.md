@@ -71,7 +71,26 @@ python -m supreme_modeltx.model_core.training.trainer --dry-run
 - `preprocessing.py` — `tokenize_and_pack()` with greedy sequence packing
 
 ### `tokenizer/`
-- `workflow.py` — `TokenizerWorkflow` (SentencePiece or HF tokenizers backend); `train_sentencepiece()`
+- `workflow.py` — `TokenizerWorkflow` (SentencePiece or HF tokenizers backend); `train_sentencepiece()` and `train_versioned_sentencepiece()`
+- `train.py` — CLI entrypoint for local-first, versioned SentencePiece tokenizer training
+
+Tokenizer training artifacts are written under:
+
+```text
+artifacts/tokenizers/<model-variant>/<version>/
+  tokenizer.model
+  tokenizer.vocab
+  metadata.json
+  training_corpus.txt
+```
+
+Inputs can come from:
+- local text files/directories (`--input-path`)
+- manifest-declared sources (`--manifest-path`) using the existing `data.manifest` and `data.sources` adapters
+
+Training + inference config should reference the produced `.model` via:
+- `tokenizer.model_path`
+- `data.tokenizer_path` (overrides tokenizer.model_path when set in trainer flow)
 
 ### `eval/`
 - `perplexity.py` — `evaluate_perplexity()` and `ValidationHook`
@@ -105,7 +124,7 @@ It is designed to be:
 
 ## Roadmap for model_core
 
-- [ ] SentencePiece tokenizer training pipeline on sovereign corpus
+- [x] SentencePiece tokenizer training pipeline on sovereign corpus (local-first, versioned artifacts)
 - [ ] Real data manifest for `data/raw/` → packed dataset
 - [ ] FSDP wrapping in the distributed trainer
 - [ ] T-101 (7B) config and first training run with GPU allocation

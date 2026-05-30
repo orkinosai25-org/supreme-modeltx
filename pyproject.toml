@@ -51,6 +51,7 @@ dev = [
 [project.scripts]
 smtx-train = "supreme_modeltx.model_core.training.trainer:main"
 smtx-serve = "supreme_modeltx.platform_api.api.app:main"
+smtx-tokenizer-train = "supreme_modeltx.model_core.tokenizer.train:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
