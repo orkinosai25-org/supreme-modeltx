@@ -15,6 +15,7 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from supreme_modeltx.platform_api.api import engine as engine_module
 from supreme_modeltx.platform_api.api.routers import (
     audit,
     auth,
@@ -65,6 +66,7 @@ def create_app() -> FastAPI:
     @application.on_event("startup")
     async def _startup() -> None:
         logger.info("Supreme ModelTX Platform API starting up.")
+        engine_module.initialize_engine()
 
     return application
 

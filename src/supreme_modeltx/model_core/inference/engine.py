@@ -92,7 +92,7 @@ class InferenceEngine:
                 top_p=top_p,
                 top_k=top_k,
             )
-            generated = torch.cat([generated, next_token.unsqueeze(0)], dim=1)
+            generated = torch.cat([generated, next_token.view(1, 1)], dim=1)
             if eos_id is not None and next_token.item() == eos_id:
                 break
 
