@@ -14,9 +14,12 @@ from fastapi.testclient import TestClient
 
 from supreme_modeltx.platform_api.api import engine as engine_module
 from supreme_modeltx.platform_api.api.engine import _format_prompt, _InferenceBackend
+from supreme_modeltx.platform_api.api.routers import chat as chat_router_module
 from supreme_modeltx.platform_api.api.routers import models as models_router_module
 from supreme_modeltx.platform_api.api.schemas import ChatMessage
+from supreme_modeltx.platform_api.audit.log import AuditLog
 from supreme_modeltx.platform_api.model_registry.registry import ModelEntry, ModelRegistry
+from supreme_modeltx.platform_api.usage.metering import UsageLedger
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -153,6 +156,35 @@ class TestChatCompletionsEndpoint:
         assert captured["max_new_tokens"] == 64
         assert captured["temperature"] == pytest.approx(0.3)
         assert captured["top_p"] == pytest.approx(0.85)
+
+    def test_persists_usage_and_audit_for_successful_completion(self, monkeypatch, tmp_path):
+        class _MockBackend:
+            def generate_from_messages(self, messages, max_new_tokens, temperature, top_p):
+                return "Hello there!", 5, 2
+
+        usage_ledger = UsageLedger(db_path=str(tmp_path / "usage.sqlite3"))
+        audit_log = AuditLog(db_path=str(tmp_path / "audit.sqlite3"))
+        monkeypatch.setattr(chat_router_module, "_usage_ledger", usage_ledger)
+        monkeypatch.setattr(chat_router_module, "_audit_log", audit_log)
+        monkeypatch.setattr(engine_module, "_engine_backend", _MockBackend())
+
+        client = _make_client()
+        resp = client.post(
+            "/v1/chat/completions",
+            json={"model": "t-dev-6l", "messages": [{"role": "user", "content": "Hey"}]},
+            headers=_AUTH_HEADERS,
+        )
+
+        assert resp.status_code == 200
+        usage_summary = usage_ledger.summarise(project_id="dev-project")
+        assert usage_summary.total_prompt_tokens == 5
+        assert usage_summary.total_completion_tokens == 2
+        assert usage_summary.total_requests == 1
+
+        audit_events = audit_log.query(project_id="dev-project", event_type="chat.completion")
+        assert len(audit_events) == 1
+        assert audit_events[0].event_type == "chat.completion"
+        assert audit_events[0].model == "t-dev-6l"
 
     def test_models_endpoint_exposes_checkpoint_metadata(self, monkeypatch, tmp_path):
         db_path = str(tmp_path / "models.sqlite3")
