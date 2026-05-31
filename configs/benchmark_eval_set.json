@@ -1,0 +1,38 @@
+{
+  "_comment": "Small canonical benchmark set for repeatable code/reasoning checks over checkpoint sample outputs.",
+  "benchmark_name": "smtx-mini-code-reasoning-v1",
+  "tasks": [
+    {
+      "id": "code_max_of_two",
+      "category": "code",
+      "prompt": "Write a Python function max_of_two(a, b) that returns the larger integer.",
+      "scoring": "keyword_ratio",
+      "required_keywords": [
+        "def max_of_two",
+        "return",
+        "if"
+      ]
+    },
+    {
+      "id": "code_list_comprehension",
+      "category": "code",
+      "prompt": "What does this Python expression output: [x*x for x in range(4)]",
+      "scoring": "contains",
+      "expected_answer": "[0, 1, 4, 9]"
+    },
+    {
+      "id": "reasoning_syllogism",
+      "category": "reasoning",
+      "prompt": "All birds have wings. A sparrow is a bird. Does a sparrow have wings? Answer yes or no.",
+      "scoring": "contains",
+      "expected_answer": "yes"
+    },
+    {
+      "id": "reasoning_widget_rate",
+      "category": "reasoning",
+      "prompt": "If five machines make five widgets in five minutes, how many widgets do 100 machines make in five minutes?",
+      "scoring": "contains",
+      "expected_answer": "100"
+    }
+  ]
+}
