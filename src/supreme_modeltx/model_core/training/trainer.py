@@ -195,8 +195,8 @@ def _load_canonical_prompts(cfg: SMTXConfig) -> list[str]:
     run_dir = Path(cfg.training.checkpoint.save_dir).parent
     candidate = run_dir / "canonical_prompts.json"
     if not candidate.exists():
-        # Try repo-level configs/ directory relative to the save_dir root
-        repo_candidate = Path(__file__).parents[5] / "configs" / "canonical_prompts.json"
+        # Try repo-level configs/ directory relative to the trainer module location
+        repo_candidate = Path(__file__).parents[4] / "configs" / "canonical_prompts.json"
         candidate = repo_candidate
     if candidate.exists():
         try:

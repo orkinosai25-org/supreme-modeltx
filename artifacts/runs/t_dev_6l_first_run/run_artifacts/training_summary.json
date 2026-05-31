@@ -1,0 +1,54 @@
+{
+  "run_name": "t_dev_6l_first_run",
+  "training_end_status": "completed",
+  "timestamps": {
+    "started_at_utc": "2026-05-31T23:07:47.999917+00:00",
+    "ended_at_utc": "2026-05-31T23:07:52.002967+00:00"
+  },
+  "git_commit": "6448046e86ef2fd05a8f4c5346f39342ba8f2d34",
+  "config_path": "artifacts/runs/t_dev_6l_first_run/run_artifacts/config_used.json",
+  "data": {
+    "manifest_path": "artifacts/runs/t_dev_6l_first_run/manifest.yaml",
+    "train_split": "train",
+    "validation_split": "validation"
+  },
+  "device": "cpu",
+  "precision": {
+    "dtype": "float32",
+    "enabled": false
+  },
+  "eval_cadence": {
+    "eval_every_n_steps": 10,
+    "eval_max_batches": 4
+  },
+  "tokenizer": {
+    "path": "artifacts/tokenizers/t-dev-6l/t-dev-6l/v-first-run/tokenizer.model",
+    "version": "v-first-run",
+    "backend": "sentencepiece"
+  },
+  "checkpoint_paths": [
+    "artifacts/runs/t_dev_6l_first_run/checkpoints/checkpoint_step_00000010.pt",
+    "artifacts/runs/t_dev_6l_first_run/checkpoints/checkpoint_step_00000020.pt"
+  ],
+  "best_checkpoint_path": "artifacts/runs/t_dev_6l_first_run/checkpoints/checkpoint_step_00000010.pt",
+  "validation_history": [
+    {
+      "step": 10,
+      "val_loss": 5.942846059799194,
+      "perplexity": 381.0177872754133,
+      "timestamp_utc": "2026-05-31T23:07:50.115636+00:00"
+    },
+    {
+      "step": 20,
+      "val_loss": 6.009589791297913,
+      "perplexity": 407.3162013491317,
+      "timestamp_utc": "2026-05-31T23:07:51.598580+00:00"
+    }
+  ],
+  "latest_validation_loss": 6.009589791297913,
+  "latest_perplexity": 407.3162013491317,
+  "sample_artifact_paths": [
+    "artifacts/runs/t_dev_6l_first_run/run_artifacts/samples/checkpoint_step_00000010_samples.json",
+    "artifacts/runs/t_dev_6l_first_run/run_artifacts/samples/checkpoint_step_00000020_samples.json"
+  ]
+}

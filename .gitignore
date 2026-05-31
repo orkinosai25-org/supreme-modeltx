@@ -37,3 +37,8 @@ Thumbs.db
 **/obj/
 *.user
 *.suo
+
+# Training artifacts — large binary files not committed to git
+artifacts/**/*.pt
+artifacts/tokenizers/**/*.model
+artifacts/tokenizers/**/training_corpus.txt

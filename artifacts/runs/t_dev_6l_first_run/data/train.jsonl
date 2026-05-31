@@ -1,0 +1,16 @@
+{"text": "Sovereign AI enables distributed model training without cloud dependency."}
+{"text": "The supreme-modeltx repository provides a clean training loop for language models."}
+{"text": "Write a Python function max_of_two that returns the larger integer."}
+{"text": "List comprehensions in Python allow concise iteration over sequences."}
+{"text": "If five machines make five widgets in five minutes, the rate is one widget per machine."}
+{"text": "All birds have wings and most birds can fly using those wings."}
+{"text": "A sparrow is a bird and therefore has wings according to the syllogism."}
+{"text": "Gradient descent optimises model parameters by moving against the gradient direction."}
+{"text": "Checkpoint saving allows training to resume from the most recent saved state."}
+{"text": "Mixed precision training uses float16 or bfloat16 to reduce memory footprint."}
+{"text": "Tokenisation converts raw text into integer token sequences for model input."}
+{"text": "Benchmark evaluation measures model capability across code and reasoning tasks."}
+{"text": "Validation loss decreases as the model fits the training distribution better."}
+{"text": "Perplexity is the exponent of the cross-entropy loss and measures fluency."}
+{"text": "AdamW combines Adam optimisation with decoupled weight decay regularisation."}
+{"text": "The cosine learning rate schedule smoothly anneals the learning rate over training."}

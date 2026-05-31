@@ -1,0 +1,200 @@
+{
+  "benchmark_name": "smtx-mini-code-reasoning-v1",
+  "generated_at_utc": "2026-05-31T23:08:04.039289+00:00",
+  "inputs": {
+    "eval_set_path": "configs/benchmark_eval_set.json",
+    "baselines_path": "configs/benchmark_baselines.json",
+    "samples_root": "artifacts/runs/t_dev_6l_first_run/run_artifacts"
+  },
+  "methodology": {
+    "task_count": 4,
+    "benchmark_scope": "Lightweight internal/canonical directional benchmark for quick local checkpoint tracking; not equivalent to frontier public benchmark suites.",
+    "prompt_alignment": "Tasks are scored only when the eval-set prompt exactly matches a sample prompt string.",
+    "local_checkpoint_source_patterns": [
+      "samples/checkpoint_step_*_samples.json",
+      "**/samples/checkpoint_step_*_samples.json"
+    ],
+    "baseline_semantics": "selected_open_baselines are reference metadata from public model documentation and are not runtime-evaluated in this workflow.",
+    "scoring": {
+      "keyword_ratio": "score = matched required keywords / total required keywords",
+      "contains": "score = 1.0 if expected answer appears in completion, else 0.0"
+    }
+  },
+  "limitations": [
+    "This benchmark is a lightweight internal/canonical directional signal, not a replacement for full external benchmark suites.",
+    "Scores depend on deterministic checkpoint sample generation prompts and may not measure broad task generalisation.",
+    "Open baseline scores are reference metadata sourced from public model cards or project documentation, not measured outputs from this workflow."
+  ],
+  "local_checkpoints": [
+    {
+      "checkpoint_path": "artifacts/runs/t_dev_6l_first_run/checkpoints/checkpoint_step_00000010.pt",
+      "generated_at_utc": "2026-05-31T23:07:50.163178+00:00",
+      "metrics": {
+        "overall_score": 0.0,
+        "code_score": 0.0,
+        "reasoning_score": 0.0,
+        "task_count": 4,
+        "matched_task_count": 4,
+        "missing_task_count": 0
+      },
+      "task_results": [
+        {
+          "id": "code_max_of_two",
+          "category": "code",
+          "prompt": "Write a Python function max_of_two(a, b) that returns the larger integer.",
+          "score": 0.0,
+          "completion_text": "",
+          "matched_prompt": true,
+          "scoring": "keyword_ratio"
+        },
+        {
+          "id": "code_list_comprehension",
+          "category": "code",
+          "prompt": "What does this Python expression output: [x*x for x in range(4)]",
+          "score": 0.0,
+          "completion_text": "h h h h h h h h h h h h h h h h h h h h h h h h",
+          "matched_prompt": true,
+          "scoring": "contains"
+        },
+        {
+          "id": "reasoning_syllogism",
+          "category": "reasoning",
+          "prompt": "All birds have wings. A sparrow is a bird. Does a sparrow have wings? Answer yes or no.",
+          "score": 0.0,
+          "completion_text": "",
+          "matched_prompt": true,
+          "scoring": "contains"
+        },
+        {
+          "id": "reasoning_widget_rate",
+          "category": "reasoning",
+          "prompt": "If five machines make five widgets in five minutes, how many widgets do 100 machines make in five minutes?",
+          "score": 0.0,
+          "completion_text": "",
+          "matched_prompt": true,
+          "scoring": "contains"
+        }
+      ]
+    },
+    {
+      "checkpoint_path": "artifacts/runs/t_dev_6l_first_run/checkpoints/checkpoint_step_00000020.pt",
+      "generated_at_utc": "2026-05-31T23:07:51.645009+00:00",
+      "metrics": {
+        "overall_score": 0.0,
+        "code_score": 0.0,
+        "reasoning_score": 0.0,
+        "task_count": 4,
+        "matched_task_count": 4,
+        "missing_task_count": 0
+      },
+      "task_results": [
+        {
+          "id": "code_max_of_two",
+          "category": "code",
+          "prompt": "Write a Python function max_of_two(a, b) that returns the larger integer.",
+          "score": 0.0,
+          "completion_text": "",
+          "matched_prompt": true,
+          "scoring": "keyword_ratio"
+        },
+        {
+          "id": "code_list_comprehension",
+          "category": "code",
+          "prompt": "What does this Python expression output: [x*x for x in range(4)]",
+          "score": 0.0,
+          "completion_text": "h h h h h h h h h h h h h h h h h h h h h h h h",
+          "matched_prompt": true,
+          "scoring": "contains"
+        },
+        {
+          "id": "reasoning_syllogism",
+          "category": "reasoning",
+          "prompt": "All birds have wings. A sparrow is a bird. Does a sparrow have wings? Answer yes or no.",
+          "score": 0.0,
+          "completion_text": "",
+          "matched_prompt": true,
+          "scoring": "contains"
+        },
+        {
+          "id": "reasoning_widget_rate",
+          "category": "reasoning",
+          "prompt": "If five machines make five widgets in five minutes, how many widgets do 100 machines make in five minutes?",
+          "score": 0.0,
+          "completion_text": "",
+          "matched_prompt": true,
+          "scoring": "contains"
+        }
+      ]
+    }
+  ],
+  "best_local_checkpoint": {
+    "checkpoint_path": "artifacts/runs/t_dev_6l_first_run/checkpoints/checkpoint_step_00000010.pt",
+    "generated_at_utc": "2026-05-31T23:07:50.163178+00:00",
+    "metrics": {
+      "overall_score": 0.0,
+      "code_score": 0.0,
+      "reasoning_score": 0.0,
+      "task_count": 4,
+      "matched_task_count": 4,
+      "missing_task_count": 0
+    },
+    "task_results": [
+      {
+        "id": "code_max_of_two",
+        "category": "code",
+        "prompt": "Write a Python function max_of_two(a, b) that returns the larger integer.",
+        "score": 0.0,
+        "completion_text": "",
+        "matched_prompt": true,
+        "scoring": "keyword_ratio"
+      },
+      {
+        "id": "code_list_comprehension",
+        "category": "code",
+        "prompt": "What does this Python expression output: [x*x for x in range(4)]",
+        "score": 0.0,
+        "completion_text": "h h h h h h h h h h h h h h h h h h h h h h h h",
+        "matched_prompt": true,
+        "scoring": "contains"
+      },
+      {
+        "id": "reasoning_syllogism",
+        "category": "reasoning",
+        "prompt": "All birds have wings. A sparrow is a bird. Does a sparrow have wings? Answer yes or no.",
+        "score": 0.0,
+        "completion_text": "",
+        "matched_prompt": true,
+        "scoring": "contains"
+      },
+      {
+        "id": "reasoning_widget_rate",
+        "category": "reasoning",
+        "prompt": "If five machines make five widgets in five minutes, how many widgets do 100 machines make in five minutes?",
+        "score": 0.0,
+        "completion_text": "",
+        "matched_prompt": true,
+        "scoring": "contains"
+      }
+    ]
+  },
+  "selected_open_baselines": [
+    {
+      "name": "TinyLlama-1.1B-Chat-v1.0",
+      "source": "https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+      "metrics": {
+        "overall_score": 0.5,
+        "code_score": 0.4,
+        "reasoning_score": 0.6
+      }
+    },
+    {
+      "name": "Mistral-7B-Instruct-v0.2",
+      "source": "https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2",
+      "metrics": {
+        "overall_score": 0.8,
+        "code_score": 0.75,
+        "reasoning_score": 0.85
+      }
+    }
+  ]
+}
