@@ -10,6 +10,11 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+SAMPLE_PATTERNS = [
+    "samples/checkpoint_step_*_samples.json",
+    "**/samples/checkpoint_step_*_samples.json",
+]
+
 
 def _normalise_text(value: str) -> str:
     return " ".join(value.lower().split())
@@ -41,12 +46,8 @@ def _load_tasks(eval_set_path: Path) -> list[dict[str, Any]]:
 
 
 def _find_sample_payloads(samples_root: Path) -> list[dict[str, Any]]:
-    patterns = [
-        "samples/checkpoint_step_*_samples.json",
-        "**/samples/checkpoint_step_*_samples.json",
-    ]
     files: list[Path] = []
-    for pattern in patterns:
+    for pattern in SAMPLE_PATTERNS:
         files.extend(samples_root.glob(pattern))
     unique_files = sorted(set(path.resolve() for path in files))
 
@@ -80,6 +81,7 @@ def evaluate_checkpoints(tasks: list[dict[str, Any]], sample_payloads: list[dict
 
         for task in tasks:
             prompt = str(task.get("prompt", ""))
+            matched_prompt = prompt in prompt_to_completion
             completion = prompt_to_completion.get(prompt, "")
             score = _score_task(task, completion)
             category = str(task.get("category", "other"))
@@ -90,6 +92,7 @@ def evaluate_checkpoints(tasks: list[dict[str, Any]], sample_payloads: list[dict
                     "prompt": prompt,
                     "score": score,
                     "completion_text": completion,
+                    "matched_prompt": matched_prompt,
                     "scoring": task.get("scoring", "contains"),
                 }
             )
@@ -108,6 +111,8 @@ def evaluate_checkpoints(tasks: list[dict[str, Any]], sample_payloads: list[dict
                     "code_score": round(_mean(code_scores), 4),
                     "reasoning_score": round(_mean(reasoning_scores), 4),
                     "task_count": len(task_rows),
+                    "matched_task_count": sum(1 for row in task_rows if row["matched_prompt"]),
+                    "missing_task_count": sum(1 for row in task_rows if not row["matched_prompt"]),
                 },
                 "task_results": task_rows,
             }
@@ -146,16 +151,19 @@ def build_report(
         },
         "methodology": {
             "task_count": len(tasks),
-            "local_checkpoint_source": "run_artifacts/samples/checkpoint_step_*_samples.json",
+            "benchmark_scope": "Lightweight internal/canonical directional benchmark for quick local checkpoint tracking; not equivalent to frontier public benchmark suites.",
+            "prompt_alignment": "Tasks are scored only when the eval-set prompt exactly matches a sample prompt string.",
+            "local_checkpoint_source_patterns": SAMPLE_PATTERNS,
+            "baseline_semantics": "selected_open_baselines are reference metadata from public model documentation and are not runtime-evaluated in this workflow.",
             "scoring": {
                 "keyword_ratio": "score = matched required keywords / total required keywords",
                 "contains": "score = 1.0 if expected answer appears in completion, else 0.0",
             },
         },
         "limitations": [
-            "This benchmark is a compact directional signal, not a replacement for full public benchmark suites.",
+            "This benchmark is a lightweight internal/canonical directional signal, not a replacement for full external benchmark suites.",
             "Scores depend on deterministic checkpoint sample generation prompts and may not measure broad task generalisation.",
-            "Open baseline scores are reference values sourced from public model cards or project documentation.",
+            "Open baseline scores are reference metadata sourced from public model cards or project documentation, not measured outputs from this workflow.",
         ],
         "local_checkpoints": checkpoint_results,
         "best_local_checkpoint": best_local,
@@ -171,6 +179,8 @@ def _build_markdown(report: dict[str, Any]) -> str:
         f"- Benchmark: `{report.get('benchmark_name')}`",
         f"- Generated at (UTC): `{report.get('generated_at_utc')}`",
         f"- Task count: `{report.get('methodology', {}).get('task_count', 0)}`",
+        f"- Scope: {report.get('methodology', {}).get('benchmark_scope', 'n/a')}",
+        f"- Baseline semantics: {report.get('methodology', {}).get('baseline_semantics', 'n/a')}",
         "",
         "## Best local checkpoint",
     ]
@@ -182,12 +192,14 @@ def _build_markdown(report: dict[str, Any]) -> str:
                 f"- Overall score: `{metrics.get('overall_score')}`",
                 f"- Code score: `{metrics.get('code_score')}`",
                 f"- Reasoning score: `{metrics.get('reasoning_score')}`",
+                f"- Matched tasks: `{metrics.get('matched_task_count')}` / `{metrics.get('task_count')}`",
+                f"- Missing tasks: `{metrics.get('missing_task_count')}`",
             ]
         )
     else:
         lines.append("- No local checkpoint samples found.")
 
-    lines.extend(["", "## Selected open baselines"])
+    lines.extend(["", "## Selected open baselines (reference metadata, not runtime-scored here)"])
     baselines = report.get("selected_open_baselines", [])
     if not baselines:
         lines.append("- None configured.")
@@ -201,7 +213,25 @@ def _build_markdown(report: dict[str, Any]) -> str:
                 f"reasoning={metrics.get('reasoning_score', 'n/a')}",
             ]
         )
-    lines.extend(["", "## Methodology limitations"])
+    lines.extend(
+        [
+            "",
+            "## What was scored",
+            f"- Local checkpoint samples found under `{report.get('inputs', {}).get('samples_root')}` using patterns `{', '.join(report.get('methodology', {}).get('local_checkpoint_source_patterns', []))}`.",
+            f"- Prompt mapping policy: {report.get('methodology', {}).get('prompt_alignment', 'n/a')}",
+            "",
+            "## How scoring works",
+        ]
+    )
+    scoring = report.get("methodology", {}).get("scoring", {})
+    for name, description in scoring.items():
+        lines.append(f"- `{name}`: {description}")
+
+    lines.extend(["", "## What was not scored"])
+    lines.append("- Tasks without an exact prompt match in checkpoint samples are reported as missing.")
+    lines.append("- Baseline entries are not re-run or re-scored by this workflow.")
+
+    lines.extend(["", "## Why this is only part of the picture"])
     for limitation in report.get("limitations", []):
         lines.append(f"- {limitation}")
     lines.append("")

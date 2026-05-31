@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       samples_root:
-        description: "Root directory containing run_artifacts/samples/*_samples.json"
+        description: "Root searched for samples/checkpoint_step_*_samples.json (also supports nested **/samples/)"
         required: false
         default: "run_artifacts"
       eval_set_path:

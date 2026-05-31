@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from supreme_modeltx.model_core.eval.benchmark import build_report, evaluate_checkpoints
+from supreme_modeltx.model_core.eval.benchmark import _build_markdown, build_report, evaluate_checkpoints
 
 
 def _write_json(path: Path, payload: dict) -> None:
@@ -51,6 +51,8 @@ def test_evaluate_checkpoints_scores_code_and_reasoning_tasks():
     assert metrics["overall_score"] == 1.0
     assert metrics["code_score"] == 1.0
     assert metrics["reasoning_score"] == 1.0
+    assert metrics["matched_task_count"] == 2
+    assert metrics["missing_task_count"] == 0
 
 
 def test_build_report_reads_samples_and_baselines(tmp_path):
@@ -104,3 +106,11 @@ def test_build_report_reads_samples_and_baselines(tmp_path):
     assert report["benchmark_name"] == "smtx-mini-code-reasoning-v1"
     assert report["best_local_checkpoint"]["metrics"]["overall_score"] == 1.0
     assert report["selected_open_baselines"][0]["name"] == "Test baseline"
+    assert "lightweight internal/canonical directional" in report["methodology"]["benchmark_scope"].lower()
+    assert "reference metadata" in report["methodology"]["baseline_semantics"].lower()
+
+    markdown = _build_markdown(report)
+    assert "## What was scored" in markdown
+    assert "## How scoring works" in markdown
+    assert "## What was not scored" in markdown
+    assert "## Why this is only part of the picture" in markdown
