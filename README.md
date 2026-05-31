@@ -133,6 +133,18 @@ Expected outputs:
 - training loss logs
 - validation logs with loss and perplexity (from `model_core/eval/perplexity.py`)
 - resume logs when checkpoint files already exist (`Resumed from step ...`)
+- structured run artifacts:
+  - `artifacts/runs/t_dev_6l_first_run/run_artifacts/config_used.json`
+  - `artifacts/runs/t_dev_6l_first_run/run_artifacts/training_summary.json`
+  - `artifacts/runs/t_dev_6l_first_run/run_artifacts/training_summary.md`
+  - `artifacts/runs/t_dev_6l_first_run/run_artifacts/samples/checkpoint_step_*_samples.json`
+
+To compare runs, inspect each run's `run_artifacts/training_summary.json` for:
+
+- tokenizer path/version
+- checkpoint paths
+- latest validation loss and perplexity
+- timestamps and git commit
 
 Example log lines:
 
