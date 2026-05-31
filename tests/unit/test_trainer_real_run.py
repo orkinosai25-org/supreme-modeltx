@@ -115,5 +115,25 @@ def test_manifest_sentencepiece_training_emits_eval_and_checkpoint(tmp_path, cap
     assert (tmp_path / "checkpoints" / "checkpoint_step_00000001.pt").exists()
     assert (tmp_path / "checkpoints" / "checkpoint_step_00000002.pt").exists()
 
+    run_artifacts_dir = tmp_path / "run_artifacts"
+    summary_path = run_artifacts_dir / "training_summary.json"
+    assert summary_path.exists()
+
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    assert summary["config_path"].endswith("run_artifacts/config_used.json")
+    assert summary["tokenizer"]["path"] == str(tokenizer_artifacts.model_path)
+    assert summary["tokenizer"]["version"] == "v-test"
+    assert len(summary["checkpoint_paths"]) == 2
+    assert summary["latest_validation_loss"] is not None
+    assert summary["latest_perplexity"] is not None
+    assert len(summary["sample_artifact_paths"]) == 2
+    assert (run_artifacts_dir / "training_summary.md").exists()
+
+    first_sample_path = Path(summary["sample_artifact_paths"][0])
+    assert first_sample_path.exists()
+    sample_payload = json.loads(first_sample_path.read_text(encoding="utf-8"))
+    assert sample_payload["samples"]
+    assert "completion_text" in sample_payload["samples"][0]
+
     assert "eval step=1/2" in caplog.text
     assert "perplexity=" in caplog.text

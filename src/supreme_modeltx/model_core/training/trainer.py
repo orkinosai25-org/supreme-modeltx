@@ -21,8 +21,11 @@ Usage (multi-GPU via torchrun):
 from __future__ import annotations
 
 import argparse
+import json
 import logging
+import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterator
 
@@ -34,6 +37,7 @@ from supreme_modeltx.model_core.data.manifest import DataManifest
 from supreme_modeltx.model_core.data.preprocessing import tokenize_and_pack
 from supreme_modeltx.model_core.data.sources import iter_source
 from supreme_modeltx.model_core.eval.perplexity import evaluate_perplexity
+from supreme_modeltx.model_core.inference.engine import InferenceEngine
 from supreme_modeltx.model_core.models.t_series.baseline import TSeriesBaseline
 from supreme_modeltx.model_core.tokenizer.workflow import TokenizerWorkflow
 from supreme_modeltx.model_core.training.checkpoint import (
@@ -139,6 +143,184 @@ def _build_data_iter(cfg: SMTXConfig, device: torch.device) -> Iterator[dict[str
     return _dummy_data_iter(cfg, device)
 
 
+def _resolve_run_artifact_dir(cfg: SMTXConfig) -> Path:
+    checkpoint_dir = Path(cfg.training.checkpoint.save_dir)
+    run_dir = checkpoint_dir.parent if checkpoint_dir.name == "checkpoints" else checkpoint_dir
+    artifact_dir = run_dir / "run_artifacts"
+    artifact_dir.mkdir(parents=True, exist_ok=True)
+    return artifact_dir
+
+
+def _extract_tokenizer_version(tokenizer_path: str | None) -> str | None:
+    if not tokenizer_path:
+        return None
+    metadata_path = Path(tokenizer_path).parent / "metadata.json"
+    if not metadata_path.exists():
+        return None
+    try:
+        metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    version = metadata.get("version")
+    return str(version) if version else None
+
+
+def _get_git_commit() -> str | None:
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except (FileNotFoundError, subprocess.CalledProcessError):
+        return None
+    sha = result.stdout.strip()
+    return sha or None
+
+
+def _generate_checkpoint_samples(
+    cfg: SMTXConfig,
+    checkpoint_path: Path,
+    artifact_dir: Path,
+    *,
+    generated_at_utc: str,
+) -> Path | None:
+    tokenizer_path = cfg.data.tokenizer_path or cfg.tokenizer.model_path
+    if not tokenizer_path:
+        return None
+
+    samples_dir = artifact_dir / "samples"
+    samples_dir.mkdir(parents=True, exist_ok=True)
+
+    tokenizer = TokenizerWorkflow(tokenizer_path, backend=cfg.tokenizer.backend)
+    engine = InferenceEngine(
+        model_config=cfg.model,
+        checkpoint_path=checkpoint_path,
+        dtype="float32",
+    )
+    prompts = [
+        "Sovereign AI enables",
+        "In this training run, the model should",
+    ]
+    prompt_rows: list[dict[str, Any]] = []
+    tokenizer_vocab_size = tokenizer.vocab_size
+
+    def _safe_decode(ids: list[int]) -> str:
+        if not ids:
+            return ""
+        safe_ids = [token if 0 <= token < tokenizer_vocab_size else cfg.model.eos_token_id for token in ids]
+        return tokenizer.decode(safe_ids)
+
+    for prompt in prompts:
+        prompt_ids = tokenizer.encode(prompt)
+        if not prompt_ids:
+            continue
+        input_ids = torch.tensor(prompt_ids, dtype=torch.long)
+        output_ids = engine.generate(
+            input_ids=input_ids,
+            max_new_tokens=24,
+            temperature=0.0,
+            top_p=1.0,
+            top_k=0,
+            eos_id=cfg.model.eos_token_id,
+        ).tolist()
+        completion_ids = output_ids[len(prompt_ids):]
+        prompt_rows.append(
+            {
+                "prompt": prompt,
+                "prompt_token_count": len(prompt_ids),
+                "completion_token_count": len(completion_ids),
+                "completion_text": _safe_decode(completion_ids),
+                "full_output_text": _safe_decode(output_ids),
+            }
+        )
+
+    if not prompt_rows:
+        return None
+
+    sample_payload = {
+        "checkpoint_path": str(checkpoint_path),
+        "generated_at_utc": generated_at_utc,
+        "generation": {
+            "max_new_tokens": 24,
+            "temperature": 0.0,
+            "top_p": 1.0,
+            "top_k": 0,
+        },
+        "samples": prompt_rows,
+    }
+    sample_path = samples_dir / f"{checkpoint_path.stem}_samples.json"
+    sample_path.write_text(json.dumps(sample_payload, indent=2), encoding="utf-8")
+    return sample_path
+
+
+def _write_run_summary(
+    cfg: SMTXConfig,
+    artifact_dir: Path,
+    *,
+    started_at_utc: str,
+    ended_at_utc: str,
+    validation_history: list[dict[str, Any]],
+    checkpoint_paths: list[str],
+    sample_artifact_paths: list[str],
+) -> None:
+    config_path = artifact_dir / "config_used.json"
+    config_path.write_text(cfg.model_dump_json(indent=2), encoding="utf-8")
+
+    latest_val = validation_history[-1] if validation_history else None
+    tokenizer_path = cfg.data.tokenizer_path or cfg.tokenizer.model_path
+    tokenizer_version = _extract_tokenizer_version(tokenizer_path)
+    summary = {
+        "run_name": Path(cfg.training.checkpoint.save_dir).parent.name,
+        "timestamps": {
+            "started_at_utc": started_at_utc,
+            "ended_at_utc": ended_at_utc,
+        },
+        "git_commit": _get_git_commit(),
+        "config_path": str(config_path),
+        "tokenizer": {
+            "path": tokenizer_path,
+            "version": tokenizer_version,
+            "backend": cfg.tokenizer.backend,
+        },
+        "checkpoint_paths": checkpoint_paths,
+        "validation_history": validation_history,
+        "latest_validation_loss": latest_val["val_loss"] if latest_val else None,
+        "latest_perplexity": latest_val["perplexity"] if latest_val else None,
+        "sample_artifact_paths": sample_artifact_paths,
+    }
+
+    summary_json_path = artifact_dir / "training_summary.json"
+    summary_json_path.write_text(json.dumps(summary, indent=2), encoding="utf-8")
+
+    summary_md_path = artifact_dir / "training_summary.md"
+    summary_md_path.write_text(
+        "\n".join(
+            [
+                "# Training Run Summary",
+                "",
+                f"- Run: `{summary['run_name']}`",
+                f"- Started (UTC): `{started_at_utc}`",
+                f"- Ended (UTC): `{ended_at_utc}`",
+                f"- Git commit: `{summary['git_commit'] or 'unavailable'}`",
+                f"- Config: `{config_path}`",
+                f"- Tokenizer path: `{tokenizer_path or 'unavailable'}`",
+                f"- Tokenizer version: `{tokenizer_version or 'unknown'}`",
+                f"- Latest validation loss: `{summary['latest_validation_loss']}`",
+                f"- Latest perplexity: `{summary['latest_perplexity']}`",
+                "",
+                "## Checkpoints",
+            ]
+            + [f"- `{path}`" for path in checkpoint_paths]
+            + ["", "## Sample artifacts"]
+            + [f"- `{path}`" for path in sample_artifact_paths]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+
 # ── Training loop ──────────────────────────────────────────────────────────────
 
 def train(cfg: SMTXConfig, *, dry_run: bool = False) -> None:
@@ -153,6 +335,10 @@ def train(cfg: SMTXConfig, *, dry_run: bool = False) -> None:
     device = get_device()
 
     torch.manual_seed(cfg.training.seed)
+    started_at_utc = datetime.now(timezone.utc).isoformat()
+    run_artifact_dir = None if dry_run else _resolve_run_artifact_dir(cfg)
+    validation_history: list[dict[str, Any]] = []
+    sample_artifact_paths: list[str] = []
 
     model = TSeriesBaseline.from_config(cfg.model).to(device)
     if is_main_process():
@@ -268,6 +454,14 @@ def train(cfg: SMTXConfig, *, dry_run: bool = False) -> None:
                 val_loss,
                 perplexity,
             )
+            validation_history.append(
+                {
+                    "step": step + 1,
+                    "val_loss": val_loss,
+                    "perplexity": perplexity,
+                    "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+                }
+            )
 
         # Save checkpoint
         if (
@@ -275,7 +469,7 @@ def train(cfg: SMTXConfig, *, dry_run: bool = False) -> None:
             and not dry_run
             and (step + 1) % cfg.training.checkpoint.save_every_n_steps == 0
         ):
-            save_checkpoint(
+            checkpoint_path = save_checkpoint(
                 step + 1,
                 model,
                 optimizer,
@@ -283,8 +477,35 @@ def train(cfg: SMTXConfig, *, dry_run: bool = False) -> None:
                 save_dir=cfg.training.checkpoint.save_dir,
                 keep_last_n=cfg.training.checkpoint.keep_last_n,
             )
+            generated_at_utc = datetime.now(timezone.utc).isoformat()
+            if run_artifact_dir is not None:
+                try:
+                    sample_path = _generate_checkpoint_samples(
+                        cfg,
+                        checkpoint_path,
+                        run_artifact_dir,
+                        generated_at_utc=generated_at_utc,
+                    )
+                except Exception as exc:  # pragma: no cover - best-effort artifact generation
+                    logger.warning("Sample generation failed for %s: %s", checkpoint_path, exc)
+                    sample_path = None
+                if sample_path is not None:
+                    sample_artifact_paths.append(str(sample_path))
 
-    if is_main_process():
+    if is_main_process() and run_artifact_dir is not None:
+        checkpoint_paths = sorted(
+            str(path)
+            for path in Path(cfg.training.checkpoint.save_dir).glob("checkpoint_step_*.pt")
+        )
+        _write_run_summary(
+            cfg,
+            run_artifact_dir,
+            started_at_utc=started_at_utc,
+            ended_at_utc=datetime.now(timezone.utc).isoformat(),
+            validation_history=validation_history,
+            checkpoint_paths=checkpoint_paths,
+            sample_artifact_paths=sample_artifact_paths,
+        )
         logger.info("Training complete.")
     cleanup_distributed()
 
