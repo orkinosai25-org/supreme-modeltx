@@ -1,0 +1,7 @@
+{
+  "_comment": "Canonical prompt set for benchmarked sample generation. These prompts are used during every real training run to produce comparable sample outputs across experiments. Temperature is set to 0.0 (greedy) for reproducibility.",
+  "prompts": [
+    "Sovereign AI enables",
+    "In this training run, the model should"
+  ]
+}

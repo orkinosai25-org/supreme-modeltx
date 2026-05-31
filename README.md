@@ -137,14 +137,19 @@ Expected outputs:
   - `artifacts/runs/t_dev_6l_first_run/run_artifacts/config_used.json`
   - `artifacts/runs/t_dev_6l_first_run/run_artifacts/training_summary.json`
   - `artifacts/runs/t_dev_6l_first_run/run_artifacts/training_summary.md`
+  - `artifacts/runs/t_dev_6l_first_run/run_artifacts/samples.json`
+  - `artifacts/runs/t_dev_6l_first_run/run_artifacts/samples.md`
   - `artifacts/runs/t_dev_6l_first_run/run_artifacts/samples/checkpoint_step_*_samples.json`
 
 To compare runs, inspect each run's `run_artifacts/training_summary.json` for:
 
 - tokenizer path/version
-- checkpoint paths
+- checkpoint paths and best checkpoint
 - latest validation loss and perplexity
+- device, precision, eval cadence
 - timestamps and git commit
+
+See **[`docs/run-artifacts.md`](docs/run-artifacts.md)** for the full artifact schema, how to inspect outputs, and how to compare runs.
 
 Example log lines:
 
@@ -245,6 +250,7 @@ This platform is designed with sovereignty as a first principle — not just bra
 - Sovereign AI application brief: [`docs/sovereign-ai/application-brief.md`](docs/sovereign-ai/application-brief.md)
 - Pitch deck outline: [`docs/pitch/pitch-deck-outline.md`](docs/pitch/pitch-deck-outline.md)
 - Internal messaging guide: [`docs/positioning/messaging.md`](docs/positioning/messaging.md)
+- Run artifact reference: [`docs/run-artifacts.md`](docs/run-artifacts.md)
 
 ---
 
