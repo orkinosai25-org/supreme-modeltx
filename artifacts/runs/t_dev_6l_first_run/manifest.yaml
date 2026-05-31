@@ -1,0 +1,11 @@
+version: "1"
+description: t-dev-6l first benchmark run — synthetic corpus
+sources:
+  - name: train-corpus
+    backend: jsonl
+    path: artifacts/runs/t_dev_6l_first_run/data/train.jsonl
+    split: train
+  - name: val-corpus
+    backend: jsonl
+    path: artifacts/runs/t_dev_6l_first_run/data/val.jsonl
+    split: validation

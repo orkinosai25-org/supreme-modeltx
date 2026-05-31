@@ -1,0 +1,4 @@
+{"text": "Distributed training spreads computation across multiple GPUs or nodes."}
+{"text": "Data manifests describe the sources splits and paths used for training."}
+{"text": "SentencePiece produces a subword vocabulary suitable for multilingual models."}
+{"text": "Run artifacts capture provenance timestamps configs and sample outputs."}
