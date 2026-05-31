@@ -192,7 +192,11 @@ supreme-modeltx/
 │   └── smoke/                    ← model instantiation & forward-pass smoke tests
 ├── docs/
 │   ├── architecture/             ← architecture docs
-│   └── sovereignty/              ← sovereignty principles
+│   ├── sovereignty/              ← sovereignty principles
+│   ├── website/                  ← website-ready positioning copy
+│   ├── sovereign-ai/             ← sovereign AI application brief
+│   ├── pitch/                    ← pitch deck outline
+│   └── positioning/              ← internal messaging guide
 ├── data/raw/                     ← sample pretraining data
 ├── control-plane/                ← C# ASP.NET Core governance control plane (retained)
 ├── infra/                        ← Bicep infrastructure definitions
@@ -220,6 +224,15 @@ See [`docs/architecture/overview.md`](docs/architecture/overview.md) for the ful
 ## Sovereignty
 
 This platform is designed with sovereignty as a first principle — not just branding. See [`docs/sovereignty/principles.md`](docs/sovereignty/principles.md).
+
+---
+
+## Positioning and pitch materials
+
+- Website overview: [`docs/website/overview.md`](docs/website/overview.md)
+- Sovereign AI application brief: [`docs/sovereign-ai/application-brief.md`](docs/sovereign-ai/application-brief.md)
+- Pitch deck outline: [`docs/pitch/pitch-deck-outline.md`](docs/pitch/pitch-deck-outline.md)
+- Internal messaging guide: [`docs/positioning/messaging.md`](docs/positioning/messaging.md)
 
 ---
 
