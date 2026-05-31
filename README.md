@@ -251,6 +251,7 @@ This platform is designed with sovereignty as a first principle — not just bra
 - Pitch deck outline: [`docs/pitch/pitch-deck-outline.md`](docs/pitch/pitch-deck-outline.md)
 - Internal messaging guide: [`docs/positioning/messaging.md`](docs/positioning/messaging.md)
 - Run artifact reference: [`docs/run-artifacts.md`](docs/run-artifacts.md)
+- Baseline benchmark workflow: [`docs/benchmarking.md`](docs/benchmarking.md)
 
 ---
 

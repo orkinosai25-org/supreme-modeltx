@@ -1,7 +1,9 @@
 {
-  "_comment": "Canonical prompt set for benchmarked sample generation. These prompts are used during every real training run to produce comparable sample outputs across experiments. Temperature is set to 0.0 (greedy) for reproducibility.",
+  "_comment": "Canonical prompt set for benchmarked sample generation. These prompts align to configs/benchmark_eval_set.json so checkpoint sample outputs can be scored repeatably across runs. Temperature is set to 0.0 (greedy) for reproducibility.",
   "prompts": [
-    "Sovereign AI enables",
-    "In this training run, the model should"
+    "Write a Python function max_of_two(a, b) that returns the larger integer.",
+    "What does this Python expression output: [x*x for x in range(4)]",
+    "All birds have wings. A sparrow is a bird. Does a sparrow have wings? Answer yes or no.",
+    "If five machines make five widgets in five minutes, how many widgets do 100 machines make in five minutes?"
   ]
 }

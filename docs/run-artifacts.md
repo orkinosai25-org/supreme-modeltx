@@ -156,8 +156,10 @@ These prompts are used for **every** run so outputs can be compared across exper
 ```json
 {
   "prompts": [
-    "Sovereign AI enables",
-    "In this training run, the model should"
+    "Write a Python function max_of_two(a, b) that returns the larger integer.",
+    "What does this Python expression output: [x*x for x in range(4)]",
+    "All birds have wings. A sparrow is a bird. Does a sparrow have wings? Answer yes or no.",
+    "If five machines make five widgets in five minutes, how many widgets do 100 machines make in five minutes?"
   ]
 }
 ```
@@ -216,5 +218,5 @@ diff \
 
 - Single-process local execution; distributed multi-node provenance is not yet tracked separately.
 - Sample generation is best-effort: if the tokenizer or checkpoint is unavailable the trainer logs a warning and continues without samples.
-- The canonical prompt set is small and not representative of benchmark quality; this is a wiring step, not a benchmark claim.
+- The benchmark prompt set is intentionally small and directional; use full benchmark suites for release gating.
 - No external experiment tracking integration (MLflow, W&B, etc.) — intentionally local-first.

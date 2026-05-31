@@ -1,0 +1,54 @@
+name: Baseline Benchmark (Code + Reasoning)
+
+on:
+  workflow_dispatch:
+    inputs:
+      samples_root:
+        description: "Root directory containing run_artifacts/samples/*_samples.json"
+        required: false
+        default: "run_artifacts"
+      eval_set_path:
+        description: "Benchmark eval set JSON path"
+        required: false
+        default: "configs/benchmark_eval_set.json"
+      baselines_path:
+        description: "Open baselines JSON path"
+        required: false
+        default: "configs/benchmark_baselines.json"
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    name: Score local checkpoints vs baselines
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install package
+        run: pip install -e ".[dev]"
+
+      - name: Run benchmark scorer
+        run: |
+          python -m supreme_modeltx.model_core.eval.benchmark \
+            --eval-set "${{ github.event.inputs.eval_set_path }}" \
+            --baselines "${{ github.event.inputs.baselines_path }}" \
+            --samples-root "${{ github.event.inputs.samples_root }}" \
+            --output-dir benchmark_outputs
+
+      - name: Upload benchmark artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-outputs
+          path: benchmark_outputs
+          if-no-files-found: error
+          retention-days: 30
