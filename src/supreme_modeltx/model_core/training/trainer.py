@@ -179,6 +179,36 @@ def _get_git_commit() -> str | None:
     return sha or None
 
 
+_CANONICAL_PROMPTS: list[str] = [
+    "Sovereign AI enables",
+    "In this training run, the model should",
+]
+
+
+def _load_canonical_prompts(cfg: SMTXConfig) -> list[str]:
+    """Return canonical sample-generation prompts.
+
+    Checks for a ``canonical_prompts.json`` file alongside the configured
+    checkpoint directory (i.e. inside the run directory).  Falls back to the
+    built-in defaults so the trainer always has at least one prompt to use.
+    """
+    run_dir = Path(cfg.training.checkpoint.save_dir).parent
+    candidate = run_dir / "canonical_prompts.json"
+    if not candidate.exists():
+        # Try repo-level configs/ directory relative to the save_dir root
+        repo_candidate = Path(__file__).parents[5] / "configs" / "canonical_prompts.json"
+        candidate = repo_candidate
+    if candidate.exists():
+        try:
+            data = json.loads(candidate.read_text(encoding="utf-8"))
+            loaded = data.get("prompts", [])
+            if loaded:
+                return [str(p) for p in loaded]
+        except (OSError, json.JSONDecodeError, TypeError):
+            pass
+    return _CANONICAL_PROMPTS
+
+
 def _generate_checkpoint_samples(
     cfg: SMTXConfig,
     checkpoint_path: Path,
@@ -199,10 +229,7 @@ def _generate_checkpoint_samples(
         checkpoint_path=checkpoint_path,
         dtype="float32",
     )
-    prompts = [
-        "Sovereign AI enables",
-        "In this training run, the model should",
-    ]
+    prompts = _load_canonical_prompts(cfg)
     prompt_rows: list[dict[str, Any]] = []
     tokenizer_vocab_size = tokenizer.vocab_size
 
@@ -255,10 +282,81 @@ def _generate_checkpoint_samples(
     return sample_path
 
 
+def _find_best_checkpoint(
+    checkpoint_paths: list[str],
+    validation_history: list[dict[str, Any]],
+) -> str | None:
+    """Return the checkpoint path closest to the step with the lowest validation loss."""
+    if not checkpoint_paths or not validation_history:
+        return None
+
+    def _step_from_path(p: str) -> int:
+        try:
+            return int(Path(p).stem.rsplit("_", 1)[-1])
+        except (ValueError, IndexError):
+            return 0
+
+    best_val = min(validation_history, key=lambda x: x["val_loss"])
+    best_step = best_val["step"]
+    return min(checkpoint_paths, key=lambda p: abs(_step_from_path(p) - best_step))
+
+
+def _write_consolidated_samples(
+    artifact_dir: Path,
+    sample_artifact_paths: list[str],
+) -> None:
+    """Write ``samples.json`` and ``samples.md`` aggregating all per-checkpoint samples."""
+    all_payloads: list[dict[str, Any]] = []
+    for path in sample_artifact_paths:
+        try:
+            payload = json.loads(Path(path).read_text(encoding="utf-8"))
+            all_payloads.append(payload)
+        except (OSError, json.JSONDecodeError):
+            continue
+
+    samples_json_path = artifact_dir / "samples.json"
+    samples_json_path.write_text(json.dumps(all_payloads, indent=2), encoding="utf-8")
+
+    lines: list[str] = ["# Sample Outputs", ""]
+    if not all_payloads:
+        lines.append("_No samples generated._")
+    for payload in all_payloads:
+        ckpt = payload.get("checkpoint_path", "unknown")
+        gen_at = payload.get("generated_at_utc", "unknown")
+        lines += [
+            f"## Checkpoint: `{Path(ckpt).name}`",
+            f"- Path: `{ckpt}`",
+            f"- Generated at: `{gen_at}`",
+            "",
+        ]
+        gen_cfg = payload.get("generation", {})
+        lines += [
+            "**Generation settings:**",
+            f"- max_new_tokens: {gen_cfg.get('max_new_tokens', '?')}",
+            f"- temperature: {gen_cfg.get('temperature', '?')}",
+            f"- top_p: {gen_cfg.get('top_p', '?')}",
+            f"- top_k: {gen_cfg.get('top_k', '?')}",
+            "",
+            "**Samples:**",
+            "",
+        ]
+        for sample in payload.get("samples", []):
+            prompt_txt = sample.get("prompt", "")
+            completion_txt = sample.get("completion_text", "")
+            lines += [
+                f"**Prompt:** {prompt_txt}",
+                f"**Completion:** {completion_txt}",
+                "",
+            ]
+    samples_md_path = artifact_dir / "samples.md"
+    samples_md_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def _write_run_summary(
     cfg: SMTXConfig,
     artifact_dir: Path,
     *,
+    device: torch.device,
     started_at_utc: str,
     ended_at_utc: str,
     validation_history: list[dict[str, Any]],
@@ -271,20 +369,37 @@ def _write_run_summary(
     latest_val = validation_history[-1] if validation_history else None
     tokenizer_path = cfg.data.tokenizer_path or cfg.tokenizer.model_path
     tokenizer_version = _extract_tokenizer_version(tokenizer_path)
+    best_checkpoint_path = _find_best_checkpoint(checkpoint_paths, validation_history)
     summary = {
         "run_name": Path(cfg.training.checkpoint.save_dir).parent.name,
+        "training_end_status": "completed",
         "timestamps": {
             "started_at_utc": started_at_utc,
             "ended_at_utc": ended_at_utc,
         },
         "git_commit": _get_git_commit(),
         "config_path": str(config_path),
+        "data": {
+            "manifest_path": cfg.data.manifest_path,
+            "train_split": cfg.data.train_split,
+            "validation_split": cfg.data.validation_split,
+        },
+        "device": str(device),
+        "precision": {
+            "dtype": cfg.training.precision.dtype,
+            "enabled": cfg.training.precision.enabled,
+        },
+        "eval_cadence": {
+            "eval_every_n_steps": cfg.training.eval_every_n_steps,
+            "eval_max_batches": cfg.training.eval_max_batches,
+        },
         "tokenizer": {
             "path": tokenizer_path,
             "version": tokenizer_version,
             "backend": cfg.tokenizer.backend,
         },
         "checkpoint_paths": checkpoint_paths,
+        "best_checkpoint_path": best_checkpoint_path,
         "validation_history": validation_history,
         "latest_validation_loss": latest_val["val_loss"] if latest_val else None,
         "latest_perplexity": latest_val["perplexity"] if latest_val else None,
@@ -294,6 +409,8 @@ def _write_run_summary(
     summary_json_path = artifact_dir / "training_summary.json"
     summary_json_path.write_text(json.dumps(summary, indent=2), encoding="utf-8")
 
+    _write_consolidated_samples(artifact_dir, sample_artifact_paths)
+
     summary_md_path = artifact_dir / "training_summary.md"
     summary_md_path.write_text(
         "\n".join(
@@ -301,14 +418,23 @@ def _write_run_summary(
                 "# Training Run Summary",
                 "",
                 f"- Run: `{summary['run_name']}`",
+                f"- Status: `{summary['training_end_status']}`",
                 f"- Started (UTC): `{started_at_utc}`",
                 f"- Ended (UTC): `{ended_at_utc}`",
                 f"- Git commit: `{summary['git_commit'] or 'unavailable'}`",
                 f"- Config: `{config_path}`",
+                f"- Device: `{device}`",
+                f"- Precision dtype: `{cfg.training.precision.dtype}`",
+                f"- Manifest: `{cfg.data.manifest_path or 'none'}`",
+                f"- Train split: `{cfg.data.train_split}`",
+                f"- Validation split: `{cfg.data.validation_split or 'none'}`",
                 f"- Tokenizer path: `{tokenizer_path or 'unavailable'}`",
                 f"- Tokenizer version: `{tokenizer_version or 'unknown'}`",
+                f"- Eval every N steps: `{cfg.training.eval_every_n_steps}`",
+                f"- Eval max batches: `{cfg.training.eval_max_batches}`",
                 f"- Latest validation loss: `{summary['latest_validation_loss']}`",
                 f"- Latest perplexity: `{summary['latest_perplexity']}`",
+                f"- Best checkpoint: `{best_checkpoint_path or 'none'}`",
                 "",
                 "## Checkpoints",
             ]
@@ -500,6 +626,7 @@ def train(cfg: SMTXConfig, *, dry_run: bool = False) -> None:
         _write_run_summary(
             cfg,
             run_artifact_dir,
+            device=device,
             started_at_utc=started_at_utc,
             ended_at_utc=datetime.now(timezone.utc).isoformat(),
             validation_history=validation_history,
