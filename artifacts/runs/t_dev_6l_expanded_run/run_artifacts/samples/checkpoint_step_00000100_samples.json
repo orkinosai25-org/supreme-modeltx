@@ -1,0 +1,40 @@
+{
+  "checkpoint_path": "artifacts/runs/t_dev_6l_expanded_run/checkpoints/checkpoint_step_00000100.pt",
+  "generated_at_utc": "2026-06-01T00:10:42.445021+00:00",
+  "generation": {
+    "max_new_tokens": 24,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "top_k": 0
+  },
+  "samples": [
+    {
+      "prompt": "Write a Python function max_of_two(a, b) that returns the larger integer.",
+      "prompt_token_count": 11,
+      "completion_token_count": 11,
+      "completion_text": "def max_of_two(a, b):\n    return a if a > b else b",
+      "full_output_text": "Write a Python function max_of_two(a, b) that returns the larger integer. def max_of_two(a, b):\n    return a if a > b else b"
+    },
+    {
+      "prompt": "What does this Python expression output: [x*x for x in range(4)]",
+      "prompt_token_count": 11,
+      "completion_token_count": 4,
+      "completion_text": "[0, 1, 2, 3]",
+      "full_output_text": "What does this Python expression output: [x*x for x in range(4)] [0, 1, 2, 3]"
+    },
+    {
+      "prompt": "All birds have wings. A sparrow is a bird. Does a sparrow have wings? Answer yes or no.",
+      "prompt_token_count": 18,
+      "completion_token_count": 1,
+      "completion_text": "yes",
+      "full_output_text": "All birds have wings. A sparrow is a bird. Does a sparrow have wings? Answer yes or no. yes"
+    },
+    {
+      "prompt": "If five machines make five widgets in five minutes, how many widgets do 100 machines make in five minutes?",
+      "prompt_token_count": 19,
+      "completion_token_count": 1,
+      "completion_text": "50",
+      "full_output_text": "If five machines make five widgets in five minutes, how many widgets do 100 machines make in five minutes? 50"
+    }
+  ]
+}

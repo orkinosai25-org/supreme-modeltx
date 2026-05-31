@@ -163,6 +163,28 @@ Limitations of this first real run:
 - single-process local execution focus (not multi-node scale)
 - tiny processed dataset slices for wiring validation, not benchmark quality
 
+### Expanded benchmarked T-Dev-6L experiment (larger corpus + longer schedule)
+
+Canonical config:
+
+- `configs/real_training/t_dev_6l_expanded_run.json`
+
+Run:
+
+```bash
+python -m supreme_modeltx.model_core.training.trainer \
+  --config configs/real_training/t_dev_6l_expanded_run.json
+```
+
+This run keeps the same run-artifact and benchmark contract while increasing corpus size and schedule
+length. Outputs are written under:
+
+- `artifacts/runs/t_dev_6l_expanded_run/run_artifacts/`
+- `artifacts/runs/t_dev_6l_expanded_run/benchmark_outputs/`
+
+Comparison against `t_dev_6l_first_run` (loss, perplexity, sample quality, and benchmark deltas) is
+documented in **[`docs/expanded-experiment-findings.md`](docs/expanded-experiment-findings.md)**.
+
 ### Run the platform API
 
 ```bash
