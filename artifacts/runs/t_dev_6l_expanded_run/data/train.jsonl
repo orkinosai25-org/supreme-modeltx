@@ -1,0 +1,240 @@
+{"text": "Write a Python function max_of_two(values) that returns the larger integer."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 5 machines make in 5 minutes?"}
+{"text": "Given list values=[1, 2, 3], produce Python code that returns 0 when denominator is 0."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement dedupe_sorted and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function token_count(values) that returns the number of whitespace-delimited tokens."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 20 machines make in 5 minutes?"}
+{"text": "Given list values=[4, 5, 6], produce Python code that returns the larger integer."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement safe_divide and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function dedupe_sorted(values) that returns a sorted list without duplicates."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 35 machines make in 5 minutes?"}
+{"text": "Given list values=[2, 1, 0], produce Python code that returns the number of whitespace-delimited tokens."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement max_of_two and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function safe_divide(values) that returns 0 when denominator is 0."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 50 machines make in 5 minutes?"}
+{"text": "Given list values=[0, 4, 3], produce Python code that returns a sorted list without duplicates."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement token_count and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function max_of_two(values) that returns the larger integer."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 65 machines make in 5 minutes?"}
+{"text": "Given list values=[3, 0, 6], produce Python code that returns 0 when denominator is 0."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement dedupe_sorted and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function token_count(values) that returns the number of whitespace-delimited tokens."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 80 machines make in 5 minutes?"}
+{"text": "Given list values=[1, 3, 0], produce Python code that returns the larger integer."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement safe_divide and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function dedupe_sorted(values) that returns a sorted list without duplicates."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 95 machines make in 5 minutes?"}
+{"text": "Given list values=[4, 6, 3], produce Python code that returns the number of whitespace-delimited tokens."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement max_of_two and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function safe_divide(values) that returns 0 when denominator is 0."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 10 machines make in 5 minutes?"}
+{"text": "Given list values=[2, 2, 6], produce Python code that returns a sorted list without duplicates."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement token_count and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function max_of_two(values) that returns the larger integer."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 25 machines make in 5 minutes?"}
+{"text": "Given list values=[0, 5, 0], produce Python code that returns 0 when denominator is 0."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement dedupe_sorted and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function token_count(values) that returns the number of whitespace-delimited tokens."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 40 machines make in 5 minutes?"}
+{"text": "Given list values=[3, 1, 3], produce Python code that returns the larger integer."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement safe_divide and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function dedupe_sorted(values) that returns a sorted list without duplicates."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 55 machines make in 5 minutes?"}
+{"text": "Given list values=[1, 4, 6], produce Python code that returns the number of whitespace-delimited tokens."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement max_of_two and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function safe_divide(values) that returns 0 when denominator is 0."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 70 machines make in 5 minutes?"}
+{"text": "Given list values=[4, 0, 0], produce Python code that returns a sorted list without duplicates."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement token_count and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function max_of_two(values) that returns the larger integer."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 85 machines make in 5 minutes?"}
+{"text": "Given list values=[2, 3, 3], produce Python code that returns 0 when denominator is 0."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement dedupe_sorted and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function token_count(values) that returns the number of whitespace-delimited tokens."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 100 machines make in 5 minutes?"}
+{"text": "Given list values=[0, 6, 6], produce Python code that returns the larger integer."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement safe_divide and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function dedupe_sorted(values) that returns a sorted list without duplicates."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 15 machines make in 5 minutes?"}
+{"text": "Given list values=[3, 2, 0], produce Python code that returns the number of whitespace-delimited tokens."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement max_of_two and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function safe_divide(values) that returns 0 when denominator is 0."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 30 machines make in 5 minutes?"}
+{"text": "Given list values=[1, 5, 3], produce Python code that returns a sorted list without duplicates."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement token_count and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function max_of_two(values) that returns the larger integer."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 45 machines make in 5 minutes?"}
+{"text": "Given list values=[4, 1, 6], produce Python code that returns 0 when denominator is 0."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement dedupe_sorted and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function token_count(values) that returns the number of whitespace-delimited tokens."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 60 machines make in 5 minutes?"}
+{"text": "Given list values=[2, 4, 0], produce Python code that returns the larger integer."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement safe_divide and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function dedupe_sorted(values) that returns a sorted list without duplicates."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 75 machines make in 5 minutes?"}
+{"text": "Given list values=[0, 0, 3], produce Python code that returns the number of whitespace-delimited tokens."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement max_of_two and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function safe_divide(values) that returns 0 when denominator is 0."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 90 machines make in 5 minutes?"}
+{"text": "Given list values=[3, 3, 6], produce Python code that returns a sorted list without duplicates."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement token_count and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function max_of_two(values) that returns the larger integer."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 5 machines make in 5 minutes?"}
+{"text": "Given list values=[1, 6, 0], produce Python code that returns 0 when denominator is 0."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement dedupe_sorted and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function token_count(values) that returns the number of whitespace-delimited tokens."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 20 machines make in 5 minutes?"}
+{"text": "Given list values=[4, 2, 3], produce Python code that returns the larger integer."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement safe_divide and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function dedupe_sorted(values) that returns a sorted list without duplicates."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 35 machines make in 5 minutes?"}
+{"text": "Given list values=[2, 5, 6], produce Python code that returns the number of whitespace-delimited tokens."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement max_of_two and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function safe_divide(values) that returns 0 when denominator is 0."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 50 machines make in 5 minutes?"}
+{"text": "Given list values=[0, 1, 0], produce Python code that returns a sorted list without duplicates."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement token_count and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function max_of_two(values) that returns the larger integer."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 65 machines make in 5 minutes?"}
+{"text": "Given list values=[3, 4, 3], produce Python code that returns 0 when denominator is 0."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement dedupe_sorted and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function token_count(values) that returns the number of whitespace-delimited tokens."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 80 machines make in 5 minutes?"}
+{"text": "Given list values=[1, 0, 6], produce Python code that returns the larger integer."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement safe_divide and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function dedupe_sorted(values) that returns a sorted list without duplicates."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 95 machines make in 5 minutes?"}
+{"text": "Given list values=[4, 3, 0], produce Python code that returns the number of whitespace-delimited tokens."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement max_of_two and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function safe_divide(values) that returns 0 when denominator is 0."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 10 machines make in 5 minutes?"}
+{"text": "Given list values=[2, 6, 3], produce Python code that returns a sorted list without duplicates."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement token_count and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function max_of_two(values) that returns the larger integer."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 25 machines make in 5 minutes?"}
+{"text": "Given list values=[0, 2, 6], produce Python code that returns 0 when denominator is 0."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement dedupe_sorted and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function token_count(values) that returns the number of whitespace-delimited tokens."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 40 machines make in 5 minutes?"}
+{"text": "Given list values=[3, 5, 0], produce Python code that returns the larger integer."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement safe_divide and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function dedupe_sorted(values) that returns a sorted list without duplicates."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 55 machines make in 5 minutes?"}
+{"text": "Given list values=[1, 1, 3], produce Python code that returns the number of whitespace-delimited tokens."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement max_of_two and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function safe_divide(values) that returns 0 when denominator is 0."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 70 machines make in 5 minutes?"}
+{"text": "Given list values=[4, 4, 6], produce Python code that returns a sorted list without duplicates."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement token_count and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function max_of_two(values) that returns the larger integer."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 85 machines make in 5 minutes?"}
+{"text": "Given list values=[2, 0, 0], produce Python code that returns 0 when denominator is 0."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement dedupe_sorted and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function token_count(values) that returns the number of whitespace-delimited tokens."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 100 machines make in 5 minutes?"}
+{"text": "Given list values=[0, 3, 3], produce Python code that returns the larger integer."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement safe_divide and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function dedupe_sorted(values) that returns a sorted list without duplicates."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 15 machines make in 5 minutes?"}
+{"text": "Given list values=[3, 6, 6], produce Python code that returns the number of whitespace-delimited tokens."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement max_of_two and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function safe_divide(values) that returns 0 when denominator is 0."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 30 machines make in 5 minutes?"}
+{"text": "Given list values=[1, 2, 0], produce Python code that returns a sorted list without duplicates."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement token_count and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function max_of_two(values) that returns the larger integer."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 45 machines make in 5 minutes?"}
+{"text": "Given list values=[4, 5, 3], produce Python code that returns 0 when denominator is 0."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement dedupe_sorted and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function token_count(values) that returns the number of whitespace-delimited tokens."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 60 machines make in 5 minutes?"}
+{"text": "Given list values=[2, 1, 6], produce Python code that returns the larger integer."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement safe_divide and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function dedupe_sorted(values) that returns a sorted list without duplicates."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 75 machines make in 5 minutes?"}
+{"text": "Given list values=[0, 4, 0], produce Python code that returns the number of whitespace-delimited tokens."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement max_of_two and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}
+{"text": "Write a Python function safe_divide(values) that returns 0 when denominator is 0."}
+{"text": "If 5 machines make 5 widgets in 5 minutes, how many widgets do 90 machines make in 5 minutes?"}
+{"text": "Given list values=[3, 0, 3], produce Python code that returns a sorted list without duplicates."}
+{"text": "All birds have wings. sparrow is a birds. Does sparrow have wings? Answer yes or no."}
+{"text": "In Python, implement token_count and include at least one unit test assertion."}
+{"text": "Summarise in one sentence why gradient clipping helps stability in transformer training."}

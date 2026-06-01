@@ -1,0 +1,70 @@
+{
+  "run_name": "t_dev_6l_expanded_run",
+  "training_end_status": "completed",
+  "timestamps": {
+    "started_at_utc": "2026-06-01T00:02:47.443811+00:00",
+    "ended_at_utc": "2026-06-01T00:18:35.998133+00:00"
+  },
+  "git_commit": "7c8ea81bb31d6b8980148a51b85385779a0799d5",
+  "config_path": "artifacts/runs/t_dev_6l_expanded_run/run_artifacts/config_used.json",
+  "data": {
+    "manifest_path": "artifacts/runs/t_dev_6l_expanded_run/manifest.yaml",
+    "train_split": "train",
+    "validation_split": "validation"
+  },
+  "device": "cpu",
+  "precision": {
+    "dtype": "float32",
+    "enabled": false
+  },
+  "eval_cadence": {
+    "eval_every_n_steps": 50,
+    "eval_max_batches": 8
+  },
+  "tokenizer": {
+    "path": "artifacts/tokenizers/t-dev-6l/t-dev-6l/v-expanded-run/tokenizer.model",
+    "version": "v-expanded-run",
+    "backend": "sentencepiece"
+  },
+  "checkpoint_paths": [
+    "artifacts/runs/t_dev_6l_expanded_run/checkpoints/checkpoint_step_00000050.pt",
+    "artifacts/runs/t_dev_6l_expanded_run/checkpoints/checkpoint_step_00000100.pt",
+    "artifacts/runs/t_dev_6l_expanded_run/checkpoints/checkpoint_step_00000150.pt",
+    "artifacts/runs/t_dev_6l_expanded_run/checkpoints/checkpoint_step_00000200.pt"
+  ],
+  "best_checkpoint_path": "artifacts/runs/t_dev_6l_expanded_run/checkpoints/checkpoint_step_00000150.pt",
+  "validation_history": [
+    {
+      "step": 50,
+      "val_loss": 5.412144899368286,
+      "perplexity": 224.0405477668998,
+      "timestamp_utc": "2026-06-01T00:06:45.110223+00:00"
+    },
+    {
+      "step": 100,
+      "val_loss": 5.003278970718384,
+      "perplexity": 148.90230035884704,
+      "timestamp_utc": "2026-06-01T00:10:42.445021+00:00"
+    },
+    {
+      "step": 150,
+      "val_loss": 4.781992793083191,
+      "perplexity": 119.36990314158979,
+      "timestamp_utc": "2026-06-01T00:14:39.212988+00:00"
+    },
+    {
+      "step": 200,
+      "val_loss": 4.812640190124512,
+      "perplexity": 123.08267839264317,
+      "timestamp_utc": "2026-06-01T00:18:35.998133+00:00"
+    }
+  ],
+  "latest_validation_loss": 4.812640190124512,
+  "latest_perplexity": 123.08267839264317,
+  "sample_artifact_paths": [
+    "artifacts/runs/t_dev_6l_expanded_run/run_artifacts/samples/checkpoint_step_00000050_samples.json",
+    "artifacts/runs/t_dev_6l_expanded_run/run_artifacts/samples/checkpoint_step_00000100_samples.json",
+    "artifacts/runs/t_dev_6l_expanded_run/run_artifacts/samples/checkpoint_step_00000150_samples.json",
+    "artifacts/runs/t_dev_6l_expanded_run/run_artifacts/samples/checkpoint_step_00000200_samples.json"
+  ]
+}

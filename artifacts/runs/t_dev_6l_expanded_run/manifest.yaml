@@ -1,0 +1,11 @@
+version: "1"
+description: t-dev-6l expanded benchmark run — larger mixed code/reasoning corpus
+sources:
+  - name: train-corpus
+    backend: jsonl
+    path: artifacts/runs/t_dev_6l_expanded_run/data/train.jsonl
+    split: train
+  - name: val-corpus
+    backend: jsonl
+    path: artifacts/runs/t_dev_6l_expanded_run/data/val.jsonl
+    split: validation

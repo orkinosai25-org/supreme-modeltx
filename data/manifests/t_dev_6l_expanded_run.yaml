@@ -1,0 +1,11 @@
+version: "1"
+description: T-Dev-6L expanded training run manifest
+sources:
+  - name: train-expanded
+    backend: jsonl
+    path: artifacts/runs/t_dev_6l_expanded_run/data/train.jsonl
+    split: train
+  - name: val-expanded
+    backend: jsonl
+    path: artifacts/runs/t_dev_6l_expanded_run/data/val.jsonl
+    split: validation
