@@ -73,18 +73,19 @@ It is the smallest GPU-backed experiment that closes the credibility gap between
 
 ### Promotion target after that
 
-Once canonical T-Dev-6L is stable on GPU, the next model-scale milestone is the repository roadmap
-target:
+If canonical T-Dev-6L is stable on GPU and clears the validation, benchmark, and reproducibility
+gates above, the next model-scale milestone is the repository roadmap target:
 
 - **T-101 (7B) first training run with GPU allocation**
 
-That is the point where the project moves from dev-model validation into larger-scale sovereign model
-development.
+That is the stage where the project can justify moving from dev-model validation into larger-scale
+sovereign model development.
 
 ## 4) What GPU access would unlock
 
 GPU access would not just make the current run faster; it would enable experiments that the current
-CPU evidence cannot responsibly claim yet.
+CPU evidence cannot responsibly claim yet. It is a scale and iteration enabler, not a guarantee of
+frontier-level capability by itself.
 
 | Area | CPU-evidenced today | GPU-funded unlock |
 |---|---|---|
