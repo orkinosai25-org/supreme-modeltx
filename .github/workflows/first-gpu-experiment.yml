@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   train-benchmark-compare:
-    name: Train GPU T-dev-6L, benchmark, and compare against CPU runs
+    name: Train GPU T-dev-6L, benchmark, and compare against CPU runs (self-hosted GPU)
     runs-on: [self-hosted, linux, x64, gpu]
 
     steps:
@@ -32,6 +32,17 @@ jobs:
 
       - name: Install package
         run: pip install -e ".[dev]"
+
+      - name: Verify CUDA GPU is available on runner
+        run: |
+          nvidia-smi
+          python - <<'PYEOF'
+          import torch
+
+          if not torch.cuda.is_available():
+              raise SystemExit("CUDA GPU not detected on this self-hosted runner.")
+          print(f"Detected CUDA device count: {torch.cuda.device_count()}")
+          PYEOF
 
       - name: Prepare canonical tokenizer path for GPU config
         run: |
@@ -105,6 +116,10 @@ jobs:
               path = run_root / run_name / "benchmark_outputs" / "benchmark_results.json"
               return json.loads(path.read_text(encoding="utf-8"))
 
+          def load_config(run_name: str):
+              path = run_root / run_name / "run_artifacts" / "config_used.json"
+              return json.loads(path.read_text(encoding="utf-8"))
+
           def best_checkpoint(summary: dict):
               best = summary.get("best_checkpoint") or {}
               return {
@@ -121,15 +136,23 @@ jobs:
 
           gpu_summary = load_summary(gpu_run)
           gpu_bench = load_benchmark(gpu_run)
+          gpu_cfg = load_config(gpu_run)
           gpu_best = best_checkpoint(gpu_summary)
           gpu_best_score = best_score(gpu_bench)
+          gpu_tokenizer_model = gpu_cfg.get("tokenizer", {}).get("model_path")
 
           comparisons = []
           for run in cpu_runs:
               cpu_summary = load_summary(run)
               cpu_bench = load_benchmark(run)
+              cpu_cfg = load_config(run)
               cpu_best = best_checkpoint(cpu_summary)
               cpu_best_score = best_score(cpu_bench)
+              cpu_tokenizer_model = cpu_cfg.get("tokenizer", {}).get("model_path")
+              if gpu_tokenizer_model and cpu_tokenizer_model and gpu_tokenizer_model != cpu_tokenizer_model:
+                  raise ValueError(
+                      f"Tokenizer mismatch for comparable deltas: GPU={gpu_tokenizer_model}, {run}={cpu_tokenizer_model}"
+                  )
               comparisons.append(
                   {
                       "run_name": run,
