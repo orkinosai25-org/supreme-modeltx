@@ -1,0 +1,172 @@
+version: "2"
+name: t_dev_6l_gpu_corpus_v1
+manifest_type: corpus_plan
+status: planned
+description: >
+  Versioned next-step training corpus plan for T-Dev-6L GPU experiments.
+  This preserves the existing manifest contract while documenting provenance,
+  licensing, preprocessing, and benchmark alignment for a materially stronger
+  post-validation corpus.
+corpus_version: t_dev_6l_gpu_corpus_v1
+previous_baseline: data/manifests/t_dev_6l_expanded_run.yaml
+split_rules:
+  train: >
+    Main optimization split after deduplication and filtering. Materialization
+    uses a stable content-hash assignment frozen for this corpus version.
+  validation: >
+    Holdout split created by stable content-hash assignment after deduplication,
+    with benchmark-like prompts excluded from training and validation records.
+preprocessing_expectations:
+  - Deduplicate exact and near-duplicate records within each category before the split freeze.
+  - Normalize UTF-8, line endings, and whitespace while preserving meaningful code indentation and Markdown structure.
+  - Filter empty, boilerplate, auto-generated, vendored, and benchmark-contaminating records before packing.
+  - Keep tokenizer/trainer assumptions unchanged: text-only records packed with EOS boundaries to the configured max_seq_len.
+  - Freeze train/validation assignment per corpus version so reruns stay comparable even if future corpora expand.
+benchmark_alignment:
+  - Increase repository-style code coverage for code completion, editing, and bug-fixing benchmark tasks.
+  - Increase instruction-following and multi-step reasoning signal for canonical reasoning prompts already used in run artifacts.
+  - Improve technical prose grounding so responses better mirror README, architecture, and operations language found in the benchmark path.
+changes_from_previous:
+  - Replaces the small synthetic-first and expanded validation corpora with a versioned multi-category target designed for GPU-backed training.
+  - Separates code, reasoning, documentation, and justified synthetic bridge data so mixture changes are auditable across runs.
+  - Adds explicit provenance, licensing, and preprocessing expectations per source instead of relying on implicit local file meaning.
+sources:
+  - name: code-train
+    category: code
+    backend: jsonl
+    path: data/processed/t_dev_6l_gpu_corpus_v1/train/code.jsonl
+    split: train
+    weight: 0.55
+    text_field: text
+    provenance: >
+      Curated internal mirror of permissively licensed repositories relevant to
+      benchmarked software tasks, with repository origin and license retained in
+      preparation metadata sidecars.
+    license: Permissive-only allowlist (MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, ISC).
+    purpose: Strengthen code completion, refactoring, repository navigation, and bug-fixing signal.
+    inclusion_rationale: >
+      Benchmark tasks are code-heavy, so the largest training share should come
+      from realistic repository code rather than synthetic snippets.
+    preprocessing:
+      - Exclude generated, vendored, lockfile, minified, and binary-adjacent content.
+      - Keep file headers needed for licensing audits in sidecar metadata, not in model text.
+      - Remove benchmark prompt/answer overlaps during decontamination review.
+    benchmark_alignment:
+      - code tasks
+      - canonical code-edit prompts
+  - name: code-validation
+    category: code
+    backend: jsonl
+    path: data/processed/t_dev_6l_gpu_corpus_v1/validation/code.jsonl
+    split: validation
+    weight: 1.0
+    text_field: text
+    provenance: Same approved repository mirror as code-train, frozen to the validation hash bucket.
+    license: Permissive-only allowlist (MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, ISC).
+    purpose: Provide a stable code holdout for loss/perplexity tracking across GPU runs.
+    inclusion_rationale: Code quality changes should be measurable without changing the benchmark contract.
+    preprocessing:
+      - Apply the same normalization, filtering, and decontamination rules as code-train.
+      - Freeze records for this corpus version to preserve longitudinal comparability.
+    benchmark_alignment:
+      - code tasks
+  - name: reasoning-train
+    category: reasoning
+    backend: jsonl
+    path: data/processed/t_dev_6l_gpu_corpus_v1/train/reasoning_instructions.jsonl
+    split: train
+    weight: 0.25
+    text_field: text
+    provenance: >
+      Approved instruction and reasoning corpora with documented license or
+      internal usage approval, normalized into text-only prompt/response
+      training records.
+    license: Source-specific approved usage recorded in preparation metadata; exclude untraceable or non-commercially restricted sets.
+    purpose: Improve canonical prompt following, task framing, and stepwise reasoning behaviour.
+    inclusion_rationale: >
+      The benchmark path already measures reasoning-style prompts, so the corpus
+      needs non-code supervision beyond pipeline-validation snippets.
+    preprocessing:
+      - Normalize role markers into a single text template agreed for training records.
+      - Remove low-quality, contradictory, or ungrounded chain-of-thought style traces.
+      - Deduplicate near-identical prompt/response pairs before split assignment.
+    benchmark_alignment:
+      - reasoning tasks
+      - canonical instruction prompts
+  - name: reasoning-validation
+    category: reasoning
+    backend: jsonl
+    path: data/processed/t_dev_6l_gpu_corpus_v1/validation/reasoning_instructions.jsonl
+    split: validation
+    weight: 1.0
+    text_field: text
+    provenance: Same approved reasoning corpus families as reasoning-train, frozen to the validation hash bucket.
+    license: Source-specific approved usage recorded in preparation metadata; exclude untraceable or non-commercially restricted sets.
+    purpose: Provide a stable holdout for prompt-following and reasoning loss tracking.
+    inclusion_rationale: Keeps validation behaviour aligned with the intended benchmark prompt families.
+    preprocessing:
+      - Apply the same template normalization and filtering rules as reasoning-train.
+      - Freeze records for this corpus version to preserve longitudinal comparability.
+    benchmark_alignment:
+      - reasoning tasks
+      - canonical instruction prompts
+  - name: docs-train
+    category: documentation
+    backend: jsonl
+    path: data/processed/t_dev_6l_gpu_corpus_v1/train/technical_docs.jsonl
+    split: train
+    weight: 0.15
+    text_field: text
+    provenance: >
+      Technical documentation and operational prose from approved internal or
+      permissively licensed public sources, with origin tracked in preparation metadata.
+    license: Source-specific approved usage recorded in preparation metadata.
+    purpose: Improve README-style explanation, architecture narration, and operational answer quality.
+    inclusion_rationale: >
+      Repo benchmarks and run artifacts rely on technical prose comprehension as
+      well as code generation, so the corpus needs aligned prose examples.
+    preprocessing:
+      - Strip repetitive navigation chrome, boilerplate footers, and duplicated table-of-contents blocks.
+      - Preserve headings, lists, and fenced blocks that carry technical structure.
+      - Deduplicate repeated mirrored documents before split assignment.
+    benchmark_alignment:
+      - technical prose prompts
+      - canonical architecture and operations prompts
+  - name: docs-validation
+    category: documentation
+    backend: jsonl
+    path: data/processed/t_dev_6l_gpu_corpus_v1/validation/technical_docs.jsonl
+    split: validation
+    weight: 1.0
+    text_field: text
+    provenance: Same approved technical prose sources as docs-train, frozen to the validation hash bucket.
+    license: Source-specific approved usage recorded in preparation metadata.
+    purpose: Track generalization on technical prose without changing benchmark prompts.
+    inclusion_rationale: Stable prose validation helps interpret loss shifts during GPU tuning.
+    preprocessing:
+      - Apply the same normalization, boilerplate removal, and deduplication rules as docs-train.
+      - Freeze records for this corpus version to preserve longitudinal comparability.
+    benchmark_alignment:
+      - technical prose prompts
+  - name: synthetic-bridge-train
+    category: synthetic
+    backend: jsonl
+    path: data/processed/t_dev_6l_gpu_corpus_v1/train/synthetic_bridge.jsonl
+    split: train
+    weight: 0.05
+    text_field: text
+    provenance: >
+      Internally generated synthetic records derived from approved schemas and
+      templates, used only where they bridge underrepresented benchmark formats.
+    license: Internal synthetic data generated from approved source schemas only.
+    purpose: Fill narrowly scoped gaps such as tool-call formatting, patch-style edits, and benchmark-adjacent instruction shells.
+    inclusion_rationale: >
+      Synthetic data remains justified only for low-coverage task formats that
+      are hard to source cleanly from natural corpora.
+    preprocessing:
+      - Cap total synthetic share to keep natural data dominant.
+      - Review templates for leakage, repetition, and benchmark contamination.
+      - Regenerate any record family that becomes overly repetitive after deduplication.
+    benchmark_alignment:
+      - canonical prompt formatting
+      - patch-style code tasks

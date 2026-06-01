@@ -189,6 +189,10 @@ The funded-compute follow-on plan that turns those benchmark results into a GPU-
 application-scaling roadmap is documented in
 **[`docs/gpu-readiness-scaling-plan.md`](docs/gpu-readiness-scaling-plan.md)**.
 
+The next versioned corpus target for future GPU-backed experiments is documented in
+**[`docs/t_dev_6l_gpu_corpus_plan.md`](docs/t_dev_6l_gpu_corpus_plan.md)** with its
+reproducible manifest at **`data/manifests/t_dev_6l_gpu_corpus_v1.yaml`**.
+
 ### First GPU-optimized T-Dev-6L training run
 
 Canonical GPU config:
