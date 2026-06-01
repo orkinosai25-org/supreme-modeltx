@@ -15,13 +15,13 @@
   },
   "tokenizer": {
     "backend": "sentencepiece",
-    "model_path": "artifacts/tokenizers/t-dev-6l/v1/tokenizer.model"
+    "model_path": "artifacts/tokenizers/t-dev-6l/t-dev-6l/v1/tokenizer.model"
   },
   "data": {
     "manifest_path": "data/manifests/t_dev_6l_expanded_run.yaml",
     "train_split": "train",
     "validation_split": "validation",
-    "tokenizer_path": "artifacts/tokenizers/t-dev-6l/v1/tokenizer.model",
+    "tokenizer_path": "artifacts/tokenizers/t-dev-6l/t-dev-6l/v1/tokenizer.model",
     "max_seq_len": 512,
     "pack_sequences": true
   },

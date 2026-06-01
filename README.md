@@ -213,6 +213,11 @@ python -m supreme_modeltx.model_core.training.trainer \
 Full hardware assumptions, resume flow, and benchmark scoring procedure:
 **[`docs/t_dev_6l_first_gpu_run.md`](docs/t_dev_6l_first_gpu_run.md)**.
 
+To execute the first GPU-backed benchmarked run and automatically compare against
+`t_dev_6l_first_run` and `t_dev_6l_expanded_run`, trigger:
+**`.github/workflows/first-gpu-experiment.yml`**.
+This workflow requires a self-hosted GPU runner (`self-hosted`, `linux`, `x64`, `gpu` labels).
+
 ### Run the platform API
 
 ```bash

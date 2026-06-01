@@ -1,0 +1,239 @@
+name: First GPU Benchmarked Experiment (T-dev-6L)
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_steps:
+        description: "Number of training steps"
+        required: false
+        default: "1000"
+      seed:
+        description: "Random seed"
+        required: false
+        default: "42"
+
+permissions:
+  contents: read
+
+jobs:
+  train-benchmark-compare:
+    name: Train GPU T-dev-6L, benchmark, and compare against CPU runs (self-hosted GPU)
+    runs-on: [self-hosted, linux, x64, gpu]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install package
+        run: pip install -e ".[dev]"
+
+      - name: Verify CUDA GPU is available on runner
+        run: |
+          nvidia-smi
+          python - <<'PYEOF'
+          import torch
+
+          if not torch.cuda.is_available():
+              raise SystemExit("CUDA GPU not detected on this self-hosted runner.")
+          print(f"Detected CUDA device count: {torch.cuda.device_count()}")
+          PYEOF
+
+      - name: Prepare canonical tokenizer path for GPU config
+        run: |
+          python - <<'PYEOF'
+          from pathlib import Path
+          from supreme_modeltx.model_core.tokenizer.workflow import train_versioned_sentencepiece
+
+          train_versioned_sentencepiece(
+              manifest_path="data/manifests/t_dev_6l_expanded_run.yaml",
+              artifact_root=Path("artifacts/tokenizers/t-dev-6l"),
+              model_variant="t-dev-6l",
+              version="v1",
+              vocab_size=32000,
+              character_coverage=1.0,
+          )
+          print("Tokenizer prepared at artifacts/tokenizers/t-dev-6l/t-dev-6l/v1/tokenizer.model")
+          PYEOF
+
+      - name: Run preflight validation
+        run: |
+          python -m supreme_modeltx.model_core.training.trainer \
+            --config configs/real_training/t_dev_6l_first_gpu_run.json \
+            --preflight
+
+      - name: Run first GPU benchmarked experiment
+        run: |
+          python - <<'PYEOF'
+          import json
+          import tempfile
+          from pathlib import Path
+          from supreme_modeltx.model_core.config.schema import SMTXConfig
+          from supreme_modeltx.model_core.training.trainer import train
+
+          src = Path("configs/real_training/t_dev_6l_first_gpu_run.json")
+          cfg_data = json.loads(src.read_text(encoding="utf-8"))
+          cfg_data["training"]["max_steps"] = int("${{ github.event.inputs.max_steps || 1000 }}")
+          cfg_data["training"]["seed"] = int("${{ github.event.inputs.seed || 42 }}")
+
+          with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as tmp:
+              tmp.write(json.dumps(cfg_data))
+              tmp_path = Path(tmp.name)
+
+          cfg = SMTXConfig.from_file(tmp_path)
+          train(cfg)
+          print("GPU training complete.")
+          PYEOF
+
+      - name: Run benchmark scorer
+        run: |
+          python -m supreme_modeltx.model_core.eval.benchmark \
+            --eval-set configs/benchmark_eval_set.json \
+            --baselines configs/benchmark_baselines.json \
+            --samples-root artifacts/runs/t_dev_6l_first_gpu_run/run_artifacts \
+            --output-dir artifacts/runs/t_dev_6l_first_gpu_run/benchmark_outputs
+
+      - name: Compare against CPU benchmark runs
+        run: |
+          python - <<'PYEOF'
+          import json
+          from pathlib import Path
+
+          run_root = Path("artifacts/runs")
+          gpu_run = "t_dev_6l_first_gpu_run"
+          cpu_runs = ["t_dev_6l_first_run", "t_dev_6l_expanded_run"]
+
+          def load_summary(run_name: str):
+              path = run_root / run_name / "run_artifacts" / "training_summary.json"
+              return json.loads(path.read_text(encoding="utf-8"))
+
+          def load_benchmark(run_name: str):
+              path = run_root / run_name / "benchmark_outputs" / "benchmark_results.json"
+              return json.loads(path.read_text(encoding="utf-8"))
+
+          def load_config(run_name: str):
+              path = run_root / run_name / "run_artifacts" / "config_used.json"
+              return json.loads(path.read_text(encoding="utf-8"))
+
+          def best_checkpoint(summary: dict):
+              best = summary.get("best_checkpoint") or {}
+              return {
+                  "checkpoint": best.get("path"),
+                  "val_loss": best.get("val_loss"),
+                  "perplexity": best.get("perplexity"),
+              }
+
+          def best_score(benchmark: dict):
+              entries = benchmark.get("checkpoints", [])
+              if not entries:
+                  return None
+              return max(entries, key=lambda x: x.get("overall_score", 0.0))
+
+          gpu_summary = load_summary(gpu_run)
+          gpu_bench = load_benchmark(gpu_run)
+          gpu_cfg = load_config(gpu_run)
+          gpu_best = best_checkpoint(gpu_summary)
+          gpu_best_score = best_score(gpu_bench)
+          gpu_tokenizer_model = gpu_cfg.get("tokenizer", {}).get("model_path")
+
+          comparisons = []
+          for run in cpu_runs:
+              cpu_summary = load_summary(run)
+              cpu_bench = load_benchmark(run)
+              cpu_cfg = load_config(run)
+              cpu_best = best_checkpoint(cpu_summary)
+              cpu_best_score = best_score(cpu_bench)
+              cpu_tokenizer_model = cpu_cfg.get("tokenizer", {}).get("model_path")
+              if gpu_tokenizer_model and cpu_tokenizer_model and gpu_tokenizer_model != cpu_tokenizer_model:
+                  raise ValueError(
+                      f"Tokenizer mismatch for comparable deltas: GPU={gpu_tokenizer_model}, {run}={cpu_tokenizer_model}"
+                  )
+              comparisons.append(
+                  {
+                      "run_name": run,
+                      "gpu_vs_cpu": {
+                          "val_loss_delta": None if gpu_best["val_loss"] is None or cpu_best["val_loss"] is None else gpu_best["val_loss"] - cpu_best["val_loss"],
+                          "perplexity_delta": None if gpu_best["perplexity"] is None or cpu_best["perplexity"] is None else gpu_best["perplexity"] - cpu_best["perplexity"],
+                          "benchmark_overall_delta": None if gpu_best_score is None or cpu_best_score is None else gpu_best_score.get("overall_score", 0.0) - cpu_best_score.get("overall_score", 0.0),
+                          "benchmark_code_delta": None if gpu_best_score is None or cpu_best_score is None else gpu_best_score.get("code_score", 0.0) - cpu_best_score.get("code_score", 0.0),
+                          "benchmark_reasoning_delta": None if gpu_best_score is None or cpu_best_score is None else gpu_best_score.get("reasoning_score", 0.0) - cpu_best_score.get("reasoning_score", 0.0),
+                      },
+                      "cpu_best_checkpoint": cpu_best,
+                      "cpu_best_benchmark": cpu_best_score,
+                  }
+              )
+
+          output_dir = run_root / gpu_run / "comparison_vs_cpu"
+          output_dir.mkdir(parents=True, exist_ok=True)
+          output_json = output_dir / "comparison_vs_cpu.json"
+          output_md = output_dir / "comparison_vs_cpu.md"
+
+          payload = {
+              "gpu_run_name": gpu_run,
+              "gpu_device": gpu_summary.get("device"),
+              "gpu_precision": gpu_summary.get("precision"),
+              "gpu_best_checkpoint": gpu_best,
+              "gpu_best_benchmark": gpu_best_score,
+              "comparisons": comparisons,
+          }
+          output_json.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+
+          lines = [
+              "# GPU Run Comparison vs CPU Runs",
+              "",
+              f"GPU run: `{gpu_run}`",
+              f"Device: `{gpu_summary.get('device')}`",
+              f"Precision: `{gpu_summary.get('precision')}`",
+              "",
+              "| CPU run | Δ best val loss (GPU-CPU) | Δ best perplexity (GPU-CPU) | Δ overall score | Δ code score | Δ reasoning score |",
+              "|---|---:|---:|---:|---:|---:|",
+          ]
+          for item in comparisons:
+              delta = item["gpu_vs_cpu"]
+              lines.append(
+                  "| {run} | {val_loss:.4f} | {ppl:.4f} | {overall:.4f} | {code:.4f} | {reasoning:.4f} |".format(
+                      run=item["run_name"],
+                      val_loss=0.0 if delta["val_loss_delta"] is None else delta["val_loss_delta"],
+                      ppl=0.0 if delta["perplexity_delta"] is None else delta["perplexity_delta"],
+                      overall=0.0 if delta["benchmark_overall_delta"] is None else delta["benchmark_overall_delta"],
+                      code=0.0 if delta["benchmark_code_delta"] is None else delta["benchmark_code_delta"],
+                      reasoning=0.0 if delta["benchmark_reasoning_delta"] is None else delta["benchmark_reasoning_delta"],
+                  )
+              )
+          output_md.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+          print(f"Wrote {output_json}")
+          print(f"Wrote {output_md}")
+          PYEOF
+
+      - name: Upload GPU run artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: first-gpu-experiment-run-artifacts
+          path: artifacts/runs/t_dev_6l_first_gpu_run/run_artifacts
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Upload GPU benchmark outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: first-gpu-experiment-benchmark-outputs
+          path: artifacts/runs/t_dev_6l_first_gpu_run/benchmark_outputs
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Upload GPU vs CPU comparison outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: first-gpu-experiment-vs-cpu-comparison
+          path: artifacts/runs/t_dev_6l_first_gpu_run/comparison_vs_cpu
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Print comparison summary
+        run: cat artifacts/runs/t_dev_6l_first_gpu_run/comparison_vs_cpu/comparison_vs_cpu.md
