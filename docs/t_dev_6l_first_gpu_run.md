@@ -24,7 +24,7 @@ Key settings vs prior CPU benchmark runs:
 - BF16-capable CUDA stack (if unavailable, use float16 config override)
 - Python environment with:
   - `pip install -e ".[dev]"`
-  - tokenizer artifact at `artifacts/tokenizers/t-dev-6l/v1/tokenizer.model`
+  - tokenizer artifact at `artifacts/tokenizers/t-dev-6l/t-dev-6l/v1/tokenizer.model`
   - manifest at `data/manifests/t_dev_6l_expanded_run.yaml` (or a run-specific replacement)
 
 ### Target envelope
@@ -71,6 +71,17 @@ python -m supreme_modeltx.model_core.training.trainer \
 torchrun --nproc_per_node=4 -m supreme_modeltx.model_core.training.trainer \
   --config configs/real_training/t_dev_6l_first_gpu_run.json
 ```
+
+### GitHub Actions (GPU-backed + CPU comparison)
+
+Use:
+
+- `.github/workflows/first-gpu-experiment.yml`
+
+This workflow runs preflight, launches the canonical GPU config, runs benchmark scoring, and writes:
+
+- `artifacts/runs/t_dev_6l_first_gpu_run/comparison_vs_cpu/comparison_vs_cpu.json`
+- `artifacts/runs/t_dev_6l_first_gpu_run/comparison_vs_cpu/comparison_vs_cpu.md`
 
 ## Resume after interruption
 

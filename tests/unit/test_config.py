@@ -96,6 +96,7 @@ class TestSMTXConfig:
         assert cfg.training.precision.dtype == "bfloat16"
         assert cfg.training.batch_size == 8
         assert cfg.data.max_seq_len == 512
+        assert cfg.tokenizer.model_path.endswith("artifacts/tokenizers/t-dev-6l/t-dev-6l/v1/tokenizer.model")
 
 
 class TestOptimizerConfig:
