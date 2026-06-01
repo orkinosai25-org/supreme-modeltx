@@ -151,6 +151,139 @@ def _resolve_run_artifact_dir(cfg: SMTXConfig) -> Path:
     return artifact_dir
 
 
+def _check_writable_dir(path: Path, *, label: str, errors: list[str]) -> None:
+    path.mkdir(parents=True, exist_ok=True)
+    probe = path / ".smtx_preflight_write_test"
+    try:
+        probe.write_text("ok", encoding="utf-8")
+        probe.unlink()
+    except OSError as exc:
+        errors.append(f"{label} is not writable: {path} ({exc})")
+
+
+def preflight_validate(cfg: SMTXConfig) -> dict[str, Any]:
+    """Run lightweight checks before launching a full training run."""
+    device = get_device()
+    errors: list[str] = []
+    warnings: list[str] = []
+    dtype = cfg.training.precision.dtype
+    precision_enabled = cfg.training.precision.enabled
+
+    if not precision_enabled and dtype != "float32":
+        warnings.append("precision.enabled is false but dtype is not float32.")
+
+    if precision_enabled:
+        if device.type == "cpu" and dtype == "float16":
+            errors.append("float16 precision is not supported on CPU devices.")
+        if device.type == "mps" and dtype == "bfloat16":
+            errors.append("bfloat16 precision is not supported on MPS devices.")
+        if (
+            device.type == "cuda"
+            and dtype == "bfloat16"
+            and hasattr(torch.cuda, "is_bf16_supported")
+            and not torch.cuda.is_bf16_supported()
+        ):
+            errors.append("bfloat16 precision requested, but this CUDA device does not support bf16.")
+
+    tokenizer_path = cfg.data.tokenizer_path or cfg.tokenizer.model_path
+    if not tokenizer_path:
+        errors.append(
+            "Tokenizer path is required for manifest training and checkpoint sample generation "
+            "(set data.tokenizer_path or tokenizer.model_path)."
+        )
+    elif not Path(tokenizer_path).exists():
+        errors.append(f"Tokenizer path does not exist: {tokenizer_path}")
+
+    if cfg.data.manifest_path:
+        manifest_path = Path(cfg.data.manifest_path)
+        if not manifest_path.exists():
+            errors.append(f"Manifest path does not exist: {cfg.data.manifest_path}")
+        else:
+            try:
+                manifest = DataManifest.from_file(manifest_path)
+                manifest_splits = {source.split for source in manifest.sources}
+                if cfg.data.train_split not in manifest_splits:
+                    errors.append(
+                        f"Manifest does not define the configured train split: {cfg.data.train_split}"
+                    )
+                if cfg.data.validation_split and cfg.data.validation_split not in manifest_splits:
+                    warnings.append(
+                        "Manifest does not define the configured validation split; validation will be skipped."
+                    )
+                for source in manifest.sources:
+                    if source.backend == "hf_dataset":
+                        continue
+                    if not source.path:
+                        errors.append(f"Manifest source '{source.name}' has no path configured.")
+                        continue
+                    if not Path(source.path).exists():
+                        errors.append(f"Manifest source path does not exist: {source.path}")
+            except Exception as exc:  # pragma: no cover - defensive preflight parsing guard
+                errors.append(f"Manifest could not be parsed: {cfg.data.manifest_path} ({exc})")
+
+    resume_from = cfg.training.checkpoint.resume_from
+    if resume_from and not Path(resume_from).exists():
+        errors.append(f"Configured resume checkpoint does not exist: {resume_from}")
+
+    checkpoint_dir = Path(cfg.training.checkpoint.save_dir)
+    run_artifact_dir = _resolve_run_artifact_dir(cfg)
+    _check_writable_dir(checkpoint_dir, label="Checkpoint directory", errors=errors)
+    _check_writable_dir(run_artifact_dir, label="Run artifact directory", errors=errors)
+
+    canonical_prompts = _load_canonical_prompts(cfg)
+    if not canonical_prompts:
+        errors.append("Canonical prompts are empty; sample generation cannot run.")
+
+    repo_root = Path(__file__).parents[4]
+    benchmark_eval = repo_root / "configs" / "benchmark_eval_set.json"
+    benchmark_baselines = repo_root / "configs" / "benchmark_baselines.json"
+    for required_path in (benchmark_eval, benchmark_baselines):
+        if not required_path.exists():
+            errors.append(f"Benchmark dependency is missing: {required_path}")
+
+    artifact_contract_paths = {
+        "config_used": str(run_artifact_dir / "config_used.json"),
+        "training_summary_json": str(run_artifact_dir / "training_summary.json"),
+        "training_summary_md": str(run_artifact_dir / "training_summary.md"),
+        "samples_json": str(run_artifact_dir / "samples.json"),
+        "samples_md": str(run_artifact_dir / "samples.md"),
+        "samples_dir": str(run_artifact_dir / "samples"),
+    }
+
+    return {
+        "ok": not errors,
+        "device": str(device),
+        "precision": {"enabled": precision_enabled, "dtype": dtype},
+        "checkpoint_dir": str(checkpoint_dir),
+        "run_artifact_dir": str(run_artifact_dir),
+        "benchmark_eval_set": str(benchmark_eval),
+        "benchmark_baselines": str(benchmark_baselines),
+        "artifact_contract_paths": artifact_contract_paths,
+        "errors": errors,
+        "warnings": warnings,
+    }
+
+
+def _format_preflight_report(report: dict[str, Any]) -> str:
+    status = "PASS" if report["ok"] else "FAIL"
+    lines = [
+        f"[preflight] {status}",
+        f"- device: {report['device']}",
+        f"- precision: enabled={report['precision']['enabled']} dtype={report['precision']['dtype']}",
+        f"- checkpoint_dir: {report['checkpoint_dir']}",
+        f"- run_artifact_dir: {report['run_artifact_dir']}",
+        f"- benchmark_eval_set: {report['benchmark_eval_set']}",
+        f"- benchmark_baselines: {report['benchmark_baselines']}",
+    ]
+    if report["warnings"]:
+        lines.append("- warnings:")
+        lines.extend(f"  - {message}" for message in report["warnings"])
+    if report["errors"]:
+        lines.append("- errors:")
+        lines.extend(f"  - {message}" for message in report["errors"])
+    return "\n".join(lines)
+
+
 def _extract_tokenizer_version(tokenizer_path: str | None) -> str | None:
     if not tokenizer_path:
         return None
@@ -643,6 +776,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="supreme-modeltx training entrypoint")
     parser.add_argument("--config", type=str, help="Path to config JSON/YAML file.")
     parser.add_argument("--dry-run", action="store_true", help="Run 2 steps then exit.")
+    parser.add_argument(
+        "--preflight",
+        action="store_true",
+        help="Validate config, data/tokenizer paths, artifact paths, and device/precision compatibility.",
+    )
     args = parser.parse_args()
 
     if args.config:
@@ -650,6 +788,11 @@ def main() -> None:
     else:
         logger.warning("No config file provided — using default SMTXConfig (smoke run).")
         cfg = SMTXConfig()
+
+    if args.preflight:
+        report = preflight_validate(cfg)
+        print(_format_preflight_report(report))
+        raise SystemExit(0 if report["ok"] else 1)
 
     train(cfg, dry_run=args.dry_run)
 

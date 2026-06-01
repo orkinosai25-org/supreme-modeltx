@@ -88,6 +88,15 @@ class TestSMTXConfig:
         loaded = SMTXConfig.from_file(path)
         assert loaded.model.hidden_size == 256
 
+    def test_gpu_first_run_config_loads(self):
+        repo_root = Path(__file__).resolve().parents[2]
+        cfg_path = repo_root / "configs" / "real_training" / "t_dev_6l_first_gpu_run.json"
+        cfg = SMTXConfig.from_file(cfg_path)
+        assert cfg.training.precision.enabled is True
+        assert cfg.training.precision.dtype == "bfloat16"
+        assert cfg.training.batch_size == 8
+        assert cfg.data.max_seq_len == 512
+
 
 class TestOptimizerConfig:
     def test_weight_decay_default(self):

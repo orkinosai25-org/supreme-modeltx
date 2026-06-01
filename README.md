@@ -189,6 +189,30 @@ The funded-compute follow-on plan that turns those benchmark results into a GPU-
 application-scaling roadmap is documented in
 **[`docs/gpu-readiness-scaling-plan.md`](docs/gpu-readiness-scaling-plan.md)**.
 
+### First GPU-optimized T-Dev-6L training run
+
+Canonical GPU config:
+
+- `configs/real_training/t_dev_6l_first_gpu_run.json`
+
+Run preflight before consuming GPU time:
+
+```bash
+python -m supreme_modeltx.model_core.training.trainer \
+  --config configs/real_training/t_dev_6l_first_gpu_run.json \
+  --preflight
+```
+
+Launch training:
+
+```bash
+python -m supreme_modeltx.model_core.training.trainer \
+  --config configs/real_training/t_dev_6l_first_gpu_run.json
+```
+
+Full hardware assumptions, resume flow, and benchmark scoring procedure:
+**[`docs/t_dev_6l_first_gpu_run.md`](docs/t_dev_6l_first_gpu_run.md)**.
+
 ### Run the platform API
 
 ```bash
@@ -278,6 +302,7 @@ This platform is designed with sovereignty as a first principle — not just bra
 - Internal messaging guide: [`docs/positioning/messaging.md`](docs/positioning/messaging.md)
 - Run artifact reference: [`docs/run-artifacts.md`](docs/run-artifacts.md)
 - Baseline benchmark workflow: [`docs/benchmarking.md`](docs/benchmarking.md)
+- First GPU T-Dev-6L run plan: [`docs/t_dev_6l_first_gpu_run.md`](docs/t_dev_6l_first_gpu_run.md)
 
 ---
 
