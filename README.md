@@ -185,6 +185,10 @@ length. Outputs are written under:
 Comparison against `t_dev_6l_first_run` (loss, perplexity, sample quality, and benchmark deltas) is
 documented in **[`docs/expanded-experiment-findings.md`](docs/expanded-experiment-findings.md)**.
 
+The funded-compute follow-on plan that turns those benchmark results into a GPU-readiness and
+application-scaling roadmap is documented in
+**[`docs/gpu-readiness-scaling-plan.md`](docs/gpu-readiness-scaling-plan.md)**.
+
 ### Run the platform API
 
 ```bash
