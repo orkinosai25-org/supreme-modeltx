@@ -20,7 +20,7 @@ preprocessing_expectations:
   - Deduplicate exact and near-duplicate records within each category before the split freeze.
   - Normalize UTF-8, line endings, and whitespace while preserving meaningful code indentation and Markdown structure.
   - Filter empty, boilerplate, auto-generated, vendored, and benchmark-contaminating records before packing.
-  - Keep tokenizer/trainer assumptions unchanged: text-only records packed with EOS boundaries to the configured max_seq_len.
+  - "Keep tokenizer/trainer assumptions unchanged: text-only records packed with EOS boundaries to the configured max_seq_len."
   - Freeze train/validation assignment per corpus version so reruns stay comparable even if future corpora expand.
 benchmark_alignment:
   - Increase repository-style code coverage for code completion, editing, and bug-fixing benchmark tasks.
