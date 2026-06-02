@@ -220,6 +220,8 @@ python -m supreme_modeltx.model_core.training.trainer \
 
 Full hardware assumptions, resume flow, and benchmark scoring procedure:
 **[`docs/t_dev_6l_first_gpu_run.md`](docs/t_dev_6l_first_gpu_run.md)**.
+Run-result review tracker:
+**[`docs/first-gpu-experiment-findings.md`](docs/first-gpu-experiment-findings.md)**.
 
 To execute the first GPU-backed benchmarked run and automatically compare against
 `t_dev_6l_first_run` and `t_dev_6l_expanded_run`, trigger:
@@ -316,6 +318,7 @@ This platform is designed with sovereignty as a first principle — not just bra
 - Run artifact reference: [`docs/run-artifacts.md`](docs/run-artifacts.md)
 - Baseline benchmark workflow: [`docs/benchmarking.md`](docs/benchmarking.md)
 - First GPU T-Dev-6L run plan: [`docs/t_dev_6l_first_gpu_run.md`](docs/t_dev_6l_first_gpu_run.md)
+- First GPU T-Dev-6L findings: [`docs/first-gpu-experiment-findings.md`](docs/first-gpu-experiment-findings.md)
 
 ---
 
