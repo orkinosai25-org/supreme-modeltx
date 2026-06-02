@@ -51,7 +51,7 @@ jobs:
           from supreme_modeltx.model_core.tokenizer.workflow import train_versioned_sentencepiece
 
           train_versioned_sentencepiece(
-              manifest_path="data/manifests/t_dev_6l_expanded_run.yaml",
+              manifest_path="data/manifests/t_dev_6l_gpu_corpus_v1_first_subset.yaml",
               artifact_root=Path("artifacts/tokenizers/t-dev-6l"),
               model_variant="t-dev-6l",
               version="v1",
@@ -235,5 +235,11 @@ jobs:
           if-no-files-found: error
           retention-days: 90
 
-      - name: Print comparison summary
-        run: cat artifacts/runs/t_dev_6l_first_gpu_run/comparison_vs_cpu/comparison_vs_cpu.md
+      - name: Publish comparison summary
+        run: |
+          cat artifacts/runs/t_dev_6l_first_gpu_run/comparison_vs_cpu/comparison_vs_cpu.md
+          {
+            echo "## CPU vs GPU comparison findings"
+            echo
+            cat artifacts/runs/t_dev_6l_first_gpu_run/comparison_vs_cpu/comparison_vs_cpu.md
+          } >> "$GITHUB_STEP_SUMMARY"
