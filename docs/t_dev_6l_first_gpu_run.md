@@ -25,7 +25,7 @@ Key settings vs prior CPU benchmark runs:
 - Python environment with:
   - `pip install -e ".[dev]"`
   - tokenizer artifact at `artifacts/tokenizers/t-dev-6l/t-dev-6l/v1/tokenizer.model`
-  - manifest at `data/manifests/t_dev_6l_expanded_run.yaml` (or a run-specific replacement)
+  - manifest at `data/manifests/t_dev_6l_gpu_corpus_v1_first_subset.yaml` (or a run-specific replacement)
 
 ### Target envelope
 

@@ -1,0 +1,3 @@
+{"text": "Task: Produce a patch-style summary. Input: rename variable old_count to sample_count in training config. Output: apply a minimal edit and keep behavior unchanged."}
+{"text": "Task: Format a deterministic tool-call shell. Input: run validation split only. Output: python -m supreme_modeltx.model_core.training.trainer --config configs/real_training/t_dev_6l_expanded_run.json --preflight"}
+{"text": "Task: Create an instruction scaffold. Input: explain manifest source provenance. Output: include source, license, and preprocessing rationale in concise bullet points."}

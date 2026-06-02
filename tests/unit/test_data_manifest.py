@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 from supreme_modeltx.model_core.data.manifest import DataManifest
@@ -70,3 +71,23 @@ def test_validate_manifest_requires_existing_files_for_materialized_sources(tmp_
     assert len(errors) == 1
     assert "path does not exist" in errors[0]
     assert str(tmp_path / "missing" / "train.jsonl") in errors[0]
+
+
+def test_gpu_corpus_first_subset_manifest_is_materialized_and_non_empty():
+    repo_root = Path(__file__).resolve().parents[2]
+    manifest_path = repo_root / "data" / "manifests" / "t_dev_6l_gpu_corpus_v1_first_subset.yaml"
+
+    manifest = DataManifest.from_file(manifest_path)
+
+    assert manifest.manifest_type == "training_run"
+    assert manifest.status == "materialized"
+    assert manifest.validate_manifest(base_dir=repo_root) == []
+    assert {"train", "validation"}.issubset({source.split for source in manifest.sources})
+
+    for source in manifest.sources:
+        resolved = manifest.resolve_source_path(source, base_dir=repo_root)
+        assert resolved is not None
+        assert resolved.exists()
+        records = [json.loads(line) for line in resolved.read_text(encoding="utf-8").splitlines() if line.strip()]
+        assert records
+        assert all("text" in row and row["text"].strip() for row in records)
