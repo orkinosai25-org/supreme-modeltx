@@ -90,6 +90,9 @@ It also publishes the same comparison markdown to the GitHub Actions run summary
 
 CPU-vs-GPU deltas are computed only when tokenizer model paths match across runs.
 
+> Scope note: workflow/documentation updates only define and expose the run path.  
+> A completed milestone still requires an actual self-hosted GPU workflow execution and review of the emitted artifacts/summary outputs.
+
 ## Resume after interruption
 
 Resume is automatic from the latest checkpoint in:
