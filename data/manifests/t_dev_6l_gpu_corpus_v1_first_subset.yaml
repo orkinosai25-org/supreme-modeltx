@@ -1,0 +1,45 @@
+version: '1'
+name: t_dev_6l_gpu_corpus_v1_first_subset
+description: First approved and materialized subset for T-Dev-6L GPU corpus v1.
+manifest_type: training_run
+status: materialized
+sources:
+- name: code-train
+  backend: jsonl
+  path: data/processed/t_dev_6l_gpu_corpus_v1/train/code.jsonl
+  split: train
+  text_field: text
+  weight: 0.55
+- name: code-validation
+  backend: jsonl
+  path: data/processed/t_dev_6l_gpu_corpus_v1/validation/code.jsonl
+  split: validation
+  text_field: text
+- name: reasoning-train
+  backend: jsonl
+  path: data/processed/t_dev_6l_gpu_corpus_v1/train/reasoning_instructions.jsonl
+  split: train
+  text_field: text
+  weight: 0.25
+- name: reasoning-validation
+  backend: jsonl
+  path: data/processed/t_dev_6l_gpu_corpus_v1/validation/reasoning_instructions.jsonl
+  split: validation
+  text_field: text
+- name: docs-train
+  backend: jsonl
+  path: data/processed/t_dev_6l_gpu_corpus_v1/train/technical_docs.jsonl
+  split: train
+  text_field: text
+  weight: 0.15
+- name: docs-validation
+  backend: jsonl
+  path: data/processed/t_dev_6l_gpu_corpus_v1/validation/technical_docs.jsonl
+  split: validation
+  text_field: text
+- name: synthetic-bridge-train
+  backend: jsonl
+  path: data/processed/t_dev_6l_gpu_corpus_v1/train/synthetic_bridge.jsonl
+  split: train
+  text_field: text
+  weight: 0.05

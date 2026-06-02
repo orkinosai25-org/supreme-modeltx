@@ -18,7 +18,7 @@
     "model_path": "artifacts/tokenizers/t-dev-6l/t-dev-6l/v1/tokenizer.model"
   },
   "data": {
-    "manifest_path": "data/manifests/t_dev_6l_expanded_run.yaml",
+    "manifest_path": "data/manifests/t_dev_6l_gpu_corpus_v1_first_subset.yaml",
     "train_split": "train",
     "validation_split": "validation",
     "tokenizer_path": "artifacts/tokenizers/t-dev-6l/t-dev-6l/v1/tokenizer.model",

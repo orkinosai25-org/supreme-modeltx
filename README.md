@@ -192,6 +192,10 @@ application-scaling roadmap is documented in
 The next versioned corpus target for future GPU-backed experiments is documented in
 **[`docs/t_dev_6l_gpu_corpus_plan.md`](docs/t_dev_6l_gpu_corpus_plan.md)** with its
 reproducible manifest at **`data/manifests/t_dev_6l_gpu_corpus_v1.yaml`**.
+The first approved materialized subset and training-ready manifest are:
+
+- `data/manifests/t_dev_6l_gpu_corpus_v1_first_subset.yaml`
+- `data/processed/t_dev_6l_gpu_corpus_v1/{train,validation}/`
 
 ### First GPU-optimized T-Dev-6L training run
 
