@@ -86,6 +86,8 @@ The workflow runs preflight, verifies CUDA availability, launches the canonical 
 - `artifacts/runs/t_dev_6l_first_gpu_run/comparison_vs_cpu/comparison_vs_cpu.json`
 - `artifacts/runs/t_dev_6l_first_gpu_run/comparison_vs_cpu/comparison_vs_cpu.md`
 
+It also publishes the same comparison markdown to the GitHub Actions run summary for quick review.
+
 CPU-vs-GPU deltas are computed only when tokenizer model paths match across runs.
 
 ## Resume after interruption
