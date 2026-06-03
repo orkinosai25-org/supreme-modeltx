@@ -2,6 +2,9 @@
 
 This document is the execution-ready package for the first canonical GPU-backed T-Dev-6L run.
 
+For an Azure UK self-hosted runner path, use
+**[`docs/azure-uk-gpu-runner-runbook.md`](azure-uk-gpu-runner-runbook.md)**.
+
 ## Canonical GPU config
 
 - `configs/real_training/t_dev_6l_first_gpu_run.json`
