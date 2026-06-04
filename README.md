@@ -227,6 +227,8 @@ To execute the first GPU-backed benchmarked run and automatically compare agains
 `t_dev_6l_first_run` and `t_dev_6l_expanded_run`, trigger:
 **`.github/workflows/first-gpu-experiment.yml`**.
 This workflow requires a self-hosted GPU runner (`self-hosted`, `linux`, `x64`, `gpu` labels).
+For Azure UK provisioning/bootstrap and runner setup, use
+**[`docs/azure-uk-gpu-runner-runbook.md`](docs/azure-uk-gpu-runner-runbook.md)**.
 
 ### Run the platform API
 
