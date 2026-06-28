@@ -7,6 +7,22 @@
 
 ---
 
+## UK Strategic Relevance
+
+Supreme ModelTX directly addresses the UK government's stated priorities for AI sovereignty:
+
+- **Domestic AI capability** — British-built, open-architecture LLM stack that is not dependent on any single US or non-UK cloud provider.
+- **Data residency and control** — Designed to run inside customer-owned Azure subscriptions in UK South / UK West regions; data never leaves the customer boundary.
+- **Governed deployment** — Control-plane architecture enforces policy, approval gates, and full audit trails before any model is deployed or inference is served — meeting public-sector accountability requirements.
+- **Reproducible, auditable science** — Every training run is config-driven and emits structured artifacts; experiments are reproducible from a clean checkout.
+- **Open foundation for public-sector use** — Platform API is OpenAI-compatible, enabling rapid integration into existing public-sector tooling, portals, and procurement patterns.
+
+**Target users:** UK government departments, NHS, HMRC, MoD, defence contractors, critical national infrastructure operators, and regulated financial institutions requiring AI capability without vendor lock-in.
+
+See [`docs/sovereign-ai/application-brief.md`](docs/sovereign-ai/application-brief.md) for the full sovereign AI application brief.
+
+---
+
 ## Two first-class layers
 
 ```
@@ -44,7 +60,21 @@ supreme-modeltx/
 
 ## Quick start
 
-### Install
+### One-step setup
+
+```bash
+# Clone and set up everything (train + eval + dev extras):
+git clone https://github.com/orkinosai25-org/supreme-modeltx.git
+cd supreme-modeltx
+bash scripts/setup.sh
+
+# With API platform dependencies:
+bash scripts/setup.sh --api
+```
+
+`scripts/setup.sh` installs the package in editable mode, verifies syntax, and copies `.env.example → .env` if not already present.
+
+### Install manually
 
 ```bash
 # Core (model_core only):
@@ -245,6 +275,44 @@ python -m pytest tests/ -v
 
 ---
 
+## Demo
+
+A complete end-to-end demo can be run from a clean checkout after setup:
+
+```bash
+# Run model smoke test + CPU training dry run + API health check:
+bash scripts/run_demo.sh
+
+# API-only (skip if fastapi is not installed):
+bash scripts/run_demo.sh --skip-api
+```
+
+Expected output:
+
+```text
+[1/2] Model instantiation, forward-pass, and training dry-run (smoke tests) ... PASSED
+[2/2] Platform API health check ... PASSED (or SKIPPED if not installed)
+Demo complete ✓
+```
+
+---
+
+## Evaluation
+
+```bash
+# Run full test suite + syntax check + (optional) perplexity + benchmark:
+bash scripts/evaluate.sh
+
+# With a checkpoint:
+export SMTX_CHECKPOINT_PATH=artifacts/runs/t_dev_6l_first_run/checkpoints/step_100.pt
+export SMTX_TOKENIZER_PATH=artifacts/tokenizers/t-dev-6l/v1/tokenizer.model
+bash scripts/evaluate.sh
+```
+
+Results are written to `results/latest.json`. See [`docs/evaluation.md`](docs/evaluation.md) for the full evaluation framework.
+
+---
+
 ## Architecture
 
 See [`docs/architecture/overview.md`](docs/architecture/overview.md) for a full description of the two-layer architecture.
@@ -321,6 +389,13 @@ This platform is designed with sovereignty as a first principle — not just bra
 - Baseline benchmark workflow: [`docs/benchmarking.md`](docs/benchmarking.md)
 - First GPU T-Dev-6L run plan: [`docs/t_dev_6l_first_gpu_run.md`](docs/t_dev_6l_first_gpu_run.md)
 - First GPU T-Dev-6L findings: [`docs/first-gpu-experiment-findings.md`](docs/first-gpu-experiment-findings.md)
+
+## UK Sovereign AI Fund — documentation pack
+
+- Architecture overview: [`docs/architecture.md`](docs/architecture.md)
+- Evaluation framework: [`docs/evaluation.md`](docs/evaluation.md)
+- 90-day delivery plan: [`docs/delivery-plan-90d.md`](docs/delivery-plan-90d.md)
+- Risk register: [`docs/risk-register.md`](docs/risk-register.md)
 
 ---
 
