@@ -1,85 +1,120 @@
-# TRL Self-Assessment Scorecard (Target: TRL 4–5)
+# TRL Self-Assessment — Supreme ModelTX
 
-> **Scope:** Evidence-based readiness assessment for `supreme-modeltx` against TRL-style criteria for applied AI scaling programs.  
-> **Assessment date:** 2026-07-22  
-> **Method:** Repository-artifact review only (code, tests, workflows, and docs linked below).
+> **Scope:** Evidence-based readiness assessment against TRL 4–6 progression criteria for applied AI / sovereign platform programmes.  
+> **Assessment date:** 2026-07-28  
+> **Method:** Repository-artifact review only — every score is backed by a concrete file path, test, or document.  
+> **Primary evidence anchor:** [`docs/poc-status.md`](poc-status.md) (merged PR #59 — POC evidence matrix).
 
 ---
 
 ## Scoring rubric
 
-Each criterion is scored on a **0–3** scale.
-
 | Score | Meaning |
 |---|---|
-| 0 | Not evidenced in repository |
+| 0 | No evidence in repository |
 | 1 | Early scaffold / partial implementation |
-| 2 | Working POC implementation with direct evidence (code + tests/docs) |
-| 3 | Pilot-ready implementation with hardening, operational controls, and demonstrated relevant-environment validation |
+| 2 | Working POC implementation with direct evidence (code + tests / docs) |
+| 3 | Pilot-ready with hardening, operational controls, and relevant-environment validation |
 
-### TRL interpretation used in this scorecard
+### TRL stage thresholds used in this scorecard
 
-- **TRL 4 threshold (component validation in lab):** Most core technical criteria at **≥2**, with repeatable local validation.
-- **TRL 5 threshold (validation in relevant environment):** Core criteria at **≥2.5 average**, with stronger security/governance/operations evidence in representative deployment conditions.
-
----
-
-## Scorecard
-
-| Criterion | Evidence | Score (0–3) | Rationale |
-|---|---|---:|---|
-| 1. Core architecture definition and modularity | [`docs/architecture/overview.md`](architecture/overview.md), [`docs/architecture/model-core.md`](architecture/model-core.md), [`docs/architecture/platform-api.md`](architecture/platform-api.md) | 2.5 | Architecture is clearly defined with separated model and platform layers; modular boundaries are explicit. |
-| 2. Core implementation completeness | [`src/supreme_modeltx/model_core/`](../src/supreme_modeltx/model_core/), [`src/supreme_modeltx/platform_api/`](../src/supreme_modeltx/platform_api/), [`docs/poc-status.md`](poc-status.md) | 2.0 | Major POC capabilities exist, but several control-plane security/governance items are still partial or missing. |
-| 3. Reproducibility of training/evaluation flows | [`README.md`](../README.md), [`scripts/setup.sh`](../scripts/setup.sh), [`scripts/evaluate.sh`](../scripts/evaluate.sh), [`docs/run-artifacts.md`](run-artifacts.md) | 2.0 | Reproducible commands and artifact contracts are documented; evidence is strong for POC repeatability from clean checkout. |
-| 4. Test evidence and quality gates | [`tests/unit/`](../tests/unit/), [`tests/smoke/test_model_smoke.py`](../tests/smoke/test_model_smoke.py), [`.github/workflows/`](../.github/workflows/) | 2.0 | Unit/smoke tests are present and broad for POC concerns; pilot-grade quality gates and production SLO checks are not yet evidenced. |
-| 5. Model/inference validation in relevant conditions | [`docs/first-experiment-findings.md`](first-experiment-findings.md), [`docs/expanded-experiment-findings.md`](expanded-experiment-findings.md), [`docs/first-gpu-experiment-findings.md`](first-gpu-experiment-findings.md) | 2.0 | CPU and initial GPU experiment evidence exists, but sustained relevant-environment validation and promotion criteria are limited. |
-| 6. Security controls (authz, tenancy, token lifecycle) | [`src/supreme_modeltx/platform_api/auth/keys.py`](../src/supreme_modeltx/platform_api/auth/keys.py), [`docs/poc-status.md`](poc-status.md) | 1.0 | API key issuance/hashing exists, but RBAC, complete tenant isolation, and scoped token lifecycle controls are not fully implemented. |
-| 7. Governance and auditability | [`src/supreme_modeltx/platform_api/audit/log.py`](../src/supreme_modeltx/platform_api/audit/log.py), [`docs/poc-status.md`](poc-status.md), [`docs/risk-register.md`](risk-register.md) | 1.5 | Append-only audit logging and risk documentation exist, but tamper-evident chaining and policy decision governance are still gaps. |
-| 8. Operations/deployment readiness | [`infra/main.bicep`](../infra/main.bicep), [`docs/azure-uk-gpu-runner-runbook.md`](azure-uk-gpu-runner-runbook.md), [`docs/gpu-readiness-scaling-plan.md`](gpu-readiness-scaling-plan.md) | 1.5 | Infrastructure and runbooks are documented, but production serving hardening and recovery/SLO maturity remain incomplete. |
-
-### Aggregate result
-
-- **Total score:** 14.5 / 24
-- **Average score:** **1.81 / 3**
-- **Current readiness verdict:** **Meets TRL 4 (POC component validation) evidence direction; does not yet meet confident TRL 5.**
-
----
-
-## Gap summary to confidently claim TRL 4–5
-
-### Highest-impact gaps (priority ordered)
-
-1. **RBAC and authorization enforcement across sensitive APIs**  
-   Evidence gap reflected in [`docs/poc-status.md`](poc-status.md) (RBAC planned/missing).
-2. **Tenant isolation enforcement by design (cross-tenant access prevention)**  
-   Current state is partial in [`docs/poc-status.md`](poc-status.md).
-3. **Scoped token lifecycle completion (expiry/rotation/revocation with policy checks)**  
-   Current key controls are incomplete for pilot posture.
-4. **Policy engine enforcement (model/data/region/retention) with decision logging**  
-   Needed for sovereign-governance claims at relevant-environment validation.
-5. **Tamper-evident audit chain + verification utility**  
-   Required to strengthen governance and incident forensics confidence.
-6. **Evaluation harness and promotion gates tied to lifecycle workflow**  
-   Needed to move from experiment evidence to operational model-release assurance.
-7. **Production operations hardening (SLOs, incident response, autoscaling behavior)**  
-   Needed for stronger TRL 5-relevant operational evidence.
-
----
-
-## Prioritized next steps
-
-| Priority | Action | Expected TRL impact |
+| Stage | Label | Threshold |
 |---|---|---|
-| P0 | Implement RBAC + tenant isolation + scoped token lifecycle controls | Raises security criterion toward 2–2.5 |
-| P0 | Implement policy engine v1 with explicit deny/allow reason codes and decision logs | Raises governance/security criteria toward 2+ |
-| P1 | Add tamper-evident audit hash-chain and verification tooling | Raises governance criterion toward 2.5 |
-| P1 | Build evaluation harness with machine-readable baseline reports and promotion thresholds | Raises validation criterion toward 2.5 |
-| P1 | Define pilot operational profile (SLOs, alerts, rollback runbook, failure drills) | Raises operations criterion toward 2.5 |
-| P2 | Run and document relevant-environment pilot validation cycles | Needed for confident TRL 5 claim |
+| TRL 4 | Component validation in controlled environment | Average score **≥ 1.5**, core engineering and validation criteria **≥ 2** |
+| TRL 5 | Validation in relevant environment | Average score **≥ 2.5**, security/governance and ops criteria **≥ 2** |
+| TRL 6 | System demonstration in relevant environment | All criteria **≥ 2.5**, pilot deployed and documented |
+
+---
+
+## Criteria scorecard
+
+### 1. Engineering Maturity
+
+*Covers: code modularity, reproducibility, config-driven execution, CI pipeline.*
+
+| Evidence | Score (0–3) | Rationale |
+|---|---:|---|
+| T-Dev-6L model architecture ([`src/supreme_modeltx/model_core/models/t_series/baseline.py`](../src/supreme_modeltx/model_core/models/t_series/baseline.py)), Pydantic v2 config schema ([`src/supreme_modeltx/model_core/config/schema.py`](../src/supreme_modeltx/model_core/config/schema.py)), training loop ([`src/supreme_modeltx/model_core/training/trainer.py`](../src/supreme_modeltx/model_core/training/trainer.py)), checkpoint management ([`src/supreme_modeltx/model_core/training/checkpoint.py`](../src/supreme_modeltx/model_core/training/checkpoint.py)), tokenizer workflow ([`src/supreme_modeltx/model_core/tokenizer/train.py`](../src/supreme_modeltx/model_core/tokenizer/train.py)), manifest-driven data pipeline ([`src/supreme_modeltx/model_core/data/manifest.py`](../src/supreme_modeltx/model_core/data/manifest.py)); FastAPI platform API with all major routers ([`src/supreme_modeltx/platform_api/api/app.py`](../src/supreme_modeltx/platform_api/api/app.py)); C# control-plane ([`control-plane/src/`](../control-plane/src/)); reproducible one-step setup ([`scripts/setup.sh`](../scripts/setup.sh)); CI workflows ([`.github/workflows/`](../.github/workflows/)). POC evidence matrix confirms all 16 Model Core rows ✅ Done. (Source: [`docs/poc-status.md`](poc-status.md) §1, §2, §3.) | **2.5** | Architecture is clearly layered (model core / platform API / control plane). All major modules implemented with stable boundaries. Reproducible from clean checkout. Pilot-scale hardening (distributed training recovery, production API error budgets) not yet evidenced. |
+
+### 2. Validation Evidence
+
+*Covers: experiment results, benchmark scores, test coverage, quality gates.*
+
+| Evidence | Score (0–3) | Rationale |
+|---|---:|---|
+| CPU training run with loss + perplexity ([`docs/first-experiment-findings.md`](first-experiment-findings.md)); expanded run ([`docs/expanded-experiment-findings.md`](expanded-experiment-findings.md)); GPU run plan + findings ([`docs/t_dev_6l_first_gpu_run.md`](t_dev_6l_first_gpu_run.md), [`docs/first-gpu-experiment-findings.md`](first-gpu-experiment-findings.md)); benchmark scorer ([`src/supreme_modeltx/model_core/eval/benchmark.py`](../src/supreme_modeltx/model_core/eval/benchmark.py)); run artifact schema ([`docs/run-artifacts.md`](run-artifacts.md)); 11 unit-test modules + smoke tests ([`tests/unit/`](../tests/unit/), [`tests/smoke/`](../tests/smoke/)). POC evidence matrix: Testing §6 all ✅ Done. (Source: [`docs/poc-status.md`](poc-status.md) §6.) | **2.0** | Multiple documented training runs with reproducible loss/perplexity curves. Broad unit-test coverage. No stable benchmark baseline yet; no CI-gated promotion thresholds; no live inference validation at relevant scale. |
+
+### 3. Security / Governance
+
+*Covers: authentication, RBAC, tenant isolation, audit trail, policy enforcement.*
+
+| Evidence | Score (0–3) | Rationale |
+|---|---:|---|
+| scrypt-hashed API key issuance + revocation ([`src/supreme_modeltx/platform_api/auth/keys.py`](../src/supreme_modeltx/platform_api/auth/keys.py)); append-only audit log ([`src/supreme_modeltx/platform_api/audit/log.py`](../src/supreme_modeltx/platform_api/audit/log.py)); project/tenant model ([`src/supreme_modeltx/platform_api/tenants/models.py`](../src/supreme_modeltx/platform_api/tenants/models.py)). POC evidence matrix: RBAC ❌ Missing (Issue #5), policy engine ❌ Missing (Issue #8), tamper-evident audit ❌ Missing (Issue #7), multi-tenant cross-project blocking ⚠️ Partial. (Source: [`docs/poc-status.md`](poc-status.md) §Component Maturity Summary.) | **1.0** | Auth scaffold with secure key hashing and a partial audit log are present. RBAC middleware, policy engine, tamper-evident audit chaining, and enforced tenant isolation are all absent — four primary blockers to TRL 5. |
+
+### 4. Ops Readiness
+
+*Covers: infrastructure-as-code, deployment runbooks, SLOs, incident response.*
+
+| Evidence | Score (0–3) | Rationale |
+|---|---:|---|
+| Azure Bicep templates ([`infra/main.bicep`](../infra/main.bicep), [`infra/rbac.bicep`](../infra/rbac.bicep), [`infra/modules/`](../infra/modules/)); Azure UK GPU runner runbook ([`docs/azure-uk-gpu-runner-runbook.md`](azure-uk-gpu-runner-runbook.md)); VM scaling guide ([`docs/vm-scaling.md`](vm-scaling.md)); GPU readiness plan ([`docs/gpu-readiness-scaling-plan.md`](gpu-readiness-scaling-plan.md)); 90-day delivery plan ([`docs/delivery-plan-90d.md`](delivery-plan-90d.md)); risk register ([`docs/risk-register.md`](risk-register.md)). POC evidence matrix: Infrastructure §5 all ✅ Done. Production serving hardening ❌ Missing (Issue #12). (Source: [`docs/poc-status.md`](poc-status.md) §5, §Component Maturity Summary.) | **1.5** | IaC and provisioning runbooks are complete for Azure UK deployment. No production SLOs, no autoscaling configuration, no incident-response runbooks tied to live paths — required for TRL 5 ops evidence. |
+
+### 5. Scalability Path
+
+*Covers: distributed training hooks, GPU scaling plan, multi-tenant capacity isolation, horizontal serving.*
+
+| Evidence | Score (0–3) | Rationale |
+|---|---:|---|
+| `torchrun` multi-GPU support + distributed setup ([`src/supreme_modeltx/model_core/training/distributed/setup.py`](../src/supreme_modeltx/model_core/training/distributed/setup.py)); mixed precision ([`src/supreme_modeltx/model_core/training/precision.py`](../src/supreme_modeltx/model_core/training/precision.py)); FSDP/DeepSpeed scaffold ([`src/supreme_modeltx/model_core/training/trainer.py`](../src/supreme_modeltx/model_core/training/trainer.py)); GPU corpus plan + first-subset manifest ([`docs/t_dev_6l_gpu_corpus_plan.md`](t_dev_6l_gpu_corpus_plan.md), [`data/manifests/t_dev_6l_gpu_corpus_v1_first_subset.yaml`](../data/manifests/t_dev_6l_gpu_corpus_v1_first_subset.yaml)); T-X multi-model orchestrator ([`tmodels/tx/orchestrator.py`](../tmodels/tx/orchestrator.py)); vLLM GPU inference scaffold ([`inference/vllm_server.py`](../inference/vllm_server.py)). POC evidence matrix: multi-tenant isolation ⚠️ Partial; experiment tracking ❌ Missing. (Source: [`docs/poc-status.md`](poc-status.md) §4, §Component Maturity Summary.) | **1.5** | Technical groundwork for distributed and GPU-scale execution is present and documented. Multi-tenant resource isolation and GPU-scale training validation have not yet been demonstrated end-to-end. |
+
+---
+
+## Aggregate result
+
+| Criterion | Score (0–3) |
+|---|---:|
+| Engineering Maturity | 2.5 |
+| Validation Evidence | 2.0 |
+| Security / Governance | 1.0 |
+| Ops Readiness | 1.5 |
+| Scalability Path | 1.5 |
+| **Total** | **8.5 / 15** |
+| **Average** | **1.70 / 3** |
+
+**Current TRL stage: TRL 4**  
+The platform meets TRL 4 thresholds (engineering and validation criteria ≥ 2, repeatable lab-environment execution, documented POC evidence across all major sub-systems). It does **not** yet meet TRL 5 — security/governance and ops criteria remain at 1.0–1.5.
+
+---
+
+## What is needed to reach TRL 5
+
+| Action required | Criterion raised | Target score |
+|---|---|---|
+| Implement RBAC middleware and per-role enforcement (Issue #5) | Security / Governance | → 2.0 |
+| Enforce multi-tenant cross-project isolation at service layer (Issue #4) | Security / Governance | → 2.0 |
+| Complete scoped API key expiry, rotation, and revocation (Issue #6) | Security / Governance | → 2.0 |
+| Implement policy engine v1 with decision logging (Issue #8) | Security / Governance | → 2.5 |
+| Add tamper-evident audit hash-chain and verification tooling (Issue #7) | Security / Governance | → 2.5 |
+| Define and instrument SLOs, alerts, and rollback runbooks | Ops Readiness | → 2.5 |
+| Document and execute pilot operational validation cycles | Ops Readiness | → 2.5 |
+| Build evaluation harness with CI-gated baseline reports (Issue #11) | Validation Evidence | → 2.5 |
+
+## What is needed to reach TRL 6
+
+In addition to TRL 5 requirements:
+
+| Action required | Criterion raised |
+|---|---|
+| Demonstrate multi-node GPU training at target T-101 scale | Scalability Path → 2.5 |
+| Validate inference provider abstraction under pilot load (Issue #10) | Scalability Path → 2.5 |
+| Complete model promotion/rollback workflow with lifecycle audit (Issue #9) | Engineering Maturity → 3.0 |
+| Execute and document a full pilot deployment in an operationally relevant environment | All criteria |
 
 ---
 
 ## Confidence and limitations
 
-- This scorecard is intentionally strict: only repository-verifiable evidence is counted.
-- Scores can be revised upward once missing controls and pilot-validation evidence are implemented and committed.
+- Every score reflects only repository-verifiable evidence; no off-repo claims are counted.
+- Scores will be revised upward when missing controls are implemented and committed.
+- See [`docs/gap-analysis.md`](gap-analysis.md) for the detailed blocker backlog with owner, effort, and dependency information.

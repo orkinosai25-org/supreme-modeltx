@@ -396,6 +396,8 @@ This platform is designed with sovereignty as a first principle — not just bra
 - Evaluation framework: [`docs/evaluation.md`](docs/evaluation.md)
 - 90-day delivery plan: [`docs/delivery-plan-90d.md`](docs/delivery-plan-90d.md)
 - Risk register: [`docs/risk-register.md`](docs/risk-register.md)
+- TRL self-assessment: [`docs/trl-assessment.md`](docs/trl-assessment.md)
+- Gap analysis (POC → pilot): [`docs/gap-analysis.md`](docs/gap-analysis.md)
 
 ---
 

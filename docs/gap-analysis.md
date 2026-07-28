@@ -1,108 +1,107 @@
-# Gap Analysis: POC → Pilot/Deployment Readiness
+# Gap Analysis: POC → Pilot / Deployment Readiness
 
-> **Scope:** Evidence-backed blockers preventing transition from current POC posture to pilot/deployment readiness.  
-> **Assessment date:** 2026-07-23  
-> **Method:** Repository artifact review only (code, tests, workflows, and docs linked below).
+> **Scope:** Evidence-backed blockers preventing transition from current POC posture to pilot and deployment readiness.  
+> **Assessment date:** 2026-07-28  
+> **Method:** Repository artifact review only — every gap references a concrete file path, test result, or doc.  
+> **Primary evidence anchors:** [`docs/poc-status.md`](poc-status.md) (PR #59), [`docs/trl-assessment.md`](trl-assessment.md).
+
+**Effort key:** S = days–1 week · M = 1–3 weeks · L = 3–6 weeks  
+**Owner roles:** Platform · Security · MLOps · Product
 
 ---
 
 ## Current-state summary
 
-`supreme-modeltx` has strong POC evidence across model core, API scaffolding, infra definitions, and documentation, but pilot readiness is blocked by control-plane hardening, policy/governance enforcement, and operational validation gaps.
-
-Primary evidence anchors:
-
-- [`docs/poc-status.md`](poc-status.md)
-- [`docs/trl-assessment.md`](trl-assessment.md)
-- [`docs/repository-readiness-review.md`](repository-readiness-review.md)
+`supreme-modeltx` has strong POC evidence across model core, API scaffolding, infra definitions, and documentation (TRL 4). Pilot readiness is blocked by four primary control-plane gaps: RBAC enforcement, policy engine, tamper-evident audit chaining, and enforced tenant isolation. Secondary blockers include production serving hardening, inference provider abstraction, and a CI-gated evaluation harness.
 
 ---
 
-## Domain gap analysis
+## Gap register
 
-### 1) Architecture gaps
+### Security gaps
 
-| Gap | Evidence | Risk/Impact | Severity | Effort | Linked issue |
-|---|---|---|---|---|---|
-| Tenant/workspace domain boundaries are incomplete | [`src/supreme_modeltx/platform_api/tenants/models.py`](../src/supreme_modeltx/platform_api/tenants/models.py), [`docs/poc-status.md`](poc-status.md) | Cross-tenant leakage risk and unclear ownership of resources | High | Medium | #4 |
-| Inference providers are not abstracted behind a stable contract | [`src/supreme_modeltx/platform_api/api/engine.py`](../src/supreme_modeltx/platform_api/api/engine.py), [`docs/poc-status.md`](poc-status.md) | GPU/runtime adoption later will require invasive rewrites | Medium | Medium | #10 |
-| Model lifecycle promotion/rollback is not fully operationalized | [`src/supreme_modeltx/platform_api/model_registry/registry.py`](../src/supreme_modeltx/platform_api/model_registry/registry.py), [`docs/poc-status.md`](poc-status.md) | Release management is manual and rollback reliability is uncertain | Medium | Medium | #9 |
+| # | Description | Impact / Risk | Priority | Effort | Owner | Dependency |
+|---|---|---|---|---|---|---|
+| G-S1 | **RBAC middleware absent** — no per-role API guards; any valid key can call any route ([`docs/poc-status.md`](poc-status.md) §RBAC row, Issue #5) | Privileged model management and governance operations reachable by any authenticated caller; blocks sovereign-control claims | High | M | Security | G-S3 (identity scope) |
+| G-S2 | **Multi-tenant isolation not enforced** — project model exists ([`src/supreme_modeltx/platform_api/tenants/models.py`](../src/supreme_modeltx/platform_api/tenants/models.py)) but cross-project data access is not blocked at service layer ([`docs/poc-status.md`](poc-status.md) §Multi-tenant row, Issue #4) | Cross-tenant data leakage; prevents multi-customer pilot | High | M | Platform | None |
+| G-S3 | **Scoped token lifecycle incomplete** — revocation exists but expiry enforcement is absent ([`src/supreme_modeltx/platform_api/auth/keys.py`](../src/supreme_modeltx/platform_api/auth/keys.py), [`docs/poc-status.md`](poc-status.md) §Scoped token row, Issue #6) | Long-lived credentials increase blast radius; machine-auth hygiene non-compliant with public-sector requirements | High | S | Security | None |
+| G-S4 | **Policy engine absent** — no configurable model/data/region/retention controls ([`docs/poc-status.md`](poc-status.md) §Policy engine row, Issue #8) | Sovereign and regulatory controls cannot be proven or audited in operation; TRL 5 blocker | High | L | Platform, Security | G-S1, G-S2 |
 
-### 2) Security gaps
+### Governance gaps
 
-| Gap | Evidence | Risk/Impact | Severity | Effort | Linked issue |
-|---|---|---|---|---|---|
-| RBAC middleware and per-role enforcement are missing | [`docs/poc-status.md`](poc-status.md), [`docs/trl-assessment.md`](trl-assessment.md) | Privileged operations may be reachable by any authenticated key | High | Medium | #5 |
-| Scoped token lifecycle (expiry/rotation/revocation controls) is incomplete | [`src/supreme_modeltx/platform_api/auth/keys.py`](../src/supreme_modeltx/platform_api/auth/keys.py), [`docs/poc-status.md`](poc-status.md) | Long-lived credentials increase blast radius and weaken machine auth hygiene | High | Medium | #6 |
-| Policy constraints (model/data/region/retention) are not enforced at runtime | [`docs/trl-assessment.md`](trl-assessment.md), [`docs/poc-status.md`](poc-status.md) | Sovereign and regulatory controls cannot be proven in operation | High | High | #8 |
+| # | Description | Impact / Risk | Priority | Effort | Owner | Dependency |
+|---|---|---|---|---|---|---|
+| G-G1 | **Audit log not tamper-evident** — events are append-only but no hash-chain linking ([`src/supreme_modeltx/platform_api/audit/log.py`](../src/supreme_modeltx/platform_api/audit/log.py), [`docs/poc-status.md`](poc-status.md) §Tamper-evident row, Issue #7) | Audit events can be silently altered; insufficient for incident forensics or grant/regulatory review | High | M | Security | None |
+| G-G2 | **Policy decision logging absent** — no explicit allow/deny reason codes emitted from routing or governance layer ([`docs/trl-assessment.md`](trl-assessment.md) §Security/Governance) | Compliance evidence for sovereign-control decisions cannot be reconstructed post-incident | High | M | Security | G-S4 |
 
-### 3) Operations gaps
+### MLOps / lifecycle gaps
 
-| Gap | Evidence | Risk/Impact | Severity | Effort | Linked issue |
-|---|---|---|---|---|---|
-| Usage rollups, chargeback view, and operational runbooks are incomplete | [`src/supreme_modeltx/platform_api/usage/metering.py`](../src/supreme_modeltx/platform_api/usage/metering.py), [`docs/poc-status.md`](poc-status.md) | Limited operational visibility and slower incident triage/recovery | Medium | Low | #12 |
-| Production serving hardening (SLOs/alerts/recovery drills) is not evidenced | [`docs/trl-assessment.md`](trl-assessment.md), [`docs/azure-uk-gpu-runner-runbook.md`](azure-uk-gpu-runner-runbook.md) | Reliability risk in pilot workloads and weak operational confidence | High | High | #12 |
+| # | Description | Impact / Risk | Priority | Effort | Owner | Dependency |
+|---|---|---|---|---|---|---|
+| G-M1 | **Inference provider not abstracted** — `InferenceEngine` coupled to a single checkpoint path ([`src/supreme_modeltx/platform_api/api/engine.py`](../src/supreme_modeltx/platform_api/api/engine.py), [`docs/poc-status.md`](poc-status.md) §Inference integration row, Issue #10) | Adopting GPU/vLLM backends later requires invasive rewrites; testing across providers is blocked | Medium | M | MLOps | None |
+| G-M2 | **Model promotion/rollback not operationalized** — registry stages exist but lifecycle transitions and rollback are manual ([`src/supreme_modeltx/platform_api/model_registry/registry.py`](../src/supreme_modeltx/platform_api/model_registry/registry.py), Issue #9) | Release management is unreliable; rollback confidence is low in pilot incidents | Medium | M | MLOps | G-M1 |
+| G-M3 | **Evaluation harness incomplete** — perplexity is reported per run but no machine-readable baseline report, no CI promotion threshold ([`docs/evaluation.md`](evaluation.md), [`docs/poc-status.md`](poc-status.md) §Experiment tracking row, Issue #11) | Quality regressions can ship undetected; model release decisions are subjective | Medium | M | MLOps | G-M2 |
 
-### 4) Testing/validation gaps
+### Operations gaps
 
-| Gap | Evidence | Risk/Impact | Severity | Effort | Linked issue |
-|---|---|---|---|---|---|
-| Reproducible evaluation harness with baseline reporting is missing | [`docs/evaluation.md`](evaluation.md), [`docs/poc-status.md`](poc-status.md) | Progress/regression decisions cannot be consistently measured | Medium | Medium | #11 |
-| CI-friendly lightweight evaluation mode is not yet integrated | [`scripts/evaluate.sh`](../scripts/evaluate.sh), [`docs/poc-status.md`](poc-status.md) | Quality gates are less effective for release readiness | Medium | Medium | #11 |
-
-### 5) Governance/compliance gaps
-
-| Gap | Evidence | Risk/Impact | Severity | Effort | Linked issue |
-|---|---|---|---|---|---|
-| Audit trail is append-only but not tamper-evident | [`src/supreme_modeltx/platform_api/audit/log.py`](../src/supreme_modeltx/platform_api/audit/log.py), [`docs/poc-status.md`](poc-status.md) | Limited forensic trust and weaker governance posture | High | Medium | #7 |
-| Policy decision logging with explicit reason codes is missing | [`docs/trl-assessment.md`](trl-assessment.md), [`docs/poc-status.md`](poc-status.md) | Compliance evidence for denied/allowed decisions is insufficient | High | High | #8 |
+| # | Description | Impact / Risk | Priority | Effort | Owner | Dependency |
+|---|---|---|---|---|---|---|
+| G-O1 | **Production serving not hardened** — no SLO definitions, no autoscaling, no incident-response runbooks ([`docs/trl-assessment.md`](trl-assessment.md) §Ops Readiness, [`docs/poc-status.md`](poc-status.md) §Production serving row, Issue #12) | Reliability risk in pilot; weak confidence for fund/grant reviewers requiring operational evidence | High | L | Platform | G-M1 |
+| G-O2 | **Usage metering rollups and cost views incomplete** — token ledger exists ([`src/supreme_modeltx/platform_api/usage/metering.py`](../src/supreme_modeltx/platform_api/usage/metering.py)) but no aggregated cost view or chargeback report (Issue #12) | Limited operational visibility; budget forecasting and per-tenant billing are manual | Medium | S | Product | None |
 
 ---
 
-## Ranked backlog (POC → pilot)
+## Ranked execution backlog
 
-| Rank | Gap | Domain | Severity | Effort | Suggested owner | Suggested sequence | Follow-on issue |
-|---:|---|---|---|---|---|---|---|
-| 1 | Implement tenant/workspace model and hard isolation boundaries | Architecture + Security | High | Medium | Platform API team | Phase 1 foundation | #4 |
-| 2 | Add RBAC policy matrix and middleware enforcement | Security | High | Medium | Platform API + Security | Phase 1 (after #4 domain scoping) | #5 |
-| 3 | Complete scoped API keys/tokens lifecycle controls | Security | High | Medium | Platform API + Security | Phase 1 (parallel with #5) | #6 |
-| 4 | Implement policy engine v1 with decision logging | Governance + Security | High | High | Governance/Policy + Platform API | Phase 2 (depends on identity/tenancy controls) | #8 |
-| 5 | Build tamper-evident append-only audit chain + verification | Governance/Compliance | High | Medium | Platform API + Compliance | Phase 2 (alongside #8) | #7 |
-| 6 | Build model registry promotion/rollback workflow | Architecture + MLOps | Medium | Medium | MLOps + Platform API | Phase 3 | #9 |
-| 7 | Add inference provider abstraction (CPU/API now, GPU later) | Architecture + MLOps | Medium | Medium | MLOps/Inference team | Phase 3 | #10 |
-| 8 | Implement evaluation harness and baseline reporting | Testing/Validation | Medium | Medium | Eval/QA + MLOps | Phase 4 (gates for #9/#10) | #11 |
-| 9 | Add usage metering rollups, cost views, and runbooks | Operations | Medium | Low | Platform Ops/SRE | Phase 4 | #12 |
-| 10 | Pilot operations hardening (SLOs, alerts, recovery drills) | Operations | High | High | Platform Ops/SRE | Phase 5 readiness gate | #12 |
-
----
-
-## Suggested implementation sequence
-
-1. **Security boundary foundation:** #4 → #5/#6  
-2. **Governance enforcement:** #8 → #7  
-3. **Lifecycle architecture stabilization:** #9 → #10  
-4. **Validation and operationalization:** #11 → #12
-
-Dependency rationale:
-
-- #8 policy controls are materially stronger once tenancy/RBAC identity boundaries are in place (#4/#5).
-- #11 evaluation gates are most useful when lifecycle flows (#9) and provider contracts (#10) are stable.
-- #12 pilot runbooks/SLOs should be finalized only after security/governance controls are enforceable.
+| Rank | Gap | Priority | Effort | Owner | Dependency |
+|---:|---|---|---|---|---|
+| 1 | G-S2 — Enforce multi-tenant isolation boundaries | High | M | Platform | None |
+| 2 | G-S3 — Complete scoped token expiry and lifecycle | High | S | Security | None |
+| 3 | G-S1 — Implement RBAC middleware and per-role enforcement | High | M | Security | G-S3 |
+| 4 | G-G1 — Add tamper-evident audit hash-chain and verification | High | M | Security | None |
+| 5 | G-S4 — Implement policy engine v1 with decision logging | High | L | Platform, Security | G-S1, G-S2 |
+| 6 | G-G2 — Wire policy decision logging (allow/deny reason codes) | High | M | Security | G-S4 |
+| 7 | G-M1 — Inference provider abstraction (CPU/GPU swappable) | Medium | M | MLOps | None |
+| 8 | G-M2 — Model registry promotion/rollback workflow | Medium | M | MLOps | G-M1 |
+| 9 | G-M3 — Evaluation harness with CI-gated baseline reports | Medium | M | MLOps | G-M2 |
+| 10 | G-O2 — Usage metering rollups and cost views | Medium | S | Product | None |
+| 11 | G-O1 — Production serving hardening (SLOs, alerts, runbooks) | High | L | Platform | G-M1 |
 
 ---
 
-## Mapping to follow-on implementation issues
+## Prioritized execution sequence — next 4–6 weeks
 
-All identified blockers map directly to the issue set from #58:
+### Week 1–2 · Security boundary foundation
 
-- **#4** Multi-tenant workspace domain model
-- **#5** RBAC middleware and role enforcement
-- **#6** Scoped API keys and token lifecycle
-- **#7** Immutable audit trail with tamper-evidence
-- **#8** Policy engine v1 for sovereign controls
-- **#9** Model registry lifecycle promotion/rollback
-- **#10** Inference provider abstraction
-- **#11** Evaluation harness and baseline reporting
-- **#12** Usage metering, chargeback, and operational runbooks
+- **G-S3** — Implement token expiry enforcement and rotation in [`auth/keys.py`](../src/supreme_modeltx/platform_api/auth/keys.py) (Issue #6). Unblocks G-S1.
+- **G-S2** — Add cross-project access check middleware in [`tenants/`](../src/supreme_modeltx/platform_api/tenants/) (Issue #4). Independent; highest compliance risk.
+- **G-G1** — Add SHA-256 hash-chain to [`audit/log.py`](../src/supreme_modeltx/platform_api/audit/log.py) + `verify_chain` utility (Issue #7). Independent; short effort.
 
-No blocker above is left without a direct implementation path.
+### Week 2–3 · RBAC and policy enforcement
+
+- **G-S1** — Implement role model and `require_role` FastAPI dependency; apply to management routes (Issue #5). Requires G-S3 identity scope.
+- **G-O2** — Add usage rollup endpoint and chargeback view (Issue #12). Short effort; high Product visibility.
+
+### Week 3–5 · Policy engine and governance logging
+
+- **G-S4** — Build policy engine v1: configurable model/data/region/retention rules, explicit allow/deny evaluation (Issue #8). Depends on G-S1, G-S2.
+- **G-G2** — Integrate decision logging into policy engine responses (Issue #8 extension). Depends on G-S4.
+
+### Week 4–6 · Lifecycle, evaluation, and ops readiness
+
+- **G-M1** — Extract inference provider interface; CPU and vLLM implementations (Issue #10). Independent.
+- **G-M2** — Wire model promotion/rollback to registry stages with audit events (Issue #9). Depends on G-M1.
+- **G-M3** — Build `eval/harness.py` and CI baseline report; add pass/fail threshold gate (Issue #11). Depends on G-M2.
+- **G-O1** — Define SLOs, add alerting config, and draft incident-response runbook (Issue #12). Depends on G-M1.
+
+### TRL gate check (end of week 6)
+
+Security/Governance average ≥ 2.0, Ops Readiness ≥ 2.0, Validation Evidence ≥ 2.5 → **TRL 5 claim is supportable**.
+
+---
+
+## Immediate next implementation PR recommended
+
+**PR title:** `feat: security boundary foundation — tenant isolation, token expiry, tamper-evident audit`  
+**Scope:** G-S2 + G-S3 + G-G1 (Issues #4, #6, #7)  
+**Why first:** These three gaps are mutually independent, have the shortest combined effort (M + S + M), and together remove the most critical security and governance blockers before RBAC and policy work begins.
