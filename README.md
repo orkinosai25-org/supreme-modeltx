@@ -390,6 +390,17 @@ This platform is designed with sovereignty as a first principle — not just bra
 - First GPU T-Dev-6L run plan: [`docs/t_dev_6l_first_gpu_run.md`](docs/t_dev_6l_first_gpu_run.md)
 - First GPU T-Dev-6L findings: [`docs/first-gpu-experiment-findings.md`](docs/first-gpu-experiment-findings.md)
 
+## Readiness & Evidence
+
+Evidence-backed readiness documents for fund reviewers and public-sector stakeholders:
+
+- POC status matrix (PR #59): [`docs/poc-status.md`](docs/poc-status.md)
+- TRL self-assessment (TRL 4–5 rubric + current score): [`docs/trl-assessment.md`](docs/trl-assessment.md)
+- Gap analysis (POC → pilot/deployment): [`docs/gap-analysis.md`](docs/gap-analysis.md)
+- Funding readiness (90-day plan, GPU-constrained strategy, milestones): [`docs/funding-readiness.md`](docs/funding-readiness.md)
+
+---
+
 ## UK Sovereign AI Fund — documentation pack
 
 - Architecture overview: [`docs/architecture.md`](docs/architecture.md)
@@ -398,6 +409,7 @@ This platform is designed with sovereignty as a first principle — not just bra
 - Risk register: [`docs/risk-register.md`](docs/risk-register.md)
 - TRL self-assessment: [`docs/trl-assessment.md`](docs/trl-assessment.md)
 - Gap analysis (POC → pilot): [`docs/gap-analysis.md`](docs/gap-analysis.md)
+- Funding readiness: [`docs/funding-readiness.md`](docs/funding-readiness.md)
 
 ---
 
