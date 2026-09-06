@@ -1,5 +1,11 @@
 # Supreme ModelTX / TAI — Pitch Deck Outline
 
+> Companion Project Ebru investor documents:
+> - [`project-ebru-investor-brief-tr.md`](project-ebru-investor-brief-tr.md)
+> - [`project-ebru-pitch-deck-tr.md`](project-ebru-pitch-deck-tr.md)
+>
+> These Turkish-language documents position Project Ebru as the market-facing assistant/platform that may temporarily use OpenAI-compatible infrastructure, while Supreme ModelTX remains the Phase 2 sovereign model foundation intended to power Ebru over time.
+
 ## Slide 1 — Title and one-line thesis
 **Headline:** Sovereign AI platform foundation for controlled model development and deployment  
 **Key bullets:**
