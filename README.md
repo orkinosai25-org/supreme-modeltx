@@ -394,6 +394,9 @@ This platform is designed with sovereignty as a first principle — not just bra
 
 Evidence-backed readiness documents for fund reviewers and public-sector stakeholders:
 
+- **Application evidence bundle** (submission narrative — problem, solution, why now, readiness, 90-day plan, risk): [`docs/application-evidence-bundle.md`](docs/application-evidence-bundle.md)
+- **Submission checklist** (complete evidence index, CI links, partner proof placeholders, final QA): [`docs/submission-checklist.md`](docs/submission-checklist.md)
+- **Impact metrics** (8 measurable KPIs — TRL, security gaps, loss, perplexity, reproducibility): [`docs/impact-metrics.md`](docs/impact-metrics.md)
 - POC status matrix (PR #59): [`docs/poc-status.md`](docs/poc-status.md)
 - TRL self-assessment (TRL 4–5 rubric + current score): [`docs/trl-assessment.md`](docs/trl-assessment.md)
 - Gap analysis (POC → pilot/deployment): [`docs/gap-analysis.md`](docs/gap-analysis.md)
