@@ -87,6 +87,10 @@ def training_state_path(output_dir: str | Path, step: int) -> Path:
     return Path(output_dir) / "checkpoints" / f"checkpoint_step_{step:08d}.state.pt"
 
 
+def training_metadata_path(output_dir: str | Path, step: int) -> Path:
+    return training_state_path(output_dir, step).with_suffix(".json")
+
+
 def _autocast_context(device: torch.device, mode: str):
     if mode == "off":
         return nullcontext()
@@ -171,6 +175,7 @@ def _save_checkpoint(
 ) -> Path:
     path = checkpoint_path(cfg.training.output_dir, step)
     state_path = training_state_path(cfg.training.output_dir, step)
+    metadata_path = training_metadata_path(cfg.training.output_dir, step)
     path.parent.mkdir(parents=True, exist_ok=True)
     torch.save(
         {
@@ -187,7 +192,7 @@ def _save_checkpoint(
         },
         state_path,
     )
-    (state_path.with_suffix(".json")).write_text(
+    metadata_path.write_text(
         json.dumps(
             {
                 "device": str(device),
@@ -202,8 +207,8 @@ def _save_checkpoint(
     model_checkpoints = [candidate for candidate in checkpoints if ".state." not in candidate.name]
     for old_path in model_checkpoints[:-cfg.training.keep_last_n_checkpoints]:
         old_path.unlink()
-        sibling_state = old_path.with_suffix(".state.pt")
-        sibling_meta = old_path.with_suffix(".state.json")
+        sibling_state = training_state_path(old_path.parent.parent, int(old_path.stem.split("_")[-1]))
+        sibling_meta = training_metadata_path(old_path.parent.parent, int(old_path.stem.split("_")[-1]))
         if sibling_state.exists():
             sibling_state.unlink()
         if sibling_meta.exists():
@@ -235,7 +240,8 @@ def _load_checkpoint(
 ) -> tuple[int, list[dict[str, Any]]]:
     model_state = torch.load(path, map_location=device, weights_only=True)
     training_state = torch.load(path.with_suffix(".state.pt"), map_location=device, weights_only=True)
-    metrics_path = path.with_suffix(".state.json")
+    step = int(path.stem.split("_")[-1])
+    metrics_path = training_metadata_path(path.parent.parent, step)
     metrics: list[dict[str, Any]] = []
     if metrics_path.exists():
         metadata = json.loads(metrics_path.read_text(encoding="utf-8"))
@@ -250,7 +256,7 @@ def _evaluate(model: nn.Module, validation_samples: list[list[int]], *, batch_si
     model.eval()
     losses: list[float] = []
     with torch.no_grad():
-        total_batches = max(1, len(validation_samples) // batch_size)
+        total_batches = max(1, (len(validation_samples) + batch_size - 1) // batch_size)
         for batch_index in range(total_batches):
             batch = _make_batch(validation_samples, step=batch_index, batch_size=batch_size, device=device)
             losses.append(float(model(**batch)["loss"].detach().cpu().item()))
@@ -297,8 +303,10 @@ def train(cfg: TrainingRunConfig) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     latest_checkpoint = None
+    current_step = start_step
     try:
         for step in range(start_step + 1, cfg.training.max_steps + 1):
+            current_step = step
             optimizer.zero_grad(set_to_none=True)
             total_loss = 0.0
             for accumulation_index in range(cfg.training.gradient_accumulation_steps):
@@ -353,7 +361,7 @@ def train(cfg: TrainingRunConfig) -> dict[str, Any]:
             model=model,
             optimizer=optimizer,
             scaler=scaler,
-            step=max(start_step, len(metrics)),
+            step=current_step,
             device=device,
             metrics=metrics,
             interrupted=True,
@@ -367,7 +375,7 @@ def train(cfg: TrainingRunConfig) -> dict[str, Any]:
         "status": status,
         "device": str(device),
         "seed": cfg.training.seed,
-        "steps_completed": metrics[-1]["step"] if metrics else start_step,
+        "steps_completed": metrics[-1]["step"] if metrics else current_step,
         "latest_checkpoint": str(latest_checkpoint) if latest_checkpoint else None,
         "latest_training_state": str(latest_checkpoint.with_suffix(".state.pt")) if latest_checkpoint else None,
         "metrics_path": str(output_dir / "metrics.jsonl"),

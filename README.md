@@ -1,6 +1,6 @@
 # Supreme Model T-X private foundation
 
-Supreme ModelTX is an early-stage sovereign AI platform foundation. This private repository now includes a reproducible PyTorch development baseline for Supreme Model T-X that is ready for CPU smoke tests today and a controlled single-GPU pilot later.
+Supreme Model T-X is an early-stage sovereign AI platform foundation. This private repository now includes a reproducible PyTorch development baseline that is ready for CPU smoke tests today and a controlled single-GPU pilot later.
 
 ## What is implemented now
 
