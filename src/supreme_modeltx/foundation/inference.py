@@ -37,11 +37,18 @@ class FoundationResponder:
 
         assert self.model is not None
         input_ids = self.tokenizer.encode(prompt, max_length=self.config.model.max_seq_len)
+        generated_tokens: list[int] = []
         tokens = torch.tensor([input_ids], dtype=torch.long, device=self.device)
         with torch.no_grad():
-            logits = self.model(tokens)["logits"][0]
-        generated = torch.argmax(logits, dim=-1).tolist()[: self.config.inference.max_new_tokens]
-        decoded = self.tokenizer.decode(generated).strip()
+            for _ in range(self.config.inference.max_new_tokens):
+                logits = self.model(tokens)["logits"][:, -1, :]
+                next_token = int(torch.argmax(logits, dim=-1).item())
+                generated_tokens.append(next_token)
+                next_token_tensor = torch.tensor([[next_token]], dtype=torch.long, device=self.device)
+                tokens = torch.cat([tokens, next_token_tensor], dim=1)
+                if tokens.size(1) > self.config.model.max_seq_len:
+                    tokens = tokens[:, -self.config.model.max_seq_len :]
+        decoded = self.tokenizer.decode(generated_tokens).strip()
         if not decoded:
             decoded = self.config.inference.response_prefix
         return f"{self.config.inference.response_prefix} {decoded}".strip()

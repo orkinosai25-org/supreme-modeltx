@@ -65,8 +65,7 @@ def validate_jsonl_dataset(
         if "license" in record:
             licenses[str(record["license"])] += 1
 
-        fingerprint_parts = [str(record.get(field, "")).strip().lower() for field in required_fields]
-        fingerprint = "|".join(fingerprint_parts)
+        fingerprint = json.dumps(record, sort_keys=True, ensure_ascii=False).strip().lower()
         if fingerprint in fingerprint_to_line:
             duplicates.append({"first_line": fingerprint_to_line[fingerprint], "duplicate_line": index})
         else:

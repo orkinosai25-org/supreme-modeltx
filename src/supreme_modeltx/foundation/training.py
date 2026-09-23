@@ -4,6 +4,7 @@ import argparse
 import json
 import logging
 import random
+import re
 from contextlib import nullcontext
 from pathlib import Path
 from typing import Any
@@ -89,6 +90,13 @@ def training_state_path(output_dir: str | Path, step: int) -> Path:
 
 def training_metadata_path(output_dir: str | Path, step: int) -> Path:
     return training_state_path(output_dir, step).with_suffix(".json")
+
+
+def _step_from_checkpoint_path(path: Path) -> int:
+    match = re.search(r"checkpoint_step_(\d+)(?:\.state)?\.pt$", path.name)
+    if not match:
+        raise ValueError(f"Unrecognized checkpoint filename: {path.name}")
+    return int(match.group(1))
 
 
 def _autocast_context(device: torch.device, mode: str):
@@ -203,12 +211,12 @@ def _save_checkpoint(
         ),
         encoding="utf-8",
     )
-    checkpoints = sorted(path.parent.glob("checkpoint_step_*.pt"))
+    checkpoints = sorted(path.parent.glob("checkpoint_step_*.pt"), key=_step_from_checkpoint_path)
     model_checkpoints = [candidate for candidate in checkpoints if ".state." not in candidate.name]
     for old_path in model_checkpoints[:-cfg.training.keep_last_n_checkpoints]:
         old_path.unlink()
-        sibling_state = training_state_path(old_path.parent.parent, int(old_path.stem.split("_")[-1]))
-        sibling_meta = training_metadata_path(old_path.parent.parent, int(old_path.stem.split("_")[-1]))
+        sibling_state = training_state_path(old_path.parent.parent, _step_from_checkpoint_path(old_path))
+        sibling_meta = training_metadata_path(old_path.parent.parent, _step_from_checkpoint_path(old_path))
         if sibling_state.exists():
             sibling_state.unlink()
         if sibling_meta.exists():
@@ -223,9 +231,12 @@ def _resolve_resume_path(cfg: TrainingRunConfig) -> Path | None:
         return None
     checkpoint_dir = Path(cfg.training.output_dir) / "checkpoints"
     candidates = sorted(
-        candidate
-        for candidate in checkpoint_dir.glob("checkpoint_step_*.pt")
-        if ".state." not in candidate.name
+        (
+            candidate
+            for candidate in checkpoint_dir.glob("checkpoint_step_*.pt")
+            if ".state." not in candidate.name
+        ),
+        key=_step_from_checkpoint_path,
     )
     return candidates[-1] if candidates else None
 
@@ -238,9 +249,13 @@ def _load_checkpoint(
     scaler: torch.amp.GradScaler,
     device: torch.device,
 ) -> tuple[int, list[dict[str, Any]]]:
+    step = _step_from_checkpoint_path(path)
     model_state = torch.load(path, map_location=device, weights_only=True)
-    training_state = torch.load(path.with_suffix(".state.pt"), map_location=device, weights_only=True)
-    step = int(path.stem.split("_")[-1])
+    training_state = torch.load(
+        training_state_path(path.parent.parent, step),
+        map_location=device,
+        weights_only=True,
+    )
     metrics_path = training_metadata_path(path.parent.parent, step)
     metrics: list[dict[str, Any]] = []
     if metrics_path.exists():
