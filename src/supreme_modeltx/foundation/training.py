@@ -83,6 +83,10 @@ def checkpoint_path(output_dir: str | Path, step: int) -> Path:
     return Path(output_dir) / "checkpoints" / f"checkpoint_step_{step:08d}.pt"
 
 
+def training_state_path(output_dir: str | Path, step: int) -> Path:
+    return Path(output_dir) / "checkpoints" / f"checkpoint_step_{step:08d}.state.pt"
+
+
 def _autocast_context(device: torch.device, mode: str):
     if mode == "off":
         return nullcontext()
@@ -166,23 +170,44 @@ def _save_checkpoint(
     interrupted: bool = False,
 ) -> Path:
     path = checkpoint_path(cfg.training.output_dir, step)
+    state_path = training_state_path(cfg.training.output_dir, step)
     path.parent.mkdir(parents=True, exist_ok=True)
     torch.save(
         {
-            "step": step,
             "model_state": model.state_dict(),
-            "optimizer_state": optimizer.state_dict(),
-            "scaler_state": scaler.state_dict(),
-            "config": cfg.model_dump(mode="json"),
-            "device": str(device),
-            "interrupted": interrupted,
-            "metrics": metrics,
         },
         path,
     )
+    torch.save(
+        {
+            "step": step,
+            "optimizer_state": optimizer.state_dict(),
+            "scaler_state": scaler.state_dict(),
+            "interrupted": interrupted,
+        },
+        state_path,
+    )
+    (state_path.with_suffix(".json")).write_text(
+        json.dumps(
+            {
+                "device": str(device),
+                "config": cfg.model_dump(mode="json"),
+                "metrics": metrics,
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
     checkpoints = sorted(path.parent.glob("checkpoint_step_*.pt"))
-    for old_path in checkpoints[:-cfg.training.keep_last_n_checkpoints]:
+    model_checkpoints = [candidate for candidate in checkpoints if ".state." not in candidate.name]
+    for old_path in model_checkpoints[:-cfg.training.keep_last_n_checkpoints]:
         old_path.unlink()
+        sibling_state = old_path.with_suffix(".state.pt")
+        sibling_meta = old_path.with_suffix(".state.json")
+        if sibling_state.exists():
+            sibling_state.unlink()
+        if sibling_meta.exists():
+            sibling_meta.unlink()
     return path
 
 
@@ -192,7 +217,11 @@ def _resolve_resume_path(cfg: TrainingRunConfig) -> Path | None:
     if not cfg.training.auto_resume_latest:
         return None
     checkpoint_dir = Path(cfg.training.output_dir) / "checkpoints"
-    candidates = sorted(checkpoint_dir.glob("checkpoint_step_*.pt"))
+    candidates = sorted(
+        candidate
+        for candidate in checkpoint_dir.glob("checkpoint_step_*.pt")
+        if ".state." not in candidate.name
+    )
     return candidates[-1] if candidates else None
 
 
@@ -204,11 +233,17 @@ def _load_checkpoint(
     scaler: torch.amp.GradScaler,
     device: torch.device,
 ) -> tuple[int, list[dict[str, Any]]]:
-    state = torch.load(path, map_location=device, weights_only=True)
-    model.load_state_dict(state["model_state"])
-    optimizer.load_state_dict(state["optimizer_state"])
-    scaler.load_state_dict(state.get("scaler_state", {}))
-    return int(state.get("step", 0)), list(state.get("metrics", []))
+    model_state = torch.load(path, map_location=device, weights_only=True)
+    training_state = torch.load(path.with_suffix(".state.pt"), map_location=device, weights_only=True)
+    metrics_path = path.with_suffix(".state.json")
+    metrics: list[dict[str, Any]] = []
+    if metrics_path.exists():
+        metadata = json.loads(metrics_path.read_text(encoding="utf-8"))
+        metrics = list(metadata.get("metrics", []))
+    model.load_state_dict(model_state["model_state"])
+    optimizer.load_state_dict(training_state["optimizer_state"])
+    scaler.load_state_dict(training_state.get("scaler_state", {}))
+    return int(training_state.get("step", 0)), metrics
 
 
 def _evaluate(model: nn.Module, validation_samples: list[list[int]], *, batch_size: int, device: torch.device) -> float:
@@ -334,6 +369,7 @@ def train(cfg: TrainingRunConfig) -> dict[str, Any]:
         "seed": cfg.training.seed,
         "steps_completed": metrics[-1]["step"] if metrics else start_step,
         "latest_checkpoint": str(latest_checkpoint) if latest_checkpoint else None,
+        "latest_training_state": str(latest_checkpoint.with_suffix(".state.pt")) if latest_checkpoint else None,
         "metrics_path": str(output_dir / "metrics.jsonl"),
     }
     with (output_dir / "metrics.jsonl").open("w", encoding="utf-8") as handle:

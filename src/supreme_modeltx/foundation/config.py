@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Literal
+from typing import Literal, TypeVar
 
 import yaml
 from pydantic import BaseModel, Field, model_validator
+
+ModelType = TypeVar("ModelType", bound=BaseModel)
 
 
 class FoundationModelConfig(BaseModel):
@@ -127,7 +129,7 @@ class EvaluationRunConfig(BaseModel):
         return load_model(path, cls)
 
 
-def load_model(path: str | Path, model_type: type[BaseModel]) -> BaseModel:
+def load_model(path: str | Path, model_type: type[ModelType]) -> ModelType:
     path = Path(path)
     raw = path.read_text(encoding="utf-8")
     if path.suffix in {".yaml", ".yml"}:

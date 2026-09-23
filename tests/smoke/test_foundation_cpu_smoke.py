@@ -15,6 +15,8 @@ def test_private_foundation_cpu_smoke(tmp_path):
     assert summary["status"] == "completed"
 
     evaluation_config = EvaluationRunConfig.from_file(REPO_ROOT / "configs" / "foundation" / "evaluation.yaml")
+    evaluation_config.inference.backend = "checkpoint"
+    evaluation_config.inference.checkpoint_path = summary["latest_checkpoint"]
     evaluation_config.evaluation.output_path = str(tmp_path / "evaluation.json")
     results = run_evaluation(evaluation_config)
     assert results["total_cases"] >= 2

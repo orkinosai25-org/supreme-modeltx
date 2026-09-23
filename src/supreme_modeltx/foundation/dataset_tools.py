@@ -185,7 +185,7 @@ def _build_parser() -> argparse.ArgumentParser:
     validate_parser.add_argument(
         "--required-field",
         action="append",
-        default=["prompt", "response", "source", "license"],
+        default=None,
     )
     validate_parser.add_argument("--scan-pii", action="store_true")
     validate_parser.add_argument("--scan-secrets", action="store_true")
@@ -206,9 +206,10 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.command == "validate":
+        required_fields = args.required_field or ["prompt", "response", "source", "license"]
         report = validate_jsonl_dataset(
             args.path,
-            required_fields=args.required_field,
+            required_fields=required_fields,
             scan_pii=args.scan_pii,
             scan_secrets=args.scan_secrets,
         )
