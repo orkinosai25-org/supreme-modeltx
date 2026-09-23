@@ -19,7 +19,6 @@ COPY docs /workspace/docs
 
 RUN pip install --upgrade pip && \
     pip install torch --index-url https://download.pytorch.org/whl/cpu && \
-    pip install -e ".[dev]" && \
-    pip install -r requirements.txt
+    pip install -e ".[foundation,dev]"
 
 CMD ["python", "-m", "supreme_modeltx.foundation.training", "--config", "configs/foundation/training-smoke.yaml"]

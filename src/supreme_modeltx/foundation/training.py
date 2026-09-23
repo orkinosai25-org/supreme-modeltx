@@ -115,6 +115,8 @@ def _encode_records(path: str | Path, *, vocab_size: int, seq_len: int) -> list[
         response = str(record.get("response", ""))
         combined = f"{prompt}\n{response}".strip()
         sequences.append(tokenizer.encode(combined, max_length=seq_len))
+    if not sequences:
+        raise ValueError(f"Dataset contains no usable records: {path}")
     return sequences
 
 
@@ -145,6 +147,8 @@ def _prepare_samples(cfg: TrainingRunConfig) -> tuple[list[list[int]], list[list
 
 def _make_batch(samples: list[list[int]], *, step: int, batch_size: int, device: torch.device) -> dict[str, torch.Tensor]:
     total = len(samples)
+    if total == 0:
+        raise ValueError("Cannot build a batch from an empty dataset.")
     batch = [samples[(step * batch_size + offset) % total] for offset in range(batch_size)]
     tensor = torch.tensor(batch, dtype=torch.long, device=device)
     return {"input_ids": tensor, "labels": tensor.clone()}
@@ -200,7 +204,7 @@ def _load_checkpoint(
     scaler: torch.amp.GradScaler,
     device: torch.device,
 ) -> tuple[int, list[dict[str, Any]]]:
-    state = torch.load(path, map_location=device, weights_only=False)
+    state = torch.load(path, map_location=device, weights_only=True)
     model.load_state_dict(state["model_state"])
     optimizer.load_state_dict(state["optimizer_state"])
     scaler.load_state_dict(state.get("scaler_state", {}))

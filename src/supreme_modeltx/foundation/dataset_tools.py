@@ -99,6 +99,17 @@ def validate_jsonl_dataset(
     }
 
 
+def report_summary_for_console(report: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "path": report["path"],
+        "record_count": report["record_count"],
+        "valid": report["valid"],
+        "issue_count": len(report["issues"]),
+        "duplicate_count": len(report["duplicates"]),
+        "finding_count": len(report["findings"]),
+    }
+
+
 def split_jsonl_dataset(
     path: str | Path,
     *,
@@ -201,7 +212,7 @@ def main() -> None:
             scan_pii=args.scan_pii,
             scan_secrets=args.scan_secrets,
         )
-        print(json.dumps(report, indent=2))
+        print(json.dumps(report_summary_for_console(report), indent=2))
         return
 
     report = split_jsonl_dataset(

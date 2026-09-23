@@ -27,7 +27,7 @@ class FoundationResponder:
                 max_seq_len=config.model.max_seq_len,
                 dropout=config.model.dropout,
             ).to(self.device)
-            state = torch.load(Path(checkpoint_path), map_location=self.device, weights_only=False)
+            state = torch.load(Path(checkpoint_path), map_location=self.device, weights_only=True)
             self.model.load_state_dict(state["model_state"])
             self.model.eval()
 

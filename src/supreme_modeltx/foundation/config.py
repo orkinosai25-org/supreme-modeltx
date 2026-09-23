@@ -96,7 +96,6 @@ class PromptSuiteConfig(BaseModel):
 class EvaluationConfig(BaseModel):
     suite_path: str
     output_path: str = "artifacts/private_foundation/evaluation/results.json"
-    inference_config_path: str | None = None
 
 
 class TrainingRunConfig(BaseModel):

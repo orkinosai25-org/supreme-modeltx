@@ -3,7 +3,7 @@
 ## Principles
 
 - Keep all training and evaluation data private unless it is explicitly cleared for internal use
-- Track source and licence metadata for every JSONL record set
+- Track source and license metadata for every JSONL record set
 - Validate before training, not after
 - Never upload private data to external services without approval
 
@@ -32,7 +32,7 @@ The validator checks:
 - required fields
 - duplicate records
 - source metadata summary
-- licence metadata summary
+- license metadata summary
 - optional PII pattern matches
 - optional secret pattern matches
 
@@ -53,12 +53,12 @@ Outputs:
 
 The split manifest records the source dataset path, ratios, seed, counts, and output file paths.
 
-## Source and licence tracking
+## Source and license tracking
 
 Every approved dataset slice should preserve:
 
 - where the text came from
-- the licence or internal-use basis
+- the license or internal-use basis
 - the approval owner
 - the date the slice was created
 

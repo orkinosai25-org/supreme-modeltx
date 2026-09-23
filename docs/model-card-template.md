@@ -35,7 +35,7 @@
 ## Data governance
 
 - data sources summary:
-- licence basis:
+- license basis:
 - PII review status:
 - secret scanning status:
 
