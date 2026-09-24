@@ -5,7 +5,7 @@ import pytest
 from supreme_modeltx.foundation.config import InferenceRunConfig, TrainingRunConfig
 from supreme_modeltx.foundation.inference import FoundationResponder
 from supreme_modeltx.foundation import training as training_module
-from supreme_modeltx.foundation.training import build_training_preflight, checkpoint_path, train, training_state_path
+from supreme_modeltx.foundation.training import build_training_preflight, checkpoint_path, resolve_device, train, training_state_path
 
 
 def test_checkpoint_path_uses_expected_pattern(tmp_path):
@@ -231,3 +231,8 @@ def test_train_raises_actionable_error_when_preflight_fails(tmp_path, monkeypatc
 
     with pytest.raises(RuntimeError, match="foundation preflight: failed"):
         train(config)
+
+
+def test_resolve_device_rejects_negative_cuda_index():
+    with pytest.raises(RuntimeError, match="CUDA device index must be zero or greater"):
+        resolve_device("cuda", cuda_device_index=-1)

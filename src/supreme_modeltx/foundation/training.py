@@ -80,6 +80,8 @@ def _cuda_bf16_supported() -> bool:
 
 
 def resolve_device(preference: str, *, cuda_device_index: int = 0) -> torch.device:
+    if cuda_device_index < 0:
+        raise RuntimeError("CUDA device index must be zero or greater.")
     if preference == "cpu":
         return torch.device("cpu")
     if preference == "cuda":
