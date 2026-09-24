@@ -65,19 +65,124 @@ def configure_determinism(seed: int) -> None:
     torch.manual_seed(seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
+    if hasattr(torch.backends, "cudnn"):
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
     torch.use_deterministic_algorithms(True, warn_only=True)
 
 
-def resolve_device(preference: str) -> torch.device:
+def _cuda_device_count() -> int:
+    return torch.cuda.device_count() if torch.cuda.is_available() else 0
+
+
+def _cuda_bf16_supported() -> bool:
+    return bool(getattr(torch.cuda, "is_bf16_supported", lambda: False)())
+
+
+def resolve_device(preference: str, *, cuda_device_index: int = 0) -> torch.device:
     if preference == "cpu":
         return torch.device("cpu")
     if preference == "cuda":
         if not torch.cuda.is_available():
-            raise RuntimeError("CUDA was requested but is not available.")
-        return torch.device("cuda")
+            raise RuntimeError(
+                "CUDA was requested but is not available. Install a CUDA-enabled PyTorch wheel "
+                "for this host and re-run `python scripts/gpu_diagnostics.py --config "
+                "configs/foundation/training-single-gpu.yaml --require-cuda`."
+            )
+        device_count = _cuda_device_count()
+        if cuda_device_index >= device_count:
+            raise RuntimeError(
+                f"CUDA device index {cuda_device_index} was requested, but only {device_count} visible "
+                "CUDA device(s) are available. Update training.cuda_device_index or CUDA_VISIBLE_DEVICES."
+            )
+        return torch.device(f"cuda:{cuda_device_index}")
     if torch.cuda.is_available():
-        return torch.device("cuda")
+        device_count = _cuda_device_count()
+        if cuda_device_index >= device_count:
+            raise RuntimeError(
+                f"Auto device selection found CUDA, but requested device index {cuda_device_index} is out of range "
+                f"for {device_count} visible CUDA device(s). Update training.cuda_device_index or CUDA_VISIBLE_DEVICES."
+            )
+        return torch.device(f"cuda:{cuda_device_index}")
     return torch.device("cpu")
+
+
+def build_training_preflight(cfg: TrainingRunConfig) -> dict[str, Any]:
+    errors: list[str] = []
+    warnings: list[str] = []
+    resolved_device: torch.device | None = None
+    device_count = _cuda_device_count()
+
+    try:
+        resolved_device = resolve_device(
+            cfg.training.device,
+            cuda_device_index=cfg.training.cuda_device_index,
+        )
+    except RuntimeError as exc:
+        errors.append(str(exc))
+
+    if resolved_device is not None and cfg.training.mixed_precision == "fp16" and resolved_device.type != "cuda":
+        errors.append(
+            "FP16 mixed precision requires CUDA. Use training.device='cuda' on a GPU host, "
+            "or set mixed_precision='off' for CPU smoke runs."
+        )
+
+    if resolved_device is not None and cfg.training.mixed_precision == "bf16":
+        if resolved_device.type != "cuda":
+            errors.append(
+                "BF16 mixed precision in this single-GPU scaffold requires CUDA. "
+                "Use training.device='cuda' on a supported GPU host, or set mixed_precision='off' for CPU smoke runs."
+            )
+        elif not _cuda_bf16_supported():
+            errors.append(
+                "BF16 mixed precision was requested, but this CUDA device/PyTorch runtime does not report BF16 support. "
+                "Switch to mixed_precision='fp16' or 'off', or use a BF16-capable GPU."
+            )
+
+    if resolved_device is not None and resolved_device.type == "cuda":
+        gpu_name = torch.cuda.get_device_name(resolved_device.index or 0)
+        warnings.append(
+            "CUDA determinism is enabled with torch.use_deterministic_algorithms(..., warn_only=True) "
+            "and cuDNN benchmark disabled, but some CUDA kernels may still have nondeterministic behaviour."
+        )
+    else:
+        gpu_name = None
+
+    return {
+        "ok": not errors,
+        "requested_device": cfg.training.device,
+        "requested_cuda_device_index": cfg.training.cuda_device_index,
+        "resolved_device": str(resolved_device) if resolved_device is not None else None,
+        "cuda_available": torch.cuda.is_available(),
+        "cuda_device_count": device_count,
+        "gpu_name": gpu_name,
+        "mixed_precision": cfg.training.mixed_precision,
+        "autocast_enabled": resolved_device is not None and resolved_device.type == "cuda" and cfg.training.mixed_precision != "off",
+        "grad_scaler_enabled": resolved_device is not None and resolved_device.type == "cuda" and cfg.training.mixed_precision == "fp16",
+        "errors": errors,
+        "warnings": warnings,
+    }
+
+
+def format_preflight_report(report: dict[str, Any]) -> str:
+    status = "ok" if report["ok"] else "failed"
+    lines = [
+        f"foundation preflight: {status}",
+        f"- requested device: {report['requested_device']}",
+        f"- resolved device: {report['resolved_device']}",
+        f"- cuda available: {report['cuda_available']}",
+        f"- cuda device count: {report['cuda_device_count']}",
+        f"- mixed precision: {report['mixed_precision']}",
+        f"- autocast enabled: {report['autocast_enabled']}",
+        f"- grad scaler enabled: {report['grad_scaler_enabled']}",
+    ]
+    if report.get("gpu_name"):
+        lines.append(f"- gpu name: {report['gpu_name']}")
+    for warning in report["warnings"]:
+        lines.append(f"- warning: {warning}")
+    for error in report["errors"]:
+        lines.append(f"- error: {error}")
+    return "\n".join(lines)
 
 
 def checkpoint_path(output_dir: str | Path, step: int) -> Path:
@@ -105,8 +210,6 @@ def _autocast_context(device: torch.device, mode: str):
     if device.type == "cuda":
         dtype = torch.bfloat16 if mode == "bf16" else torch.float16
         return torch.autocast(device_type="cuda", dtype=dtype)
-    if device.type == "cpu" and mode == "bf16":
-        return torch.autocast(device_type="cpu", dtype=torch.bfloat16)
     return nullcontext()
 
 
@@ -281,8 +384,13 @@ def _evaluate(model: nn.Module, validation_samples: list[list[int]], *, batch_si
 
 def train(cfg: TrainingRunConfig) -> dict[str, Any]:
     logging.basicConfig(level=logging.INFO, format="%(message)s")
+    preflight = build_training_preflight(cfg)
+    if not preflight["ok"]:
+        raise RuntimeError(format_preflight_report(preflight))
+    for warning in preflight["warnings"]:
+        logger.warning(warning)
     configure_determinism(cfg.training.seed)
-    device = resolve_device(cfg.training.device)
+    device = torch.device(preflight["resolved_device"])
     train_samples, validation_samples = _prepare_samples(cfg)
 
     model = TinyPilotLM(
@@ -389,6 +497,7 @@ def train(cfg: TrainingRunConfig) -> dict[str, Any]:
     summary = {
         "status": status,
         "device": str(device),
+        "mixed_precision": cfg.training.mixed_precision,
         "seed": cfg.training.seed,
         "steps_completed": metrics[-1]["step"] if metrics else current_step,
         "latest_checkpoint": str(latest_checkpoint) if latest_checkpoint else None,

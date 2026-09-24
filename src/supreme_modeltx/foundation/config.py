@@ -50,6 +50,7 @@ class DatasetConfig(BaseModel):
 class TrainingLoopConfig(BaseModel):
     seed: int = 7
     device: Literal["auto", "cpu", "cuda"] = "auto"
+    cuda_device_index: int = Field(0, ge=0)
     batch_size: int = Field(4, ge=1)
     gradient_accumulation_steps: int = Field(2, ge=1)
     max_steps: int = Field(6, ge=1)
@@ -65,6 +66,12 @@ class TrainingLoopConfig(BaseModel):
     auto_resume_latest: bool = True
     train_samples: int = Field(32, ge=4)
     validation_samples: int = Field(8, ge=2)
+
+    @model_validator(mode="after")
+    def validate_device_precision_pairing(self) -> "TrainingLoopConfig":
+        if self.device == "cpu" and self.mixed_precision == "fp16":
+            raise ValueError("fp16 mixed precision requires device='cuda'")
+        return self
 
 
 class InferenceConfig(BaseModel):

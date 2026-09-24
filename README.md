@@ -1,6 +1,6 @@
 # Supreme Model T-X private foundation
 
-Supreme Model T-X is an early-stage sovereign AI platform foundation. This private repository now includes a reproducible PyTorch development baseline that is ready for CPU smoke tests today and a controlled single-GPU pilot later.
+Supreme Model T-X is a private PyTorch-based language-model development foundation. This repository supports CPU smoke tests today and is ready for a controlled single-GPU pilot, but it is not a completed, production-trained, or production-deployed LLM.
 
 ## What is implemented now
 
@@ -32,7 +32,7 @@ src/supreme_modeltx/foundation/
   training.py          # reproducible tiny-model training scaffold
 ```
 
-## Install for local development
+## Install for local CPU development
 
 ```bash
 python -m venv .venv
@@ -41,10 +41,31 @@ python -m pip install --upgrade pip
 pip install -e ".[foundation,dev]"
 ```
 
-For CPU-only PyTorch wheels in a fresh environment:
+For a fresh CPU-only environment:
 
 ```bash
-pip install torch --index-url https://download.pytorch.org/whl/cpu
+pip install --index-url https://download.pytorch.org/whl/cpu "torch>=2.4,<2.6"
+pip install -e ".[foundation,dev]"
+```
+
+## Install for a cloud GPU host
+
+Keep the CPU-safe path above for local development. For a CUDA host such as a single-GPU Lambda instance, install a CUDA-enabled PyTorch wheel explicitly instead of replacing the CPU image silently:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+export PYTORCH_WHL_INDEX_URL="${PYTORCH_WHL_INDEX_URL:-https://download.pytorch.org/whl/cu124}"
+pip install --index-url "${PYTORCH_WHL_INDEX_URL}" "torch>=2.4,<2.6"
+pip install -e ".[foundation,dev]"
+```
+
+Choose the wheel index that matches the host driver/runtime combination. Validate the host before training:
+
+```bash
+python scripts/gpu_diagnostics.py
+python scripts/gpu_diagnostics.py --config configs/foundation/training-single-gpu.yaml --require-cuda
 ```
 
 ## CPU smoke test
@@ -79,11 +100,18 @@ Run GPU diagnostics:
 python scripts/gpu_diagnostics.py
 ```
 
+Run the strict foundation preflight for the single-GPU config:
+
+```bash
+python scripts/gpu_diagnostics.py --config configs/foundation/training-single-gpu.yaml --require-cuda
+```
+
 ## Single-GPU pilot readiness
 
 Use `configs/foundation/training-single-gpu.yaml` as the starting point for the first approved GPU run. It enables:
 
 - deterministic seeding
+- explicit `cuda_device_index` selection
 - configurable batch size and gradient accumulation
 - optional BF16/FP16 mixed precision
 - checkpoint save and resume
@@ -94,8 +122,9 @@ Before any real run:
 
 1. validate private JSONL data with source and license metadata
 2. split train/validation/test data and archive the generated manifest
-3. run `scripts/gpu_diagnostics.py`
+3. run `python scripts/gpu_diagnostics.py --config configs/foundation/training-single-gpu.yaml --require-cuda`
 4. record the experiment with `docs/experiment-report-template.md`
+5. start training with `python -m supreme_modeltx.foundation.training --config configs/foundation/training-single-gpu.yaml`
 
 ## Docker
 
@@ -111,9 +140,12 @@ Default container command:
 python -m supreme_modeltx.foundation.training --config configs/foundation/training-smoke.yaml
 ```
 
+The checked-in Dockerfiles remain CPU-safe. For the first single-GPU pilot, use the documented host-level CUDA installation path so the PyTorch wheel index and NVIDIA runtime stay explicit and reviewable.
+
 ## Documentation
 
 - `docs/gpu-runbook.md`
+- `docs/first-gpu-pilot-checklist.md`
 - `docs/data-governance.md`
 - `docs/experiment-report-template.md`
 - `docs/model-card-template.md`

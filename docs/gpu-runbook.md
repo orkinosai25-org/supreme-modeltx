@@ -2,68 +2,148 @@
 
 ## Scope
 
-This runbook is for the first private single-GPU pilot of Supreme Model T-X. It assumes the repository stays private and that no proprietary datasets, credentials, or checkpoints are committed back into source control.
+This runbook covers the first controlled single-GPU pilot for the private Supreme Model T-X PyTorch development foundation. It preserves the CPU-safe local workflow and adds a documented CUDA host path for a single approved GPU instance.
 
-## Before provision
+## Operating rules
 
-- Confirm the approved config file: `configs/foundation/training-single-gpu.yaml`
-- Confirm the training dataset has passed JSONL validation, duplicate checks, and optional PII/secret scans
-- Confirm destination storage for checkpoints and copied logs
-- Set a manual budget ceiling before powering on a GPU instance
+- Keep the repository private.
+- Do not commit datasets, checkpoints, logs, model weights, or generated run artifacts.
+- Do not place credentials, API keys, or cloud secrets in configs, shell history, or source control.
+- Do not claim the project is a completed or production-trained LLM.
 
-## Initial machine setup
+## CPU versus GPU environment setup
 
-1. Provision a single GPU instance.
-2. Install Python 3.11 and create a virtual environment.
-3. Install the project with `pip install -e ".[foundation,dev]"`.
-4. Run `python scripts/gpu_diagnostics.py`.
-5. Save the diagnostics output with the experiment record.
+### CPU-safe local development
 
-## CUDA and PyTorch verification
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install --index-url https://download.pytorch.org/whl/cpu "torch>=2.4,<2.6"
+pip install -e ".[foundation,dev]"
+```
 
-The diagnostics output must confirm:
+CPU validation commands:
 
-- CUDA is available
-- the expected GPU name is visible
-- reported VRAM is enough for the configured batch size and accumulation plan
-- the installed PyTorch version matches the approved environment
-- the reported CUDA runtime version matches the driver environment
-- BF16 or FP16 support is present before enabling mixed precision
+```bash
+python -m pytest tests/unit/test_foundation_config.py tests/unit/test_foundation_training.py tests/unit/test_foundation_gpu_diagnostics.py -v
+python -m pytest tests/smoke/test_foundation_cpu_smoke.py -v
+```
 
-## Training launch
+### CUDA host setup
 
-1. Copy the approved config file into the run workspace.
-2. Set the private dataset paths in `configs/foundation/training-single-gpu.yaml`.
-3. Launch the run with `python -m supreme_modeltx.foundation.training --config configs/foundation/training-single-gpu.yaml`.
-4. Record the exact config, start time, diagnostics output, and operator name in the experiment report.
+Use a clean virtual environment on the GPU host instead of replacing the CPU image in-place.
 
-## Checkpoint handling
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+export PYTORCH_WHL_INDEX_URL="${PYTORCH_WHL_INDEX_URL:-https://download.pytorch.org/whl/cu124}"
+pip install --index-url "${PYTORCH_WHL_INDEX_URL}" "torch>=2.4,<2.6"
+pip install -e ".[foundation,dev]"
+```
 
-- Keep checkpoints outside the repository working tree if they contain real model state
-- Copy each retained checkpoint to approved private storage after creation
-- Retain at least the latest checkpoint and the checkpoint tied to any recorded evaluation result
-- Never commit checkpoints into Git
+## Cloud-host preparation
 
-## Cost controls
+1. Provision a single GPU host with current NVIDIA drivers.
+2. Confirm the host has enough local disk for temporary checkpoints and logs.
+3. Mount or provision approved private storage for dataset input and checkpoint backup.
+4. Copy private datasets outside the repository working tree.
+5. Set a budget cap and shutdown time before starting the instance.
 
-- Use a single GPU only for the initial pilot
-- Prefer fixed run windows with manual stop times
-- Review utilisation before extending the run
-- Shut down the instance immediately after checkpoint backup and log capture
+## CUDA/PyTorch compatibility guidance
 
-## Interrupted run recovery
+- Keep Python within the repository constraint: `>=3.10`.
+- Keep PyTorch within the repository constraint: `torch>=2.4,<2.6`.
+- Choose `PYTORCH_WHL_INDEX_URL` to match the host driver/runtime combination.
+- If CUDA diagnostics fail, fix the host driver or wheel selection before starting training.
 
-If the process stops intentionally or via interruption:
+## Diagnostics and strict preflight
 
-1. Confirm the latest checkpoint under the configured `output_dir/checkpoints/`
-2. Copy the checkpoint and `training_summary.json` to backup storage
-3. Set `resume_from` or leave `auto_resume_latest: true`
-4. Relaunch with the same config and document the resumed run in the experiment report
+Basic diagnostics:
 
-## Shutdown and deletion
+```bash
+python scripts/gpu_diagnostics.py
+```
 
-- confirm checkpoint copy completion
-- confirm evaluation outputs are archived
-- stop the GPU instance
-- delete the instance if it is no longer required
-- rotate any temporary runtime credentials used outside source control
+Strict single-GPU preflight:
+
+```bash
+python scripts/gpu_diagnostics.py --config configs/foundation/training-single-gpu.yaml --require-cuda
+```
+
+The strict command must report:
+
+- CUDA availability
+- visible device count
+- GPU name and VRAM
+- PyTorch version
+- compiled CUDA version
+- runtime details when available through `nvidia-smi`
+- BF16/FP16 support status
+- config/device/precision preflight status
+
+If the command exits non-zero, do not start training. Fix the reported issue first.
+
+## BF16 and FP16 selection guidance
+
+- Prefer `bf16` when the GPU and installed PyTorch runtime report BF16 support.
+- Use `fp16` only when CUDA is available but BF16 is not supported or not desired.
+- Use `off` for CPU smoke runs.
+- CPU smoke runs should not request `fp16`.
+- If BF16 is requested on unsupported hardware, the preflight fails before training starts.
+
+## First-run sequence
+
+1. Activate the approved environment.
+2. Validate private JSONL data and scans:
+   ```bash
+   python -m supreme_modeltx.foundation.dataset_tools validate /private/path/train.jsonl --scan-pii --scan-secrets
+   ```
+3. Review and update dataset paths in `configs/foundation/training-single-gpu.yaml`.
+4. Run diagnostics and strict preflight:
+   ```bash
+   python scripts/gpu_diagnostics.py --config configs/foundation/training-single-gpu.yaml --require-cuda
+   ```
+5. Start a CPU smoke validation if the host image is new:
+   ```bash
+   python -m pytest tests/smoke/test_foundation_cpu_smoke.py -v
+   ```
+6. Launch the first single-GPU pilot:
+   ```bash
+   python -m supreme_modeltx.foundation.training --config configs/foundation/training-single-gpu.yaml
+   ```
+7. Record the config used, diagnostics output, and operator notes in `docs/experiment-report-template.md`.
+
+## Determinism note
+
+The training scaffold seeds Python and PyTorch, enables deterministic algorithms with `warn_only=True`, and disables cuDNN benchmarking. CUDA kernels can still have practical determinism limits on some operators, so repeatability should be treated as best-effort rather than bit-for-bit guaranteed across every host/runtime combination.
+
+## Checkpoint backup and retention
+
+- Keep live checkpoints under the configured output directory, not in Git.
+- Back up retained checkpoints to approved private storage after each checkpoint interval.
+- Retain at minimum:
+  - the latest checkpoint
+  - the checkpoint used for any recorded evaluation result
+  - `training_summary.json` and `metrics.jsonl`
+- Verify that backup copies complete before shutting the host down.
+
+## Cost controls and shutdown steps
+
+- Use one GPU only for this pilot.
+- Stop the run if preflight, dataset validation, or checkpoint backup is incomplete.
+- Set manual reminders for checkpoint review and host shutdown.
+- After the run:
+  1. verify checkpoint backup
+  2. archive evaluation output and run notes
+  3. stop training
+  4. shut down the GPU instance
+  5. delete the instance if it is no longer needed
+
+## No-public-data / no-secrets rules
+
+- Do not add proprietary dataset rows or samples to docs, tests, or logs.
+- Do not print dataset contents in diagnostics.
+- Do not commit real checkpoints, tokenizer models trained on private data, or weights.
+- Do not commit credentials, tokens, `.env` values, or cloud-provider secrets.

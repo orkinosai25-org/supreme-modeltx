@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import logging
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 import uuid
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -56,7 +56,7 @@ async def chat_completions(
     prompt_tokens_i = int(prompt_tokens)
     completion_tokens_i = int(completion_tokens)
     total_tokens_i = prompt_tokens_i + completion_tokens_i
-    now = datetime.now(UTC)
+    now = datetime.now(timezone.utc)
     try:
         _usage_ledger.record(
             UsageEvent(
