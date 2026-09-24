@@ -34,7 +34,8 @@ def test_gpu_training_config_loads():
     assert config.training.mixed_precision == "bf16"
 
 
+@pytest.mark.parametrize("device", ["auto", "cpu"])
 @pytest.mark.parametrize("precision", ["bf16", "fp16"])
-def test_cpu_mixed_precision_config_is_rejected(precision):
+def test_non_cuda_mixed_precision_config_is_rejected(device, precision):
     with pytest.raises(ValueError, match=f"{precision} mixed precision requires device='cuda'"):
-        TrainingRunConfig.model_validate({"training": {"device": "cpu", "mixed_precision": precision}})
+        TrainingRunConfig.model_validate({"training": {"device": device, "mixed_precision": precision}})

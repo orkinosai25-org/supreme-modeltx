@@ -69,7 +69,7 @@ class TrainingLoopConfig(BaseModel):
 
     @model_validator(mode="after")
     def validate_device_precision_pairing(self) -> "TrainingLoopConfig":
-        if self.device == "cpu" and self.mixed_precision in {"bf16", "fp16"}:
+        if self.device != "cuda" and self.mixed_precision in {"bf16", "fp16"}:
             raise ValueError(f"{self.mixed_precision} mixed precision requires device='cuda'")
         return self
 
