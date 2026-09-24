@@ -113,7 +113,7 @@ def main(argv: list[str] | None = None) -> None:
     if args.config:
         try:
             diagnostics["preflight"] = build_training_preflight(TrainingRunConfig.from_file(args.config))
-        except (OSError, TypeError, ValidationError, json.JSONDecodeError, yaml.YAMLError) as exc:
+        except (OSError, TypeError, ValueError, ValidationError, json.JSONDecodeError, yaml.YAMLError) as exc:
             diagnostics["preflight"] = {"ok": False, "errors": [f"Failed to load config '{args.config}': {exc}"]}
         if not diagnostics["preflight"]["ok"]:
             strict_errors.extend(diagnostics["preflight"]["errors"])
