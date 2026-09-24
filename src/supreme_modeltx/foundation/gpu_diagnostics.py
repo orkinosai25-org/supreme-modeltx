@@ -104,7 +104,10 @@ def main(argv: list[str] | None = None) -> None:
             "confirm the NVIDIA driver is present, then re-run this command."
         )
     if args.config:
-        diagnostics["preflight"] = build_training_preflight(TrainingRunConfig.from_file(args.config))
+        try:
+            diagnostics["preflight"] = build_training_preflight(TrainingRunConfig.from_file(args.config))
+        except Exception as exc:
+            diagnostics["preflight"] = {"ok": False, "errors": [f"Failed to load config '{args.config}': {exc}"]}
         if not diagnostics["preflight"]["ok"]:
             strict_errors.extend(diagnostics["preflight"]["errors"])
     if strict_errors:

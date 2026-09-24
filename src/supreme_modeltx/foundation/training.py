@@ -140,7 +140,7 @@ def build_training_preflight(cfg: TrainingRunConfig) -> dict[str, Any]:
             )
 
     if resolved_device is not None and resolved_device.type == "cuda":
-        gpu_name = torch.cuda.get_device_name(resolved_device.index or 0)
+        gpu_name = torch.cuda.get_device_name(cfg.training.cuda_device_index)
         warnings.append(
             "CUDA determinism is enabled with torch.use_deterministic_algorithms(..., warn_only=True) "
             "and cuDNN benchmark disabled, but some CUDA kernels may still have nondeterministic behaviour."
