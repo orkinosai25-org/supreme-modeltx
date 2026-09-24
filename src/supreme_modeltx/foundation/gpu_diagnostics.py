@@ -9,6 +9,8 @@ import subprocess
 from typing import Any
 
 import torch
+import yaml
+from pydantic import ValidationError
 
 from supreme_modeltx.foundation.config import TrainingRunConfig
 from supreme_modeltx.foundation.training import build_training_preflight
@@ -106,7 +108,7 @@ def main(argv: list[str] | None = None) -> None:
     if args.config:
         try:
             diagnostics["preflight"] = build_training_preflight(TrainingRunConfig.from_file(args.config))
-        except Exception as exc:
+        except (OSError, ValidationError, json.JSONDecodeError, yaml.YAMLError) as exc:
             diagnostics["preflight"] = {"ok": False, "errors": [f"Failed to load config '{args.config}': {exc}"]}
         if not diagnostics["preflight"]["ok"]:
             strict_errors.extend(diagnostics["preflight"]["errors"])
