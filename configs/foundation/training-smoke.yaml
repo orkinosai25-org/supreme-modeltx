@@ -1,0 +1,36 @@
+model:
+  model_name: supreme-model-tx-pilot-smoke
+  vocab_size: 128
+  hidden_size: 64
+  num_layers: 2
+  num_attention_heads: 4
+  max_seq_len: 32
+  dropout: 0.1
+dataset:
+  required_fields:
+    - prompt
+    - response
+    - source
+    - license
+  train_ratio: 0.8
+  validation_ratio: 0.1
+  test_ratio: 0.1
+  scan_pii: false
+  scan_secrets: false
+training:
+  seed: 7
+  device: cpu
+  batch_size: 4
+  gradient_accumulation_steps: 2
+  max_steps: 4
+  learning_rate: 0.0005
+  weight_decay: 0.01
+  mixed_precision: "off"
+  validation_interval: 2
+  checkpoint_interval: 2
+  keep_last_n_checkpoints: 2
+  max_grad_norm: 1.0
+  output_dir: artifacts/private_foundation/smoke_run
+  auto_resume_latest: false
+  train_samples: 24
+  validation_samples: 8

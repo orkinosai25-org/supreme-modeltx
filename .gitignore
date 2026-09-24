@@ -42,3 +42,4 @@ Thumbs.db
 artifacts/**/*.pt
 artifacts/tokenizers/**/*.model
 artifacts/tokenizers/**/training_corpus.txt
+artifacts/private_foundation/**

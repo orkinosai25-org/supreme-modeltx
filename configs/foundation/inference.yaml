@@ -1,0 +1,13 @@
+model:
+  model_name: supreme-model-tx-pilot-smoke
+  vocab_size: 128
+  hidden_size: 64
+  num_layers: 2
+  num_attention_heads: 4
+  max_seq_len: 32
+  dropout: 0.1
+inference:
+  backend: stub
+  device: cpu
+  response_prefix: "Draft pilot response:"
+  max_new_tokens: 48

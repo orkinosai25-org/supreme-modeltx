@@ -1,0 +1,38 @@
+model:
+  model_name: supreme-model-tx-pilot-single-gpu
+  vocab_size: 256
+  hidden_size: 256
+  num_layers: 4
+  num_attention_heads: 8
+  max_seq_len: 256
+  dropout: 0.1
+dataset:
+  train_path: /mnt/private-data/train.jsonl
+  validation_path: /mnt/private-data/validation.jsonl
+  required_fields:
+    - prompt
+    - response
+    - source
+    - license
+  train_ratio: 0.8
+  validation_ratio: 0.1
+  test_ratio: 0.1
+  scan_pii: true
+  scan_secrets: true
+training:
+  seed: 7
+  device: cuda
+  batch_size: 2
+  gradient_accumulation_steps: 8
+  max_steps: 200
+  learning_rate: 0.0003
+  weight_decay: 0.01
+  mixed_precision: bf16
+  validation_interval: 20
+  checkpoint_interval: 20
+  keep_last_n_checkpoints: 3
+  max_grad_norm: 1.0
+  output_dir: artifacts/private_foundation/single_gpu_run
+  auto_resume_latest: true
+  train_samples: 256
+  validation_samples: 32
