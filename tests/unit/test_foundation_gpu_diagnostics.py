@@ -236,3 +236,33 @@ def test_gpu_diagnostics_main_reports_value_error_config(monkeypatch, tmp_path, 
     report = json.loads(capsys.readouterr().out)
     assert report["preflight"]["ok"] is False
     assert "bad value" in report["strict_errors"][0]
+
+
+def test_gpu_diagnostics_main_reports_runtime_preflight_error(monkeypatch, tmp_path, capsys):
+    config_path = tmp_path / "runtime.yaml"
+    config_path.write_text("training: {}\n", encoding="utf-8")
+    monkeypatch.setattr(
+        diagnostics_module,
+        "collect_gpu_diagnostics",
+        lambda: {
+            "cuda_available": True,
+            "cuda_device_count": 1,
+            "devices": [{"index": 0, "name": "Mock GPU"}],
+            "torch_version": "2.x",
+            "torch_compiled_cuda_version": "12.4",
+            "runtime": {"nvidia_smi": {"available": True}},
+            "mixed_precision": {"fp16_supported": True, "bf16_supported": True},
+        },
+    )
+    monkeypatch.setattr(
+        diagnostics_module,
+        "build_training_preflight",
+        lambda cfg: (_ for _ in ()).throw(RuntimeError("runtime preflight failed")),
+    )
+
+    with pytest.raises(SystemExit, match="1"):
+        diagnostics_module.main(["--config", str(config_path)])
+
+    report = json.loads(capsys.readouterr().out)
+    assert report["preflight"]["ok"] is False
+    assert "runtime preflight failed" in report["strict_errors"][0]
