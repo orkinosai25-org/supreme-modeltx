@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 
 import pytest
 
@@ -49,6 +50,25 @@ def test_collect_gpu_diagnostics_reports_cuda_details(monkeypatch):
     assert report["devices"][0]["name"] == "Mock GPU"
     assert report["devices"][0]["bf16_supported"] is True
     assert report["runtime"]["nvidia_smi"]["available"] is True
+
+
+def test_collect_nvidia_runtime_handles_commas_in_gpu_names(monkeypatch):
+    monkeypatch.setattr(diagnostics_module.shutil, "which", lambda _: "/usr/bin/nvidia-smi")
+    monkeypatch.setattr(
+        diagnostics_module.subprocess,
+        "run",
+        lambda *args, **kwargs: subprocess.CompletedProcess(
+            args=args[0],
+            returncode=0,
+            stdout='0,"Mock, GPU",550.54.15,24564\n',
+            stderr="",
+        ),
+    )
+
+    report = diagnostics_module._collect_nvidia_runtime()
+
+    assert report["available"] is True
+    assert report["gpus"][0]["name"] == "Mock, GPU"
 
 
 def test_gpu_diagnostics_main_requires_cuda(monkeypatch, capsys):

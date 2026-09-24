@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import os
 import shutil
@@ -32,8 +33,8 @@ def _collect_nvidia_runtime() -> dict[str, Any]:
         return {"available": False}
 
     gpus = []
-    for line in result.stdout.splitlines():
-        parts = [part.strip() for part in line.split(",")]
+    for parts in csv.reader(result.stdout.splitlines()):
+        parts = [part.strip() for part in parts]
         if len(parts) != 4:
             continue
         index, name, driver_version, memory_total_mb = parts
