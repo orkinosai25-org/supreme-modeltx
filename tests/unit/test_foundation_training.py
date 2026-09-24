@@ -1,9 +1,11 @@
 import json
 
+import pytest
+
 from supreme_modeltx.foundation.config import InferenceRunConfig, TrainingRunConfig
 from supreme_modeltx.foundation.inference import FoundationResponder
 from supreme_modeltx.foundation import training as training_module
-from supreme_modeltx.foundation.training import checkpoint_path, train, training_state_path
+from supreme_modeltx.foundation.training import build_training_preflight, checkpoint_path, resolve_device, train, training_state_path
 
 
 def test_checkpoint_path_uses_expected_pattern(tmp_path):
@@ -130,3 +132,107 @@ def test_training_interrupt_writes_checkpoint_and_summary(tmp_path, monkeypatch)
     assert checkpoint_path(tmp_path / "interrupt_run", 1).exists()
     assert training_state_path(tmp_path / "interrupt_run", 1).exists()
     assert (tmp_path / "interrupt_run" / "training_summary.json").exists()
+
+
+def test_preflight_rejects_missing_cuda_for_cuda_config(tmp_path, monkeypatch):
+    config = TrainingRunConfig.model_validate(
+        {
+            "training": {
+                "device": "cuda",
+                "cuda_device_index": 0,
+                "mixed_precision": "fp16",
+                "output_dir": str(tmp_path / "gpu_run"),
+            }
+        }
+    )
+    monkeypatch.setattr(training_module.torch.cuda, "is_available", lambda: False)
+
+    report = build_training_preflight(config)
+
+    assert report["ok"] is False
+    assert any("CUDA was requested but is not available" in message for message in report["errors"])
+
+
+def test_preflight_rejects_unsupported_bf16(tmp_path, monkeypatch):
+    config = TrainingRunConfig.model_validate(
+        {
+            "training": {
+                "device": "cuda",
+                "cuda_device_index": 0,
+                "mixed_precision": "bf16",
+                "output_dir": str(tmp_path / "gpu_run"),
+            }
+        }
+    )
+    monkeypatch.setattr(training_module.torch.cuda, "is_available", lambda: True)
+    monkeypatch.setattr(training_module.torch.cuda, "device_count", lambda: 1)
+    monkeypatch.setattr(training_module.torch.cuda, "is_bf16_supported", lambda: False)
+    monkeypatch.setattr(training_module.torch.cuda, "get_device_name", lambda device=None: "Mock GPU")
+
+    report = build_training_preflight(config)
+
+    assert report["ok"] is False
+    assert any("does not report BF16 support" in message for message in report["errors"])
+
+
+def test_preflight_accepts_cpu_smoke_config(tmp_path):
+    config = TrainingRunConfig.model_validate(
+        {
+            "training": {
+                "device": "cpu",
+                "mixed_precision": "off",
+                "output_dir": str(tmp_path / "cpu_run"),
+            }
+        }
+    )
+
+    report = build_training_preflight(config)
+
+    assert report["ok"] is True
+    assert report["resolved_device"] == "cpu"
+    assert report["autocast_enabled"] is False
+    assert report["grad_scaler_enabled"] is False
+
+
+def test_preflight_accepts_valid_cuda_config(tmp_path, monkeypatch):
+    config = TrainingRunConfig.model_validate(
+        {
+            "training": {
+                "device": "cuda",
+                "cuda_device_index": 0,
+                "mixed_precision": "fp16",
+                "output_dir": str(tmp_path / "gpu_run"),
+            }
+        }
+    )
+    monkeypatch.setattr(training_module.torch.cuda, "is_available", lambda: True)
+    monkeypatch.setattr(training_module.torch.cuda, "device_count", lambda: 1)
+    monkeypatch.setattr(training_module.torch.cuda, "get_device_name", lambda device=None: "Mock GPU")
+
+    report = build_training_preflight(config)
+
+    assert report["ok"] is True
+    assert report["resolved_device"] == "cuda:0"
+    assert report["autocast_enabled"] is True
+    assert report["grad_scaler_enabled"] is True
+
+
+def test_train_raises_actionable_error_when_preflight_fails(tmp_path, monkeypatch):
+    config = TrainingRunConfig.model_validate(
+        {
+            "training": {
+                "device": "cuda",
+                "mixed_precision": "fp16",
+                "output_dir": str(tmp_path / "gpu_run"),
+            }
+        }
+    )
+    monkeypatch.setattr(training_module.torch.cuda, "is_available", lambda: False)
+
+    with pytest.raises(RuntimeError, match="foundation preflight: failed"):
+        train(config)
+
+
+def test_resolve_device_rejects_negative_cuda_index():
+    with pytest.raises(RuntimeError, match="CUDA device index must be zero or greater"):
+        resolve_device("cuda", cuda_device_index=-1)

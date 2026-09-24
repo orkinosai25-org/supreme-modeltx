@@ -22,6 +22,7 @@ dataset:
 training:
   seed: 7
   device: cuda
+  cuda_device_index: 0
   batch_size: 2
   gradient_accumulation_steps: 8
   max_steps: 200

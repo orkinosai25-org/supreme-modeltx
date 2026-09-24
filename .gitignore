@@ -40,6 +40,15 @@ Thumbs.db
 
 # Training artifacts — large binary files not committed to git
 artifacts/**/*.pt
+artifacts/**/*.pth
+artifacts/**/*.ckpt
+artifacts/**/*.bin
+artifacts/**/*.safetensors
+artifacts/**/logs/
+artifacts/**/checkpoints/
+artifacts/**/events.out.tfevents*
 artifacts/tokenizers/**/*.model
 artifacts/tokenizers/**/training_corpus.txt
 artifacts/private_foundation/**
+run_artifacts/
+*.log
