@@ -40,12 +40,17 @@ def _collect_nvidia_runtime() -> dict[str, Any]:
         if len(parts) != 4:
             continue
         index, name, driver_version, memory_total_mb = parts
+        try:
+            gpu_index = int(index)
+            gpu_memory_total_mb = int(memory_total_mb)
+        except ValueError:
+            continue
         gpus.append(
             {
-                "index": int(index),
+                "index": gpu_index,
                 "name": name,
                 "driver_version": driver_version,
-                "memory_total_mb": int(memory_total_mb),
+                "memory_total_mb": gpu_memory_total_mb,
             }
         )
     return {
@@ -108,7 +113,7 @@ def main(argv: list[str] | None = None) -> None:
     if args.config:
         try:
             diagnostics["preflight"] = build_training_preflight(TrainingRunConfig.from_file(args.config))
-        except (OSError, ValidationError, json.JSONDecodeError, yaml.YAMLError) as exc:
+        except (OSError, TypeError, ValidationError, json.JSONDecodeError, yaml.YAMLError) as exc:
             diagnostics["preflight"] = {"ok": False, "errors": [f"Failed to load config '{args.config}': {exc}"]}
         if not diagnostics["preflight"]["ok"]:
             strict_errors.extend(diagnostics["preflight"]["errors"])

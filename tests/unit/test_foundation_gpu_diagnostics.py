@@ -71,6 +71,25 @@ def test_collect_nvidia_runtime_handles_commas_in_gpu_names(monkeypatch):
     assert report["gpus"][0]["name"] == "Mock, GPU"
 
 
+def test_collect_nvidia_runtime_skips_non_numeric_rows(monkeypatch):
+    monkeypatch.setattr(diagnostics_module.shutil, "which", lambda _: "/usr/bin/nvidia-smi")
+    monkeypatch.setattr(
+        diagnostics_module.subprocess,
+        "run",
+        lambda *args, **kwargs: subprocess.CompletedProcess(
+            args=args[0],
+            returncode=0,
+            stdout='0,Good GPU,550.54.15,24564\nN/A,Bad GPU,550.54.15,N/A\n',
+            stderr="",
+        ),
+    )
+
+    report = diagnostics_module._collect_nvidia_runtime()
+
+    assert report["available"] is True
+    assert report["gpus"] == [{"index": 0, "name": "Good GPU", "driver_version": "550.54.15", "memory_total_mb": 24564}]
+
+
 def test_gpu_diagnostics_main_requires_cuda(monkeypatch, capsys):
     monkeypatch.setattr(
         diagnostics_module,
@@ -157,3 +176,33 @@ def test_gpu_diagnostics_main_reports_invalid_config(monkeypatch, tmp_path, caps
     report = json.loads(capsys.readouterr().out)
     assert report["preflight"]["ok"] is False
     assert "Failed to load config" in report["strict_errors"][0]
+
+
+def test_gpu_diagnostics_main_reports_type_error_config(monkeypatch, tmp_path, capsys):
+    config_path = tmp_path / "invalid-shape.yaml"
+    config_path.write_text("training: []\n", encoding="utf-8")
+    monkeypatch.setattr(
+        diagnostics_module,
+        "collect_gpu_diagnostics",
+        lambda: {
+            "cuda_available": True,
+            "cuda_device_count": 1,
+            "devices": [{"index": 0, "name": "Mock GPU"}],
+            "torch_version": "2.x",
+            "torch_compiled_cuda_version": "12.4",
+            "runtime": {"nvidia_smi": {"available": True}},
+            "mixed_precision": {"fp16_supported": True, "bf16_supported": True},
+        },
+    )
+    monkeypatch.setattr(
+        diagnostics_module.TrainingRunConfig,
+        "from_file",
+        classmethod(lambda cls, path: (_ for _ in ()).throw(TypeError("bad shape"))),
+    )
+
+    with pytest.raises(SystemExit, match="1"):
+        diagnostics_module.main(["--config", str(config_path)])
+
+    report = json.loads(capsys.readouterr().out)
+    assert report["preflight"]["ok"] is False
+    assert "bad shape" in report["strict_errors"][0]
