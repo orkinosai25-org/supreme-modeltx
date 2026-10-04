@@ -20,7 +20,6 @@ import os
 from pathlib import Path
 from typing import TYPE_CHECKING, Optional
 
-import torch
 from supreme_modeltx.platform_api.model_registry.registry import ModelEntry, ModelRegistry
 
 if TYPE_CHECKING:
@@ -62,6 +61,8 @@ class _InferenceBackend:
         Returns:
             A 3-tuple ``(generated_text, prompt_tokens, completion_tokens)``.
         """
+        import torch
+
         prompt = _format_prompt(messages)
         prompt_ids = self.tokenizer.encode(prompt)
         input_tensor = torch.tensor([prompt_ids], dtype=torch.long)

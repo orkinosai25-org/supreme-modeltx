@@ -5,6 +5,7 @@ Supreme Model T-X is an early-stage sovereign AI platform foundation. This priva
 ## What is implemented now
 
 - `pyproject.toml` packaging with constrained foundation dependencies
+- a lightweight FastAPI service with `/health/` and a non-root Docker runtime
 - CPU-safe training, evaluation, and inference configs under `configs/foundation/`
 - checkpoint-aware PyTorch training scaffolding in `src/supreme_modeltx/foundation/training.py`
 - JSONL dataset validation and split tooling in `src/supreme_modeltx/foundation/dataset_tools.py`
@@ -32,13 +33,54 @@ src/supreme_modeltx/foundation/
   training.py          # reproducible tiny-model training scaffold
 ```
 
-## Install for local development
+## Day 1: run the API locally
+
+Use Python 3.10–3.12 (Docker uses 3.11). The API needs no GPU,
+PyTorch, model weights, or cloud credentials.
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -e ".[api,dev]"
+cp .env.example .env
+set -a; source .env; set +a
+smtx-serve
+```
+
+In another terminal:
+
+```bash
+curl --fail http://localhost:9000/health/
+```
+
+Expected response: `{"status":"ok","version":"0.1.0"}`.
+Interactive API documentation is at `http://localhost:9000/docs`.
+The health endpoint checks service liveness, not model readiness; inference
+returns HTTP 503 until a checkpoint and tokenizer are configured.
+
+`.env` is not loaded automatically. Its sample key and salt are for local
+development only; replace both before sharing access. This is not a
+production-hardened service.
+
+Run lightweight validation without installing PyTorch:
+
+```bash
+python -m compileall src/supreme_modeltx
+python -m pytest tests/unit/test_api_startup.py tests/unit/test_platform_api.py
+```
+
+## Install for PyTorch development
+
+Training and checkpoint-backed inference are optional extensions of the same
+`src/supreme_modeltx` package. API code lives under `platform_api/`, model
+components under `model_core/`, and training/evaluation workflows under
+`foundation/`.
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-pip install -e ".[foundation,dev]"
+pip install -e ".[api,foundation,dev]"
 ```
 
 For CPU-only PyTorch wheels in a fresh environment:
@@ -99,17 +141,42 @@ Before any real run:
 
 ## Docker
 
-Build the CPU-safe development image:
+Build and run the lightweight API image (Docker Engine required):
 
 ```bash
-docker build -t supreme-modeltx-foundation .
+docker build -t supreme-modeltx .
+cp .env.example .env  # skip if already configured
+docker run --rm --name smtx-api --env-file .env \
+  -p 127.0.0.1:9000:9000 supreme-modeltx
 ```
 
-Default container command:
+In another terminal, use the same `curl` health check as above. Docker also
+checks `/health/` automatically:
 
 ```bash
-python -m supreme_modeltx.foundation.training --config configs/foundation/training-smoke.yaml
+docker inspect --format '{{.State.Health.Status}}' smtx-api
 ```
+
+The default image installs only the `api` extra from `pyproject.toml`, excludes
+local secrets and model artifacts from its build context, and runs as a
+non-root user. SQLite state is temporary unless a writable volume is mounted
+and `SUPREME_MODELTX_PLATFORM_DB_PATH` is set to a path inside it.
+
+For the existing CPU training scaffold, explicitly select the optional target:
+
+```bash
+docker build --target foundation -t supreme-modeltx-foundation .
+docker run --rm supreme-modeltx-foundation
+```
+
+Its default command runs the small synthetic-data training smoke config; no
+private corpus is bundled. This target is CPU-only, not a CUDA/GPU image.
+Additional training dependencies, approved datasets, and GPU provisioning
+remain separate from Day 1 API startup.
+
+`pyproject.toml` is the package manifest; `requirements.txt` remains available
+for the existing training/deployment scripts. Python CI validates both the
+PyTorch tests and the lightweight API, and builds/runs the default Docker image.
 
 ## Documentation
 
