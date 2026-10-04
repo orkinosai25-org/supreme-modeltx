@@ -7,16 +7,59 @@ on:
       - "src/**"
       - "tests/**"
       - "pyproject.toml"
+      - "Dockerfile"
+      - ".dockerignore"
+      - ".github/workflows/python-ci.yml"
   pull_request:
     paths:
       - "src/**"
       - "tests/**"
       - "pyproject.toml"
+      - "Dockerfile"
+      - ".dockerignore"
+      - ".github/workflows/python-ci.yml"
 
 permissions:
   contents: read
 
 jobs:
+  lightweight-api:
+    name: API without PyTorch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install API and test dependencies only
+        run: pip install -e ".[api,dev]"
+
+      - name: Validate lightweight API startup
+        run: python -m pytest tests/unit/test_api_startup.py tests/unit/test_platform_api.py
+
+  docker-smoke:
+    name: Docker API smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build default image
+        run: docker build -t supreme-modeltx .
+
+      - name: Verify container health without PyTorch
+        run: |
+          docker run -d --name smtx-api supreme-modeltx
+          trap 'docker logs smtx-api; docker rm -f smtx-api' EXIT
+          timeout 60 bash -c 'until [ "$(docker inspect --format "{{.State.Health.Status}}" smtx-api)" = healthy ]; do sleep 2; done'
+          docker exec smtx-api python -c "import json, urllib.request; response = json.load(urllib.request.urlopen('http://127.0.0.1:9000/health/', timeout=2)); assert response == {'status': 'ok', 'version': '0.1.0'}"
+          docker exec smtx-api python -c "import importlib.util; assert importlib.util.find_spec('torch') is None"
+
   test:
     name: Test (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
