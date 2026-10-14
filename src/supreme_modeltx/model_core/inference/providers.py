@@ -103,6 +103,7 @@ class LocalTransformersProvider:
         if not root.is_dir():
             raise ValueError("SMTX_PRETRAINED_MODEL_PATH must be a local snapshot directory.")
         self.artifact = PretrainedArtifact.verify(root)
+        self._validate_snapshot(root)
 
         import torch
         import transformers
@@ -146,6 +147,9 @@ class LocalTransformersProvider:
     @property
     def is_ready(self) -> bool:
         return True
+
+    def _validate_snapshot(self, root: Path) -> None:
+        """Additional backend-specific checks before importing the runtime."""
 
     @property
     def metadata(self) -> dict[str, object]:
@@ -196,3 +200,28 @@ class LocalTransformersProvider:
             prompt_tokens,
             int(completion.shape[-1]),
         )
+
+
+class MistralProvider(LocalTransformersProvider):
+    """Opt-in dense Mistral chat adapter over the verified local runtime."""
+
+    def _validate_snapshot(self, root: Path) -> None:
+        config = json.loads((root / "config.json").read_text())
+        if (
+            self.artifact.architecture != "mistral"
+            or not isinstance(config, dict)
+            or config.get("model_type") != "mistral"
+        ):
+            raise ValueError(
+                "Mistral backend requires model_type and manifest architecture 'mistral'; "
+                "Mixtral and other architectures are not supported by this adapter."
+            )
+        files = self.artifact.files_sha256
+        if not {"tokenizer.json", "tokenizer.model"} & files.keys():
+            raise ValueError("Mistral snapshot requires a hashed tokenizer.json or tokenizer.model.")
+        if not {"model.safetensors", "model.safetensors.index.json"} & files.keys():
+            raise ValueError("Mistral snapshot requires model.safetensors or its complete shard index.")
+
+    @property
+    def metadata(self) -> dict[str, object]:
+        return {**super().metadata, "backend": "mistral"}

@@ -1,0 +1,14 @@
+{
+  "inference": {
+    "backend": "mistral",
+    "device": "cpu",
+    "pretrained_model_path": "/approved/models/mistral-instruct",
+    "dtype": "float32",
+    "max_new_tokens": 64
+  },
+  "evaluation": {
+    "suite_path": "configs/foundation/eval_cases/turkish-baseline-v1.yaml",
+    "output_path": "artifacts/private_foundation/mistral_baseline/results.json",
+    "compute_cost_per_hour_usd": null
+  }
+}

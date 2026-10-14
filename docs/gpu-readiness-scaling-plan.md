@@ -37,6 +37,15 @@ actual GPU executions, or validated NVIDIA integrations.
 
 No runtime dependency or toolkit installation is implied by this matrix.
 
+The opt-in [Mistral demo adapter](../README.md#mistral-demo-path-for-ebru)
+reuses local Transformers inference, not an NVIDIA-specific runtime. It
+supports verified dense `mistral` snapshots through the existing API and
+`configs/mistral_baseline.json` evaluation path. Ebru remains the customer
+MVP and Supreme Model T-X the model/program layer from Orkinosai Limited, a
+British startup. Azure OpenAI migration is opt-in and remains subject to the
+same license, Turkish quality/safety, operational, and GPU evidence gates.
+No Mistral candidate approval or GPU execution is reported by this integration.
+
 ## 3) Candidate and local runtime contract
 
 `Qwen/Qwen2.5-0.5B-Instruct` is a small **candidate only**, with a candidate

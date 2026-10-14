@@ -68,7 +68,7 @@ class TrainingLoopConfig(BaseModel):
 
 
 class InferenceConfig(BaseModel):
-    backend: Literal["stub", "checkpoint", "transformers"] = "stub"
+    backend: Literal["stub", "checkpoint", "transformers", "mistral"] = "stub"
     device: Literal["auto", "cpu", "cuda"] = "auto"
     checkpoint_path: str | None = None
     pretrained_model_path: str | None = None
@@ -78,11 +78,11 @@ class InferenceConfig(BaseModel):
 
     @model_validator(mode="after")
     def validate_pretrained_route(self) -> "InferenceConfig":
-        if self.backend == "transformers":
+        if self.backend in {"transformers", "mistral"}:
             if not self.pretrained_model_path:
-                raise ValueError("transformers backend requires inference.pretrained_model_path")
+                raise ValueError(f"{self.backend} backend requires inference.pretrained_model_path")
             if self.device == "auto":
-                raise ValueError("transformers backend requires explicit device=cpu or cuda")
+                raise ValueError(f"{self.backend} backend requires explicit device=cpu or cuda")
         return self
 
 

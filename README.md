@@ -179,6 +179,81 @@ approval are required before use. No candidate scores or GPU runs are reported.
 Upstream model-card verification was blocked by DNS in this task; explicit
 upstream license approval remains required.
 
+### Mistral demo path for Ebru
+
+Orkinosai Limited is a British startup building sovereign AI tooling. **Ebru**
+is the customer-facing Turkish-language MVP; **Supreme Model T-X** is the
+underlying model/program layer. The current Azure OpenAI MVP is not replaced
+by this opt-in local path. This repository does not contain Ebru's hosted
+Azure OpenAI client; no hosted credentials or deployment settings are changed.
+
+The `MistralProvider` adapter reuses the verified Transformers runtime and the
+existing `InferenceProvider.generate_from_messages` boundary. It supports
+**dense Mistral causal-LM snapshots with `model_type: "mistral"`**, not every
+Mistral-branded architecture (Mixtral, multimodal models, GGUF, and unmerged
+adapters are outside this adapter's scope). No Mistral checkpoint is bundled,
+approved, fine-tuned, or claimed to meet Turkish quality/safety requirements.
+
+1. Independently review the exact model's license/notices, intended use,
+   immutable revision, and tokenizer/chat template. Acquire a complete local
+   Hugging Face-format snapshot in a separate approved preparation step.
+2. Follow [snapshot manifest preparation](#required-snapshot-manifest).
+   Set manifest `architecture` and model config `model_type` to `mistral`.
+   Include `tokenizer.json` or `tokenizer.model`, `tokenizer_config.json` with
+   the model's chat template, and `model.safetensors` or the full
+   `model.safetensors.index.json` and every referenced shard. Hash every file.
+   A hash inventory checks integrity; it does not grant governance approval.
+3. Install the existing `api,foundation` extras above on an isolated demo host.
+   Keep the approved snapshot read-only and select the backend explicitly:
+
+   ```bash
+   export SMTX_INFERENCE_BACKEND=mistral
+   export SMTX_PRETRAINED_MODEL_PATH=/approved/models/mistral-instruct
+   export SMTX_DEVICE=cpu
+   export SMTX_INFERENCE_DTYPE=float32
+   export SMTX_MODEL_ID=ebru-mistral-demo
+   smtx-serve
+   ```
+
+   `SUPREME_MODELTX_DEVICE`, when set, takes precedence over `SMTX_DEVICE`.
+   CPU float32 can require substantial RAM for real models (7B weights alone
+   are roughly 28 GB); the tiny random test fixture is not a product model.
+   Use `cuda` and a supported dtype only on an approved compatible host.
+4. Exercise the unchanged, non-streaming chat contract with a securely supplied
+   API key (see the API authentication setup):
+
+   ```bash
+   curl http://localhost:9000/v1/chat/completions \
+     --oauth2-bearer "$SMTX_API_KEY" \
+     -H 'Content-Type: application/json' \
+     -d '{"model":"ebru-mistral-demo","messages":[{"role":"user","content":"Merhaba"}],"max_tokens":64,"temperature":0}'
+   ```
+
+   An Ebru application transport can target this `/v1` boundary instead of its
+   Azure OpenAI transport while retaining messages and token usage handling.
+   This is not full Azure API parity: deployment URLs, authentication,
+   streaming, tools, and structured-output features need separate integration
+   validation. The server selects one backend at startup, not per request.
+   Templates are not rewritten: some Mistral templates reject system roles or
+   non-alternating conversations; validate the chosen template against Ebru's
+   messages before migration.
+5. Set the approved snapshot path in `configs/mistral_baseline.json`, then run
+   `python -m supreme_modeltx.foundation.evaluation --config configs/mistral_baseline.json`.
+   This CPU/float32 example uses the existing Turkish **lexical smoke** suite;
+   it is not a held-out product-quality or religious/cultural adaptation test.
+   Reports preserve provenance, runtime versions, token usage, and timings.
+
+Missing files, mismatched hashes/architecture, missing chat templates,
+unsupported tokenizers/weights, and unavailable requested CUDA fail closed.
+API startup logs the underlying exception and leaves inference unavailable
+(chat returns 503); health alone is not a model-readiness check. Evaluation
+raises an error rather than substituting stub outputs or another model.
+Local loading never downloads missing assets and never enables remote code.
+Tests include an offline, randomly initialized tiny Mistral CPU roundtrip.
+They establish wiring only, not pretrained quality, GPU validation, or NVIDIA
+NeMo/Megatron/TensorRT-ONNX integration. Keep the existing
+[evidence gates](docs/gpu-readiness-scaling-plan.md) before promoting any model.
+
 ### Required snapshot manifest
 
 The snapshot must contain `config.json`, `tokenizer_config.json`, all required

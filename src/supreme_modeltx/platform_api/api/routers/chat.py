@@ -37,7 +37,7 @@ async def chat_completions(
             detail=(
                 "Model backend not configured. "
                 "Set SMTX_CHECKPOINT_PATH and SMTX_TOKENIZER_PATH for pytorch, or "
-                "SMTX_INFERENCE_BACKEND=transformers with SMTX_PRETRAINED_MODEL_PATH."
+                "SMTX_INFERENCE_BACKEND=transformers or mistral with SMTX_PRETRAINED_MODEL_PATH."
             ),
         )
 
