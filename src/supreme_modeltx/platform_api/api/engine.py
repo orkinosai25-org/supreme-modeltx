@@ -1,6 +1,10 @@
 """
 platform_api/api/engine.py — InferenceEngine singleton for the platform API.
 
+Selects a local provider using SMTX_INFERENCE_BACKEND (default: pytorch).
+The optional transformers provider uses SMTX_PRETRAINED_MODEL_PATH and a
+verified smtx-artifact.json snapshot; no remote download is performed.
+
 Loads a checkpoint-backed InferenceEngine at application startup when the
 required environment variables are present:
 
@@ -15,12 +19,14 @@ unloaded and inference endpoints respond with HTTP 503.
 
 from __future__ import annotations
 
+import json
 import logging
 import os
 from pathlib import Path
 from typing import TYPE_CHECKING, Optional
 
 from supreme_modeltx.platform_api.model_registry.registry import ModelEntry, ModelRegistry
+from supreme_modeltx.model_core.inference.providers import InferenceProvider, LocalTransformersProvider
 
 if TYPE_CHECKING:
     from supreme_modeltx.model_core.inference.engine import InferenceEngine
@@ -28,7 +34,7 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
 
-_engine_backend: Optional["_InferenceBackend"] = None
+_engine_backend: Optional[InferenceProvider] = None
 
 
 class _InferenceBackend:
@@ -41,6 +47,14 @@ class _InferenceBackend:
     ) -> None:
         self.engine = engine
         self.tokenizer = tokenizer
+
+    @property
+    def is_ready(self) -> bool:
+        return True
+
+    @property
+    def metadata(self) -> dict[str, object]:
+        return {"backend": "pytorch", "checkpoint_format": "model_state_dict"}
 
     def generate_from_messages(
         self,
@@ -84,7 +98,7 @@ def _format_prompt(messages: list) -> str:
     return "\n".join(parts) + "\nassistant:"
 
 
-def get_engine() -> Optional[_InferenceBackend]:
+def get_engine() -> Optional[InferenceProvider]:
     """Return the active inference backend, or ``None`` if not configured."""
     return _engine_backend
 
@@ -97,6 +111,38 @@ def initialize_engine() -> None:
     """
     global _engine_backend
     if _engine_backend is not None:
+        return
+
+    backend_name = os.environ.get("SMTX_INFERENCE_BACKEND", "pytorch")
+    if backend_name == "transformers":
+        try:
+            model_path = os.environ.get("SMTX_PRETRAINED_MODEL_PATH", "")
+            if not model_path:
+                raise ValueError("Set SMTX_PRETRAINED_MODEL_PATH to an approved local snapshot.")
+            backend = LocalTransformersProvider(
+                model_path,
+                device=os.environ.get("SUPREME_MODELTX_DEVICE", os.environ.get("SMTX_DEVICE", "cpu")),
+                dtype=os.environ.get("SMTX_INFERENCE_DTYPE"),
+            )
+            ModelRegistry().register(ModelEntry(
+                id=os.environ.get("SMTX_MODEL_ID", "local-pretrained"),
+                name=os.environ.get("SMTX_MODEL_NAME", backend.artifact.source_model),
+                family="pretrained",
+                variant=backend.artifact.architecture,
+                stage="development",
+                description=json.dumps(backend.metadata),
+                context_length=backend.context_length,
+                checkpoint_path=str(Path(model_path).resolve()),
+                tokenizer_path=str(Path(model_path).resolve()),
+                inference_dtype=backend.dtype,
+                is_available=backend.is_ready,
+            ))
+            _engine_backend = backend
+        except Exception:
+            logger.exception("Failed to load local pretrained backend — inference disabled.")
+        return
+    if backend_name != "pytorch":
+        logger.error("Unsupported inference backend: %s", backend_name)
         return
 
     checkpoint_path = os.environ.get("SMTX_CHECKPOINT_PATH", "")
@@ -135,7 +181,7 @@ def initialize_engine() -> None:
             dtype=dtype,
         )
         tokenizer = TokenizerWorkflow(tokenizer_path)
-        _engine_backend = _InferenceBackend(engine=engine, tokenizer=tokenizer)
+        backend = _InferenceBackend(engine=engine, tokenizer=tokenizer)
         _register_loaded_model(
             checkpoint_path=checkpoint_path,
             tokenizer_path=tokenizer_path,
@@ -145,6 +191,7 @@ def initialize_engine() -> None:
             model_variant=model_config.model_variant,
             context_length=model_config.max_position_embeddings,
         )
+        _engine_backend = backend
         logger.info("InferenceEngine loaded from checkpoint: %s", checkpoint_path)
     except Exception:
         logger.exception("Failed to load InferenceEngine — inference disabled.")

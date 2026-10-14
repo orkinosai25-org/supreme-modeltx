@@ -1,0 +1,14 @@
+{
+  "inference": {
+    "backend": "transformers",
+    "device": "cpu",
+    "pretrained_model_path": "/approved/models/qwen2.5-0.5b-instruct",
+    "dtype": "float32",
+    "max_new_tokens": 64
+  },
+  "evaluation": {
+    "suite_path": "configs/foundation/eval_cases/turkish-baseline-v1.yaml",
+    "output_path": "artifacts/private_foundation/pretrained_baseline/results.json",
+    "compute_cost_per_hour_usd": null
+  }
+}

@@ -8,7 +8,7 @@ Implements:
 
 Design notes:
   - Uses torch.nn.functional.scaled_dot_product_attention when available
-    (PyTorch ≥ 2.0) for memory-efficient Flash-Attention-style kernels.
+    (PyTorch ≥ 2.0); actual kernel selection depends on device, dtype and shapes.
   - Supports both MHA (num_kv_heads == num_heads) and GQA.
   - RoPE follows the original Su et al. 2023 formulation.
 
@@ -144,7 +144,7 @@ class GroupedQueryAttention(nn.Module):
             k = k.repeat_interleave(self.kv_groups, dim=1)
             v = v.repeat_interleave(self.kv_groups, dim=1)
 
-        # Use PyTorch's fused SDPA when available (Flash Attention on GPU, efficient on CPU)
+        # SDPA selects a supported kernel at runtime; acceleration is not guaranteed.
         attn_out = F.scaled_dot_product_attention(
             q, k, v,
             attn_mask=attention_mask,

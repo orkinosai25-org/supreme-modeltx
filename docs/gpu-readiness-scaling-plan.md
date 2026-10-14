@@ -1,187 +1,162 @@
-# GPU Readiness and Scaling Plan from T-Dev-6L Evidence
+# GPU Readiness and Evidence-Gated Scaling Plan
 
-The two benchmarked T-Dev-6L runs now provide enough engineering evidence to define a concrete
-GPU-readiness plan. The core conclusion is: the training/benchmark pipeline works end to end, the
-expanded run shows real learning, and CPU-only execution is now the main constraint on moving from
-engineering validation to application-ready model development.
+Supreme ModelTX is an early-stage governed pretrained-model evaluation,
+adaptation, and deployment foundation supporting Ebru. GPU access can enable
+experiments, but is not the only blocker and does not establish application
+readiness. Licensing, data quality, Turkish evaluation, safety, reproducibility,
+and operational controls are independent gates.
 
-## 1) What the benchmark evidence already proves
+This document proposes work; it reports no new measurements, candidate results,
+actual GPU executions, or validated NVIDIA integrations.
 
-| Evidence area | `t_dev_6l_first_run` | `t_dev_6l_expanded_run` | What it means |
-|---|---:|---:|---|
-| Corpus | 20 synthetic sentences | 288 mixed code/reasoning examples | The pipeline scales beyond the tiny wiring-only corpus. |
-| Training steps | 20 | 200 | A 10x longer schedule produces measurable quality gains. |
-| Wall-clock | ~4.0s | ~15.8m | CPU runtime rises sharply as the experiment becomes more realistic. |
-| Best validation loss | 5.9428 | 4.7820 | More data + longer schedule improved generalisation. |
-| Best perplexity | 381.02 | 119.37 | Learning is no longer noise-only at the expanded scale. |
-| Best internal benchmark score | 0.00 | 1.00 | The expanded run solved all 4 benchmark prompts at its best checkpoint. |
-| Sample quality | empty/repetitive outputs | correct canonical answers by step 150 | The model can now learn the benchmarked task pattern, not just reduce loss. |
+## 1) Current evidence boundary
 
-### Bottom line
+- CPU custom-model workflows provide research and smoke-test infrastructure.
+  Existing small proxy artifacts are directional engineering evidence, not
+  broad generalization, Turkish product quality, or deployment readiness.
+- Canonical `model_core` T-Dev-6L is approximately **58M parameters / 512-token
+  context** (`configs/t_dev_6l.json`). Smaller 256-hidden / 128-context CPU
+  proxies are not canonical-model GPU validation.
+- `foundation` TinyPilotLM uses its own tokenizer/checkpoint format; it is not
+  `model_core` TSeriesBaseline or a Transformers pretrained snapshot.
+- T-101 is an **unvalidated legacy ~7B config**. Larger T-series targets and
+  distributed training are research options, not commitments.
+- CUDA and mixed-precision code paths exist but are **not GPU-validated**.
+  Distributed initialization does not establish multi-GPU correctness.
 
-- **Baseline run:** proved the artifact, checkpoint, sampling, and benchmark plumbing.
-- **Expanded run:** proved that the same pipeline can produce real learning signal when given more
-  data and a longer schedule.
-- **Remaining gap:** both runs were still **CPU-only, float32, and materially smaller than the
-  canonical GPU-oriented T-Dev-6L config**.
+## 2) Integration status matrix
 
-## 2) Current CPU bottlenecks, quantified
+| Component | Status today | Proposed role | Evidence before adoption |
+|---|---|---|---|
+| PyTorch CUDA | Existing code paths; not GPU-validated | Single-GPU inference/research | Compatible host, version inventory, complete approved run |
+| cuDNN | Runtime library where provided by compatible CUDA/PyTorch stack | Runtime support, not an independent backend | Record versions and compatibility; do not infer performance |
+| NVIDIA NeMo | Planned; not integrated | Pretrained adaptation | Supported model/data recipe and held-out comparison |
+| NVIDIA Megatron Core | Planned; not integrated | Distributed research if justified | Single-GPU baseline, budget, synchronization/checkpoint validation |
+| NVIDIA TensorRT-LLM | Planned; not integrated | Optimized GPU serving | Supported model export/build and output-quality parity |
+| ONNX | Planned; not integrated | Portable export/runtime investigation | Supported export and output-parity checks |
 
-The current bottleneck is no longer “does training work?” but “can training scale beyond small CPU
-experiments quickly enough to support model iteration?”
+No runtime dependency or toolkit installation is implied by this matrix.
 
-| Constraint | Current evidence |
-|---|---|
-| Device path | Both benchmarked runs used `device=cpu` and `precision.enabled=false`. |
-| Effective end-to-end throughput | Expanded run took **948.6s for 200 steps** = **4.74s/step** (~0.21 steps/s). |
-| Token throughput at current proxy settings | With batch size 2 and sequence length 128, the expanded run processed ~**54 packed tokens/s** end to end. |
-| Time to longer schedules on CPU | At expanded-run throughput, **1,000 steps ≈ 79 minutes** and **5,000 steps ≈ 6.6 hours** before adding broader eval sweeps. |
-| Model scale compromise | Benchmarked runs used a **256-hidden / 128-context proxy config**; the canonical dev config is **512-hidden / 512-context / BF16**. |
-| Batch-size compromise | Benchmarked runs used batch size **2**; the canonical dev config targets batch size **8** with gradient accumulation **4**. |
+## 3) Candidate and local runtime contract
 
-This means CPU is constraining all four scaling axes at once:
+`Qwen/Qwen2.5-0.5B-Instruct` is a small **candidate only**, with a candidate
+Apache-2.0 license not independently verified here (upstream access was blocked
+by DNS in this task). Explicit upstream approval requires review of the exact snapshot's
+license/notices, immutable revision and hashes, intended use and safety, and
+Turkish evaluation design. Approval is pending; no measured results are claimed.
 
-1. **Schedule length** — practical runs stop at 200 steps instead of the 1k–10k range already
-   described by the canonical config.
-2. **Corpus size** — the expanded run is better than baseline, but still far below a full
-   application-readiness training corpus.
-3. **Model/context size** — the benchmarked proxy is smaller than the intended T-Dev-6L geometry.
-4. **Experiment velocity** — once a single 200-step CPU run takes ~16 minutes, hyperparameter and
-   benchmark iteration slows down materially.
+The existing API backend remains `SMTX_INFERENCE_BACKEND=pytorch` by default.
+Optional local pretrained inference uses:
 
-## 3) Next target model and training scale
+```bash
+export SMTX_INFERENCE_BACKEND=transformers
+export SMTX_PRETRAINED_MODEL_PATH=/absolute/path/to/approved/local-snapshot
+export SMTX_DEVICE=cpu  # or cuda on an approved compatible host
+```
 
-The immediate target should be the **canonical T-Dev-6L GPU validation run**, not a direct jump to
-T-101.
+The snapshot must include local model/tokenizer artifacts. This is not a Hub-ID
+download interface. Pretrained device selection is strict: unavailable requested
+CUDA must fail, not silently fall back. The optional runtime is not bundled in
+the default lightweight API image. This backend supplies inference, not a NeMo
+adaptation pipeline or TensorRT-LLM/ONNX execution engine.
 
-### Immediate funded target
+The provider requires the existing `foundation` extra and a verified
+`smtx-artifact.json`: source model, immutable 40-character lowercase hexadecimal
+revision, reviewed license, matching Hugging Face `model_type`, conversion
+lineage, and SHA-256 inventory of every other snapshot file. Model/tokenizer
+configs, safetensors weights, and a tokenizer chat template are required.
+Loading is local-only with remote code disabled; defaults are CPU float32 and
+CUDA BF16 on supported hardware. Runtime registry descriptions retain artifact
+metadata. See [README snapshot preparation](../README.md#required-snapshot-manifest)
+for manifest generation using existing tooling, not a new helper script.
 
-- **Model:** canonical T-Dev-6L (~58M params)
-- **Shape:** 6 layers, hidden size 512, FFN 2048, context 512
-- **Precision:** BF16
-- **Training recipe target:** batch size 8, gradient accumulation 4, up to 10,000 steps
-- **Data target:** move from the 288-example expanded set to the full SMTX-Baby/`data/raw` style
-  corpus and follow-on larger corpora
+After approval/preparation, opt into the existing foundation evaluation harness:
 
-### Why this is the right next target
+```bash
+python -m supreme_modeltx.foundation.evaluation --config configs/pretrained_baseline.json
+```
 
-It is the smallest GPU-backed experiment that closes the credibility gap between:
+The example config selects CPU/float32 and the illustrative local path
+`/approved/models/qwen2.5-0.5b-instruct`; set its path to your approved snapshot.
+Its four-case `turkish-baseline-v1.yaml` suite is **lexical smoke coverage**, not
+the larger held-out quality/safety gate. Reports include provenance, token
+counts, serial generation latency/throughput, peak allocated CUDA VRAM where
+applicable, and optional generation-only cost using
+`evaluation.compute_cost_per_hour_usd`. CPU VRAM and an unspecified cost rate
+are `null`; model loading, warmup, and idle costs are excluded. No downloaded
+model or executed pretrained results are reported.
 
-- a **benchmarked CPU proof** that the training stack learns, and
-- an **application-ready training recipe** that uses the intended model shape, context window,
-  precision mode, and a meaningfully larger corpus.
+## 4) Minimum plan — licensed, reproducible baseline
 
-### Promotion target after that
+Before allocating compute:
 
-If canonical T-Dev-6L is stable on GPU and clears the validation, benchmark, and reproducibility
-gates above, the next model-scale milestone is the repository roadmap target:
+1. Approve the candidate manifest and immutable artifact revision/hashes.
+2. Freeze at least 100 held-out Turkish prompts covering instruction following,
+   grounding, language quality, and safety; review dataset provenance/redaction.
+3. Predeclare numerical quality/safety thresholds, latency/VRAM budgets, context,
+   batch size, generation settings, and maximum spend.
+4. Complete two local CPU evaluation passes with recorded seeds, outputs,
+   scores, errors, package versions, timings, and memory.
 
-- **T-101 (7B) first training run with GPU allocation**
+**Exit gate:** complete frozen-set results and an approved reproducibility and
+threshold review. A successful load or fluent sample alone is insufficient.
 
-That is the stage where the project can justify moving from dev-model validation into larger-scale
-sovereign model development.
+## 5) Target plan — approved one-GPU evaluation
 
-## 4) What GPU access would unlock
+After baseline approval:
 
-GPU access would not just make the current run faster; it would enable experiments that the current
-CPU evidence cannot responsibly claim yet. It is a scale and iteration enabler, not a guarantee of
-frontier-level capability by itself.
+1. Inventory GPU, driver, PyTorch, CUDA, cuDNN, and supported precision.
+2. Execute the same frozen workload on one approved GPU.
+3. Record warm/cold latency, tokens/s, peak VRAM, failures, and cost/run, alongside
+   exact batch/context settings and quality/safety scores.
+4. Require zero runtime failures in the approved workload and quality/safety
+   within predeclared tolerance; retain every failure and artifact.
+5. Review CPU/GPU differences before promotion; do not compare losses across
+   changed architectures, datasets, or tokenizers as if they were equivalent.
 
-| Area | CPU-evidenced today | GPU-funded unlock |
-|---|---|---|
-| Schedule length | 20–200 steps | practical 1k–10k step training windows |
-| Corpus size | 20 sentences → 288 examples | full seed corpus plus larger packed corpora |
-| Precision | float32 only | BF16 / mixed-precision validation on the real training path |
-| Model size | 256-hidden proxy | canonical ~58M T-Dev-6L, then T-101 preparation |
-| Sequence length | 128 | 512-context canonical dev runs |
-| Batch regime | batch size 2 | larger effective batch sizes with accumulation |
-| Iteration speed | single longer CPU run per tuning loop | multiple benchmarked experiments in the same working day |
+**Exit gate:** archived comparable results and operator sign-off. BF16 support,
+speedup, and efficiency must be measured, not assumed.
 
-In practical terms, funded GPU access unlocks:
+## 6) Conditional adaptation, optimized serving, and scale
 
-1. **Longer schedules** that can test whether the benchmark win at 200 steps survives at 1k–5k+.
-2. **Larger corpora** that move beyond the current small benchmark-focused dataset toward
-   application-relevant training evidence.
-3. **Bigger batch / sequence / model settings** aligned with the intended T-Dev-6L configuration.
-4. **Faster experiment iteration** so optimiser, schedule, tokenizer, and benchmark changes can be
-   compared within days instead of serial CPU-bound loops.
+- **NeMo:** investigate an approved Turkish adaptation recipe only if a baseline
+  gap justifies it. Compare unchanged/adapted models on the frozen held-out set;
+  record quality, safety regressions, cost, and artifact provenance.
+- **TensorRT-LLM:** check exact model/precision/GPU support before export/build.
+  Require parity within approved tolerance and measured latency/VRAM benefit.
+- **ONNX:** check export/operator/runtime support and output parity; portability
+  is not guaranteed for every architecture or generation workload.
+- **Megatron Core:** consider only if single-GPU evidence establishes a research
+  need and budget. Require explicit distributed-gradient, checkpoint/resume,
+  reproducibility, and scaling-efficiency tests. No multi-GPU result is claimed.
+- **Custom T-series:** retain CPU smoke and bounded research experiments. A
+  canonical T-Dev-6L CUDA experiment needs its own dataset, precision, stability,
+  and checkpoint gates; it does not automatically justify T-101 pretraining.
 
-## 5) Staged compute plan
+**Ebru pilot gate:** approved model card, Turkish quality/safety review, access
+and retention policies, deployment boundary, audit evidence, rollback test, and
+operator sign-off. Hardware access alone cannot satisfy these requirements.
 
-### Minimum plan — prove canonical T-Dev-6L on GPU
+See [the roadmap](roadmap.md) for phase-level acceptance evidence.
 
-**Goal:** validate the intended training path on GPU with the canonical dev model.
+## Official ecosystem resources
 
-- Run canonical T-Dev-6L in BF16 on CUDA
-- Use 512 context and the planned higher effective batch regime
-- Train for **1,000 steps**
-- Evaluate multiple checkpoints on the internal benchmark
-- Record throughput, stability, and checkpoint-resume behaviour
+- [NVIDIA Inception](https://www.nvidia.com/en-us/startups/) — programme information;
+  no admission, benefits entitlement, or GPU allocation is claimed.
+- [NVIDIA NeMo Framework](https://docs.nvidia.com/nemo-framework/user-guide/latest/overview.html)
+- [NVIDIA Megatron Core](https://docs.nvidia.com/megatron-core/developer-guide/latest/)
+- [NVIDIA TensorRT-LLM](https://nvidia.github.io/TensorRT-LLM/)
+- [NVIDIA CUDA documentation](https://docs.nvidia.com/cuda/)
+- [NVIDIA cuDNN documentation](https://docs.nvidia.com/deeplearning/cudnn/)
+- [ONNX documentation](https://onnx.ai/onnx/)
+- [ONNX Runtime documentation](https://onnxruntime.ai/docs/)
+- [Candidate model card](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct) —
+  upstream reference, not model approval.
 
-**Success metrics**
+## Existing research references
 
-- GPU/BF16 run completes end to end with no CUDA or mixed-precision failures
-- Best validation loss beats the expanded CPU best of **4.7820**
-- Internal benchmark remains at least as strong as the expanded run best checkpoint
-- Throughput improvement over the CPU expanded run is measured and reported
-- Checkpoint, sample, and benchmark artifacts remain reproducible
-
-### Target plan — turn engineering proof into application-readiness evidence
-
-**Goal:** show that the canonical dev model can train long enough and on enough data to support a
-credible funded-development case.
-
-- Run **3–5 benchmarked GPU experiments**
-- Extend schedules into the **5,000-step** range
-- Use the full seed corpus plus larger packed training mixtures
-- Compare at least one schedule/optimizer variant
-- Add broader benchmark coverage once the internal benchmark is stable
-
-**Success metrics**
-
-- Repeated runs show a stable validation-loss improvement trend, not a one-off win
-- Benchmark gains persist beyond one checkpoint and one dataset slice
-- At least one run demonstrates better sample quality on held prompts outside the initial 4-task set
-- Per-run turnaround is fast enough to support multiple experiments per week
-- Results are strong enough to justify promotion from dev-model validation to T-101 preparation
-
-### Stretch plan — prepare the first T-101 GPU programme
-
-**Goal:** use the validated T-Dev-6L recipe as the launchpad for larger-model training.
-
-- Finalise the canonical T-Dev-6L recipe and benchmark contract
-- Stand up the first **T-101 (7B)** GPU-backed training run
-- Exercise distributed-training features needed for larger-scale experiments
-- Publish benchmark and model-card evidence for the first T-101 milestone
-
-**Success metrics**
-
-- T-101 training starts and completes a first benchmarked run on allocated GPU compute
-- The larger-model workflow preserves run-artifact, checkpoint, and benchmark reproducibility
-- GPU utilisation evidence is clear enough for milestone-based funder reporting
-- The project can point to a credible path from dev-model experiments to deployable sovereign model work
-
-## 6) Why this is the bridge to application readiness
-
-The current benchmark evidence already establishes three key facts:
-
-1. **The engineering stack is real** — training, checkpointing, sampling, and benchmarking all work.
-2. **Scaling the recipe improves outcomes** — the expanded run materially outperformed baseline.
-3. **CPU is now the blocker** — the remaining limitations are schedule, corpus, precision, and model
-   scale rather than core pipeline correctness.
-
-That is exactly the point where funded GPU compute becomes application-relevant. The ask is no longer
-for speculative infrastructure; it is for the compute required to turn an evidence-backed training
-prototype into a repeatable, benchmarked, application-ready development programme.
-
-## Evidence sources
-
-- `artifacts/runs/t_dev_6l_first_run/run_artifacts/training_summary.json`
-- `artifacts/runs/t_dev_6l_expanded_run/run_artifacts/training_summary.json`
-- `artifacts/runs/t_dev_6l_expanded_run/benchmark_outputs/benchmark_results.md`
-- `artifacts/runs/t_dev_6l_expanded_run/run_artifacts/samples.md`
-- `configs/real_training/t_dev_6l_first_run.json`
-- `configs/real_training/t_dev_6l_expanded_run.json`
-- `configs/t_dev_6l.json`
-- `docs/architecture/model-core.md`
-- `docs/dataset-overview.md`
+- `configs/t_dev_6l.json` — canonical research geometry
+- `configs/real_training/t_dev_6l_first_run.json` — smaller CPU proxy configuration
+- `configs/real_training/t_dev_6l_expanded_run.json` — smaller CPU proxy configuration
+- `docs/architecture/model-core.md` — custom-model contract and limitations
+- `docs/dataset-overview.md` — research data context, not pretrained evaluation approval

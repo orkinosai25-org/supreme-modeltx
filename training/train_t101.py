@@ -1,5 +1,8 @@
 """
-train_t101.py — T‑101 Base Model Training Script
+train_t101.py — Legacy T‑101 random-initialization research script
+
+This does not load pretrained weights. LoRA here is an experimental constraint
+on randomly initialized parameters, not a supported pretrained adaptation recipe.
 
 CPU-first distributed training with optional GPU acceleration.
 
@@ -126,10 +129,7 @@ def load_config(config_path: str) -> dict:
 
 
 def apply_peft(model: AutoModelForCausalLM, peft_cfg: dict) -> AutoModelForCausalLM:
-    """Wrap model with LoRA adapters for parameter-efficient CPU training.
-
-    Freezes 90–99 % of weights so CPU gradient sync is cheap.
-    """
+    """Apply experimental adapters to the randomly initialized research model."""
     try:
         from peft import LoraConfig, TaskType, get_peft_model
     except ImportError as exc:
@@ -273,16 +273,15 @@ def main() -> None:
     num_params = sum(p.numel() for p in model.parameters())
     logger.info("Model parameter count: %s", f"{num_params:,}")
 
-    # ── Parameter-efficient fine-tuning (LoRA) — strongly recommended on CPU ─
-    # Default: LoRA ON for CPU (makes distributed gradient sync practical),
-    # LoRA OFF for GPU (full fine-tuning leverages CUDA memory/speed).
+    # Legacy random-initialization experiment, not pretrained fine-tuning.
+    # Default: LoRA ON for CPU, OFF for GPU.
     # Override via `use_peft` in the training config.
     use_peft = train_cfg.get("use_peft", is_cpu)
     if use_peft:
         peft_cfg = cfg.get("peft", {})
         model = apply_peft(model, peft_cfg)
     else:
-        logger.info("Full fine-tuning (LoRA disabled).")
+        logger.info("Full random-initialization training (LoRA disabled; not fine-tuning).")
 
     logger.info("Preprocessing dataset …")
     tokenized_datasets = preprocess_dataset(tokenizer, cfg)

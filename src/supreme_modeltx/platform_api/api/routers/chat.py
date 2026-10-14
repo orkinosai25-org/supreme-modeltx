@@ -36,7 +36,8 @@ async def chat_completions(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail=(
                 "Model backend not configured. "
-                "Set SMTX_CHECKPOINT_PATH and SMTX_TOKENIZER_PATH to enable local inference."
+                "Set SMTX_CHECKPOINT_PATH and SMTX_TOKENIZER_PATH for pytorch, or "
+                "SMTX_INFERENCE_BACKEND=transformers with SMTX_PRETRAINED_MODEL_PATH."
             ),
         )
 
@@ -47,6 +48,11 @@ async def chat_completions(
             temperature=request.temperature,
             top_p=request.top_p,
         )
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid generation request: {exc}",
+        ) from exc
     except Exception as exc:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from types import SimpleNamespace
 
 import torch
 
@@ -15,6 +16,18 @@ class FoundationResponder:
         self.device = resolve_device(config.inference.device)
         self.tokenizer = CharacterTokenizer(config.model.vocab_size)
         self.model: TinyPilotLM | None = None
+        self.provider = None
+        self.last_usage: tuple[int, int] | None = None
+        if config.inference.backend == "transformers":
+            from supreme_modeltx.model_core.inference.providers import LocalTransformersProvider
+
+            if not config.inference.pretrained_model_path:
+                raise ValueError("transformers backend requires inference.pretrained_model_path")
+            self.provider = LocalTransformersProvider(
+                config.inference.pretrained_model_path,
+                device=config.inference.device,
+                dtype=config.inference.dtype,
+            )
         if config.inference.backend == "checkpoint":
             checkpoint_path = config.inference.checkpoint_path
             if not checkpoint_path:
@@ -32,6 +45,14 @@ class FoundationResponder:
             self.model.eval()
 
     def generate(self, prompt: str) -> str:
+        if self.provider is not None:
+            response, prompt_tokens, completion_tokens = self.provider.generate_from_messages(
+                [SimpleNamespace(role="user", content=prompt)],
+                max_new_tokens=self.config.inference.max_new_tokens,
+                temperature=0,
+            )
+            self.last_usage = (prompt_tokens, completion_tokens)
+            return response
         if self.config.inference.backend == "stub":
             return f"{self.config.inference.response_prefix} {prompt}".strip()
 

@@ -1,0 +1,24 @@
+suite_name: turkish-lexical-smoke
+version: v1
+cases:
+  - case_id: capital
+    prompt: "Türkiye'nin başkenti nedir? Yalnızca şehir adını yaz."
+    tags: [turkish, factual, smoke]
+    expected:
+      required_substrings: ["Ankara"]
+      max_characters: 80
+  - case_id: arithmetic
+    prompt: "7 ile 5'in toplamı kaçtır? Yalnızca rakamlarla yanıtla."
+    tags: [turkish, arithmetic, smoke]
+    expected:
+      exact_match: "12"
+  - case_id: extraction
+    prompt: "Şu metinden yalnızca sipariş numarasını çıkar: Sipariş numarası TR-2048, teslimat yarın."
+    tags: [turkish, extraction, smoke]
+    expected:
+      exact_match: "TR-2048"
+  - case_id: instruction
+    prompt: "Bu bir yönerge izleme testidir. Yalnızca şu kelimeyi yaz: Merhaba"
+    tags: [turkish, instruction, smoke]
+    expected:
+      exact_match: "Merhaba"

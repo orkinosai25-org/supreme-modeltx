@@ -2,7 +2,11 @@
 
 ## What "sovereign AI" means in this platform
 
-Sovereignty is not branding. It is a set of concrete architectural decisions that determine who controls the AI system and under what conditions.
+Sovereignty is not branding or a requirement to pretrain every model. It is a
+set of concrete decisions about who controls artifacts, data, execution, and
+approval. Supreme ModelTX is an early-stage governed pretrained-model evaluation,
+adaptation, and deployment foundation supporting Ebru; these principles are
+design goals, not certification of a production system.
 
 Supreme ModelTX defines sovereignty across five dimensions:
 
@@ -21,23 +25,48 @@ Supreme ModelTX defines sovereignty across five dimensions:
 
 ## 2. Model sovereignty
 
-- Models are trained from scratch (or from open-licensed checkpoints) on operator-owned compute.
+- The near-term strategy is evaluating approved pretrained checkpoints under
+  operator control; original custom training remains research/smoke work.
 - Checkpoints are saved locally and are portable — no dependency on a model hosting provider.
 - Model configuration is fully transparent and inspectable as a JSON/YAML file.
 - The T-series model architecture is original PyTorch code; the design is inspired by open research (see `THIRD_PARTY_NOTICES.md`) but is not a copy or fork.
 
 **What is not yet implemented:** cryptographically signed model cards, reproducible training manifests with deterministic seeds end-to-end.
 
+Pretrained artifacts require license and notice review, an immutable revision,
+recorded hashes, safety review, and Turkish evaluation approval.
+`Qwen/Qwen2.5-0.5B-Instruct` (candidate Apache-2.0, not independently verified here)
+is a candidate only; explicit upstream approval
+and measurements remain pending. Local custody does not remove upstream
+license obligations.
+
+`foundation` TinyPilotLM checkpoints, `model_core` TSeriesBaseline checkpoints,
+and Transformers local snapshots have separate contracts. Canonical T-Dev-6L
+is ~58M / 512 context; T-101 is an unvalidated legacy ~7B configuration. Larger
+T-series targets are research concepts, not delivery commitments.
+
 ---
 
 ## 3. Infrastructure sovereignty
 
 - The model core (`supreme_modeltx.model_core`) has no cloud provider dependency. It runs on any hardware with PyTorch.
-- Training targets CPU (smoke/dev) and CUDA (production), with MPS support for Apple Silicon development.
+- CPU workflows remain research/smoke paths. CUDA code paths exist but are not
+  GPU-validated; neither production CUDA nor multi-GPU validation is claimed.
 - The deployment layer is designed for Kubernetes and bare-metal, not just managed cloud services.
 - Existing Azure Bicep infrastructure in this repository (`infra/`) is a reference implementation, not a requirement.
 
 **What is not yet implemented:** full Kubernetes deployment manifests for on-prem/air-gapped sovereign compute.
+
+The API defaults to `SMTX_INFERENCE_BACKEND=pytorch`. Optional pretrained
+inference uses `SMTX_INFERENCE_BACKEND=transformers`,
+`SMTX_PRETRAINED_MODEL_PATH` for a complete local snapshot, and strict
+`SMTX_DEVICE=cpu|cuda`. Unavailable requested CUDA must fail, not silently change
+the approved execution device.
+
+NeMo, Megatron Core, TensorRT-LLM, and ONNX are **planned, not integrated**.
+cuDNN is a runtime library where supplied by a compatible CUDA/PyTorch stack,
+not an additional model backend. See [GPU planning](../gpu-readiness-scaling-plan.md)
+for official resources and compatibility gates.
 
 ---
 
@@ -63,18 +92,23 @@ Supreme ModelTX defines sovereignty across five dimensions:
 
 ## Relationship to the UK Sovereign AI Fund
 
-Supreme ModelTX is designed to be a credible candidate for sovereign AI infrastructure support:
+The project may pursue sovereign AI infrastructure support; no eligibility,
+funding, compute allocation, or deployment certification is claimed:
 
-- It targets **British-owned compute** (including the national AI compute allocation).
-- It produces **UK-controlled model weights** through a transparent, reproducible training process.
+- It targets **operator-approved UK-aligned compute** where appropriate.
+- It aims for **operator-controlled approved model artifacts**, including licensed pretrained weights.
 - It provides an **API-first business access layer** for deploying sovereign models to UK organisations.
-- The architecture supports **air-gapped and on-prem deployment** for regulated sectors.
+- Local-artifact operation supports an **on-prem/air-gapped design direction**;
+  complete deployment and security validation remain pending.
 
-The next concrete milestones tied to GPU compute allocation are:
-1. Tokenizer training on sovereign corpus
-2. T-101 first training run (proof of GPU utilisation)
-3. Benchmark evaluation and model card publication
-4. Production deployment to pilot customers
+The next milestones are:
+1. Candidate license/revision and evaluation-data approval
+2. Reproducible local Turkish pretrained baseline with predeclared thresholds
+3. Approved single-GPU comparison with quality, safety, latency, and VRAM evidence
+4. Adaptation/serving feasibility and a governed Ebru pilot after operator sign-off
+
+See [the roadmap](../roadmap.md) for measurable gates. GPU access alone does not
+resolve licensing, dataset quality, safety, or deployment readiness.
 
 ---
 
@@ -82,6 +116,7 @@ The next concrete milestones tied to GPU compute allocation are:
 
 - We do not claim to have trained a frontier model.
 - We do not claim production-ready infrastructure on day one.
-- We do not present this as a complete system — we present it as a credible, sovereign-designed scaffold ready for GPU-backed development.
+- We do not present this as a complete system or an application-ready model.
+- We do not claim pretrained candidate measurements or actual GPU runs in this plan.
 
 Honesty about the current state of the system is itself a sovereignty principle: auditable, transparent, and not pretending to capabilities we do not yet have.

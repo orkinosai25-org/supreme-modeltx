@@ -1,7 +1,11 @@
 # backends.yml — SMTX Inference Backend Registry
 #
-# Declares all inference backends available to the SUMOTX platform.
-# The orchestrator reads this to determine routing and availability.
+# Documents legacy SUMOTX service backends. The orchestrator currently selects
+# CPU/vLLM using environment variables, not this file as an executable registry.
+# The packaged API separately selects pytorch or local transformers through
+# SMTX_INFERENCE_BACKEND. Custom model_core .pt files are not HF/vLLM snapshots.
+# TensorRT-LLM and ONNX Runtime providers remain planned, not available entries.
+# NeMo adaptation and Megatron Core scaling are separate roadmap experiments.
 #
 # Fields:
 #   name             — backend identifier
@@ -26,7 +30,8 @@ backends:
     port: 8003
     description: >
       Default CPU inference backend using PyTorch + HuggingFace Transformers.
-      No GPU quota required. Serves all T-Series models on CPU.
+      No GPU quota required. Requires a supported pretrained model and tokenizer;
+      T-Series configuration stubs alone are not loadable model artifacts.
       Active by default on the CPU VM.
 
   - name: vllm

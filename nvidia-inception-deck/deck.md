@@ -3,10 +3,11 @@
 ## Slide 1 — Company overview
 
 **Orkinosai Limited**  
-UK AI company building practical AI products now and sovereign AI capability over time.
+UK AI company developing Turkish-first product workflows and governed model foundations.
 
 - Near term: **Ebru**, a Turkish-first AI assistant/product layer for private and institutional use
-- Longer term: **Supreme ModelTX**, a sovereign model and governed deployment stack intended to power Ebru more directly over time
+- Foundation: **Supreme ModelTX**, an early-stage governed pretrained-model
+  evaluation, adaptation, and deployment foundation supporting Ebru
 - Core positioning: private deployment, auditability, local-language quality, and controlled operations
 
 ## Slide 2 — Mission and problem
@@ -19,9 +20,9 @@ UK AI company building practical AI products now and sovereign AI capability ove
 
 ## Slide 3 — Stage 1: Ebru
 
-**Ebru is the commercial wedge.**
+**Ebru is the near-term product direction and intended commercial wedge.**
 
-- Turkish-first assistant and product experience
+- Turkish-first assistant and product experience direction; no customer traction is claimed here
 - Intended use cases include knowledge access, document workflows, guided assistance, and customer-facing AI interactions
 - Modular positioning already documented for general assistant, education/child-friendly, institutional, and document-oriented usage modes
 - Can use OpenAI-compatible infrastructure in the short term to validate product, safety, and deployment patterns quickly
@@ -38,48 +39,75 @@ UK AI company building practical AI products now and sovereign AI capability ove
 ## Slide 5 — Why now
 
 - AI adoption is rising, but many institutions still need safer deployment models and stronger local-language fit
-- Turkish-first product execution can create a practical market wedge before deeper model ownership is fully funded
+- Turkish-first product evaluation can guide approved pretrained-model selection
+  without requiring original large-model pretraining first
 - The company already presents AI services and sector experience across government, heritage, and commercial work on its public website
 - Repository evidence shows Supreme ModelTX has moved beyond concept into a reproducible early technical foundation
 
 ## Slide 6 — Stage 2: Supreme ModelTX
 
-**Supreme ModelTX is the longer-term sovereign model path behind Ebru.**
+**Supreme ModelTX is the governed model foundation supporting Ebru.**
 
-- Two-layer architecture: `model_core` for tokenizer/data/training/inference and `platform_api` for auth, tenancy, usage, audit, registry, and deployment metadata
+- `platform_api` provides API/governance scaffolding; `model_core` contains custom
+  PyTorch research models, tokenizer/data/training, and local checkpoint inference
 - Current repo evidence includes versioned tokenizer workflow, manifest-based data pipeline, checkpoint save/resume, validation loss and perplexity reporting, and checkpoint-backed inference
-- OpenAI-compatible API boundaries support staged integration while longer-term model independence is developed
+- API default remains `SMTX_INFERENCE_BACKEND=pytorch`; optional local pretrained
+  inference uses `transformers`, `SMTX_PRETRAINED_MODEL_PATH`, and strict
+  `SMTX_DEVICE=cpu|cuda` (unavailable requested CUDA fails)
+- `foundation` TinyPilotLM checkpoints, `model_core` checkpoints, and pretrained
+  snapshots are separate formats; CPU/custom workflows remain research/smoke paths
+- `Qwen/Qwen2.5-0.5B-Instruct` (candidate Apache-2.0, not independently verified here)
+  is a candidate pending explicit upstream
+  license/revision and Turkish evaluation approval, not an approved deployment
 
 ## Slide 7 — Current status and credibility
 
 **Current status: early, honest, and real.**
 
-- Supreme ModelTX is documented in-repo as an **early-stage sovereign AI platform foundation**
-- Current TRL self-assessment is **TRL 4**, with working POC evidence across model core, API, infrastructure, and tests
-- Expanded CPU training runs show measurable learning and benchmark improvement, but GPU-backed scale-up remains the main constraint
+- Supreme ModelTX is an **early-stage governed pretrained-model foundation**,
+  not an application-ready model or production-certified system
+- CPU proxy experiments support narrow research plumbing, not pretrained Turkish
+  quality; no candidate measurements or GPU runs are reported
+- Canonical T-Dev-6L is ~58M / 512 context; T-101 is an unvalidated legacy ~7B
+  config, with larger T-series ideas uncommitted
+- Licensing, data quality, held-out Turkish evaluation, safety, reproducibility,
+  and deployment controls remain gates alongside compute
 - The project explicitly avoids frontier-model or production-readiness overclaims
 
 ## Slide 8 — Why NVIDIA
 
 **NVIDIA support would accelerate the next credible milestone, not just add prestige.**
 
-- Validate the canonical GPU-backed T-Dev-6L training path with CUDA/BF16 and longer schedules
-- Increase corpus size, batch regime, and experiment velocity beyond CPU-only constraints
-- Harden GPU inference and governed deployment pathways, including the repository's vLLM-ready serving path
-- Benefit from Inception ecosystem support, technical guidance, and access to proven GPU software practices
+- CUDA paths exist but are not GPU-validated; no BF16 or multi-GPU validation is claimed
+- **NeMo:** planned, not integrated — investigate approved Turkish adaptation
+- **Megatron Core:** planned, not integrated — distributed research only if justified
+- **TensorRT-LLM:** planned, not integrated — supported-model optimized serving investigation
+- **ONNX:** planned, not integrated — export/runtime parity investigation
+- **cuDNN:** runtime library in a compatible CUDA stack, not a model backend
+- Seek Inception technical guidance on these gated choices; programme benefits
+  and GPU allocation are not assumed
 
 ## Slide 9 — Differentiation
 
-- Not just a wrapper around third-party APIs: long-term plan includes owned model workflow and governed infrastructure
+- Artifact custody, approved local inference, and accountable model selection
+  matter independently of who originally pretrained the model
 - Not just a model lab: Ebru provides the product wedge, user learning loop, and route to commercial validation
 - Turkish-first positioning with private deployment and governance emphasis
 - Conservative, evidence-based story with implemented components, documented limitations, and staged milestones
 
 ## Slide 10 — The ask
 
-**We are applying for NVIDIA Inception to accelerate both stages of the roadmap.**
+**Proposed NVIDIA Inception ask: guidance toward measurable, approved milestones.**
 
-- Near-term: technical guidance and ecosystem support for Ebru deployments and institutional pilots
-- Compute: GPU enablement for canonical T-Dev-6L validation, larger Turkish-language experiments, and faster iteration
-- Platform: advice on efficient training/inference stack choices for secure, governed deployments
-- Outcome: turn Ebru traction into a stronger sovereign-model pathway with measurable technical milestones
+- Approve candidate license, immutable revision/hashes, and a frozen Turkish
+  evaluation set of at least 100 prompts with predeclared thresholds
+- Complete two reproducible local baseline passes before an approved one-GPU
+  comparison of quality/safety, latency, tokens/s, peak VRAM, and cost
+- Investigate adaptation and serving only after baseline approval and exact
+  model/hardware support checks; require held-out comparison and output parity
+- Gate an Ebru pilot on model card, access/retention policy, audit evidence,
+  rollback test, safety review, and operator sign-off
+
+These are planned gates, not completed experiments, customer traction, or an
+application-readiness claim. See [the roadmap](../docs/roadmap.md) and
+[official ecosystem sources](sources.md).

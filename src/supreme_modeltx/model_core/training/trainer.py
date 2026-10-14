@@ -4,7 +4,6 @@ model_core/training/trainer.py — Main training loop entrypoint.
 A clean, readable training loop for the supreme-modeltx model core.
 Supports:
   - Single-process CPU/GPU training
-  - Distributed (torch.distributed) via torchrun
   - Mixed precision (BF16/FP16)
   - Gradient accumulation
   - Checkpoint save/resume
@@ -13,16 +12,17 @@ Supports:
 Usage (single process):
     python -m supreme_modeltx.model_core.training.trainer --config config.json
 
-Usage (multi-GPU via torchrun):
-    torchrun --nproc_per_node=8 -m supreme_modeltx.model_core.training.trainer \\
-        --config config.json
+Multi-GPU and FSDP launches are rejected until validated.
 """
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import logging
+import math
+import os
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -57,6 +57,155 @@ from supreme_modeltx.utils.device import get_device
 from supreme_modeltx.utils.logging import configure_logging
 
 logger = logging.getLogger("supreme_modeltx.train")
+
+
+def _effective_precision(cfg: SMTXConfig) -> str:
+    return cfg.training.precision.dtype if cfg.training.precision.enabled else "float32"
+
+
+def _execution_errors(cfg: SMTXConfig, device: torch.device) -> list[str]:
+    errors = []
+    requested_device = os.environ.get("SUPREME_MODELTX_DEVICE", os.environ.get("SMTX_DEVICE", ""))
+    if (requested_device.lower().strip() == "cuda" or os.environ.get("SMTX_REQUIRE_GPU") == "1") and (
+        device.type != "cuda" or not torch.cuda.is_available()
+    ):
+        errors.append("GPU-designated training requires an available CUDA device; CPU fallback is forbidden.")
+    if cfg.training.distributed.fsdp_enabled:
+        errors.append("FSDP is unsupported until validated.")
+    if int(os.environ.get("WORLD_SIZE", "1")) > 1 or (
+        torch.distributed.is_initialized() and torch.distributed.get_world_size() > 1
+    ):
+        errors.append("Multi-GPU/distributed training is unsupported until validated.")
+    dtype = _effective_precision(cfg)
+    if device.type == "cpu" and dtype == "float16":
+        errors.append("float16 precision is not supported on CPU devices.")
+    if device.type == "mps" and dtype == "bfloat16":
+        errors.append("bfloat16 precision is not supported on MPS devices.")
+    if device.type == "cuda" and dtype == "bfloat16" and not torch.cuda.is_bf16_supported():
+        errors.append("bfloat16 precision requested, but this CUDA device does not support bf16.")
+    return errors
+
+
+def _json_hash(value: Any) -> str:
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+
+def _path_hash(path: str | Path | None) -> str | None:
+    if not path:
+        return None
+    candidate = Path(path)
+    if not candidate.exists():
+        return None
+    digest = hashlib.sha256()
+    files = sorted(candidate.rglob("*")) if candidate.is_dir() else [candidate]
+    for file in files:
+        if not file.is_file():
+            continue
+        if candidate.is_dir():
+            digest.update(file.relative_to(candidate).as_posix().encode())
+        with file.open("rb") as handle:
+            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _collect_artifact_identity(cfg: SMTXConfig) -> dict[str, Any]:
+    """Snapshot contents, not paths or mutable tokenizer version labels."""
+    config = cfg.model_dump(mode="json")
+    settings = json.loads(json.dumps(config))
+    for key in ("save_dir", "resume_from"):
+        settings["training"]["checkpoint"].pop(key, None)
+    settings["data"].pop("manifest_path", None)
+    settings["data"].pop("tokenizer_path", None)
+    settings["tokenizer"].pop("model_path", None)
+    settings["training"]["distributed"] = {}
+    settings["training"]["precision"] = {"dtype": _effective_precision(cfg)}
+    dataset_hash = None
+    if cfg.data.manifest_path:
+        try:
+            manifest = DataManifest.from_file(cfg.data.manifest_path).model_dump(mode="json")
+        except (OSError, ValueError):
+            manifest = None
+        if manifest is not None:
+            complete = bool(manifest["sources"])
+            for source in manifest["sources"]:
+                content_hash = _path_hash(source.pop("path", None))
+                source["content_sha256"] = content_hash
+                complete = complete and content_hash is not None and source["backend"] != "hf_dataset"
+            if complete:
+                dataset_hash = _json_hash(manifest)
+    repo_root = Path(__file__).parents[4]
+    return {
+        "model_sha256": _json_hash(config["model"]),
+        "config_sha256": _json_hash(config),
+        "settings_sha256": _json_hash(settings),
+        "dataset_sha256": dataset_hash,
+        "manifest_sha256": _path_hash(cfg.data.manifest_path),
+        "tokenizer_sha256": _path_hash(cfg.data.tokenizer_path or cfg.tokenizer.model_path),
+        "resume_checkpoint_sha256": _path_hash(cfg.training.checkpoint.resume_from),
+        "benchmark_eval_sha256": _path_hash(repo_root / "configs/benchmark_eval_set.json"),
+        "benchmark_baselines_sha256": _path_hash(repo_root / "configs/benchmark_baselines.json"),
+        "sample_settings_sha256": _json_hash({"prompts": _load_canonical_prompts(cfg), "max_new_tokens": 24,
+                                            "temperature": 0.0, "top_p": 1.0, "top_k": 0}),
+        "git_commit": _get_git_commit(),
+        "code_sha256": _json_hash({
+            "trainer": _path_hash(Path(__file__)),
+            "model": _path_hash(Path(__file__).parents[1] / "models/t_series/baseline.py"),
+            "preprocessing": _path_hash(Path(__file__).parents[1] / "data/preprocessing.py"),
+        }),
+    }
+
+
+def compare_gpu_run(
+    gpu_summary: dict[str, Any], cpu_summary: dict[str, Any],
+    gpu_benchmark: dict[str, Any], cpu_benchmark: dict[str, Any],
+) -> dict[str, Any]:
+    """Only identical experiment inputs can support hardware-attributed deltas."""
+    gpu_identity = gpu_summary.get("artifact_identity") or {}
+    cpu_identity = cpu_summary.get("artifact_identity") or {}
+    keys = ("model_sha256", "settings_sha256", "dataset_sha256", "tokenizer_sha256",
+            "benchmark_eval_sha256", "benchmark_baselines_sha256", "sample_settings_sha256",
+            "git_commit", "code_sha256")
+    reasons = [f"missing or different {key}" for key in keys
+               if not gpu_identity.get(key) or gpu_identity.get(key) != cpu_identity.get(key)]
+    if gpu_identity.get("resume_checkpoint_sha256") != cpu_identity.get("resume_checkpoint_sha256"):
+        reasons.append("different resume checkpoint")
+    if gpu_summary.get("auto_resumed") or cpu_summary.get("auto_resumed"):
+        reasons.append("automatic resume has unverified initial state")
+    comparable = not reasons
+
+    def finite(value: Any) -> bool:
+        return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
+
+    def best_validation(summary: dict[str, Any]) -> dict[str, Any]:
+        rows = [row for row in summary.get("validation_history", []) if finite(row.get("val_loss"))]
+        best = min(rows, key=lambda row: row["val_loss"]) if rows else {}
+        return {"checkpoint": summary.get("best_checkpoint_path"), "val_loss": best.get("val_loss"),
+                "perplexity": best.get("perplexity") if finite(best.get("perplexity")) else None}
+
+    def best_benchmark(benchmark: dict[str, Any]) -> dict[str, Any]:
+        rows = [row for row in benchmark.get("local_checkpoints", [])
+                if finite(row.get("metrics", {}).get("overall_score"))]
+        return max(rows, key=lambda row: row["metrics"]["overall_score"]) if rows else {}
+
+    gpu_best, cpu_best = best_validation(gpu_summary), best_validation(cpu_summary)
+    gpu_score, cpu_score = best_benchmark(gpu_benchmark), best_benchmark(cpu_benchmark)
+
+    def delta(left: Any, right: Any) -> float | None:
+        if not comparable or not finite(left) or not finite(right):
+            return None
+        difference = left - right
+        return difference if finite(difference) else None
+
+    deltas = {"val_loss_delta": delta(gpu_best["val_loss"], cpu_best["val_loss"]),
+              "perplexity_delta": delta(gpu_best["perplexity"], cpu_best["perplexity"])}
+    for metric in ("overall", "code", "reasoning"):
+        deltas[f"benchmark_{metric}_delta"] = delta(
+            gpu_score.get("metrics", {}).get(f"{metric}_score"),
+            cpu_score.get("metrics", {}).get(f"{metric}_score"))
+    return {"comparable": comparable, "noncomparable_reasons": reasons, "gpu_vs_cpu": deltas,
+            "cpu_best_checkpoint": cpu_best, "cpu_best_benchmark": cpu_score or None,
+            "gpu_best_checkpoint": gpu_best, "gpu_best_benchmark": gpu_score or None}
 
 
 # ── Minimal synthetic dataset for smoke/dev runs ───────────────────────────────
@@ -164,26 +313,13 @@ def _check_writable_dir(path: Path, *, label: str, errors: list[str]) -> None:
 def preflight_validate(cfg: SMTXConfig) -> dict[str, Any]:
     """Run lightweight checks before launching a full training run."""
     device = get_device()
-    errors: list[str] = []
+    errors: list[str] = _execution_errors(cfg, device)
     warnings: list[str] = []
     dtype = cfg.training.precision.dtype
     precision_enabled = cfg.training.precision.enabled
 
     if not precision_enabled and dtype != "float32":
-        warnings.append("precision.enabled is false but dtype is not float32.")
-
-    if precision_enabled:
-        if device.type == "cpu" and dtype == "float16":
-            errors.append("float16 precision is not supported on CPU devices.")
-        if device.type == "mps" and dtype == "bfloat16":
-            errors.append("bfloat16 precision is not supported on MPS devices.")
-        if (
-            device.type == "cuda"
-            and dtype == "bfloat16"
-            and hasattr(torch.cuda, "is_bf16_supported")
-            and not torch.cuda.is_bf16_supported()
-        ):
-            errors.append("bfloat16 precision requested, but this CUDA device does not support bf16.")
+        warnings.append("precision.enabled is false; executing float32, ignoring configured dtype.")
 
     tokenizer_path = cfg.data.tokenizer_path or cfg.tokenizer.model_path
     if not tokenizer_path:
@@ -253,7 +389,7 @@ def preflight_validate(cfg: SMTXConfig) -> dict[str, Any]:
     return {
         "ok": not errors,
         "device": str(device),
-        "precision": {"enabled": precision_enabled, "dtype": dtype},
+        "precision": {"enabled": precision_enabled, "dtype": _effective_precision(cfg), "configured_dtype": dtype},
         "checkpoint_dir": str(checkpoint_dir),
         "run_artifact_dir": str(run_artifact_dir),
         "benchmark_eval_set": str(benchmark_eval),
@@ -495,6 +631,8 @@ def _write_run_summary(
     validation_history: list[dict[str, Any]],
     checkpoint_paths: list[str],
     sample_artifact_paths: list[str],
+    artifact_identity: dict[str, Any] | None = None,
+    auto_resumed: bool = False,
 ) -> None:
     config_path = artifact_dir / "config_used.json"
     config_path.write_text(cfg.model_dump_json(indent=2), encoding="utf-8")
@@ -511,6 +649,8 @@ def _write_run_summary(
             "ended_at_utc": ended_at_utc,
         },
         "git_commit": _get_git_commit(),
+        "artifact_identity": artifact_identity or _collect_artifact_identity(cfg),
+        "auto_resumed": auto_resumed,
         "config_path": str(config_path),
         "data": {
             "manifest_path": cfg.data.manifest_path,
@@ -519,7 +659,8 @@ def _write_run_summary(
         },
         "device": str(device),
         "precision": {
-            "dtype": cfg.training.precision.dtype,
+            "dtype": _effective_precision(cfg),
+            "configured_dtype": cfg.training.precision.dtype,
             "enabled": cfg.training.precision.enabled,
         },
         "eval_cadence": {
@@ -532,6 +673,7 @@ def _write_run_summary(
             "backend": cfg.tokenizer.backend,
         },
         "checkpoint_paths": checkpoint_paths,
+        "checkpoint_sha256": {path: _path_hash(path) for path in checkpoint_paths},
         "best_checkpoint_path": best_checkpoint_path,
         "validation_history": validation_history,
         "latest_validation_loss": latest_val["val_loss"] if latest_val else None,
@@ -557,7 +699,7 @@ def _write_run_summary(
                 f"- Git commit: `{summary['git_commit'] or 'unavailable'}`",
                 f"- Config: `{config_path}`",
                 f"- Device: `{device}`",
-                f"- Precision dtype: `{cfg.training.precision.dtype}`",
+                f"- Precision dtype: `{_effective_precision(cfg)}`",
                 f"- Manifest: `{cfg.data.manifest_path or 'none'}`",
                 f"- Train split: `{cfg.data.train_split}`",
                 f"- Validation split: `{cfg.data.validation_split or 'none'}`",
@@ -590,12 +732,17 @@ def train(cfg: SMTXConfig, *, dry_run: bool = False) -> None:
         dry_run: If True, run for 2 steps then return (useful for CI smoke tests).
     """
     configure_logging()
-    is_dist = init_distributed(cfg.training.distributed.backend)
     device = get_device()
+    errors = _execution_errors(cfg, device)
+    if errors:
+        raise ValueError(" ".join(errors))
+    is_dist = init_distributed(cfg.training.distributed.backend)
+    precision_dtype = _effective_precision(cfg)
 
     torch.manual_seed(cfg.training.seed)
     started_at_utc = datetime.now(timezone.utc).isoformat()
     run_artifact_dir = None if dry_run else _resolve_run_artifact_dir(cfg)
+    artifact_identity = None if dry_run else _collect_artifact_identity(cfg)
     validation_history: list[dict[str, Any]] = []
     sample_artifact_paths: list[str] = []
 
@@ -613,7 +760,7 @@ def train(cfg: SMTXConfig, *, dry_run: bool = False) -> None:
 
     optimizer = build_optimizer(model, cfg.training.optimizer)
     scheduler = build_scheduler(optimizer, cfg.training.scheduler, cfg.training.max_steps)
-    scaler = get_grad_scaler(cfg.training.precision.dtype, device.type)
+    scaler = get_grad_scaler(precision_dtype, device.type)
 
     # Resume from checkpoint if available
     start_step = 0
@@ -656,7 +803,7 @@ def train(cfg: SMTXConfig, *, dry_run: bool = False) -> None:
         batch = next(data_iter)
         is_accum_step = (step + 1) % accum_steps != 0
 
-        with get_autocast_context(cfg.training.precision.dtype, device_type=device.type):
+        with get_autocast_context(precision_dtype, device_type=device.type):
             out = model(
                 input_ids=batch["input_ids"],
                 labels=batch.get("labels"),
@@ -765,6 +912,8 @@ def train(cfg: SMTXConfig, *, dry_run: bool = False) -> None:
             validation_history=validation_history,
             checkpoint_paths=checkpoint_paths,
             sample_artifact_paths=sample_artifact_paths,
+            artifact_identity=artifact_identity,
+            auto_resumed=bool(resume_path and not cfg.training.checkpoint.resume_from),
         )
         logger.info("Training complete.")
     cleanup_distributed()

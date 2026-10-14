@@ -19,10 +19,10 @@ Last updated: 2026-06
 |---|---|---|---|---|---|
 | R01 | GPU quota not available in UK Azure region within 30 days | M | H | H | Pre-request Azure UK South/UK West quota; CPU-only fallback for Phase 1 deliverables |
 | R02 | Training instability at T-101 scale (7B) — gradient explosion, NaN loss | M | M | M | Gradient clipping already in trainer; validate on T-Dev-6L first; incremental scale-up |
-| R03 | SentencePiece tokeniser vocab mismatch when switching corpora | L | M | L | Tokeniser versioning enforced in manifest contract; version pinned in all configs |
-| R04 | PyTorch or CUDA version incompatibility on Azure GPU VMs | M | M | M | Pin `torch==2.3.x` in `requirements.txt`; use validated Docker images (`scripts/Dockerfile`) |
+| R03 | SentencePiece tokeniser vocab mismatch when switching corpora | L | M | L | Restore immutable approved tokenizer; record content SHA-256. Retraining at the same path/version is not identity; suppress hardware deltas without identical hashes/settings |
+| R04 | PyTorch or CUDA version incompatibility on Azure GPU VMs | M | M | M | Candidate only: existing `torch>=2.4,<2.6` constraint from cu124 wheel index plus `foundation,dev`; archive resolved environment, driver/compute capability/CUDA/cuDNN and synchronized precision numerical checks. Legacy `scripts/Dockerfile*` images are unsupported, not validated. No GPU experiment validation yet |
 | R05 | Checkpoint storage costs exceed budget at scale | L | L | L | Use Azure Blob lifecycle policies; keep only N best checkpoints per run |
-| R06 | Distributed training (FSDP) adds deadlock or OOM risk | M | M | M | Default to single-GPU; FSDP only after single-GPU baseline is stable |
+| R06 | Distributed training (FSDP) adds deadlock or OOM risk | M | M | M | Reject FSDP and multi-GPU until separately validated; require CUDA explicitly for GPU-designated training, never silently fall back to CPU |
 
 ---
 
