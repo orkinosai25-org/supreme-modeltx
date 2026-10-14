@@ -1,6 +1,7 @@
 # First GPU-Optimized T-Dev-6L Run Plan
 
-This document is the execution-ready package for the first canonical GPU-backed T-Dev-6L run.
+This document defines the candidate path for the first GPU-backed T-Dev-6L run.
+It is **not GPU-validated**; readiness changes did not execute GPU experiments.
 
 For an Azure UK self-hosted runner path, use
 **[`docs/azure-uk-gpu-runner-runbook.md`](azure-uk-gpu-runner-runbook.md)**.
@@ -26,14 +27,15 @@ Key settings vs prior CPU benchmark runs:
 - 1 CUDA GPU with **24 GB+ VRAM**
 - BF16-capable CUDA stack (if unavailable, use float16 config override)
 - Python environment with:
-  - `pip install -e ".[dev]"`
+  - `python -m pip install "torch>=2.4,<2.6" --index-url https://download.pytorch.org/whl/cu124`
+  - `python -m pip install -e ".[foundation,dev]"`
   - tokenizer artifact at `artifacts/tokenizers/t-dev-6l/t-dev-6l/v1/tokenizer.model`
   - manifest at `data/manifests/t_dev_6l_gpu_corpus_v1_first_subset.yaml` (or a run-specific replacement)
 
 ### Target envelope
 
-- 1-4 CUDA GPUs with 40-80 GB VRAM each
-- same config and artifact contract; scale with `torchrun` when needed
+- 1 CUDA GPU with 40-80 GB VRAM
+- single-process training only; FSDP and multi-GPU are unsupported until validated
 
 ### Practical constraints
 
@@ -45,7 +47,7 @@ Key settings vs prior CPU benchmark runs:
 Run:
 
 ```bash
-python -m supreme_modeltx.model_core.training.trainer \
+SMTX_REQUIRE_GPU=1 python -m supreme_modeltx.model_core.training.trainer \
   --config configs/real_training/t_dev_6l_first_gpu_run.json \
   --preflight
 ```
@@ -56,6 +58,8 @@ Preflight checks:
 - manifest/tokenizer/source paths resolve
 - checkpoint + artifact directories are writable
 - device/precision combination is valid
+- GPU-designated commands cannot silently fall back to CPU
+- FSDP and multi-process launches are rejected
 - benchmark follow-on inputs (`configs/benchmark_eval_set.json`, `configs/benchmark_baselines.json`) exist
 - artifact contract paths are still aligned (`config_used.json`, `training_summary.*`, `samples.*`)
 
@@ -64,16 +68,19 @@ Preflight checks:
 ### Single GPU
 
 ```bash
-python -m supreme_modeltx.model_core.training.trainer \
+SMTX_REQUIRE_GPU=1 python -m supreme_modeltx.model_core.training.trainer \
   --config configs/real_training/t_dev_6l_first_gpu_run.json
 ```
 
 ### Multi-GPU
 
-```bash
-torchrun --nproc_per_node=4 -m supreme_modeltx.model_core.training.trainer \
-  --config configs/real_training/t_dev_6l_first_gpu_run.json
-```
+Unsupported until validated. Do not launch with `torchrun` or enable FSDP.
+
+Before launch, run `python scripts/gpu_diagnostics.py --require-cuda` and archive
+the driver, compute capability, CUDA/cuDNN versions and synchronized FP32/FP16/BF16
+forward/backward numerical checks. A T4 requires FP16 rather than BF16 and a
+smaller memory envelope; this changes settings and is not a hardware-only delta.
+Legacy Docker images under `scripts/` are unsupported for this candidate path.
 
 ### GitHub Actions (GPU-backed + CPU comparison)
 
@@ -94,7 +101,28 @@ Post-run findings should be documented in:
 
 - `docs/first-gpu-experiment-findings.md`
 
-CPU-vs-GPU deltas are computed only when tokenizer model paths match across runs.
+The workflow restores an approved immutable tokenizer **after default clean
+checkout**; it does not retrain at an existing path. Mount the approved file
+read-only outside `GITHUB_WORKSPACE`, then provide workflow inputs
+`tokenizer_source_path` (absolute mounted path) and `tokenizer_sha256` (approved
+64-character digest). The source and restored copy must match that digest.
+Pre-restoring the ignored checkout path before checkout will not survive cleaning.
+Archive the SHA-256, not just the path/version. Summaries add
+`artifact_identity` with model/config/settings/dataset/tokenizer and benchmark
+hashes while retaining existing artifact filenames and summary fields.
+
+CPU-vs-GPU hardware deltas require identical content hashes, code revision,
+precision, seed, model shape, data, batch/accumulation, steps, validation, sample
+generation and benchmark settings. Historical runs lacking hashes, or runs with
+different settings (including the prior CPU configurations), are **noncomparable**.
+Their deltas are null in JSON and N/A in Markdown; missing/nonfinite metrics are
+never replaced with zero/NaN.
+
+Benchmark reports record the hashes of the eval set and task baselines actually
+read at scoring time, scorer code, and each scored sample's content/checkpoint
+provenance. Those samples/checkpoints must bind to the training summary hashes;
+pretraining canonical-file snapshots are insufficient. Historical benchmark reports
+without scoring identity cannot yield hardware deltas.
 
 > Scope note: workflow/documentation updates only define and expose the run path.  
 > A completed milestone still requires an actual self-hosted GPU workflow execution and review of the emitted artifacts/summary outputs.

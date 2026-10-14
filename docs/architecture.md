@@ -5,9 +5,11 @@ Version: 0.2.0
 
 ## 1. Platform Identity
 
-SMTX is a governed AI control plane for customer-owned Azure deployments.
+SMTX is an early-stage governed pretrained-model evaluation, adaptation, and
+deployment foundation supporting Ebru. Customer-owned Azure is a reference
+deployment boundary, not a requirement or evidence of production readiness.
 
-The architecture is designed around enterprise lifecycle control, not GPU-first model hosting:
+The architecture targets enterprise lifecycle control around approved models:
 
 1. Register models and runtime configurations
 2. Enforce policy and approval gates
@@ -15,7 +17,9 @@ The architecture is designed around enterprise lifecycle control, not GPU-first 
 4. Ground inference with enterprise retrieval sources
 5. Audit decisions and operations end-to-end
 
-T-Series model components remain part of the roadmap and runtime strategy, but are subordinate to the control-plane product identity.
+T-series custom models and CPU workflows remain research/smoke paths. The
+near-term Ebru strategy is to assess approved pretrained models, not make
+original large-model pretraining a product prerequisite.
 
 ---
 
@@ -34,7 +38,7 @@ SMTX Control Plane (API + admin)
       │
       ▼
 Execution plane (customer-owned Azure)
-  ├─ Inference runtime (CPU default, GPU optional)
+  ├─ Local inference runtime (PyTorch default; optional Transformers)
   ├─ Retrieval + grounding services
   ├─ Verification / assurance services
   └─ Optional training workers
@@ -58,7 +62,9 @@ SMTX target lifecycle:
 - **Ground** → Retrieval and verification against enterprise sources
 - **Audit** → Trace who did what, when, and under which policy
 
-Current repository components already implement control-plane and runtime scaffolding. Lifecycle governance depth is being expanded in this same architecture direction.
+Current repository components implement control-plane and runtime scaffolding.
+The full approval, production security, and immutable audit lifecycle remains a
+target, not an implemented end-to-end guarantee.
 
 ---
 
@@ -89,8 +95,18 @@ Responsibilities:
 
 Execution profiles:
 
-- **Default:** CPU-first operation
-- **Optional:** GPU acceleration where customer quota/policy allows
+- **Default backend:** `SMTX_INFERENCE_BACKEND=pytorch`, using `model_core` artifacts
+- **Optional backend:** `SMTX_INFERENCE_BACKEND=transformers`, using a complete local
+  snapshot at `SMTX_PRETRAINED_MODEL_PATH` and strict `SMTX_DEVICE=cpu|cuda`
+- **Research/smoke:** CPU custom-model workflows remain supported
+- **GPU:** existing CUDA paths require approved hardware and validation; no
+  completed single-GPU or multi-GPU validation is claimed
+
+Requesting unavailable CUDA for pretrained inference fails rather than silently
+falling back. Snapshot selection does not imply model approval or a Hub download.
+`Qwen/Qwen2.5-0.5B-Instruct` (candidate Apache-2.0, not independently verified here)
+is only a candidate pending explicit upstream
+license/revision and Turkish evaluation approval.
 
 ### 4.3 Data + Grounding Plane
 
@@ -104,15 +120,27 @@ Responsibilities:
 
 ## 5. T-Series Positioning
 
-T-Series modules stay relevant as supporting runtime capabilities:
+`model_core`'s canonical T-Dev-6L is ~58M parameters / 512-token context.
+T-101 is an unvalidated legacy ~7B config; larger T-series names are research
+concepts, not validated runtime capabilities or delivery commitments.
+`foundation`'s TinyPilotLM checkpoint format is separate from `model_core`'s
+TSeriesBaseline format and from pretrained snapshots.
 
-- **T-101** base model path
-- **T-201** reasoning specialization
-- **T-301** retrieval/benchmark support
-- **T-501** verification/evidence support
-- **T-X** orchestration and decision layer
+### NVIDIA / portability boundary
 
-Near-term product narrative remains control-plane governance. Large-scale frontier-model training is a future-state option, not the immediate platform identity.
+| Technology | Status | Intended role |
+|---|---|---|
+| CUDA / PyTorch | Existing paths; not GPU-validated | Approved local GPU experiments |
+| cuDNN | Runtime library where supplied by a compatible CUDA stack | Runtime compatibility, not a model backend |
+| NeMo | Planned; not integrated | Governed pretrained adaptation |
+| Megatron Core | Planned; not integrated | Distributed research if justified |
+| TensorRT-LLM | Planned; not integrated | Supported-model serving optimization |
+| ONNX | Planned; not integrated | Export portability and parity checks |
+
+The [roadmap](roadmap.md) requires license, reproducibility, Turkish quality,
+safety, and deployment gates; [GPU planning](gpu-readiness-scaling-plan.md)
+provides official resource links. No candidate measurements or actual GPU runs
+are claimed by this architecture.
 
 ---
 
@@ -122,4 +150,3 @@ Near-term product narrative remains control-plane governance. Large-scale fronti
 - Identity and RBAC govern who can register, approve, deploy, and operate AI
 - Policy and audit trails provide compliance evidence
 - Provider flexibility is preserved without forcing vendor lock-in
-

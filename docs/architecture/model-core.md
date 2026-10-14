@@ -2,9 +2,18 @@
 
 ## Overview
 
-`model_core` is the PyTorch-native LLM development layer. It contains everything needed to define, train, evaluate, and serve a decoder-only language model.
+`model_core` is the PyTorch-native custom-model research layer for defining,
+training, evaluating, and locally serving TSeriesBaseline. It is not the
+near-term pretrained-model product strategy or a validated production runtime.
 
 It has **no dependency on** the platform_api layer and can be used standalone.
+
+The broader foundation supports governed pretrained-model evaluation,
+adaptation planning, and deployment for Ebru. Its optional Transformers API
+backend loads an approved local snapshot, separately from this custom-model
+engine. `foundation/training.py` defines **TinyPilotLM**, with its own smoke
+tokenizer and checkpoint format; those checkpoints cannot be substituted for
+`model_core` checkpoints or pretrained snapshots.
 
 ---
 
@@ -58,14 +67,11 @@ Training is launched via:
 # Single process (CPU or GPU):
 python -m supreme_modeltx.model_core.training.trainer --config config.json
 
-# Multi-GPU (torchrun):
-torchrun --nproc_per_node=8 -m supreme_modeltx.model_core.training.trainer --config config.json
-
 # Dry run (2 steps, no checkpoint):
 python -m supreme_modeltx.model_core.training.trainer --dry-run
 ```
 
-First real experiment command:
+Example research experiment command (not evidence of a GPU run):
 
 ```bash
 python -m supreme_modeltx.model_core.training.trainer \
@@ -126,22 +132,30 @@ T-Dev-6L is the first concrete T-series model:
 | Hidden size | 512 |
 | Attention heads | 8 (MHA) |
 | FFN width (SwiGLU) | 2048 |
-| Context length | 512 (scalable) |
+| Context length | 512 (canonical; extensions require validation) |
 | Parameters | ~58M |
-| Dtype | BF16 (training), FP32 (CPU smoke) |
+| Dtype | BF16 configured for research, FP32 for CPU smoke; GPU precision unvalidated |
 
 It is designed to be:
 - **CPU-runnable** for smoke tests and CI
-- **GPU-trainable** for real experiments
-- **Structurally identical** to the larger T-101 (only dimensions differ)
+- **CUDA-configurable** for separately approved research experiments; not GPU-validated
+- **A research baseline**, not evidence that the legacy ~7B T-101 config works
+
+Distributed initialization scaffolding does not establish complete
+distributed-gradient synchronization, FSDP support, or multi-GPU validation.
+NeMo, Megatron Core, TensorRT-LLM, and ONNX are all **planned, not integrated**.
+cuDNN is a runtime library of a compatible CUDA/PyTorch stack, not a model backend.
 
 ---
 
 ## Roadmap for model_core
 
 - [x] SentencePiece tokenizer training pipeline on sovereign corpus (local-first, versioned artifacts)
-- [x] First real manifest/tokenizer/training/checkpoint/perplexity run for T-Dev-6L
-- [ ] FSDP wrapping in the distributed trainer
-- [ ] T-101 (7B) config and first training run with GPU allocation
-- [ ] lm-eval-harness integration for standardised benchmarking
-- [ ] vLLM-compatible checkpoint export
+- [x] CPU proxy experiment artifacts for manifest/tokenizer/checkpoint/perplexity plumbing (not canonical GPU validation)
+- [ ] Governed pretrained baseline and held-out Turkish evaluation supporting Ebru
+- [ ] Approved single-GPU validation with hardware/version/precision and reproducibility evidence
+- [ ] Adaptation and optimized serving experiments after baseline approval
+- [ ] Distributed research only after need and budget are justified; T-101 is an unvalidated legacy ~7B config, not a delivery commitment
+
+Promotion gates are defined in [the roadmap](../roadmap.md) and
+[GPU readiness plan](../gpu-readiness-scaling-plan.md).

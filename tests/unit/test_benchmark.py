@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 from pathlib import Path
 
 from supreme_modeltx.model_core.eval.benchmark import _build_markdown, build_report, evaluate_checkpoints
@@ -106,6 +107,19 @@ def test_build_report_reads_samples_and_baselines(tmp_path):
     assert report["benchmark_name"] == "smtx-mini-code-reasoning-v1"
     assert report["best_local_checkpoint"]["metrics"]["overall_score"] == 1.0
     assert report["selected_open_baselines"][0]["name"] == "Test baseline"
+    identity = report["artifact_identity"]
+    assert identity["eval_set_sha256"] == hashlib.sha256(eval_set.read_bytes()).hexdigest()
+    assert identity["baselines_sha256"] == hashlib.sha256(baselines.read_bytes()).hexdigest()
+    sample_path = tmp_path / "run_artifacts" / "samples" / "checkpoint_step_00000020_samples.json"
+    scored_sample = identity["samples"][0]
+    assert scored_sample["sample_sha256"] == hashlib.sha256(sample_path.read_bytes()).hexdigest()
+    assert scored_sample["checkpoint_sha256"] is None
+    assert report["best_local_checkpoint"]["sample_identity"] == scored_sample
+    sample_payload["samples"][0]["completion_text"] = "different output"
+    _write_json(sample_path, sample_payload)
+    changed = build_report(eval_set_path=eval_set, baselines_path=baselines,
+                           samples_root=tmp_path / "run_artifacts")
+    assert changed["artifact_identity"]["samples"][0]["sample_sha256"] != scored_sample["sample_sha256"]
     assert "lightweight internal/canonical directional" in report["methodology"]["benchmark_scope"].lower()
     assert "reference metadata" in report["methodology"]["baseline_semantics"].lower()
 

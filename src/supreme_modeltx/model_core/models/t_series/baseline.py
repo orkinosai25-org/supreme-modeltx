@@ -13,7 +13,7 @@ Architecture overview:
   - Grouped Query Attention (GQA)
   - Tied or untied output embeddings
 
-Default configuration: 6 layers, 512 hidden, 8 heads → ~25M parameters.
+Canonical configuration: 6 layers, 512 hidden, 8 heads → ~58M parameters.
 This fits on CPU for smoke runs and is GPU-scalable.
 
 Provenance:
@@ -206,7 +206,7 @@ class TSeriesBaseline(nn.Module):
 
     @classmethod
     def dev_model(cls) -> "TSeriesBaseline":
-        """Return the canonical T-Dev-6L smoke-test model (~25M params)."""
+        """Return the canonical T-Dev-6L smoke-test model (~58M params)."""
         cfg = ModelConfig(
             model_variant="t-dev-6l",
             vocab_size=32_000,

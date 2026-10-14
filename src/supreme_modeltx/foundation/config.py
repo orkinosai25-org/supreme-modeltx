@@ -68,11 +68,22 @@ class TrainingLoopConfig(BaseModel):
 
 
 class InferenceConfig(BaseModel):
-    backend: Literal["stub", "checkpoint"] = "stub"
+    backend: Literal["stub", "checkpoint", "transformers"] = "stub"
     device: Literal["auto", "cpu", "cuda"] = "auto"
     checkpoint_path: str | None = None
+    pretrained_model_path: str | None = None
+    dtype: Literal["float32", "bfloat16", "float16"] | None = None
     response_prefix: str = "Draft pilot response:"
     max_new_tokens: int = Field(48, ge=1)
+
+    @model_validator(mode="after")
+    def validate_pretrained_route(self) -> "InferenceConfig":
+        if self.backend == "transformers":
+            if not self.pretrained_model_path:
+                raise ValueError("transformers backend requires inference.pretrained_model_path")
+            if self.device == "auto":
+                raise ValueError("transformers backend requires explicit device=cpu or cuda")
+        return self
 
 
 class ExpectedBehaviourConfig(BaseModel):
@@ -98,6 +109,7 @@ class PromptSuiteConfig(BaseModel):
 class EvaluationConfig(BaseModel):
     suite_path: str
     output_path: str = "artifacts/private_foundation/evaluation/results.json"
+    compute_cost_per_hour_usd: float | None = Field(default=None, ge=0)
 
 
 class TrainingRunConfig(BaseModel):

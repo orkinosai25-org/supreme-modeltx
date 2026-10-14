@@ -10,6 +10,10 @@ This runbook provides a repeatable, startup-credit-conscious path to:
 - run the existing first GPU workflow or equivalent commands
 - stop/deallocate the VM when finished
 
+**Candidate, not GPU-validated:** no GPU experiment was run during readiness
+hardening. Single-GPU only; FSDP/multi-GPU remain unsupported. Legacy images in
+`scripts/Dockerfile*` are unsupported for this environment, not validated images.
+
 ## 1. Provision the VM
 
 Use the plain Ubuntu 22.04 image path, not a Marketplace GPU image:
@@ -62,8 +66,15 @@ Bootstrap covers:
 - `nvidia-smi` verification (and a clear failure if the driver is not ready yet)
 - repo checkout/update
 - Python virtualenv creation
-- `pip install -e ".[dev]"`
-- PyTorch CUDA verification
+- candidate `torch>=2.4,<2.6` CUDA 12.4 wheel from `https://download.pytorch.org/whl/cu124`
+- `pip install -e ".[foundation,dev]"`
+- PyTorch CUDA verification with synchronized numerical forward/backward checks
+
+Archive the resolved environment (`python -m pip freeze`), NVIDIA driver,
+compute capability and CUDA/cuDNN versions. Wheel installation is a candidate
+setup; it is not GPU training validation. The driver must support the wheel's
+runtime. T4 does not support BF16: use an explicitly reviewed FP16/reduced-batch
+config and treat it as a different experiment, not a hardware-only comparison.
 
 If the Azure NVIDIA extension was skipped or failed, install/retry it from your workstation:
 
@@ -122,12 +133,13 @@ Validation covers:
 - `nvidia-smi`
 - PyTorch CUDA availability
 - manifest path verification
-- tokenizer path verification (auto-prepares the canonical tokenizer if missing)
+- tokenizer content verification (restore the approved immutable artifact if missing;
+  the script does not silently retrain at the same path)
 - output directory readiness
 - training preflight:
 
 ```bash
-python -m supreme_modeltx.model_core.training.trainer \
+SMTX_REQUIRE_GPU=1 python -m supreme_modeltx.model_core.training.trainer \
   --config configs/real_training/t_dev_6l_first_gpu_run.json \
   --preflight
 ```
@@ -136,6 +148,7 @@ Expected failure conditions before a full run:
 
 - `nvidia-smi` unavailable
 - `torch.cuda.is_available()` is false
+- synchronized CUDA operation or a supported precision numerical check fails
 - manifest/config/tokenizer inputs missing
 - artifact directories not writable
 
@@ -151,11 +164,26 @@ This runs:
 
 - package install
 - CUDA verification
-- tokenizer preparation
+- approved tokenizer presence and clean checkpoint state (no implicit resume)
 - trainer preflight
 - canonical first GPU training run
 - benchmark scoring
-- CPU-vs-GPU comparison artifact generation
+- model/config/dataset/tokenizer hash recording and guarded CPU-vs-GPU comparisons
+
+Before dispatch, mount the approved immutable tokenizer from private storage on a
+read-only path **outside the runner checkout** (for example,
+`/mnt/smtx-approved/tokenizers/t-dev-6l-v1/tokenizer.model`). Supply workflow inputs
+`tokenizer_source_path` with that absolute path and `tokenizer_sha256` with the
+approved 64-character digest. Default checkout cleaning remains enabled: the
+workflow restores and verifies the artifact **after checkout**. Do not pre-restore
+it into the ignored checkout path, where checkout cleaning deletes it.
+
+Hardware
+deltas require identical content hashes and experiment settings; matching paths
+alone are insufficient. Historical runs without identity evidence or runs using
+different precision/batch/data are noncomparable and emit null/N/A deltas.
+Scoring-time eval-set/baseline/scorer hashes and sample/checkpoint provenance must
+also match the training records; canonical pretraining snapshots alone are insufficient.
 
 ### Option B — run equivalent commands manually on the VM
 
@@ -163,11 +191,11 @@ This runs:
 cd ~/supreme-modeltx
 . .venv/bin/activate
 
-python -m supreme_modeltx.model_core.training.trainer \
+SMTX_REQUIRE_GPU=1 python -m supreme_modeltx.model_core.training.trainer \
   --config configs/real_training/t_dev_6l_first_gpu_run.json \
   --preflight
 
-python -m supreme_modeltx.model_core.training.trainer \
+SMTX_REQUIRE_GPU=1 python -m supreme_modeltx.model_core.training.trainer \
   --config configs/real_training/t_dev_6l_first_gpu_run.json
 ```
 

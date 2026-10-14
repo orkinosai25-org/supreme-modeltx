@@ -11,14 +11,26 @@ on:
         description: "Random seed"
         required: false
         default: "42"
+      tokenizer_source_path:
+        description: "Absolute immutable tokenizer.model path on a read-only mount outside the checkout"
+        required: true
+      tokenizer_sha256:
+        description: "Approved SHA-256 of tokenizer.model (64 hexadecimal characters)"
+        required: true
 
 permissions:
   contents: read
 
 jobs:
   train-benchmark-compare:
-    name: Train GPU T-dev-6L, benchmark, and compare against CPU runs (self-hosted GPU)
+    name: Candidate single-GPU experiment (not yet GPU validated)
     runs-on: [self-hosted, linux, x64, gpu]
+    env:
+      SMTX_REQUIRE_GPU: "1"
+      MAX_STEPS: ${{ inputs.max_steps || '1000' }}
+      TRAINING_SEED: ${{ inputs.seed || '42' }}
+      TOKENIZER_SOURCE_PATH: ${{ inputs.tokenizer_source_path }}
+      TOKENIZER_SHA256: ${{ inputs.tokenizer_sha256 }}
 
     steps:
       - name: Checkout
@@ -30,65 +42,71 @@ jobs:
           python-version: "3.11"
           cache: "pip"
 
-      - name: Install package
-        run: pip install -e ".[dev]"
+      - name: Install candidate CUDA environment
+        run: |
+          python -m pip install "torch>=2.4,<2.6" --index-url https://download.pytorch.org/whl/cu124
+          python -m pip install -e ".[foundation,dev]"
 
-      - name: Verify CUDA GPU is available on runner
+      - name: Verify CUDA with synchronized numerical checks
         run: |
           nvidia-smi
-          python - <<'PYEOF'
-          import torch
+          mkdir -p artifacts/runs/t_dev_6l_first_gpu_run/run_artifacts
+          python -m pip freeze > artifacts/runs/t_dev_6l_first_gpu_run/run_artifacts/environment.txt
+          python -m supreme_modeltx.foundation.gpu_diagnostics --require-cuda \
+            > artifacts/runs/t_dev_6l_first_gpu_run/run_artifacts/gpu_diagnostics.json
 
-          if not torch.cuda.is_available():
-              raise SystemExit("CUDA GPU not detected on this self-hosted runner.")
-          print(f"Detected CUDA device count: {torch.cuda.device_count()}")
-          PYEOF
-
-      - name: Prepare canonical tokenizer path for GPU config
+      - name: Restore and verify approved tokenizer after clean checkout
         run: |
           python - <<'PYEOF'
+          import hashlib
+          import os
+          import re
           from pathlib import Path
-          from supreme_modeltx.model_core.tokenizer.workflow import train_versioned_sentencepiece
-
-          train_versioned_sentencepiece(
-              manifest_path="data/manifests/t_dev_6l_gpu_corpus_v1_first_subset.yaml",
-              artifact_root=Path("artifacts/tokenizers/t-dev-6l"),
-              model_variant="t-dev-6l",
-              version="v1",
-              vocab_size=32000,
-              character_coverage=1.0,
-          )
-          print("Tokenizer prepared at artifacts/tokenizers/t-dev-6l/t-dev-6l/v1/tokenizer.model")
+          workspace = Path(os.environ["GITHUB_WORKSPACE"]).resolve()
+          source = Path(os.environ["TOKENIZER_SOURCE_PATH"])
+          if not source.is_absolute():
+              raise SystemExit("Tokenizer source must be an absolute path outside the checkout.")
+          source = source.resolve(strict=True)
+          if source.is_relative_to(workspace) or not source.is_file():
+              raise SystemExit("Tokenizer source must be an immutable file outside the checkout.")
+          expected = os.environ["TOKENIZER_SHA256"].lower()
+          if not re.fullmatch(r"[0-9a-f]{64}", expected):
+              raise SystemExit("Supply the approved 64-character tokenizer SHA-256.")
+          content = source.read_bytes()
+          if hashlib.sha256(content).hexdigest() != expected:
+              raise SystemExit("Tokenizer source does not match the approved SHA-256.")
+          target = (workspace / "artifacts/tokenizers/t-dev-6l/t-dev-6l/v1/tokenizer.model").resolve()
+          if not target.is_relative_to(workspace):
+              raise SystemExit("Tokenizer destination must remain inside the checkout.")
+          target.parent.mkdir(parents=True, exist_ok=True)
+          target.write_bytes(content)
+          if hashlib.sha256(target.read_bytes()).hexdigest() != expected:
+              raise SystemExit("Restored tokenizer failed SHA-256 verification.")
           PYEOF
+          if find artifacts/runs/t_dev_6l_first_gpu_run/checkpoints -name 'checkpoint_step_*.pt' -print -quit 2>/dev/null | grep -q .; then
+            echo "Archive prior run outputs before a fresh experiment; implicit resume is not comparable."
+            exit 1
+          fi
 
-      - name: Run preflight validation
-        run: |
-          python -m supreme_modeltx.model_core.training.trainer \
-            --config configs/real_training/t_dev_6l_first_gpu_run.json \
-            --preflight
-
-      - name: Run first GPU benchmarked experiment
+      - name: Prepare exact config and run preflight
         run: |
           python - <<'PYEOF'
           import json
-          import tempfile
+          import os
           from pathlib import Path
-          from supreme_modeltx.model_core.config.schema import SMTXConfig
-          from supreme_modeltx.model_core.training.trainer import train
-
-          src = Path("configs/real_training/t_dev_6l_first_gpu_run.json")
-          cfg_data = json.loads(src.read_text(encoding="utf-8"))
-          cfg_data["training"]["max_steps"] = int("${{ github.event.inputs.max_steps || 1000 }}")
-          cfg_data["training"]["seed"] = int("${{ github.event.inputs.seed || 42 }}")
-
-          with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as tmp:
-              tmp.write(json.dumps(cfg_data))
-              tmp_path = Path(tmp.name)
-
-          cfg = SMTXConfig.from_file(tmp_path)
-          train(cfg)
-          print("GPU training complete.")
+          cfg = json.loads(Path("configs/real_training/t_dev_6l_first_gpu_run.json").read_text())
+          cfg["training"]["max_steps"] = int(os.environ["MAX_STEPS"])
+          cfg["training"]["seed"] = int(os.environ["TRAINING_SEED"])
+          target = Path("artifacts/runs/t_dev_6l_first_gpu_run/run_artifacts/launch_config.json")
+          target.write_text(json.dumps(cfg, indent=2))
           PYEOF
+          python -m supreme_modeltx.model_core.training.trainer \
+            --config artifacts/runs/t_dev_6l_first_gpu_run/run_artifacts/launch_config.json --preflight
+
+      - name: Run first GPU benchmarked experiment
+        run: |
+          python -m supreme_modeltx.model_core.training.trainer \
+            --config artifacts/runs/t_dev_6l_first_gpu_run/run_artifacts/launch_config.json
 
       - name: Run benchmark scorer
         run: |
@@ -98,125 +116,79 @@ jobs:
             --samples-root artifacts/runs/t_dev_6l_first_gpu_run/run_artifacts \
             --output-dir artifacts/runs/t_dev_6l_first_gpu_run/benchmark_outputs
 
-      - name: Compare against CPU benchmark runs
+      - name: Compare only identical artifacts and experiment settings
         run: |
           python - <<'PYEOF'
           import json
+          import math
           from pathlib import Path
+          from supreme_modeltx.model_core.training.trainer import compare_gpu_run
 
           run_root = Path("artifacts/runs")
           gpu_run = "t_dev_6l_first_gpu_run"
           cpu_runs = ["t_dev_6l_first_run", "t_dev_6l_expanded_run"]
 
-          def load_summary(run_name: str):
-              path = run_root / run_name / "run_artifacts" / "training_summary.json"
-              return json.loads(path.read_text(encoding="utf-8"))
+          def load(run, relative):
+              path = run_root / run / relative
+              return json.loads(path.read_text()) if path.exists() else {}
 
-          def load_benchmark(run_name: str):
-              path = run_root / run_name / "benchmark_outputs" / "benchmark_results.json"
-              return json.loads(path.read_text(encoding="utf-8"))
-
-          def load_config(run_name: str):
-              path = run_root / run_name / "run_artifacts" / "config_used.json"
-              return json.loads(path.read_text(encoding="utf-8"))
-
-          def best_checkpoint(summary: dict):
-              best = summary.get("best_checkpoint") or {}
-              return {
-                  "checkpoint": best.get("path"),
-                  "val_loss": best.get("val_loss"),
-                  "perplexity": best.get("perplexity"),
-              }
-
-          def best_score(benchmark: dict):
-              entries = benchmark.get("checkpoints", [])
-              if not entries:
-                  return None
-              return max(entries, key=lambda x: x.get("overall_score", 0.0))
-
-          gpu_summary = load_summary(gpu_run)
-          gpu_bench = load_benchmark(gpu_run)
-          gpu_cfg = load_config(gpu_run)
-          gpu_best = best_checkpoint(gpu_summary)
-          gpu_best_score = best_score(gpu_bench)
-          gpu_tokenizer_model = gpu_cfg.get("tokenizer", {}).get("model_path")
-
+          gpu_summary = load(gpu_run, "run_artifacts/training_summary.json")
+          gpu_bench = load(gpu_run, "benchmark_outputs/benchmark_results.json")
           comparisons = []
           for run in cpu_runs:
-              cpu_summary = load_summary(run)
-              cpu_bench = load_benchmark(run)
-              cpu_cfg = load_config(run)
-              cpu_best = best_checkpoint(cpu_summary)
-              cpu_best_score = best_score(cpu_bench)
-              cpu_tokenizer_model = cpu_cfg.get("tokenizer", {}).get("model_path")
-              if gpu_tokenizer_model and cpu_tokenizer_model and gpu_tokenizer_model != cpu_tokenizer_model:
-                  raise ValueError(
-                      f"Tokenizer mismatch for comparable deltas: GPU={gpu_tokenizer_model}, {run}={cpu_tokenizer_model}"
-                  )
-              comparisons.append(
-                  {
-                      "run_name": run,
-                      "gpu_vs_cpu": {
-                          "val_loss_delta": None if gpu_best["val_loss"] is None or cpu_best["val_loss"] is None else gpu_best["val_loss"] - cpu_best["val_loss"],
-                          "perplexity_delta": None if gpu_best["perplexity"] is None or cpu_best["perplexity"] is None else gpu_best["perplexity"] - cpu_best["perplexity"],
-                          "benchmark_overall_delta": None if gpu_best_score is None or cpu_best_score is None else gpu_best_score.get("overall_score", 0.0) - cpu_best_score.get("overall_score", 0.0),
-                          "benchmark_code_delta": None if gpu_best_score is None or cpu_best_score is None else gpu_best_score.get("code_score", 0.0) - cpu_best_score.get("code_score", 0.0),
-                          "benchmark_reasoning_delta": None if gpu_best_score is None or cpu_best_score is None else gpu_best_score.get("reasoning_score", 0.0) - cpu_best_score.get("reasoning_score", 0.0),
-                      },
-                      "cpu_best_checkpoint": cpu_best,
-                      "cpu_best_benchmark": cpu_best_score,
-                  }
+              comparison = compare_gpu_run(
+                  gpu_summary, load(run, "run_artifacts/training_summary.json"),
+                  gpu_bench, load(run, "benchmark_outputs/benchmark_results.json"),
               )
+              comparison["run_name"] = run
+              comparisons.append(comparison)
 
           output_dir = run_root / gpu_run / "comparison_vs_cpu"
           output_dir.mkdir(parents=True, exist_ok=True)
-          output_json = output_dir / "comparison_vs_cpu.json"
-          output_md = output_dir / "comparison_vs_cpu.md"
-
           payload = {
               "gpu_run_name": gpu_run,
               "gpu_device": gpu_summary.get("device"),
               "gpu_precision": gpu_summary.get("precision"),
-              "gpu_best_checkpoint": gpu_best,
-              "gpu_best_benchmark": gpu_best_score,
+              "gpu_artifact_identity": gpu_summary.get("artifact_identity"),
+              "gpu_best_checkpoint": comparisons[0]["gpu_best_checkpoint"],
+              "gpu_best_benchmark": comparisons[0]["gpu_best_benchmark"],
               "comparisons": comparisons,
           }
-          output_json.write_text(json.dumps(payload, indent=2), encoding="utf-8")
 
+          def sanitize(value):
+              if isinstance(value, float) and not math.isfinite(value):
+                  return None
+              if isinstance(value, dict):
+                  return {key: sanitize(item) for key, item in value.items()}
+              if isinstance(value, list):
+                  return [sanitize(item) for item in value]
+              return value
+
+          (output_dir / "comparison_vs_cpu.json").write_text(
+              json.dumps(sanitize(payload), indent=2, allow_nan=False)
+          )
           lines = [
-              "# GPU Run Comparison vs CPU Runs",
-              "",
-              f"GPU run: `{gpu_run}`",
-              f"Device: `{gpu_summary.get('device')}`",
-              f"Precision: `{gpu_summary.get('precision')}`",
-              "",
-              "| CPU run | Δ best val loss (GPU-CPU) | Δ best perplexity (GPU-CPU) | Δ overall score | Δ code score | Δ reasoning score |",
-              "|---|---:|---:|---:|---:|---:|",
+              "# GPU Run Comparison vs CPU Runs", "",
+              "Hardware deltas require identical content hashes, code revision, precision, and settings.",
+              "Historical runs without hashes are noncomparable. Missing metrics are N/A, never zero.", "",
+              "| CPU run | Comparable | Δ val loss | Δ perplexity | Δ overall | Δ code | Δ reasoning |",
+              "|---|---|---:|---:|---:|---:|---:|",
           ]
           for item in comparisons:
-              delta = item["gpu_vs_cpu"]
-              lines.append(
-                  "| {run} | {val_loss:.4f} | {ppl:.4f} | {overall:.4f} | {code:.4f} | {reasoning:.4f} |".format(
-                      run=item["run_name"],
-                      val_loss=0.0 if delta["val_loss_delta"] is None else delta["val_loss_delta"],
-                      ppl=0.0 if delta["perplexity_delta"] is None else delta["perplexity_delta"],
-                      overall=0.0 if delta["benchmark_overall_delta"] is None else delta["benchmark_overall_delta"],
-                      code=0.0 if delta["benchmark_code_delta"] is None else delta["benchmark_code_delta"],
-                      reasoning=0.0 if delta["benchmark_reasoning_delta"] is None else delta["benchmark_reasoning_delta"],
-                  )
-              )
-          output_md.write_text("\n".join(lines) + "\n", encoding="utf-8")
-
-          print(f"Wrote {output_json}")
-          print(f"Wrote {output_md}")
+              values = ["N/A" if value is None else f"{value:.4f}" for value in item["gpu_vs_cpu"].values()]
+              lines.append(f"| {item['run_name']} | {item['comparable']} | " + " | ".join(values) + " |")
+              if item["noncomparable_reasons"]:
+                  lines.append("\nNoncomparable " + item["run_name"] + ": " + "; ".join(item["noncomparable_reasons"]) + "\n")
+          (output_dir / "comparison_vs_cpu.md").write_text("\n".join(lines) + "\n")
           PYEOF
 
       - name: Upload GPU run artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: first-gpu-experiment-run-artifacts
           path: artifacts/runs/t_dev_6l_first_gpu_run/run_artifacts
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 90
 
       - name: Upload GPU benchmark outputs
@@ -237,9 +209,5 @@ jobs:
 
       - name: Publish comparison summary
         run: |
-          cat artifacts/runs/t_dev_6l_first_gpu_run/comparison_vs_cpu/comparison_vs_cpu.md
-          {
-            echo "## CPU vs GPU comparison findings"
-            echo
-            cat artifacts/runs/t_dev_6l_first_gpu_run/comparison_vs_cpu/comparison_vs_cpu.md
-          } >> "$GITHUB_STEP_SUMMARY"
+          cat artifacts/runs/t_dev_6l_first_gpu_run/comparison_vs_cpu/comparison_vs_cpu.md \
+            >> "$GITHUB_STEP_SUMMARY"

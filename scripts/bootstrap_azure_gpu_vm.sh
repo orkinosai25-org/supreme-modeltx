@@ -87,7 +87,8 @@ fi
 
 run_as_user python3 -m venv "${SMTX_VENV_DIR}"
 run_as_user "${SMTX_VENV_DIR}/bin/pip" install --upgrade pip
-run_as_user "${SMTX_VENV_DIR}/bin/pip" install -e "${SMTX_REPO_DIR}[dev]"
+run_as_user "${SMTX_VENV_DIR}/bin/pip" install "torch>=2.4,<2.6" --index-url https://download.pytorch.org/whl/cu124
+run_as_user "${SMTX_VENV_DIR}/bin/pip" install -e "${SMTX_REPO_DIR}[foundation,dev]"
 
 run_as_user "${SMTX_VENV_DIR}/bin/python" - <<'PYEOF'
 import torch
@@ -98,6 +99,7 @@ if not torch.cuda.is_available():
 print(f"Detected CUDA devices: {torch.cuda.device_count()}")
 print(f"Primary GPU: {torch.cuda.get_device_name(0)}")
 PYEOF
+run_as_user "${SMTX_VENV_DIR}/bin/python" -m supreme_modeltx.foundation.gpu_diagnostics --require-cuda
 
 if [[ -n "${GITHUB_RUNNER_URL}" && -n "${GITHUB_RUNNER_TOKEN}" ]]; then
   runner_version="$(
@@ -122,7 +124,7 @@ if [[ -n "${GITHUB_RUNNER_URL}" && -n "${GITHUB_RUNNER_TOKEN}" ]]; then
 fi
 
 cat <<EOF
-[OK] Azure GPU VM bootstrap complete.
+[OK] Candidate Azure GPU environment bootstrap complete (not a validated training experiment).
 
 Repo      : ${SMTX_REPO_DIR}
 Virtualenv: ${SMTX_VENV_DIR}
