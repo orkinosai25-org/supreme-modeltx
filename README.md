@@ -258,6 +258,10 @@ Self-generated hashes detect subsequent changes; they do not prove provenance
 or approve a license. Loading verifies the complete file inventory/hashes,
 architecture, and tokenizer chat template. This preparation example has not
 been used to evaluate a pretrained model or execute a GPU run.
+Shard indexes may reference only inventoried local safetensors files. Tokenizer
+file overrides must name inventoried files and are resolved inside the snapshot;
+positional tokenizer overrides and adapters pointing to external base models
+are rejected. Use a reviewed, complete merged model snapshot.
 
 ### Opt-in Turkish lexical smoke evaluation
 

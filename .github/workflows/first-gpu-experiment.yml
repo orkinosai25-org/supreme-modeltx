@@ -11,6 +11,12 @@ on:
         description: "Random seed"
         required: false
         default: "42"
+      tokenizer_source_path:
+        description: "Absolute immutable tokenizer.model path on a read-only mount outside the checkout"
+        required: true
+      tokenizer_sha256:
+        description: "Approved SHA-256 of tokenizer.model (64 hexadecimal characters)"
+        required: true
 
 permissions:
   contents: read
@@ -23,6 +29,8 @@ jobs:
       SMTX_REQUIRE_GPU: "1"
       MAX_STEPS: ${{ inputs.max_steps || '1000' }}
       TRAINING_SEED: ${{ inputs.seed || '42' }}
+      TOKENIZER_SOURCE_PATH: ${{ inputs.tokenizer_source_path }}
+      TOKENIZER_SHA256: ${{ inputs.tokenizer_sha256 }}
 
     steps:
       - name: Checkout
@@ -47,12 +55,34 @@ jobs:
           python -m supreme_modeltx.foundation.gpu_diagnostics --require-cuda \
             > artifacts/runs/t_dev_6l_first_gpu_run/run_artifacts/gpu_diagnostics.json
 
-      - name: Require immutable approved tokenizer and clean checkpoint state
+      - name: Restore and verify approved tokenizer after clean checkout
         run: |
-          test -f artifacts/tokenizers/t-dev-6l/t-dev-6l/v1/tokenizer.model || {
-            echo "Restore the approved tokenizer from private storage; do not retrain at the same path."
-            exit 1
-          }
+          python - <<'PYEOF'
+          import hashlib
+          import os
+          import re
+          from pathlib import Path
+          workspace = Path(os.environ["GITHUB_WORKSPACE"]).resolve()
+          source = Path(os.environ["TOKENIZER_SOURCE_PATH"])
+          if not source.is_absolute():
+              raise SystemExit("Tokenizer source must be an absolute path outside the checkout.")
+          source = source.resolve(strict=True)
+          if source.is_relative_to(workspace) or not source.is_file():
+              raise SystemExit("Tokenizer source must be an immutable file outside the checkout.")
+          expected = os.environ["TOKENIZER_SHA256"].lower()
+          if not re.fullmatch(r"[0-9a-f]{64}", expected):
+              raise SystemExit("Supply the approved 64-character tokenizer SHA-256.")
+          content = source.read_bytes()
+          if hashlib.sha256(content).hexdigest() != expected:
+              raise SystemExit("Tokenizer source does not match the approved SHA-256.")
+          target = (workspace / "artifacts/tokenizers/t-dev-6l/t-dev-6l/v1/tokenizer.model").resolve()
+          if not target.is_relative_to(workspace):
+              raise SystemExit("Tokenizer destination must remain inside the checkout.")
+          target.parent.mkdir(parents=True, exist_ok=True)
+          target.write_bytes(content)
+          if hashlib.sha256(target.read_bytes()).hexdigest() != expected:
+              raise SystemExit("Restored tokenizer failed SHA-256 verification.")
+          PYEOF
           if find artifacts/runs/t_dev_6l_first_gpu_run/checkpoints -name 'checkpoint_step_*.pt' -print -quit 2>/dev/null | grep -q .; then
             echo "Archive prior run outputs before a fresh experiment; implicit resume is not comparable."
             exit 1

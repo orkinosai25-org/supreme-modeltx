@@ -63,6 +63,59 @@ def test_artifact_rejects_external_symlink(snapshot, tmp_path):
         PretrainedArtifact.verify(snapshot)
 
 
+def _write_hashed_file(snapshot, name, data):
+    path = snapshot / name
+    path.write_text(json.dumps(data))
+    manifest_path = snapshot / "smtx-artifact.json"
+    manifest = json.loads(manifest_path.read_text())
+    manifest["files_sha256"][name] = hashlib.sha256(path.read_bytes()).hexdigest()
+    manifest_path.write_text(json.dumps(manifest))
+
+
+@pytest.mark.parametrize("shard", [
+    "../outside.safetensors", "/tmp/outside.safetensors", "model.bin", "untracked.safetensors",
+])
+def test_index_cannot_reference_external_unhashed_or_pickle_shards(snapshot, shard):
+    _write_hashed_file(snapshot, "model.safetensors.index.json", {"weight_map": {"weight": shard}})
+    with pytest.raises(ValueError, match="hashed local safetensors"):
+        PretrainedArtifact.verify(snapshot)
+
+
+def test_valid_index_references_hashed_shards(snapshot):
+    _write_hashed_file(snapshot, "model.safetensors.index.json", {
+        "weight_map": {"weight": "model.safetensors"},
+    })
+    assert PretrainedArtifact.verify(snapshot).architecture == "qwen2"
+
+
+@pytest.mark.parametrize("config", [
+    {"tokenizer_file": "/tmp/external.json"},
+    {"vocab_file": "../external.model"},
+    {"init_inputs": ["/tmp/external.model"]},
+    {"fast_tokenizer_files": ["../outside/tokenizer.0.0.json"]},
+    {"fast_tokenizer_files": ["/tmp/tokenizer.0.0.json"]},
+    {"fast_tokenizer_files": "tokenizer.0.0.json"},
+])
+def test_tokenizer_cannot_override_external_files(snapshot, config):
+    _write_hashed_file(snapshot, "tokenizer_config.json", config)
+    with pytest.raises(ValueError, match="Tokenizer"):
+        PretrainedArtifact.verify(snapshot)
+
+
+def test_fast_tokenizer_variants_must_be_inventoried(snapshot):
+    _write_hashed_file(snapshot, "tokenizer.0.0.json", {})
+    _write_hashed_file(snapshot, "tokenizer_config.json", {
+        "fast_tokenizer_files": ["tokenizer.0.0.json"],
+    })
+    assert PretrainedArtifact.verify(snapshot).architecture == "qwen2"
+
+
+def test_adapter_cannot_redirect_to_unverified_base_model(snapshot):
+    _write_hashed_file(snapshot, "adapter_config.json", {"base_model_name_or_path": "/outside"})
+    with pytest.raises(ValueError, match="complete merged snapshot"):
+        PretrainedArtifact.verify(snapshot)
+
+
 @pytest.fixture
 def runtime(monkeypatch):
     torch = pytest.importorskip("torch")
@@ -141,6 +194,16 @@ def test_local_generation_contract(snapshot, runtime):
         assert calls[name]["local_files_only"] is True
         assert calls[name]["trust_remote_code"] is False
     assert calls["model"]["use_safetensors"] is True
+
+
+def test_local_tokenizer_file_override_is_resolved_inside_snapshot(snapshot, runtime):
+    _, calls = runtime
+    _write_hashed_file(snapshot, "tokenizer.json", {})
+    _write_hashed_file(snapshot, "tokenizer_config.json", {
+        "tokenizer_file": "tokenizer.json", "chat_template": "test",
+    })
+    LocalTransformersProvider(str(snapshot))
+    assert calls["tokenizer"]["tokenizer_file"] == str(snapshot / "tokenizer.json")
 
 
 def test_context_limit_is_not_silently_truncated(snapshot, runtime):
@@ -344,3 +407,15 @@ def test_real_transformers_local_roundtrip_without_downloads(tmp_path):
     assert prompt_tokens == 2
     assert 1 <= completion_tokens <= 2
     assert provider.model.device == torch.device("cpu")
+
+
+@pytest.mark.parametrize("variable", ["WORLD_SIZE", "LOCAL_WORLD_SIZE"])
+def test_tiny_foundation_rejects_distributed_launch(variable, monkeypatch, tmp_path):
+    from supreme_modeltx.foundation.config import TrainingRunConfig
+    from supreme_modeltx.foundation.training import train
+
+    monkeypatch.setenv(variable, "2")
+    cfg = TrainingRunConfig.model_validate({"training": {"output_dir": str(tmp_path / "run")}})
+    with pytest.raises(ValueError, match="single process only"):
+        train(cfg)
+    assert not (tmp_path / "run").exists()

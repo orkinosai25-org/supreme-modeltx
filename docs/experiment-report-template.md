@@ -20,6 +20,7 @@
 - dataset content and manifest SHA-256:
 - tokenizer artifact SHA-256 (path/version alone is not identity):
 - checkpoint/model artifact SHA-256:
+- scoring-time eval-set/baselines/scorer SHA-256 and sample/checkpoint provenance:
 - code revision:
 
 ## Environment verification

@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
 import random
 import re
 from contextlib import nullcontext
@@ -280,6 +281,8 @@ def _evaluate(model: nn.Module, validation_samples: list[list[int]], *, batch_si
 
 
 def train(cfg: TrainingRunConfig) -> dict[str, Any]:
+    if int(os.environ.get("WORLD_SIZE", "1")) != 1 or int(os.environ.get("LOCAL_WORLD_SIZE", "1")) != 1:
+        raise ValueError("TinyPilotLM smoke training supports a single process only.")
     logging.basicConfig(level=logging.INFO, format="%(message)s")
     configure_determinism(cfg.training.seed)
     device = resolve_device(cfg.training.device)

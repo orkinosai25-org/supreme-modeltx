@@ -5,8 +5,10 @@
 This runbook is for the first private single-GPU pilot of Supreme Model T-X. It assumes the repository stays private and that no proprietary datasets, credentials, or checkpoints are committed back into source control.
 
 **Status: candidate environment, not GPU-validated.** No GPU experiment has been
-performed as part of readiness hardening. Only single-process, single-GPU training
-is supported; FSDP and multi-GPU launches are rejected until separately validated.
+performed as part of readiness hardening. The **model-core trainer** rejects FSDP
+and multi-process launches until separately validated. The foundation smoke/pilot
+entrypoint below is single-process only; do not launch it with `torchrun`, and do
+not infer model-core guard guarantees for another entrypoint.
 The legacy `scripts/Dockerfile`, `scripts/Dockerfile.cpu`, and
 `scripts/Dockerfile.inference` images are unsupported for this candidate environment;
 they are not validated replacements for the virtualenv path below.
@@ -67,6 +69,18 @@ version label after retraining is not identity. Hardware comparisons require the
 same content hashes, code, seed, precision, batch/accumulation, step count,
 validation and sampling/benchmark settings. Missing evidence means noncomparable,
 with null/N/A deltas, never fabricated zero or NaN.
+
+For the GitHub GPU workflow, provision an approved immutable tokenizer on a
+read-only runner mount **outside `GITHUB_WORKSPACE`**. Dispatch with
+`tokenizer_source_path` (absolute mounted file path) and `tokenizer_sha256`
+(approved 64-character digest). Checkout retains its default cleaning behavior;
+the workflow copies and verifies the artifact **after checkout**. Pre-restoring an
+ignored tokenizer inside the checkout is insufficient because checkout removes it.
+
+Benchmark deltas also require scoring-time eval-set/baseline/scorer hashes and
+sample provenance bound to the run's recorded sample/checkpoint hashes. Training
+snapshots of canonical benchmark paths alone do not prove what was actually scored;
+historical benchmark reports without this evidence are noncomparable.
 
 ## Checkpoint handling
 

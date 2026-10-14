@@ -172,7 +172,6 @@ def compare_gpu_run(
         reasons.append("different resume checkpoint")
     if gpu_summary.get("auto_resumed") or cpu_summary.get("auto_resumed"):
         reasons.append("automatic resume has unverified initial state")
-    comparable = not reasons
 
     def finite(value: Any) -> bool:
         return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
@@ -190,6 +189,49 @@ def compare_gpu_run(
 
     gpu_best, cpu_best = best_validation(gpu_summary), best_validation(cpu_summary)
     gpu_score, cpu_score = best_benchmark(gpu_benchmark), best_benchmark(cpu_benchmark)
+
+    gpu_scoring = gpu_benchmark.get("artifact_identity") or {}
+    cpu_scoring = cpu_benchmark.get("artifact_identity") or {}
+    for key in ("eval_set_sha256", "baselines_sha256", "scorer_sha256"):
+        if not gpu_scoring.get(key) or gpu_scoring.get(key) != cpu_scoring.get(key):
+            reasons.append(f"missing or different scored {key}")
+    for label, summary, benchmark, score in (
+        ("GPU", gpu_summary, gpu_benchmark, gpu_score),
+        ("CPU", cpu_summary, cpu_benchmark, cpu_score),
+    ):
+        identity = benchmark.get("artifact_identity") or {}
+        training_identity = summary.get("artifact_identity") or {}
+        for scored_key, training_key in (("eval_set_sha256", "benchmark_eval_sha256"),
+                                         ("baselines_sha256", "benchmark_baselines_sha256")):
+            if not identity.get(scored_key) or identity.get(scored_key) != training_identity.get(training_key):
+                reasons.append(f"{label} scored {scored_key} is not bound to the training record")
+        sample = score.get("sample_identity") or {}
+        if not sample or sample not in (identity.get("samples") or []):
+            reasons.append(f"{label} selected benchmark lacks scoring-time sample provenance")
+            continue
+        sample_hashes = summary.get("sample_sha256") or {}
+        sample_path = sample.get("sample_path")
+        recorded_sample_hash = next(
+            (value for path, value in sample_hashes.items()
+             if isinstance(sample_path, str) and sample_path
+             and Path(path).resolve() == Path(sample_path).resolve()), None
+        )
+        checkpoint_hash = (summary.get("checkpoint_sha256") or {}).get(score.get("checkpoint_path"))
+        if not sample.get("sample_sha256") or recorded_sample_hash != sample["sample_sha256"]:
+            reasons.append(f"{label} scored samples are not bound to the training record")
+        if (
+            not sample.get("payload_sha256") or not sample.get("generation_sha256")
+            or sample.get("checkpoint_path") != score.get("checkpoint_path")
+            or not checkpoint_hash or checkpoint_hash != sample.get("checkpoint_sha256")
+        ):
+            reasons.append(f"{label} scored checkpoint provenance is missing or different")
+    gpu_sample = gpu_score.get("sample_identity") or {}
+    cpu_sample = cpu_score.get("sample_identity") or {}
+    if not gpu_sample.get("generation_sha256") or (
+        gpu_sample.get("generation_sha256") != cpu_sample.get("generation_sha256")
+    ):
+        reasons.append("missing or different scored generation settings/prompts")
+    comparable = not reasons
 
     def delta(left: Any, right: Any) -> float | None:
         if not comparable or not finite(left) or not finite(right):
@@ -537,6 +579,7 @@ def _generate_checkpoint_samples(
 
     sample_payload = {
         "checkpoint_path": str(checkpoint_path),
+        "checkpoint_sha256": _path_hash(checkpoint_path),
         "generated_at_utc": generated_at_utc,
         "generation": {
             "max_new_tokens": 24,
@@ -679,6 +722,7 @@ def _write_run_summary(
         "latest_validation_loss": latest_val["val_loss"] if latest_val else None,
         "latest_perplexity": latest_val["perplexity"] if latest_val else None,
         "sample_artifact_paths": sample_artifact_paths,
+        "sample_sha256": {path: _path_hash(path) for path in sample_artifact_paths},
     }
 
     summary_json_path = artifact_dir / "training_summary.json"

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 from pathlib import Path
 from typing import Protocol
 
@@ -37,6 +38,10 @@ class PretrainedArtifact(BaseModel):
 
     @classmethod
     def verify(cls, root: Path) -> "PretrainedArtifact":
+        root = root.resolve()
+        for path in root.rglob("*"):
+            if path.is_symlink() and not path.resolve().is_relative_to(root):
+                raise ValueError("Artifact file must remain inside the local snapshot.")
         artifact = cls.model_validate_json((root / "smtx-artifact.json").read_text())
         actual = {
             str(path.relative_to(root))
@@ -49,6 +54,8 @@ class PretrainedArtifact(BaseModel):
             raise ValueError("Snapshot requires model and tokenizer configuration.")
         if not any(name.endswith(".safetensors") for name in actual):
             raise ValueError("Snapshot requires safetensors weights.")
+        if "adapter_config.json" in actual:
+            raise ValueError("Use a complete merged snapshot, not an adapter with an external base model.")
         for name, expected in artifact.files_sha256.items():
             path = (root / name).resolve()
             if not path.is_relative_to(root) or not path.is_file():
@@ -61,6 +68,30 @@ class PretrainedArtifact(BaseModel):
                     digest.update(chunk)
             if digest.hexdigest() != expected:
                 raise ValueError(f"Artifact hash mismatch: {name}")
+        index_path = root / "model.safetensors.index.json"
+        if index_path.is_file():
+            index = json.loads(index_path.read_text())
+            weight_map = index.get("weight_map") if isinstance(index, dict) else None
+            if not isinstance(weight_map, dict) or not weight_map:
+                raise ValueError("Safetensors index requires a nonempty weight_map.")
+            for shard in weight_map.values():
+                if not isinstance(shard, str) or shard not in actual or not shard.endswith(".safetensors"):
+                    raise ValueError("Every indexed shard must be a hashed local safetensors file.")
+        tokenizer_config = json.loads((root / "tokenizer_config.json").read_text())
+        if not isinstance(tokenizer_config, dict):
+            raise ValueError("Tokenizer configuration must be an object.")
+        if tokenizer_config.get("init_inputs"):
+            raise ValueError("Tokenizer positional file overrides are not supported.")
+        fast_files = tokenizer_config.get("fast_tokenizer_files")
+        if fast_files is not None:
+            if not isinstance(fast_files, list) or any(
+                not isinstance(reference, str) or reference not in actual for reference in fast_files
+            ):
+                raise ValueError("Tokenizer fast file variants must name hashed snapshot files.")
+        for key, reference in tokenizer_config.items():
+            if key.endswith("_file") and reference is not None:
+                if not isinstance(reference, str) or reference not in actual:
+                    raise ValueError("Tokenizer file overrides must name hashed snapshot files.")
         return artifact
 
 
@@ -87,8 +118,14 @@ class LocalTransformersProvider:
             raise ValueError("Use float32 on CPU, or float32/float16/bfloat16 on CUDA.")
         if device == "cuda" and dtype == "bfloat16" and not torch.cuda.is_bf16_supported():
             raise ValueError("This CUDA device does not support BF16.")
+        tokenizer_files = {
+            key: str(root / reference)
+            for key, reference in json.loads((root / "tokenizer_config.json").read_text()).items()
+            if key.endswith("_file") and reference is not None
+        }
         self.tokenizer = AutoTokenizer.from_pretrained(
             str(root), local_files_only=True, trust_remote_code=False,
+            **tokenizer_files,
         )
         if not self.tokenizer.chat_template:
             raise ValueError("Pretrained chat inference requires the model's chat template.")

@@ -101,8 +101,13 @@ Post-run findings should be documented in:
 
 - `docs/first-gpu-experiment-findings.md`
 
-The workflow restores an approved immutable tokenizer; it does not retrain at an
-existing path. Archive its SHA-256, not just its path/version. Summaries add
+The workflow restores an approved immutable tokenizer **after default clean
+checkout**; it does not retrain at an existing path. Mount the approved file
+read-only outside `GITHUB_WORKSPACE`, then provide workflow inputs
+`tokenizer_source_path` (absolute mounted path) and `tokenizer_sha256` (approved
+64-character digest). The source and restored copy must match that digest.
+Pre-restoring the ignored checkout path before checkout will not survive cleaning.
+Archive the SHA-256, not just the path/version. Summaries add
 `artifact_identity` with model/config/settings/dataset/tokenizer and benchmark
 hashes while retaining existing artifact filenames and summary fields.
 
@@ -112,6 +117,12 @@ generation and benchmark settings. Historical runs lacking hashes, or runs with
 different settings (including the prior CPU configurations), are **noncomparable**.
 Their deltas are null in JSON and N/A in Markdown; missing/nonfinite metrics are
 never replaced with zero/NaN.
+
+Benchmark reports record the hashes of the eval set and task baselines actually
+read at scoring time, scorer code, and each scored sample's content/checkpoint
+provenance. Those samples/checkpoints must bind to the training summary hashes;
+pretraining canonical-file snapshots are insufficient. Historical benchmark reports
+without scoring identity cannot yield hardware deltas.
 
 > Scope note: workflow/documentation updates only define and expose the run path.  
 > A completed milestone still requires an actual self-hosted GPU workflow execution and review of the emitted artifacts/summary outputs.

@@ -170,10 +170,20 @@ This runs:
 - benchmark scoring
 - model/config/dataset/tokenizer hash recording and guarded CPU-vs-GPU comparisons
 
-Restore the approved tokenizer from private storage before dispatch. Hardware
+Before dispatch, mount the approved immutable tokenizer from private storage on a
+read-only path **outside the runner checkout** (for example,
+`/mnt/smtx-approved/tokenizers/t-dev-6l-v1/tokenizer.model`). Supply workflow inputs
+`tokenizer_source_path` with that absolute path and `tokenizer_sha256` with the
+approved 64-character digest. Default checkout cleaning remains enabled: the
+workflow restores and verifies the artifact **after checkout**. Do not pre-restore
+it into the ignored checkout path, where checkout cleaning deletes it.
+
+Hardware
 deltas require identical content hashes and experiment settings; matching paths
 alone are insufficient. Historical runs without identity evidence or runs using
 different precision/batch/data are noncomparable and emit null/N/A deltas.
+Scoring-time eval-set/baseline/scorer hashes and sample/checkpoint provenance must
+also match the training records; canonical pretraining snapshots alone are insufficient.
 
 ### Option B — run equivalent commands manually on the VM
 

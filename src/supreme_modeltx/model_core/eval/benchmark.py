@@ -5,6 +5,7 @@ model_core/eval/benchmark.py — Lightweight benchmark scoring for code/reasonin
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from datetime import UTC, datetime
 from pathlib import Path
@@ -14,6 +15,14 @@ SAMPLE_PATTERNS = [
     "samples/checkpoint_step_*_samples.json",
     "**/samples/checkpoint_step_*_samples.json",
 ]
+
+
+def _content_hash(content: bytes) -> str:
+    return hashlib.sha256(content).hexdigest()
+
+
+def _json_hash(value: Any) -> str:
+    return _content_hash(json.dumps(value, sort_keys=True, separators=(",", ":")).encode())
 
 
 def _normalise_text(value: str) -> str:
@@ -54,10 +63,25 @@ def _find_sample_payloads(samples_root: Path) -> list[dict[str, Any]]:
     payloads: list[dict[str, Any]] = []
     for path in unique_files:
         try:
-            payload = json.loads(path.read_text(encoding="utf-8"))
+            content = path.read_bytes()
+            payload = json.loads(content)
         except (OSError, json.JSONDecodeError):
             continue
         if isinstance(payload, dict):
+            payload["_scoring_identity"] = {
+                "sample_path": str(path),
+                "sample_sha256": _content_hash(content),
+                "payload_sha256": _json_hash(payload),
+                "checkpoint_path": payload.get("checkpoint_path"),
+                "checkpoint_sha256": payload.get("checkpoint_sha256"),
+                "generation_sha256": _json_hash({
+                    "generation": payload.get("generation"),
+                    "prompts": [row.get("prompt") for row in payload.get("samples", [])
+                                if isinstance(row, dict)],
+                }) if isinstance(payload.get("generation"), dict) and {
+                    "max_new_tokens", "temperature", "top_p"
+                }.issubset(payload["generation"]) else None,
+            }
             payloads.append(payload)
     return payloads
 
@@ -106,6 +130,7 @@ def evaluate_checkpoints(tasks: list[dict[str, Any]], sample_payloads: list[dict
             {
                 "checkpoint_path": payload.get("checkpoint_path"),
                 "generated_at_utc": payload.get("generated_at_utc"),
+                "sample_identity": payload.get("_scoring_identity"),
                 "metrics": {
                     "overall_score": round(_mean(overall_scores), 4),
                     "code_score": round(_mean(code_scores), 4),
@@ -132,10 +157,13 @@ def build_report(
     baselines_path: Path,
     samples_root: Path,
 ) -> dict[str, Any]:
-    tasks = _load_tasks(eval_set_path)
+    eval_content = eval_set_path.read_bytes()
+    baseline_content = baselines_path.read_bytes()
+    tasks = [task for task in json.loads(eval_content).get("tasks", []) if isinstance(task, dict)]
     sample_payloads = _find_sample_payloads(samples_root)
     checkpoint_results = evaluate_checkpoints(tasks, sample_payloads)
-    baselines = _load_baselines(baselines_path)
+    baselines = [row for row in json.loads(baseline_content).get("selected_open_baselines", [])
+                 if isinstance(row, dict)]
 
     best_local = None
     if checkpoint_results:
@@ -148,6 +176,12 @@ def build_report(
             "eval_set_path": str(eval_set_path),
             "baselines_path": str(baselines_path),
             "samples_root": str(samples_root),
+        },
+        "artifact_identity": {
+            "eval_set_sha256": _content_hash(eval_content),
+            "baselines_sha256": _content_hash(baseline_content),
+            "scorer_sha256": _content_hash(Path(__file__).read_bytes()),
+            "samples": [payload["_scoring_identity"] for payload in sample_payloads],
         },
         "methodology": {
             "task_count": len(tasks),

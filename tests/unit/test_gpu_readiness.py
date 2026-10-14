@@ -136,6 +136,20 @@ def _summary_and_benchmark(tmp_path):
                "validation_history": [{"val_loss": 2.0, "perplexity": 7.0}]}
     benchmark = {"local_checkpoints": [{"checkpoint_path": "checkpoint.pt",
                                       "metrics": {"overall_score": 0.5, "code_score": 0.3}}]}
+    sample_path = str(tmp_path / "sample.json")
+    sample_identity = {
+        "sample_path": sample_path, "sample_sha256": "sample-hash",
+        "payload_sha256": "payload-hash", "checkpoint_path": "checkpoint.pt",
+        "checkpoint_sha256": "checkpoint-hash", "generation_sha256": "generation-hash",
+    }
+    summary["sample_sha256"] = {sample_path: "sample-hash"}
+    summary["checkpoint_sha256"] = {"checkpoint.pt": "checkpoint-hash"}
+    benchmark["local_checkpoints"][0]["sample_identity"] = sample_identity
+    benchmark["artifact_identity"] = {
+        "eval_set_sha256": summary["artifact_identity"]["benchmark_eval_sha256"],
+        "baselines_sha256": summary["artifact_identity"]["benchmark_baselines_sha256"],
+        "scorer_sha256": "scorer-hash", "samples": [sample_identity],
+    }
     return summary, benchmark
 
 
@@ -172,6 +186,117 @@ def test_historical_missing_identity_and_nonfinite_metrics(tmp_path):
     result = trainer.compare_gpu_run(summary, summary, benchmark, benchmark)
     assert result["gpu_vs_cpu"]["val_loss_delta"] is None
     assert result["gpu_vs_cpu"]["benchmark_overall_delta"] is None
+
+
+@pytest.mark.parametrize("key", ["eval_set_sha256", "baselines_sha256", "scorer_sha256"])
+def test_actual_scored_inputs_must_match_before_benchmark_deltas(tmp_path, key):
+    summary, benchmark = _summary_and_benchmark(tmp_path)
+    changed = copy.deepcopy(benchmark)
+    changed["artifact_identity"][key] = "different-scored-input"
+    result = trainer.compare_gpu_run(summary, summary, benchmark, changed)
+    assert not result["comparable"]
+    assert result["gpu_vs_cpu"]["benchmark_overall_delta"] is None
+
+
+def test_identical_scored_inputs_still_must_bind_to_training_snapshots(tmp_path):
+    summary, benchmark = _summary_and_benchmark(tmp_path)
+    benchmark["artifact_identity"]["eval_set_sha256"] = "different-from-training"
+    result = trainer.compare_gpu_run(summary, summary, benchmark, benchmark)
+    assert not result["comparable"]
+    assert result["gpu_vs_cpu"]["benchmark_overall_delta"] is None
+
+
+def test_real_scoring_provenance_binds_each_runs_different_outputs(tmp_path):
+    import hashlib
+    from supreme_modeltx.model_core.eval.benchmark import build_report
+    eval_set, baselines = tmp_path / "eval.json", tmp_path / "baselines.json"
+    eval_set.write_text(json.dumps({"tasks": [{"id": "task", "prompt": "Question",
+                                             "expected_answer": "yes", "category": "reasoning"}]}))
+    baselines.write_text('{"selected_open_baselines": []}')
+    identity = trainer._collect_artifact_identity(_cfg(tmp_path))
+    identity["benchmark_eval_sha256"] = hashlib.sha256(eval_set.read_bytes()).hexdigest()
+    identity["benchmark_baselines_sha256"] = hashlib.sha256(baselines.read_bytes()).hexdigest()
+    records = []
+    for name, output in (("gpu", "yes"), ("cpu", "no")):
+        root = tmp_path / name
+        sample_path = root / "samples/checkpoint_step_00000001_samples.json"
+        sample_path.parent.mkdir(parents=True)
+        checkpoint = root / "checkpoint.pt"
+        checkpoint.write_bytes(name.encode())
+        checkpoint_hash = hashlib.sha256(checkpoint.read_bytes()).hexdigest()
+        sample_path.write_text(json.dumps({
+            "checkpoint_path": str(checkpoint), "checkpoint_sha256": checkpoint_hash,
+            "generation": {"max_new_tokens": 24, "temperature": 0.0, "top_p": 1.0},
+            "samples": [{"prompt": "Question", "completion_text": output}],
+        }))
+        summary = {"artifact_identity": identity,
+                   "checkpoint_sha256": {str(checkpoint): checkpoint_hash},
+                   "sample_sha256": {str(sample_path): hashlib.sha256(sample_path.read_bytes()).hexdigest()}}
+        report = build_report(eval_set_path=eval_set, baselines_path=baselines, samples_root=root)
+        records.append((summary, report))
+    result = trainer.compare_gpu_run(records[0][0], records[1][0], records[0][1], records[1][1])
+    assert result["comparable"]
+    assert result["gpu_vs_cpu"]["benchmark_overall_delta"] == 1.0
+    records[1][0]["checkpoint_sha256"][str(tmp_path / "cpu/checkpoint.pt")] = "overwritten-checkpoint"
+    assert not trainer.compare_gpu_run(records[0][0], records[1][0], records[0][1], records[1][1])["comparable"]
+
+
+@pytest.mark.parametrize("tamper", ["historical", "samples", "checkpoint", "generation", "unbound"])
+def test_scored_sample_provenance_must_bind_to_recorded_run(tmp_path, tamper):
+    summary, benchmark = _summary_and_benchmark(tmp_path)
+    changed = copy.deepcopy(benchmark)
+    if tamper == "historical":
+        changed.pop("artifact_identity")
+    elif tamper == "unbound":
+        changed["artifact_identity"]["samples"] = []
+    else:
+        key = {"samples": "sample_sha256", "checkpoint": "checkpoint_sha256",
+               "generation": "generation_sha256"}[tamper]
+        changed["local_checkpoints"][0]["sample_identity"][key] = "tampered"
+    result = trainer.compare_gpu_run(summary, summary, benchmark, changed)
+    assert not result["comparable"]
+    assert all(value is None for value in result["gpu_vs_cpu"].values())
+
+
+def _workflow_restore_code():
+    import yaml
+    workflow = yaml.safe_load(Path(".github/workflows/first-gpu-experiment.yml").read_text())
+    steps = workflow["jobs"]["train-benchmark-compare"]["steps"]
+    checkout = next(step for step in steps if step["name"] == "Checkout")
+    assert checkout.get("with", {}).get("clean", True) is True
+    restore = next(step for step in steps if step["name"] == "Restore and verify approved tokenizer after clean checkout")
+    assert steps.index(restore) > steps.index(checkout)
+    return restore["run"].split("<<'PYEOF'\n", 1)[1].split("\nPYEOF", 1)[0]
+
+
+def test_workflow_restores_verified_tokenizer_after_checkout(tmp_path, monkeypatch):
+    import hashlib
+    workspace = tmp_path / "checkout"
+    workspace.mkdir()
+    source = tmp_path / "immutable-tokenizer.model"
+    source.write_bytes(b"approved-tokenizer")
+    monkeypatch.setenv("GITHUB_WORKSPACE", str(workspace))
+    monkeypatch.setenv("TOKENIZER_SOURCE_PATH", str(source))
+    monkeypatch.setenv("TOKENIZER_SHA256", hashlib.sha256(source.read_bytes()).hexdigest())
+    exec(compile(_workflow_restore_code(), "<workflow restore>", "exec"), {})
+    restored = workspace / "artifacts/tokenizers/t-dev-6l/t-dev-6l/v1/tokenizer.model"
+    assert restored.read_bytes() == source.read_bytes()
+
+
+@pytest.mark.parametrize("invalid", ["hash", "inside-workspace", "relative-path"])
+def test_workflow_rejects_unverified_or_checkout_local_tokenizer(tmp_path, monkeypatch, invalid):
+    import hashlib
+    workspace = tmp_path / "checkout"
+    workspace.mkdir()
+    source = (workspace if invalid == "inside-workspace" else tmp_path) / "tokenizer.model"
+    source.write_bytes(b"approved-tokenizer")
+    monkeypatch.setenv("GITHUB_WORKSPACE", str(workspace))
+    monkeypatch.setenv("TOKENIZER_SOURCE_PATH", "relative.model" if invalid == "relative-path" else str(source))
+    monkeypatch.setenv("TOKENIZER_SHA256", "0" * 64 if invalid == "hash"
+                       else hashlib.sha256(source.read_bytes()).hexdigest())
+    with pytest.raises(SystemExit):
+        exec(compile(_workflow_restore_code(), "<workflow restore>", "exec"), {})
+    assert not (workspace / "artifacts/tokenizers/t-dev-6l/t-dev-6l/v1/tokenizer.model").exists()
 
 
 def test_cpu_diagnostics_skip_cuda_operations(monkeypatch):
