@@ -51,6 +51,9 @@ This repository currently ships a mixed execution surface:
 
 The governance-first architecture applies across all paths, but execution profiles differ by deployment mode.
 
+For the current standalone Lambda A10 GPU experiment and its separation from
+Azure deployment, see [`lambda-a10-first-run.md`](lambda-a10-first-run.md).
+
 ---
 
 ## Current Target Architecture
