@@ -139,6 +139,10 @@ Before any real run:
 3. run `scripts/gpu_diagnostics.py`
 4. record the experiment with `docs/experiment-report-template.md`
 
+For the Lambda A10 first-chat and T-Dev-6L experiment workflow, including SSH
+tunneling, persistent model storage, and the boundary with Azure, see
+[`docs/lambda-a10-first-run.md`](docs/lambda-a10-first-run.md).
+
 ## Docker
 
 Build and run the lightweight API image (Docker Engine required):
