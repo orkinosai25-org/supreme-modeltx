@@ -1,4 +1,8 @@
-"""Provider contracts without downloads or pretrained model artifacts."""
+"""Wiring, provenance and fail-closed checks without pretrained model artifacts.
+
+Mocked loaders and tiny random models with synthetic tokenizers/templates do
+not prove real pretrained Mistral compatibility or production readiness.
+"""
 
 import hashlib
 import json
@@ -381,7 +385,7 @@ def test_pretrained_initialization_registers_provenance(snapshot, runtime, monke
     assert json.loads(entry.description)["artifact"]["license"] == "Apache-2.0"
 
 
-def test_mistral_serves_existing_chat_boundary(mistral_snapshot, runtime, monkeypatch, tmp_path):
+def test_dense_mistral_mock_wiring_serves_existing_chat_boundary(mistral_snapshot, runtime, monkeypatch, tmp_path):
     from fastapi.testclient import TestClient
     from supreme_modeltx.platform_api.api.app import create_app
     from supreme_modeltx.platform_api.api.routers.auth import require_api_key
@@ -489,7 +493,8 @@ def test_invalid_provider_request_returns_client_error(monkeypatch):
 
 
 @pytest.mark.parametrize("architecture", ["gpt2", "mistral"])
-def test_real_transformers_local_roundtrip_without_downloads(tmp_path, monkeypatch, architecture):
+def test_tiny_random_model_offline_transformers_wiring(tmp_path, monkeypatch, architecture):
+    """Exercise runtime wiring, not upstream pretrained/tokenizer compatibility."""
     import socket
 
     torch = pytest.importorskip("torch")

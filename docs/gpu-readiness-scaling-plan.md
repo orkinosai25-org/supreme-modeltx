@@ -37,13 +37,16 @@ actual GPU executions, or validated NVIDIA integrations.
 
 No runtime dependency or toolkit installation is implied by this matrix.
 
-The opt-in [Mistral demo adapter](../README.md#mistral-demo-path-for-ebru)
+The opt-in [dense Mistral local demo adapter](../README.md#dense-mistral-local-demo-path-for-ebru)
 reuses local Transformers inference, not an NVIDIA-specific runtime. It
-supports verified dense `mistral` snapshots through the existing API and
-`configs/mistral_baseline.json` evaluation path. Ebru remains the customer
-MVP and Supreme Model T-X the model/program layer from Orkinosai Limited, a
-British startup. Azure OpenAI migration is opt-in and remains subject to the
-same license, Turkish quality/safety, operational, and GPU evidence gates.
+provides a governed demo boundary for dense `mistral` snapshots only through
+the existing API and `configs/mistral_baseline.json` lexical-smoke example.
+Tests establish wiring, provenance and fail-closed behavior, not real
+pretrained compatibility or general Mistral-family support. Ebru remains the
+customer MVP and Supreme Model T-X the model/program layer from Orkinosai Limited, a
+British startup. This is not a production-ready Azure OpenAI replacement;
+any future Ebru integration remains subject to separate application validation
+and the same license, Turkish quality/safety, operational, and GPU evidence gates.
 No Mistral candidate approval or GPU execution is reported by this integration.
 
 ## 3) Candidate and local runtime contract

@@ -179,7 +179,7 @@ approval are required before use. No candidate scores or GPU runs are reported.
 Upstream model-card verification was blocked by DNS in this task; explicit
 upstream license approval remains required.
 
-### Mistral demo path for Ebru
+### Dense Mistral local demo path for Ebru
 
 Orkinosai Limited is a British startup building sovereign AI tooling. **Ebru**
 is the customer-facing Turkish-language MVP; **Supreme Model T-X** is the
@@ -187,12 +187,16 @@ underlying model/program layer. The current Azure OpenAI MVP is not replaced
 by this opt-in local path. This repository does not contain Ebru's hosted
 Azure OpenAI client; no hosted credentials or deployment settings are changed.
 
-The `MistralProvider` adapter reuses the verified Transformers runtime and the
-existing `InferenceProvider.generate_from_messages` boundary. It supports
-**dense Mistral causal-LM snapshots with `model_type: "mistral"`**, not every
-Mistral-branded architecture (Mixtral, multimodal models, GGUF, and unmerged
-adapters are outside this adapter's scope). No Mistral checkpoint is bundled,
-approved, fine-tuned, or claimed to meet Turkish quality/safety requirements.
+The `MistralProvider` adapter adds a **governed local demo path for dense
+Mistral snapshots only**, not general Mistral-family support or a
+production-ready Azure OpenAI replacement. It reuses local Transformers
+loading and the narrow `InferenceProvider.generate_from_messages` boundary:
+messages and generation limits in; text and prompt/completion token counts out.
+Both manifest `architecture` and config `model_type` must be `mistral`.
+Mixtral, multimodal models, GGUF, and unmerged adapters are outside this
+adapter's scope. No real pretrained Mistral snapshot has been validated by
+these tests; no checkpoint is bundled, approved, fine-tuned, or claimed to
+meet Turkish quality/safety requirements.
 
 1. Independently review the exact model's license/notices, intended use,
    immutable revision, and tokenizer/chat template. Acquire a complete local
@@ -208,7 +212,7 @@ approved, fine-tuned, or claimed to meet Turkish quality/safety requirements.
 
    ```bash
    export SMTX_INFERENCE_BACKEND=mistral
-   export SMTX_PRETRAINED_MODEL_PATH=/approved/models/mistral-instruct
+   export SMTX_PRETRAINED_MODEL_PATH=/approved/models/dense-mistral-demo
    export SMTX_DEVICE=cpu
    export SMTX_INFERENCE_DTYPE=float32
    export SMTX_MODEL_ID=ebru-mistral-demo
@@ -229,15 +233,18 @@ approved, fine-tuned, or claimed to meet Turkish quality/safety requirements.
      -d '{"model":"ebru-mistral-demo","messages":[{"role":"user","content":"Merhaba"}],"max_tokens":64,"temperature":0}'
    ```
 
-   An Ebru application transport can target this `/v1` boundary instead of its
-   Azure OpenAI transport while retaining messages and token usage handling.
-   This is not full Azure API parity: deployment URLs, authentication,
-   streaming, tools, and structured-output features need separate integration
-   validation. The server selects one backend at startup, not per request.
+   This exercises the local demo endpoint only; it does not connect Ebru's
+   Azure OpenAI client or implement an application transport switch. Any
+   future Ebru integration requires separate validation of deployment URLs,
+   authentication, message formats, streaming, tools, and structured outputs.
+   There is no full Azure API parity or production migration in this change.
+   The server selects one backend at startup, not per request.
    Templates are not rewritten: some Mistral templates reject system roles or
    non-alternating conversations; validate the chosen template against Ebru's
-   messages before migration.
-5. Set the approved snapshot path in `configs/mistral_baseline.json`, then run
+   messages before any future integration.
+5. `configs/mistral_baseline.json` is a **dense-Mistral local demo config**,
+   not an approved pretrained baseline. Its snapshot path is illustrative;
+   set it to a separately approved dense `mistral` snapshot, then run
    `python -m supreme_modeltx.foundation.evaluation --config configs/mistral_baseline.json`.
    This CPU/float32 example uses the existing Turkish **lexical smoke** suite;
    it is not a held-out product-quality or religious/cultural adaptation test.
@@ -249,8 +256,11 @@ API startup logs the underlying exception and leaves inference unavailable
 (chat returns 503); health alone is not a model-readiness check. Evaluation
 raises an error rather than substituting stub outputs or another model.
 Local loading never downloads missing assets and never enables remote code.
-Tests include an offline, randomly initialized tiny Mistral CPU roundtrip.
-They establish wiring only, not pretrained quality, GPU validation, or NVIDIA
+Tests cover wiring, provenance verification, and fail-closed checks using
+mocked loaders and an offline, randomly initialized tiny dense Mistral CPU
+roundtrip with a synthetic tokenizer/template. They do **not** prove real
+pretrained Mistral compatibility, upstream tokenizer/template compatibility,
+product quality, production readiness, GPU validation, or NVIDIA
 NeMo/Megatron/TensorRT-ONNX integration. Keep the existing
 [evidence gates](docs/gpu-readiness-scaling-plan.md) before promoting any model.
 

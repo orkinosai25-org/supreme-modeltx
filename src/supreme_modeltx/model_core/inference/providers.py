@@ -203,7 +203,7 @@ class LocalTransformersProvider:
 
 
 class MistralProvider(LocalTransformersProvider):
-    """Opt-in dense Mistral chat adapter over the verified local runtime."""
+    """Dense-Mistral-only local demo adapter; not a hosted-backend replacement."""
 
     def _validate_snapshot(self, root: Path) -> None:
         config = json.loads((root / "config.json").read_text())
