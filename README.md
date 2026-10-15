@@ -188,9 +188,9 @@ must match. It reuses verified local Transformers loading and
 text and prompt/completion token counts out. Backend selection is at startup;
 the PyTorch default and Ebru's Azure OpenAI MVP are unchanged.
 
-This is backend enablement, not general Mistral-family support or an Ebru
-transport switch. Mocked loaders and a tiny random model establish wiring,
-provenance and fail-closed behavior—not real pretrained compatibility,
+This is backend enablement, not migration readiness, general Mistral-family
+support or an Ebru transport switch. Mocked loaders and a tiny random model
+establish wiring, provenance and fail-closed behavior—not real pretrained compatibility,
 production readiness or GPU validation.
 
 See the [local demo runbook](docs/gpu-readiness-scaling-plan.md#dense-mistral-local-demo)

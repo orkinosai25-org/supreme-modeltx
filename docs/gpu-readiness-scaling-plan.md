@@ -93,6 +93,8 @@ NVIDIA-specific runtime. Scope is dense `model_type: "mistral"` snapshots only;
 Mixtral, multimodal models, GGUF and unmerged adapters are excluded. This is
 backend enablement, not an Ebru transport switch or production Azure OpenAI
 replacement. No real pretrained Mistral snapshot or GPU run is validated here.
+Validation against a separately approved real snapshot remains an outstanding
+gate; passing synthetic tests does not establish migration readiness.
 
 1. Separately approve the exact model's license/notices, immutable revision,
    intended use and tokenizer/chat template. Follow

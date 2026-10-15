@@ -336,7 +336,7 @@ def test_unsupported_backend_fails_closed(monkeypatch):
 
 
 @pytest.mark.parametrize("backend", ["transformers", "mistral"])
-def test_pretrained_initialization_failure_stays_unloaded(snapshot, monkeypatch, backend):
+def test_mock_provider_initialization_failure_stays_unloaded(snapshot, monkeypatch, backend):
     monkeypatch.setattr(engine, "_engine_backend", None)
     monkeypatch.setenv("SMTX_INFERENCE_BACKEND", backend)
     monkeypatch.setenv("SMTX_PRETRAINED_MODEL_PATH", str(snapshot))
@@ -359,21 +359,30 @@ def test_invalid_mistral_startup_does_not_fall_back(mistral_snapshot, monkeypatc
     assert "hash mismatch: tokenizer.json" in caplog.text
 
 
-def test_pretrained_registry_failure_stays_unloaded(snapshot, runtime, monkeypatch):
+@pytest.mark.parametrize("backend", ["transformers", "mistral"])
+def test_mock_provider_registry_failure_stays_unloaded(mistral_snapshot, runtime, monkeypatch, caplog, backend):
+    runtime[0].config.model_type = "mistral"
     monkeypatch.setattr(engine, "_engine_backend", None)
-    monkeypatch.setenv("SMTX_INFERENCE_BACKEND", "transformers")
-    monkeypatch.setenv("SMTX_PRETRAINED_MODEL_PATH", str(snapshot))
+    monkeypatch.setenv("SMTX_INFERENCE_BACKEND", backend)
+    monkeypatch.setenv("SMTX_PRETRAINED_MODEL_PATH", str(mistral_snapshot))
+    monkeypatch.setenv("SUPREME_MODELTX_DEVICE", "cpu")
+    monkeypatch.setenv("SMTX_INFERENCE_DTYPE", "float32")
+    registrations = []
 
     class BrokenRegistry:
         def register(self, entry):
+            registrations.append(entry)
             raise RuntimeError("database unavailable")
 
     monkeypatch.setattr(engine, "ModelRegistry", BrokenRegistry)
     engine.initialize_engine()
     assert engine.get_engine() is None
+    assert len(registrations) == 1
+    assert json.loads(registrations[0].description)["backend"] == backend
+    assert "database unavailable" in caplog.text
 
 
-def test_pretrained_initialization_registers_provenance(snapshot, runtime, monkeypatch, tmp_path):
+def test_mock_provider_initialization_registers_provenance(snapshot, runtime, monkeypatch, tmp_path):
     monkeypatch.setattr(engine, "_engine_backend", None)
     monkeypatch.setenv("SUPREME_MODELTX_PLATFORM_DB_PATH", str(tmp_path / "registry.sqlite3"))
     monkeypatch.setenv("SMTX_INFERENCE_BACKEND", "transformers")
