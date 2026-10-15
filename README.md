@@ -181,88 +181,20 @@ upstream license approval remains required.
 
 ### Dense Mistral local demo path for Ebru
 
-Orkinosai Limited is a British startup building sovereign AI tooling. **Ebru**
-is the customer-facing Turkish-language MVP; **Supreme Model T-X** is the
-underlying model/program layer. The current Azure OpenAI MVP is not replaced
-by this opt-in local path. This repository does not contain Ebru's hosted
-Azure OpenAI client; no hosted credentials or deployment settings are changed.
+`SMTX_INFERENCE_BACKEND=mistral` enables a local demo adapter for **dense
+`mistral` snapshots only**; both manifest `architecture` and config `model_type`
+must match. It reuses verified local Transformers loading and
+`InferenceProvider.generate_from_messages`: messages and generation limits in,
+text and prompt/completion token counts out. Backend selection is at startup;
+the PyTorch default and Ebru's Azure OpenAI MVP are unchanged.
 
-The `MistralProvider` adapter adds a **governed local demo path for dense
-Mistral snapshots only**, not general Mistral-family support or a
-production-ready Azure OpenAI replacement. It reuses local Transformers
-loading and the narrow `InferenceProvider.generate_from_messages` boundary:
-messages and generation limits in; text and prompt/completion token counts out.
-Both manifest `architecture` and config `model_type` must be `mistral`.
-Mixtral, multimodal models, GGUF, and unmerged adapters are outside this
-adapter's scope. No real pretrained Mistral snapshot has been validated by
-these tests; no checkpoint is bundled, approved, fine-tuned, or claimed to
-meet Turkish quality/safety requirements.
+This is backend enablement, not general Mistral-family support or an Ebru
+transport switch. Mocked loaders and a tiny random model establish wiring,
+provenance and fail-closed behavior—not real pretrained compatibility,
+production readiness or GPU validation.
 
-1. Independently review the exact model's license/notices, intended use,
-   immutable revision, and tokenizer/chat template. Acquire a complete local
-   Hugging Face-format snapshot in a separate approved preparation step.
-2. Follow [snapshot manifest preparation](#required-snapshot-manifest).
-   Set manifest `architecture` and model config `model_type` to `mistral`.
-   Include `tokenizer.json` or `tokenizer.model`, `tokenizer_config.json` with
-   the model's chat template, and `model.safetensors` or the full
-   `model.safetensors.index.json` and every referenced shard. Hash every file.
-   A hash inventory checks integrity; it does not grant governance approval.
-3. Install the existing `api,foundation` extras above on an isolated demo host.
-   Keep the approved snapshot read-only and select the backend explicitly:
-
-   ```bash
-   export SMTX_INFERENCE_BACKEND=mistral
-   export SMTX_PRETRAINED_MODEL_PATH=/approved/models/dense-mistral-demo
-   export SMTX_DEVICE=cpu
-   export SMTX_INFERENCE_DTYPE=float32
-   export SMTX_MODEL_ID=ebru-mistral-demo
-   smtx-serve
-   ```
-
-   `SUPREME_MODELTX_DEVICE`, when set, takes precedence over `SMTX_DEVICE`.
-   CPU float32 can require substantial RAM for real models (7B weights alone
-   are roughly 28 GB); the tiny random test fixture is not a product model.
-   Use `cuda` and a supported dtype only on an approved compatible host.
-4. Exercise the unchanged, non-streaming chat contract with a securely supplied
-   API key (see the API authentication setup):
-
-   ```bash
-   curl http://localhost:9000/v1/chat/completions \
-     --oauth2-bearer "$SMTX_API_KEY" \
-     -H 'Content-Type: application/json' \
-     -d '{"model":"ebru-mistral-demo","messages":[{"role":"user","content":"Merhaba"}],"max_tokens":64,"temperature":0}'
-   ```
-
-   This exercises the local demo endpoint only; it does not connect Ebru's
-   Azure OpenAI client or implement an application transport switch. Any
-   future Ebru integration requires separate validation of deployment URLs,
-   authentication, message formats, streaming, tools, and structured outputs.
-   There is no full Azure API parity or production migration in this change.
-   The server selects one backend at startup, not per request.
-   Templates are not rewritten: some Mistral templates reject system roles or
-   non-alternating conversations; validate the chosen template against Ebru's
-   messages before any future integration.
-5. `configs/mistral_baseline.json` is a **dense-Mistral local demo config**,
-   not an approved pretrained baseline. Its snapshot path is illustrative;
-   set it to a separately approved dense `mistral` snapshot, then run
-   `python -m supreme_modeltx.foundation.evaluation --config configs/mistral_baseline.json`.
-   This CPU/float32 example uses the existing Turkish **lexical smoke** suite;
-   it is not a held-out product-quality or religious/cultural adaptation test.
-   Reports preserve provenance, runtime versions, token usage, and timings.
-
-Missing files, mismatched hashes/architecture, missing chat templates,
-unsupported tokenizers/weights, and unavailable requested CUDA fail closed.
-API startup logs the underlying exception and leaves inference unavailable
-(chat returns 503); health alone is not a model-readiness check. Evaluation
-raises an error rather than substituting stub outputs or another model.
-Local loading never downloads missing assets and never enables remote code.
-Tests cover wiring, provenance verification, and fail-closed checks using
-mocked loaders and an offline, randomly initialized tiny dense Mistral CPU
-roundtrip with a synthetic tokenizer/template. They do **not** prove real
-pretrained Mistral compatibility, upstream tokenizer/template compatibility,
-product quality, production readiness, GPU validation, or NVIDIA
-NeMo/Megatron/TensorRT-ONNX integration. Keep the existing
-[evidence gates](docs/gpu-readiness-scaling-plan.md) before promoting any model.
+See the [local demo runbook](docs/gpu-readiness-scaling-plan.md#dense-mistral-local-demo)
+for snapshot requirements, commands, limitations and evaluation gates.
 
 ### Required snapshot manifest
 

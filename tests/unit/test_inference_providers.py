@@ -419,7 +419,7 @@ def test_dense_mistral_mock_wiring_serves_existing_chat_boundary(mistral_snapsho
 
 
 @pytest.mark.parametrize("backend", ["transformers", "mistral"])
-def test_existing_evaluation_harness_records_pretrained_metrics(mistral_snapshot, runtime, tmp_path, backend):
+def test_mock_provider_evaluation_wiring_records_usage_and_provenance(mistral_snapshot, runtime, tmp_path, backend):
     from supreme_modeltx.foundation.config import EvaluationRunConfig
     from supreme_modeltx.foundation.evaluation import run_evaluation
 
@@ -427,7 +427,7 @@ def test_existing_evaluation_harness_records_pretrained_metrics(mistral_snapshot
 
     suite = tmp_path / "suite.json"
     suite.write_text(json.dumps({
-        "suite_name": "turkish-test", "version": "v1",
+        "suite_name": "mock-wiring-only", "version": "v1",
         "cases": [{
             "case_id": "greeting", "prompt": "Merhaba",
             "expected": {"exact_match": "Merhaba!"},

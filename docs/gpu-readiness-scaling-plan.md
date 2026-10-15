@@ -37,18 +37,6 @@ actual GPU executions, or validated NVIDIA integrations.
 
 No runtime dependency or toolkit installation is implied by this matrix.
 
-The opt-in [dense Mistral local demo adapter](../README.md#dense-mistral-local-demo-path-for-ebru)
-reuses local Transformers inference, not an NVIDIA-specific runtime. It
-provides a governed demo boundary for dense `mistral` snapshots only through
-the existing API and `configs/mistral_baseline.json` lexical-smoke example.
-Tests establish wiring, provenance and fail-closed behavior, not real
-pretrained compatibility or general Mistral-family support. Ebru remains the
-customer MVP and Supreme Model T-X the model/program layer from Orkinosai Limited, a
-British startup. This is not a production-ready Azure OpenAI replacement;
-any future Ebru integration remains subject to separate application validation
-and the same license, Turkish quality/safety, operational, and GPU evidence gates.
-No Mistral candidate approval or GPU execution is reported by this integration.
-
 ## 3) Candidate and local runtime contract
 
 `Qwen/Qwen2.5-0.5B-Instruct` is a small **candidate only**, with a candidate
@@ -97,6 +85,64 @@ applicable, and optional generation-only cost using
 `evaluation.compute_cost_per_hour_usd`. CPU VRAM and an unspecified cost rate
 are `null`; model loading, warmup, and idle costs are excluded. No downloaded
 model or executed pretrained results are reported.
+
+### Dense Mistral local demo
+
+The opt-in `MistralProvider` reuses local Transformers inference, not an
+NVIDIA-specific runtime. Scope is dense `model_type: "mistral"` snapshots only;
+Mixtral, multimodal models, GGUF and unmerged adapters are excluded. This is
+backend enablement, not an Ebru transport switch or production Azure OpenAI
+replacement. No real pretrained Mistral snapshot or GPU run is validated here.
+
+1. Separately approve the exact model's license/notices, immutable revision,
+   intended use and tokenizer/chat template. Follow
+   [snapshot preparation](../README.md#required-snapshot-manifest); hashes
+   establish integrity, not approval. Set both manifest `architecture` and
+   config `model_type` to `mistral`. Include `tokenizer.json` or
+   `tokenizer.model`, `tokenizer_config.json` with a chat template, and
+   `model.safetensors` or its complete index and every referenced shard.
+2. Install the existing `api,foundation` extras on an isolated demo host,
+   keep the approved snapshot read-only, and select the backend:
+
+   ```bash
+   export SMTX_INFERENCE_BACKEND=mistral
+   export SMTX_PRETRAINED_MODEL_PATH=/approved/models/dense-mistral-demo
+   export SMTX_DEVICE=cpu
+   export SMTX_INFERENCE_DTYPE=float32
+   export SMTX_MODEL_ID=dense-mistral-demo
+   smtx-serve
+   ```
+
+   `SUPREME_MODELTX_DEVICE` overrides `SMTX_DEVICE`. CPU float32 may require
+   substantial RAM (7B weights alone are roughly 28 GB). CUDA and supported
+   precision require separate host validation; unavailable CUDA fails closed.
+3. Exercise the non-streaming endpoint with a securely configured API key:
+
+   ```bash
+   curl http://localhost:9000/v1/chat/completions \
+     --oauth2-bearer "$SMTX_API_KEY" \
+     -H 'Content-Type: application/json' \
+     -d '{"model":"dense-mistral-demo","messages":[{"role":"user","content":"Merhaba"}],"max_tokens":64,"temperature":0}'
+   ```
+
+4. Set the approved snapshot path in `configs/mistral_baseline.json`, then run
+   `python -m supreme_modeltx.foundation.evaluation --config configs/mistral_baseline.json`.
+   This is an illustrative CPU/float32 lexical-smoke config, not an approved
+   pretrained baseline or a held-out quality/safety evaluation.
+
+Missing or incompatible artifacts leave API inference disabled (503); startup
+logs retain the error. Health is not a readiness check. Evaluation raises
+rather than substituting a stub or another backend. Loading stays local-only,
+with remote code disabled and safetensors weights required.
+
+Tests use mocked loaders and a tiny random model with a synthetic tokenizer
+and template: they check wiring, provenance and fail-closed behavior only.
+They do not prove real pretrained/tokenizer compatibility or product quality.
+Templates are not rewritten; system roles and conversation ordering may be
+rejected. Any future Ebru integration needs independent validation of message
+formats, authentication, URLs, streaming, tools and structured outputs, plus
+the approval gates below. No general Mistral-family or NVIDIA integration is
+implied.
 
 ## 4) Minimum plan — licensed, reproducible baseline
 
