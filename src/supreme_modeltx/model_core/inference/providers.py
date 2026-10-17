@@ -130,10 +130,16 @@ class LocalTransformersProvider:
         )
         if not self.tokenizer.chat_template:
             raise ValueError("Pretrained chat inference requires the model's chat template.")
-        self.model = AutoModelForCausalLM.from_pretrained(
+        model, loading_info = AutoModelForCausalLM.from_pretrained(
             str(root), local_files_only=True, trust_remote_code=False,
-            use_safetensors=True, torch_dtype=dtypes[dtype],
-        ).to(device).eval()
+            use_safetensors=True, torch_dtype=dtypes[dtype], output_loading_info=True,
+        )
+        if any(loading_info.get(key) for key in (
+            "missing_keys", "unexpected_keys", "mismatched_keys", "error_msgs",
+        )):
+            raise ValueError("Snapshot weights do not exactly match the configured causal language model.")
+        self.model = model.to(device).eval()
+        self.model_id: str | None = None
         self.device = device
         self.dtype = dtype
         self.runtime_versions = {
@@ -174,10 +180,15 @@ class LocalTransformersProvider:
 
         if max_new_tokens < 1 or temperature < 0 or not 0 <= top_p <= 1:
             raise ValueError("Invalid generation limits or sampling parameters.")
-        prompt = self.tokenizer.apply_chat_template(
-            [{"role": m.role, "content": m.content} for m in messages],
-            tokenize=False, add_generation_prompt=True,
-        )
+        from jinja2.exceptions import TemplateError
+
+        try:
+            prompt = self.tokenizer.apply_chat_template(
+                [{"role": m.role, "content": m.content} for m in messages],
+                tokenize=False, add_generation_prompt=True,
+            )
+        except TemplateError as exc:
+            raise ValueError("Messages are not supported by the approved chat template.") from exc
         inputs = self.tokenizer(prompt, return_tensors="pt", add_special_tokens=False).to(self.device)
         prompt_tokens = int(inputs["input_ids"].shape[-1])
         if prompt_tokens + max_new_tokens > self.context_length:
@@ -203,7 +214,7 @@ class LocalTransformersProvider:
 
 
 class MistralProvider(LocalTransformersProvider):
-    """Dense-Mistral-only local demo adapter; not a hosted-backend replacement."""
+    """Dense-Mistral-only local adapter; activation requires snapshot qualification."""
 
     def _validate_snapshot(self, root: Path) -> None:
         config = json.loads((root / "config.json").read_text())
@@ -216,6 +227,10 @@ class MistralProvider(LocalTransformersProvider):
                 "Mistral backend requires model_type and manifest architecture 'mistral'; "
                 "Mixtral and other architectures are not supported by this adapter."
             )
+        if config.get("architectures") not in (None, ["MistralForCausalLM"]):
+            raise ValueError("Mistral backend supports MistralForCausalLM snapshots only.")
+        if config.get("quantization_config") is not None:
+            raise ValueError("Mistral backend requires unquantized safetensors weights.")
         files = self.artifact.files_sha256
         if not {"tokenizer.json", "tokenizer.model"} & files.keys():
             raise ValueError("Mistral snapshot requires a hashed tokenizer.json or tokenizer.model.")

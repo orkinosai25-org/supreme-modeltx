@@ -127,7 +127,7 @@ def initialize_engine() -> None:
                 device=os.environ.get("SUPREME_MODELTX_DEVICE", os.environ.get("SMTX_DEVICE", "cpu")),
                 dtype=os.environ.get("SMTX_INFERENCE_DTYPE"),
             )
-            ModelRegistry().register(ModelEntry(
+            entry = ModelEntry(
                 id=os.environ.get("SMTX_MODEL_ID", "local-pretrained"),
                 name=os.environ.get("SMTX_MODEL_NAME", backend.artifact.source_model),
                 family="pretrained",
@@ -139,7 +139,9 @@ def initialize_engine() -> None:
                 tokenizer_path=str(Path(model_path).resolve()),
                 inference_dtype=backend.dtype,
                 is_available=backend.is_ready,
-            ))
+            )
+            ModelRegistry().register(entry)
+            backend.model_id = entry.id
             _engine_backend = backend
         except Exception:
             logger.exception("Failed to load local pretrained backend — inference disabled.")

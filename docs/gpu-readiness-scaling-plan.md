@@ -99,8 +99,11 @@ gate; passing synthetic tests does not establish migration readiness.
 1. Separately approve the exact model's license/notices, immutable revision,
    intended use and tokenizer/chat template. Follow
    [snapshot preparation](../README.md#required-snapshot-manifest); hashes
-   establish integrity, not approval. Set both manifest `architecture` and
-   config `model_type` to `mistral`. Include `tokenizer.json` or
+   establish integrity, not approval. Both manifest `architecture` and the
+   upstream config's `model_type` must already be `mistral`; do not relabel an
+   incompatible snapshot. If present, `architectures` must be
+   `["MistralForCausalLM"]`. Quantized configurations are unsupported.
+   Include `tokenizer.json` or
    `tokenizer.model`, `tokenizer_config.json` with a chat template, and
    `model.safetensors` or its complete index and every referenced shard.
 2. Install the existing `api,foundation` extras on an isolated demo host,
@@ -132,10 +135,14 @@ gate; passing synthetic tests does not establish migration readiness.
    This is an illustrative CPU/float32 lexical-smoke config, not an approved
    pretrained baseline or a held-out quality/safety evaluation.
 
-Missing or incompatible artifacts leave API inference disabled (503); startup
-logs retain the error. Health is not a readiness check. Evaluation raises
-rather than substituting a stub or another backend. Loading stays local-only,
-with remote code disabled and safetensors weights required.
+Missing or incompatible artifacts, inexact weights (including missing tensors
+that Transformers would otherwise initialize), or registry failures leave API
+inference disabled (503); startup logs retain the error. `/health/` is liveness
+only; `/health/ready` returns 200 with `{"status":"ready","backend":"mistral"}`
+only after loading and registration, otherwise 503. This probe does not prove
+generation, model quality, or deployment approval. Evaluation raises rather
+than substituting a stub or another backend. Loading stays local-only, with
+remote code disabled and safetensors weights required.
 
 Tests use mocked loaders and a tiny random model with a synthetic tokenizer
 and template: they check wiring, provenance and fail-closed behavior only.
@@ -145,6 +152,86 @@ rejected. Any future Ebru integration needs independent validation of message
 formats, authentication, URLs, streaming, tools and structured outputs, plus
 the approval gates below. No general Mistral-family or NVIDIA integration is
 implied.
+
+### Controlled release candidate gate
+
+**Current evidence:** no approved real pretrained Mistral snapshot, intended
+validation host, or deployment approval was supplied for this readiness work.
+Activation remains blocked until the following evidence is reviewed. Synthetic
+CI coverage now includes single-file/sharded loading and incomplete tensor
+rejection; it is not a substitute for this gate.
+
+1. Obtain the separately reviewed immutable snapshot, revision, license/notices
+   and complete manifest. Record the manifest's SHA-256 in the approval record
+   **outside** the snapshot; a newly computed digest alone is not approval.
+   Use a read-only mount with no concurrent writers. Hash checks do not protect
+   files changed after verification. The loader validates integrity and
+   compatibility, not an approval signature or license entitlement.
+2. On the intended isolated host, install `.[api,dev,foundation]` with the
+   existing package tooling. Use Python 3.11/3.12 for this qualification, archive
+   `python -m pip freeze`, application commit, host/RAM inventory and, for CUDA,
+   GPU/driver/runtime versions. The lightweight API container is insufficient.
+   Allow RAM/VRAM headroom for activations/KV cache, not just weights. Set
+   `HF_HUB_OFFLINE=1` and `TRANSFORMERS_OFFLINE=1`; deny outbound network traffic
+   at the deployment boundary as defense in depth.
+3. Run the opt-in test from the repository root with an independently approved
+   digest (placeholders below must be replaced). No model is downloaded:
+
+   ```bash
+   export SMTX_MISTRAL_VALIDATION_PATH=/approved/models/dense-mistral-demo
+   export SMTX_MISTRAL_VALIDATION_MANIFEST_SHA256='<approved 64-character lowercase SHA-256>'
+   export SMTX_MISTRAL_VALIDATION_DEVICE=cpu
+   export SMTX_MISTRAL_VALIDATION_DTYPE=float32
+   : "${SMTX_MISTRAL_VALIDATION_PATH:?approved snapshot required}"
+   : "${SMTX_MISTRAL_VALIDATION_MANIFEST_SHA256:?approved digest required}"
+   python -m pytest tests/unit/test_mistral_approved_snapshot.py \
+     --junitxml=/tmp/mistral-qualification.xml -o junit_family=xunit1
+   ```
+
+   Require **one passed, zero skipped**. With no path the test intentionally
+   skips in ordinary CI; a supplied missing/invalid path, missing digest or
+   load/generation failure fails the test. It checks the pinned manifest,
+   local-only startup, readiness, a real chat completion and token accounting,
+   and records provenance/runtime/output in JUnit. Archive that report securely.
+   Repeat on the target CUDA host/dtype if CUDA will be used; CPU success does
+   not qualify GPU deployment. Authentication is overridden **only in this
+   test**; it does not validate deployed key configuration.
+4. Point `configs/mistral_baseline.json` at the **same** approved snapshot and
+   target device/dtype, run the evaluation command above, and archive its JSON.
+   Check the report's backend, artifact revision/hashes and runtime versions.
+   Run the separately frozen Turkish quality/safety workload and require the
+   predeclared thresholds below; the example lexical suite alone is insufficient.
+5. Deploy to an isolated canary with a writable, persistent registry database
+   (`SUPREME_MODELTX_PLATFORM_DB_PATH`) and securely provisioned API keys. Use
+   the activation variables above; resolve any conflicting
+   `SUPREME_MODELTX_DEVICE` value. Backend changes require a process restart;
+   re-calling initialization does not replace an already loaded singleton.
+   Use one worker and serial, bounded requests for this baseline; there is no
+   validated concurrency scheduler, batching, cancellation or serving SLO.
+   Configure startup timeouts for full file hashing and model loading.
+6. Before routing traffic, require `/health/ready` to identify `mistral` and run
+   the authenticated curl smoke request above with the exact `SMTX_MODEL_ID`.
+   Wrong model IDs return 404, unsupported streaming returns 400, invalid
+   context budgets/template-incompatible roles or turn ordering return 400,
+   and an unloaded backend returns 503. Templates are never rewritten to
+   accommodate messages. Test missing/invalid authentication returns 401.
+   Only non-streaming `/v1/chat/completions` is qualified here: `/v1/responses`
+   and embeddings remain unrelated stubs, not Mistral inference. Restrict
+   exposed routes accordingly; there is no tools/structured-output parity.
+7. Record owner sign-off against the manifest digest, host, workload results,
+   memory/latency/error budgets and rollback rehearsal before controlled traffic.
+   Probe success or registry `stage=development` is not deployment approval.
+
+**Rollback:** stop/drain canary traffic first. Restore the previous application
+revision, dependency environment, backend variables and its approved artifact
+paths; restart the process and verify its readiness plus an authenticated chat
+smoke before restoring traffic. For `pytorch`, restore
+`SMTX_CHECKPOINT_PATH`/`SMTX_TOKENIZER_PATH` and the previous dtype/device settings;
+do not point it at a Transformers snapshot. For Ebru, retain/restore its
+existing Azure OpenAI transport independently (this backend does not switch it).
+Merely unsetting `SMTX_INFERENCE_BACKEND` is not a working rollback without
+the old backend's assets. Preserve failed canary logs/reports, do not modify
+the approved snapshot in place, and never introduce automatic fallback.
 
 ## 4) Minimum plan — licensed, reproducible baseline
 
