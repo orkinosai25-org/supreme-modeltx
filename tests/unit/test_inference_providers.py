@@ -1,4 +1,8 @@
-"""Provider contracts without downloads or pretrained model artifacts."""
+"""Wiring, provenance and fail-closed checks without pretrained model artifacts.
+
+Mocked loaders and tiny random models with synthetic tokenizers/templates do
+not prove real pretrained Mistral compatibility or production readiness.
+"""
 
 import hashlib
 import json
@@ -8,7 +12,9 @@ from types import SimpleNamespace
 import pytest
 
 from supreme_modeltx.platform_api.api import engine
-from supreme_modeltx.model_core.inference.providers import LocalTransformersProvider, PretrainedArtifact
+from supreme_modeltx.model_core.inference.providers import (
+    LocalTransformersProvider, MistralProvider, PretrainedArtifact,
+)
 
 
 @pytest.fixture
@@ -70,6 +76,74 @@ def _write_hashed_file(snapshot, name, data):
     manifest = json.loads(manifest_path.read_text())
     manifest["files_sha256"][name] = hashlib.sha256(path.read_bytes()).hexdigest()
     manifest_path.write_text(json.dumps(manifest))
+
+
+@pytest.fixture
+def mistral_snapshot(snapshot):
+    _write_hashed_file(snapshot, "config.json", {"model_type": "mistral"})
+    _write_hashed_file(snapshot, "tokenizer.json", {})
+    manifest_path = snapshot / "smtx-artifact.json"
+    manifest = json.loads(manifest_path.read_text())
+    manifest.update(architecture="mistral", source_model="synthetic-mistral-test")
+    manifest_path.write_text(json.dumps(manifest))
+    return snapshot
+
+
+@pytest.mark.parametrize("model_type", ["qwen2", "mixtral", None])
+def test_mistral_rejects_incompatible_config(mistral_snapshot, model_type):
+    _write_hashed_file(mistral_snapshot, "config.json", {"model_type": model_type})
+    with pytest.raises(ValueError, match="requires model_type"):
+        MistralProvider(str(mistral_snapshot))
+
+
+def test_mistral_rejects_incompatible_manifest(snapshot):
+    _write_hashed_file(snapshot, "config.json", {"model_type": "mistral"})
+    with pytest.raises(ValueError, match="manifest architecture"):
+        MistralProvider(str(snapshot))
+
+
+@pytest.mark.parametrize("filename", [
+    "smtx-artifact.json", "config.json", "tokenizer_config.json", "model.safetensors",
+])
+def test_mistral_rejects_missing_snapshot_files(mistral_snapshot, filename):
+    (mistral_snapshot / filename).unlink()
+    with pytest.raises((ValueError, FileNotFoundError)):
+        MistralProvider(str(mistral_snapshot))
+
+
+def test_mistral_requires_tokenizer_artifacts(mistral_snapshot):
+    (mistral_snapshot / "tokenizer.json").unlink()
+    manifest_path = mistral_snapshot / "smtx-artifact.json"
+    manifest = json.loads(manifest_path.read_text())
+    del manifest["files_sha256"]["tokenizer.json"]
+    manifest_path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="hashed tokenizer"):
+        MistralProvider(str(mistral_snapshot))
+
+
+def test_mistral_rejects_tampered_tokenizer(mistral_snapshot):
+    (mistral_snapshot / "tokenizer.json").write_text("tampered")
+    with pytest.raises(ValueError, match="hash mismatch: tokenizer.json"):
+        MistralProvider(str(mistral_snapshot))
+
+
+def test_mistral_rejects_incomplete_shards(mistral_snapshot):
+    _write_hashed_file(mistral_snapshot, "model.safetensors.index.json", {
+        "weight_map": {"weight": "missing.safetensors"},
+    })
+    with pytest.raises(ValueError, match="hashed local safetensors"):
+        MistralProvider(str(mistral_snapshot))
+
+
+def test_mistral_requires_loadable_weight_filename(mistral_snapshot):
+    weights = mistral_snapshot / "model.safetensors"
+    weights.rename(mistral_snapshot / "unindexed.safetensors")
+    manifest_path = mistral_snapshot / "smtx-artifact.json"
+    manifest = json.loads(manifest_path.read_text())
+    manifest["files_sha256"]["unindexed.safetensors"] = manifest["files_sha256"].pop("model.safetensors")
+    manifest_path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="complete shard index"):
+        MistralProvider(str(mistral_snapshot))
 
 
 @pytest.mark.parametrize("shard", [
@@ -261,34 +335,54 @@ def test_unsupported_backend_fails_closed(monkeypatch):
     assert engine.get_engine() is None
 
 
-def test_pretrained_initialization_failure_stays_unloaded(snapshot, monkeypatch):
+@pytest.mark.parametrize("backend", ["transformers", "mistral"])
+def test_mock_provider_initialization_failure_stays_unloaded(snapshot, monkeypatch, backend):
     monkeypatch.setattr(engine, "_engine_backend", None)
-    monkeypatch.setenv("SMTX_INFERENCE_BACKEND", "transformers")
+    monkeypatch.setenv("SMTX_INFERENCE_BACKEND", backend)
     monkeypatch.setenv("SMTX_PRETRAINED_MODEL_PATH", str(snapshot))
 
     def failed_provider(*args, **kwargs):
         raise ValueError("unapproved snapshot")
 
-    monkeypatch.setattr(engine, "LocalTransformersProvider", failed_provider)
+    monkeypatch.setattr(engine, "MistralProvider" if backend == "mistral" else "LocalTransformersProvider", failed_provider)
     engine.initialize_engine()
     assert engine.get_engine() is None
 
 
-def test_pretrained_registry_failure_stays_unloaded(snapshot, runtime, monkeypatch):
+def test_invalid_mistral_startup_does_not_fall_back(mistral_snapshot, monkeypatch, caplog):
+    (mistral_snapshot / "tokenizer.json").write_text("tampered")
     monkeypatch.setattr(engine, "_engine_backend", None)
-    monkeypatch.setenv("SMTX_INFERENCE_BACKEND", "transformers")
-    monkeypatch.setenv("SMTX_PRETRAINED_MODEL_PATH", str(snapshot))
+    monkeypatch.setenv("SMTX_INFERENCE_BACKEND", "mistral")
+    monkeypatch.setenv("SMTX_PRETRAINED_MODEL_PATH", str(mistral_snapshot))
+    engine.initialize_engine()
+    assert engine.get_engine() is None
+    assert "hash mismatch: tokenizer.json" in caplog.text
+
+
+@pytest.mark.parametrize("backend", ["transformers", "mistral"])
+def test_mock_provider_registry_failure_stays_unloaded(mistral_snapshot, runtime, monkeypatch, caplog, backend):
+    runtime[0].config.model_type = "mistral"
+    monkeypatch.setattr(engine, "_engine_backend", None)
+    monkeypatch.setenv("SMTX_INFERENCE_BACKEND", backend)
+    monkeypatch.setenv("SMTX_PRETRAINED_MODEL_PATH", str(mistral_snapshot))
+    monkeypatch.setenv("SUPREME_MODELTX_DEVICE", "cpu")
+    monkeypatch.setenv("SMTX_INFERENCE_DTYPE", "float32")
+    registrations = []
 
     class BrokenRegistry:
         def register(self, entry):
+            registrations.append(entry)
             raise RuntimeError("database unavailable")
 
     monkeypatch.setattr(engine, "ModelRegistry", BrokenRegistry)
     engine.initialize_engine()
     assert engine.get_engine() is None
+    assert len(registrations) == 1
+    assert json.loads(registrations[0].description)["backend"] == backend
+    assert "database unavailable" in caplog.text
 
 
-def test_pretrained_initialization_registers_provenance(snapshot, runtime, monkeypatch, tmp_path):
+def test_mock_provider_initialization_registers_provenance(snapshot, runtime, monkeypatch, tmp_path):
     monkeypatch.setattr(engine, "_engine_backend", None)
     monkeypatch.setenv("SUPREME_MODELTX_PLATFORM_DB_PATH", str(tmp_path / "registry.sqlite3"))
     monkeypatch.setenv("SMTX_INFERENCE_BACKEND", "transformers")
@@ -300,13 +394,49 @@ def test_pretrained_initialization_registers_provenance(snapshot, runtime, monke
     assert json.loads(entry.description)["artifact"]["license"] == "Apache-2.0"
 
 
-def test_existing_evaluation_harness_records_pretrained_metrics(snapshot, runtime, tmp_path):
+def test_dense_mistral_mock_wiring_serves_existing_chat_boundary(mistral_snapshot, runtime, monkeypatch, tmp_path):
+    from fastapi.testclient import TestClient
+    from supreme_modeltx.platform_api.api.app import create_app
+    from supreme_modeltx.platform_api.api.routers.auth import require_api_key
+
+    model, calls = runtime
+    model.config.model_type = "mistral"
+    monkeypatch.setattr(engine, "_engine_backend", None)
+    monkeypatch.setenv("SUPREME_MODELTX_PLATFORM_DB_PATH", str(tmp_path / "registry.sqlite3"))
+    monkeypatch.setenv("SMTX_INFERENCE_BACKEND", "mistral")
+    monkeypatch.setenv("SMTX_PRETRAINED_MODEL_PATH", str(mistral_snapshot))
+    monkeypatch.setenv("SMTX_MODEL_ID", "ebru-mistral-demo")
+    monkeypatch.setenv("SUPREME_MODELTX_DEVICE", "cpu")
+    engine.initialize_engine()
+    assert isinstance(engine.get_engine(), MistralProvider)
+    entry = engine.ModelRegistry().get_model("ebru-mistral-demo")
+    assert entry.stage == "development"
+    assert json.loads(entry.description)["backend"] == "mistral"
+    app = create_app()
+    app.dependency_overrides[require_api_key] = lambda: "test-project"
+    response = TestClient(app).post("/v1/chat/completions", json={
+        "model": entry.id, "messages": [{"role": "user", "content": "Merhaba"}],
+        "max_tokens": 4, "temperature": 0,
+    })
+    assert response.status_code == 200, response.text
+    assert response.json()["choices"][0]["message"]["content"] == "Merhaba!"
+    assert response.json()["usage"]["prompt_tokens"] == 3
+    for name in ("model", "tokenizer"):
+        assert calls[name]["local_files_only"] is True
+        assert calls[name]["trust_remote_code"] is False
+    assert calls["model"]["use_safetensors"] is True
+
+
+@pytest.mark.parametrize("backend", ["transformers", "mistral"])
+def test_mock_provider_evaluation_wiring_records_usage_and_provenance(mistral_snapshot, runtime, tmp_path, backend):
     from supreme_modeltx.foundation.config import EvaluationRunConfig
     from supreme_modeltx.foundation.evaluation import run_evaluation
 
+    runtime[0].config.model_type = "mistral"
+
     suite = tmp_path / "suite.json"
     suite.write_text(json.dumps({
-        "suite_name": "turkish-test", "version": "v1",
+        "suite_name": "mock-wiring-only", "version": "v1",
         "cases": [{
             "case_id": "greeting", "prompt": "Merhaba",
             "expected": {"exact_match": "Merhaba!"},
@@ -314,8 +444,8 @@ def test_existing_evaluation_harness_records_pretrained_metrics(snapshot, runtim
     }))
     cfg = EvaluationRunConfig.model_validate({
         "inference": {
-            "backend": "transformers", "device": "cpu",
-            "pretrained_model_path": str(snapshot), "max_new_tokens": 4,
+            "backend": backend, "device": "cpu",
+            "pretrained_model_path": str(mistral_snapshot), "max_new_tokens": 4,
         },
         "evaluation": {
             "suite_path": str(suite), "output_path": str(tmp_path / "results.json"),
@@ -326,27 +456,30 @@ def test_existing_evaluation_harness_records_pretrained_metrics(snapshot, runtim
     assert result["passed_cases"] == 1
     assert result["results"][0]["prompt_tokens"] == 3
     assert result["results"][0]["completion_tokens"] == 2
-    assert result["runtime"]["provider"]["artifact"]["source_model"].startswith("Qwen/")
+    assert result["runtime"]["provider"]["backend"] == backend
+    assert result["runtime"]["provider"]["artifact"]["source_model"] == "synthetic-mistral-test"
     assert result["runtime"]["suite_sha256"] == hashlib.sha256(suite.read_bytes()).hexdigest()
     assert result["runtime"]["peak_allocated_vram_bytes"] is None
     assert result["runtime"]["estimated_generation_cost_usd"] >= 0
 
 
-def test_pretrained_evaluation_requires_snapshot_path():
+@pytest.mark.parametrize("backend", ["transformers", "mistral"])
+def test_pretrained_evaluation_requires_snapshot_path(backend):
     from supreme_modeltx.foundation.config import InferenceRunConfig
     from supreme_modeltx.foundation.inference import FoundationResponder
 
     with pytest.raises(ValueError, match="pretrained_model_path"):
         FoundationResponder(InferenceRunConfig.model_validate({
-            "inference": {"backend": "transformers", "device": "cpu"},
+            "inference": {"backend": backend, "device": "cpu"},
         }))
 
 
-def test_pretrained_evaluation_requires_explicit_device():
+@pytest.mark.parametrize("backend", ["transformers", "mistral"])
+def test_pretrained_evaluation_requires_explicit_device(backend):
     from supreme_modeltx.foundation.config import InferenceConfig
 
     with pytest.raises(ValueError, match="explicit device"):
-        InferenceConfig(backend="transformers", pretrained_model_path="/approved/snapshot")
+        InferenceConfig(backend=backend, pretrained_model_path="/approved/snapshot")
 
 
 def test_invalid_provider_request_returns_client_error(monkeypatch):
@@ -368,7 +501,11 @@ def test_invalid_provider_request_returns_client_error(monkeypatch):
     assert "context window" in response.json()["detail"]
 
 
-def test_real_transformers_local_roundtrip_without_downloads(tmp_path):
+@pytest.mark.parametrize("architecture", ["gpt2", "mistral"])
+def test_tiny_random_model_offline_transformers_wiring(tmp_path, monkeypatch, architecture):
+    """Exercise runtime wiring, not upstream pretrained/tokenizer compatibility."""
+    import socket
+
     torch = pytest.importorskip("torch")
     transformers = pytest.importorskip("transformers")
     tokenizers = pytest.importorskip("tokenizers")
@@ -381,25 +518,39 @@ def test_real_transformers_local_roundtrip_without_downloads(tmp_path):
     fast_tokenizer = transformers.PreTrainedTokenizerFast(
         tokenizer_object=tokenizer, pad_token="[PAD]", eos_token="[EOS]", unk_token="[UNK]",
         chat_template="{% for message in messages %}{{ message['content'] }} {% endfor %}assistant",
+        model_input_names=["input_ids", "attention_mask"],
     )
     fast_tokenizer.save_pretrained(tmp_path)
-    model = transformers.GPT2LMHeadModel(transformers.GPT2Config(
-        vocab_size=5, n_positions=16, n_embd=16, n_layer=1, n_head=2,
-        bos_token_id=1, eos_token_id=1, pad_token_id=0,
-    ))
+    torch.manual_seed(0)
+    if architecture == "mistral":
+        model = transformers.MistralForCausalLM(transformers.MistralConfig(
+            vocab_size=5, max_position_embeddings=16, hidden_size=16,
+            intermediate_size=32, num_hidden_layers=1, num_attention_heads=2,
+            num_key_value_heads=1, bos_token_id=1, eos_token_id=1, pad_token_id=0,
+        ))
+    else:
+        model = transformers.GPT2LMHeadModel(transformers.GPT2Config(
+            vocab_size=5, n_positions=16, n_embd=16, n_layer=1, n_head=2,
+            bos_token_id=1, eos_token_id=1, pad_token_id=0,
+        ))
     model.save_pretrained(tmp_path, safe_serialization=True)
     (tmp_path / "smtx-artifact.json").write_text(json.dumps({
         "source_model": "synthetic-local-test",
         "revision": "0" * 40,
         "license": "test-fixture-only",
-        "architecture": "gpt2",
+        "architecture": architecture,
         "conversion_lineage": ["Random tiny test model; no candidate weights or capability claims."],
         "files_sha256": {
             path.name: hashlib.sha256(path.read_bytes()).hexdigest()
             for path in tmp_path.iterdir() if path.is_file()
         },
     }))
-    provider = LocalTransformersProvider(str(tmp_path), device="cpu", dtype="float32")
+    def no_network(*args, **kwargs):
+        raise AssertionError("Local inference must not use the network.")
+
+    monkeypatch.setattr(socket.socket, "connect", no_network)
+    provider_class = MistralProvider if architecture == "mistral" else LocalTransformersProvider
+    provider = provider_class(str(tmp_path), device="cpu", dtype="float32")
     text, prompt_tokens, completion_tokens = provider.generate_from_messages(
         [SimpleNamespace(role="user", content="Hello")], max_new_tokens=2, temperature=0,
     )

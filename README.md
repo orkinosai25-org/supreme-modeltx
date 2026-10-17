@@ -179,6 +179,23 @@ approval are required before use. No candidate scores or GPU runs are reported.
 Upstream model-card verification was blocked by DNS in this task; explicit
 upstream license approval remains required.
 
+### Dense Mistral local demo path for Ebru
+
+`SMTX_INFERENCE_BACKEND=mistral` enables a local demo adapter for **dense
+`mistral` snapshots only**; both manifest `architecture` and config `model_type`
+must match. It reuses verified local Transformers loading and
+`InferenceProvider.generate_from_messages`: messages and generation limits in,
+text and prompt/completion token counts out. Backend selection is at startup;
+the PyTorch default and Ebru's Azure OpenAI MVP are unchanged.
+
+This is backend enablement, not migration readiness, general Mistral-family
+support or an Ebru transport switch. Mocked loaders and a tiny random model
+establish wiring, provenance and fail-closed behavior—not real pretrained compatibility,
+production readiness or GPU validation.
+
+See the [local demo runbook](docs/gpu-readiness-scaling-plan.md#dense-mistral-local-demo)
+for snapshot requirements, commands, limitations and evaluation gates.
+
 ### Required snapshot manifest
 
 The snapshot must contain `config.json`, `tokenizer_config.json`, all required

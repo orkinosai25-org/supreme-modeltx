@@ -86,6 +86,66 @@ applicable, and optional generation-only cost using
 are `null`; model loading, warmup, and idle costs are excluded. No downloaded
 model or executed pretrained results are reported.
 
+### Dense Mistral local demo
+
+The opt-in `MistralProvider` reuses local Transformers inference, not an
+NVIDIA-specific runtime. Scope is dense `model_type: "mistral"` snapshots only;
+Mixtral, multimodal models, GGUF and unmerged adapters are excluded. This is
+backend enablement, not an Ebru transport switch or production Azure OpenAI
+replacement. No real pretrained Mistral snapshot or GPU run is validated here.
+Validation against a separately approved real snapshot remains an outstanding
+gate; passing synthetic tests does not establish migration readiness.
+
+1. Separately approve the exact model's license/notices, immutable revision,
+   intended use and tokenizer/chat template. Follow
+   [snapshot preparation](../README.md#required-snapshot-manifest); hashes
+   establish integrity, not approval. Set both manifest `architecture` and
+   config `model_type` to `mistral`. Include `tokenizer.json` or
+   `tokenizer.model`, `tokenizer_config.json` with a chat template, and
+   `model.safetensors` or its complete index and every referenced shard.
+2. Install the existing `api,foundation` extras on an isolated demo host,
+   keep the approved snapshot read-only, and select the backend:
+
+   ```bash
+   export SMTX_INFERENCE_BACKEND=mistral
+   export SMTX_PRETRAINED_MODEL_PATH=/approved/models/dense-mistral-demo
+   export SMTX_DEVICE=cpu
+   export SMTX_INFERENCE_DTYPE=float32
+   export SMTX_MODEL_ID=dense-mistral-demo
+   smtx-serve
+   ```
+
+   `SUPREME_MODELTX_DEVICE` overrides `SMTX_DEVICE`. CPU float32 may require
+   substantial RAM (7B weights alone are roughly 28 GB). CUDA and supported
+   precision require separate host validation; unavailable CUDA fails closed.
+3. Exercise the non-streaming endpoint with a securely configured API key:
+
+   ```bash
+   curl http://localhost:9000/v1/chat/completions \
+     --oauth2-bearer "$SMTX_API_KEY" \
+     -H 'Content-Type: application/json' \
+     -d '{"model":"dense-mistral-demo","messages":[{"role":"user","content":"Merhaba"}],"max_tokens":64,"temperature":0}'
+   ```
+
+4. Set the approved snapshot path in `configs/mistral_baseline.json`, then run
+   `python -m supreme_modeltx.foundation.evaluation --config configs/mistral_baseline.json`.
+   This is an illustrative CPU/float32 lexical-smoke config, not an approved
+   pretrained baseline or a held-out quality/safety evaluation.
+
+Missing or incompatible artifacts leave API inference disabled (503); startup
+logs retain the error. Health is not a readiness check. Evaluation raises
+rather than substituting a stub or another backend. Loading stays local-only,
+with remote code disabled and safetensors weights required.
+
+Tests use mocked loaders and a tiny random model with a synthetic tokenizer
+and template: they check wiring, provenance and fail-closed behavior only.
+They do not prove real pretrained/tokenizer compatibility or product quality.
+Templates are not rewritten; system roles and conversation ordering may be
+rejected. Any future Ebru integration needs independent validation of message
+formats, authentication, URLs, streaming, tools and structured outputs, plus
+the approval gates below. No general Mistral-family or NVIDIA integration is
+implied.
+
 ## 4) Minimum plan — licensed, reproducible baseline
 
 Before allocating compute:

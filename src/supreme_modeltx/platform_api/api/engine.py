@@ -2,7 +2,7 @@
 platform_api/api/engine.py — InferenceEngine singleton for the platform API.
 
 Selects a local provider using SMTX_INFERENCE_BACKEND (default: pytorch).
-The optional transformers provider uses SMTX_PRETRAINED_MODEL_PATH and a
+The optional transformers/mistral providers use SMTX_PRETRAINED_MODEL_PATH and a
 verified smtx-artifact.json snapshot; no remote download is performed.
 
 Loads a checkpoint-backed InferenceEngine at application startup when the
@@ -26,7 +26,9 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Optional
 
 from supreme_modeltx.platform_api.model_registry.registry import ModelEntry, ModelRegistry
-from supreme_modeltx.model_core.inference.providers import InferenceProvider, LocalTransformersProvider
+from supreme_modeltx.model_core.inference.providers import (
+    InferenceProvider, LocalTransformersProvider, MistralProvider,
+)
 
 if TYPE_CHECKING:
     from supreme_modeltx.model_core.inference.engine import InferenceEngine
@@ -114,12 +116,13 @@ def initialize_engine() -> None:
         return
 
     backend_name = os.environ.get("SMTX_INFERENCE_BACKEND", "pytorch")
-    if backend_name == "transformers":
+    if backend_name in {"transformers", "mistral"}:
         try:
             model_path = os.environ.get("SMTX_PRETRAINED_MODEL_PATH", "")
             if not model_path:
                 raise ValueError("Set SMTX_PRETRAINED_MODEL_PATH to an approved local snapshot.")
-            backend = LocalTransformersProvider(
+            provider_class = MistralProvider if backend_name == "mistral" else LocalTransformersProvider
+            backend = provider_class(
                 model_path,
                 device=os.environ.get("SUPREME_MODELTX_DEVICE", os.environ.get("SMTX_DEVICE", "cpu")),
                 dtype=os.environ.get("SMTX_INFERENCE_DTYPE"),

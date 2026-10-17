@@ -18,12 +18,13 @@ class FoundationResponder:
         self.model: TinyPilotLM | None = None
         self.provider = None
         self.last_usage: tuple[int, int] | None = None
-        if config.inference.backend == "transformers":
-            from supreme_modeltx.model_core.inference.providers import LocalTransformersProvider
+        if config.inference.backend in {"transformers", "mistral"}:
+            from supreme_modeltx.model_core.inference.providers import LocalTransformersProvider, MistralProvider
 
             if not config.inference.pretrained_model_path:
-                raise ValueError("transformers backend requires inference.pretrained_model_path")
-            self.provider = LocalTransformersProvider(
+                raise ValueError(f"{config.inference.backend} backend requires inference.pretrained_model_path")
+            provider_class = MistralProvider if config.inference.backend == "mistral" else LocalTransformersProvider
+            self.provider = provider_class(
                 config.inference.pretrained_model_path,
                 device=config.inference.device,
                 dtype=config.inference.dtype,
