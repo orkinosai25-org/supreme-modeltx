@@ -196,6 +196,15 @@ production readiness or GPU validation.
 See the [local demo runbook](docs/gpu-readiness-scaling-plan.md#dense-mistral-local-demo)
 for snapshot requirements, commands, limitations and evaluation gates.
 
+For a controlled release candidate, follow the runbook's
+[qualification and rollback procedure](docs/gpu-readiness-scaling-plan.md#controlled-release-candidate-gate).
+`GET /health/ready` returns 503 until model loading and registry registration
+succeed; `/health/` is liveness only. Pretrained chat requests must name the
+active `SMTX_MODEL_ID` (default `local-pretrained`); other IDs return 404 and
+streaming requests return 400. Inexact checkpoint weights are rejected rather
+than silently initialized. An opt-in approved-snapshot test is provided, but
+no approved real Mistral snapshot or deployment sign-off is supplied here.
+
 ### Required snapshot manifest
 
 The snapshot must contain `config.json`, `tokenizer_config.json`, all required
