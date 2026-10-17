@@ -79,11 +79,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
 
-      - name: Install package and dev dependencies
-        run: pip install -e ".[dev]"
-
       - name: Install torch (CPU-only for CI)
-        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+        run: pip install "torch>=2.4,<2.6" --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Install package, dev and local inference dependencies
+        run: pip install -e ".[dev,foundation]"
 
       - name: Syntax check (compileall)
         run: python -m compileall src/supreme_modeltx

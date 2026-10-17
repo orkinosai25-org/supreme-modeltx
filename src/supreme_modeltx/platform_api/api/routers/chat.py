@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import logging
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 import uuid
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -41,6 +41,18 @@ async def chat_completions(
             ),
         )
 
+    served_model_id = getattr(backend, "model_id", None)
+    if served_model_id is not None and request.model != served_model_id:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Requested model is not the active local pretrained model.",
+        )
+    if served_model_id is not None and request.stream:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Local pretrained chat supports non-streaming requests only.",
+        )
+
     try:
         text, prompt_tokens, completion_tokens = backend.generate_from_messages(
             request.messages,
@@ -62,7 +74,7 @@ async def chat_completions(
     prompt_tokens_i = int(prompt_tokens)
     completion_tokens_i = int(completion_tokens)
     total_tokens_i = prompt_tokens_i + completion_tokens_i
-    now = datetime.now(UTC)
+    now = datetime.now(timezone.utc)
     try:
         _usage_ledger.record(
             UsageEvent(

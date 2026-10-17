@@ -102,6 +102,17 @@ def test_mistral_rejects_incompatible_manifest(snapshot):
         MistralProvider(str(snapshot))
 
 
+@pytest.mark.parametrize("extra", [
+    {"architectures": ["MixtralForCausalLM"]},
+    {"architectures": ["MistralModel"]},
+    {"quantization_config": {"quant_method": "bitsandbytes"}},
+])
+def test_mistral_rejects_unsupported_model_configuration(mistral_snapshot, extra):
+    _write_hashed_file(mistral_snapshot, "config.json", {"model_type": "mistral", **extra})
+    with pytest.raises(ValueError, match="Mistral backend"):
+        MistralProvider(str(mistral_snapshot))
+
+
 @pytest.mark.parametrize("filename", [
     "smtx-artifact.json", "config.json", "tokenizer_config.json", "model.safetensors",
 ])
@@ -242,7 +253,7 @@ def runtime(monkeypatch):
 
     def model_loader(path, **kwargs):
         calls["model"] = kwargs
-        return model
+        return model, {}
 
     monkeypatch.setitem(sys.modules, "transformers", SimpleNamespace(
         AutoTokenizer=SimpleNamespace(from_pretrained=tokenizer_loader),
@@ -268,6 +279,34 @@ def test_local_generation_contract(snapshot, runtime):
         assert calls[name]["local_files_only"] is True
         assert calls[name]["trust_remote_code"] is False
     assert calls["model"]["use_safetensors"] is True
+    assert calls["model"]["output_loading_info"] is True
+
+
+@pytest.mark.parametrize("key", [
+    "missing_keys", "unexpected_keys", "mismatched_keys", "error_msgs",
+])
+def test_inexact_weights_are_rejected_before_device_transfer(snapshot, runtime, monkeypatch, key):
+    import transformers
+
+    model, _ = runtime
+    monkeypatch.setattr(transformers.AutoModelForCausalLM, "from_pretrained",
+                        lambda *a, **k: (model, {key: ["invalid.weight"]}))
+    monkeypatch.setattr(model, "to", lambda *a: pytest.fail("Invalid model must not be activated."))
+    with pytest.raises(ValueError, match="weights do not exactly match"):
+        LocalTransformersProvider(str(snapshot))
+
+
+def test_template_rejection_is_a_client_error(snapshot, runtime, monkeypatch):
+    from jinja2.exceptions import TemplateError
+
+    provider = LocalTransformersProvider(str(snapshot))
+
+    def reject(*args, **kwargs):
+        raise TemplateError("Unsupported role or turn ordering")
+
+    monkeypatch.setattr(provider.tokenizer, "apply_chat_template", reject)
+    with pytest.raises(ValueError, match="approved chat template"):
+        provider.generate_from_messages([SimpleNamespace(role="system", content="Hello")])
 
 
 def test_local_tokenizer_file_override_is_resolved_inside_snapshot(snapshot, runtime):
@@ -407,17 +446,27 @@ def test_dense_mistral_mock_wiring_serves_existing_chat_boundary(mistral_snapsho
     monkeypatch.setenv("SMTX_PRETRAINED_MODEL_PATH", str(mistral_snapshot))
     monkeypatch.setenv("SMTX_MODEL_ID", "ebru-mistral-demo")
     monkeypatch.setenv("SUPREME_MODELTX_DEVICE", "cpu")
-    engine.initialize_engine()
-    assert isinstance(engine.get_engine(), MistralProvider)
-    entry = engine.ModelRegistry().get_model("ebru-mistral-demo")
-    assert entry.stage == "development"
-    assert json.loads(entry.description)["backend"] == "mistral"
     app = create_app()
     app.dependency_overrides[require_api_key] = lambda: "test-project"
-    response = TestClient(app).post("/v1/chat/completions", json={
-        "model": entry.id, "messages": [{"role": "user", "content": "Merhaba"}],
-        "max_tokens": 4, "temperature": 0,
-    })
+    with TestClient(app) as client:
+        assert isinstance(engine.get_engine(), MistralProvider)
+        entry = engine.ModelRegistry().get_model("ebru-mistral-demo")
+        assert entry.stage == "development"
+        assert json.loads(entry.description)["backend"] == "mistral"
+        assert client.get("/health/ready").json() == {"status": "ready", "backend": "mistral"}
+        response = client.post("/v1/chat/completions", json={
+            "model": entry.id, "messages": [{"role": "user", "content": "Merhaba"}],
+            "max_tokens": 4, "temperature": 0,
+        })
+        wrong_model = client.post("/v1/chat/completions", json={
+            "model": "other-model", "messages": [{"role": "user", "content": "Merhaba"}],
+        })
+        assert wrong_model.status_code == 404
+        streaming = client.post("/v1/chat/completions", json={
+            "model": entry.id, "messages": [{"role": "user", "content": "Merhaba"}],
+            "stream": True,
+        })
+        assert streaming.status_code == 400
     assert response.status_code == 200, response.text
     assert response.json()["choices"][0]["message"]["content"] == "Merhaba!"
     assert response.json()["usage"]["prompt_tokens"] == 3
@@ -425,6 +474,58 @@ def test_dense_mistral_mock_wiring_serves_existing_chat_boundary(mistral_snapsho
         assert calls[name]["local_files_only"] is True
         assert calls[name]["trust_remote_code"] is False
     assert calls["model"]["use_safetensors"] is True
+
+
+@pytest.mark.parametrize("failure", ["missing_path", "tampered", "registry"])
+def test_mistral_api_startup_failure_is_not_ready(mistral_snapshot, runtime, monkeypatch, failure):
+    from fastapi.testclient import TestClient
+    from supreme_modeltx.platform_api.api.app import create_app
+    from supreme_modeltx.platform_api.api.routers.auth import require_api_key
+
+    runtime[0].config.model_type = "mistral"
+    monkeypatch.setattr(engine, "_engine_backend", None)
+    monkeypatch.setenv("SMTX_INFERENCE_BACKEND", "mistral")
+    monkeypatch.setenv("SMTX_PRETRAINED_MODEL_PATH", str(mistral_snapshot))
+    monkeypatch.setenv("SUPREME_MODELTX_DEVICE", "cpu")
+    monkeypatch.setenv("SMTX_INFERENCE_DTYPE", "float32")
+    if failure == "missing_path":
+        monkeypatch.delenv("SMTX_PRETRAINED_MODEL_PATH")
+    elif failure == "tampered":
+        (mistral_snapshot / "model.safetensors").write_text("tampered")
+    else:
+        def broken_registry():
+            raise RuntimeError("registry unavailable")
+
+        monkeypatch.setattr(engine, "ModelRegistry", broken_registry)
+    monkeypatch.setattr(engine, "LocalTransformersProvider",
+                        lambda *a, **k: pytest.fail("Must not fall back to Transformers."))
+    monkeypatch.setattr(engine, "_InferenceBackend",
+                        lambda *a, **k: pytest.fail("Must not fall back to PyTorch."))
+    app = create_app()
+    app.dependency_overrides[require_api_key] = lambda: "test-project"
+    with TestClient(app) as client:
+        assert client.get("/health/").status_code == 200
+        assert client.get("/health/ready").status_code == 503
+        assert client.post("/v1/chat/completions", json={
+            "model": "local-pretrained", "messages": [{"role": "user", "content": "Hello"}],
+        }).status_code == 503
+        assert engine.get_engine() is None
+
+
+def test_mistral_evaluation_invalid_snapshot_never_uses_stub(mistral_snapshot, monkeypatch):
+    from supreme_modeltx.foundation.config import InferenceRunConfig
+    from supreme_modeltx.foundation.inference import FoundationResponder
+
+    (mistral_snapshot / "model.safetensors").write_text("tampered")
+    monkeypatch.setattr(LocalTransformersProvider, "generate_from_messages",
+                        lambda *a, **k: pytest.fail("Invalid snapshot must never generate."))
+    with pytest.raises(ValueError, match="hash mismatch"):
+        FoundationResponder(InferenceRunConfig.model_validate({
+            "inference": {
+                "backend": "mistral", "device": "cpu",
+                "pretrained_model_path": str(mistral_snapshot),
+            },
+        }))
 
 
 @pytest.mark.parametrize("backend", ["transformers", "mistral"])
@@ -501,8 +602,10 @@ def test_invalid_provider_request_returns_client_error(monkeypatch):
     assert "context window" in response.json()["detail"]
 
 
-@pytest.mark.parametrize("architecture", ["gpt2", "mistral"])
-def test_tiny_random_model_offline_transformers_wiring(tmp_path, monkeypatch, architecture):
+@pytest.mark.parametrize(("architecture", "sharded"), [
+    ("gpt2", False), ("mistral", False), ("mistral", True),
+])
+def test_tiny_random_model_offline_transformers_wiring(tmp_path, monkeypatch, architecture, sharded):
     """Exercise runtime wiring, not upstream pretrained/tokenizer compatibility."""
     import socket
 
@@ -533,7 +636,7 @@ def test_tiny_random_model_offline_transformers_wiring(tmp_path, monkeypatch, ar
             vocab_size=5, n_positions=16, n_embd=16, n_layer=1, n_head=2,
             bos_token_id=1, eos_token_id=1, pad_token_id=0,
         ))
-    model.save_pretrained(tmp_path, safe_serialization=True)
+    model.save_pretrained(tmp_path, safe_serialization=True, max_shard_size="1KB" if sharded else "5GB")
     (tmp_path / "smtx-artifact.json").write_text(json.dumps({
         "source_model": "synthetic-local-test",
         "revision": "0" * 40,
@@ -558,6 +661,19 @@ def test_tiny_random_model_offline_transformers_wiring(tmp_path, monkeypatch, ar
     assert prompt_tokens == 2
     assert 1 <= completion_tokens <= 2
     assert provider.model.device == torch.device("cpu")
+    if architecture == "mistral" and not sharded:
+        from safetensors.torch import load_file, save_file
+
+        weights = tmp_path / "model.safetensors"
+        tensors = load_file(weights)
+        del tensors["model.layers.0.mlp.gate_proj.weight"]
+        save_file(tensors, weights, metadata={"format": "pt"})
+        manifest_path = tmp_path / "smtx-artifact.json"
+        manifest = json.loads(manifest_path.read_text())
+        manifest["files_sha256"]["model.safetensors"] = hashlib.sha256(weights.read_bytes()).hexdigest()
+        manifest_path.write_text(json.dumps(manifest))
+        with pytest.raises(ValueError, match="weights do not exactly match"):
+            MistralProvider(str(tmp_path), device="cpu", dtype="float32")
 
 
 @pytest.mark.parametrize("variable", ["WORLD_SIZE", "LOCAL_WORLD_SIZE"])
