@@ -7,7 +7,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -171,7 +171,7 @@ def build_report(
 
     return {
         "benchmark_name": "smtx-mini-code-reasoning-v1",
-        "generated_at_utc": datetime.now(UTC).isoformat(),
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "inputs": {
             "eval_set_path": str(eval_set_path),
             "baselines_path": str(baselines_path),
