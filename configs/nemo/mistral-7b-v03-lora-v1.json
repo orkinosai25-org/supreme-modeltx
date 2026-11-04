@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "model_id": "mistralai/Mistral-7B-v0.3",
+  "nemo_version": "2.4.0",
+  "method": "lora",
+  "domains": ["turkish_culture", "tourism", "islamic_knowledge"],
+  "seed": 1234,
+  "seq_length": 512,
+  "micro_batch_size": 1,
+  "global_batch_size": 4,
+  "max_steps": 100,
+  "val_check_interval": 25,
+  "limit_val_batches": 4,
+  "learning_rate": 0.0001,
+  "warmup_steps": 10,
+  "lora_rank": 8,
+  "lora_alpha": 16,
+  "lora_dropout": 0.05
+}

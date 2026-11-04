@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "dataset_id": "REPLACE_WITH_APPROVED_IMMUTABLE_DATASET_VERSION",
+  "language": "tr",
+  "approved_by": "",
+  "pii_review_passed": false,
+  "secret_review_passed": false,
+  "near_duplicate_review_passed": false,
+  "base_model": {
+    "model_id": "mistralai/Mistral-7B-v0.3",
+    "revision": "",
+    "license": "Apache-2.0",
+    "approved_by": ""
+  },
+  "sources": [],
+  "splits": {
+    "train": {"file": "training.jsonl", "sha256": ""},
+    "validation": {"file": "validation.jsonl", "sha256": ""}
+  }
+}
